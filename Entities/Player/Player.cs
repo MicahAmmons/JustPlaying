@@ -96,10 +96,19 @@ namespace PlayingAround.Entities.Player
             spriteBatch.Draw(Texture, destination, Color.White);
         }
 
-        public Rectangle GetDrawRectangle()
+        public Rectangle GetFeetHitbox()
         {
-            return new Rectangle((int)Position.X, (int)Position.Y, PlayerWidth, PlayerHeight);
+            int hitboxWidth = PlayerWidth;
+            int hitboxHeight = PlayerHeight / 3;
+
+            return new Rectangle(
+                (int)(Position.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
+                (int)(Position.Y + PlayerHeight - hitboxHeight),
+                hitboxWidth,
+                hitboxHeight
+            );
         }
+
 
         public Vector2 GenerateSpawnPoint(Vector2 starting)
         {
@@ -147,11 +156,25 @@ namespace PlayingAround.Entities.Player
             if (tile == null)
                 return false;
 
-            int cellX = (int)(nextPos.X / MapTile.TileWidth);
-            int cellY = (int)(nextPos.Y / MapTile.TileHeight);
+            // Predict the new feet hitbox based on where the player would move
+            int hitboxWidth = PlayerWidth;
+            int hitboxHeight = PlayerHeight / 3;
 
-            return IsCellWalkable(cellX, cellY, tile);
+            Rectangle futureFeetBox = new Rectangle(
+                (int)(nextPos.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
+                (int)(nextPos.Y + PlayerHeight - hitboxHeight),
+                hitboxWidth,
+                hitboxHeight
+            );
+
+            // Check the 4 corners of the feet box
+            return IsCornerWalkable(futureFeetBox.Left, futureFeetBox.Top, tile) &&
+                   IsCornerWalkable(futureFeetBox.Right - 1, futureFeetBox.Top, tile) &&
+                   IsCornerWalkable(futureFeetBox.Left, futureFeetBox.Bottom - 1, tile) &&
+                   IsCornerWalkable(futureFeetBox.Right - 1, futureFeetBox.Bottom - 1, tile);
         }
+
+
 
         private Vector2 CenterOfCell(int x, int y)
         {
@@ -160,5 +183,13 @@ namespace PlayingAround.Entities.Player
                 y * MapTile.TileHeight + MapTile.TileHeight / 2
             );
         }
+        private bool IsCornerWalkable(int pixelX, int pixelY, MapTile tile)
+        {
+            int cellX = pixelX / MapTile.TileWidth;
+            int cellY = pixelY / MapTile.TileHeight;
+
+            return IsCellWalkable(cellX, cellY, tile);
+        }
+
     }
 }

@@ -107,7 +107,7 @@ namespace PlayingAround
 
             if (showDebugOutline)
             {
-                DrawRectangle(player.GetDrawRectangle(), Color.Red);
+                DrawRectangle(player.GetFeetHitbox(), Color.Red);
                 DrawDebugOverlay();
             }
 
@@ -130,13 +130,14 @@ namespace PlayingAround
             // Bottom
             _spriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Bottom, rect.Width + 1, 1), color);
         } // Debugging Border Rectangle 
+
         private void DrawDebugOverlay()
         {
             Vector2 playerPos = player.Position;
 
             string debugText =
                 $"Position: X={playerPos.X:0}, Y={playerPos.Y:0}\n" +
-                $"Draw Rect: {player.GetDrawRectangle()}\n" +
+                $"Draw Rect: {player.GetFeetHitbox()}\n" +
                 $"Outline: {(showDebugOutline ? "ON" : "OFF")}";
 
 

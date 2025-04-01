@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0,0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/File.spritefont</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/HeroArt/BlonderHero.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/0,0.png</File>
   </SourceFiles>
   <DestFiles>
     <File>debug.spritefont</File>

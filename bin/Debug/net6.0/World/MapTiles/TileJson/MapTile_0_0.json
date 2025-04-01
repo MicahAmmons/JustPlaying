@@ -1534,19 +1534,19 @@
       {
         "x": 14,
         "y": 8,
-        "walkable": true,
+        "walkable": false,
         "z": 0
       },
       {
         "x": 15,
         "y": 8,
-        "walkable": true,
+        "walkable": false,
         "z": 0
       },
       {
         "x": 16,
         "y": 8,
-        "walkable": true,
+        "walkable": false,
         "z": 0
       },
       {
