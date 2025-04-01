@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Assets;
+using PlayingAround.Game.Map;
+using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Utils;
 using System;
@@ -23,6 +25,7 @@ namespace PlayingAround
         Texture2D debugPixel;
         private bool showDebugOutline = true;
         private bool showTileCellOutlines = true;
+
 
         public Game1()
         {
@@ -46,6 +49,8 @@ namespace PlayingAround
         protected override void LoadContent()
         {
             var tileDataList = JsonLoader.LoadTileData("World/MapTiles/TileJson/MapTile_0_0.json");
+
+
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -72,10 +77,12 @@ namespace PlayingAround
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
+    Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
+
+            var mouse = Mouse.GetState();
             var keyboard = Keyboard.GetState();
             if (keyboard.IsKeyDown(Keys.F3) && previousKeyboardState.IsKeyUp(Keys.F3))
             {
@@ -85,6 +92,15 @@ namespace PlayingAround
             {
                 showTileCellOutlines = !showTileCellOutlines;
             }
+            if (mouse.RightButton == ButtonState.Pressed)
+            {
+                Vector2 start = player.FeetCenter;
+                Vector2 target = new Vector2(mouse.X, mouse.Y);
+                var path = CustomPathfinder.BuildPixelPath(start, target);
+                player.SetPath(path);
+            }
+
+
 
             player.Update(gameTime);
 
@@ -107,8 +123,10 @@ namespace PlayingAround
 
             if (showDebugOutline)
             {
+                player.DrawDebugPath(_spriteBatch, debugPixel);
                 DrawRectangle(player.GetFeetHitbox(), Color.Red);
                 DrawDebugOverlay();
+                
             }
 
 
@@ -133,16 +151,25 @@ namespace PlayingAround
 
         private void DrawDebugOverlay()
         {
-            Vector2 playerPos = player.Position;
+            Rectangle feetHitbox = player.GetFeetHitbox();
+            Vector2 feetCenter = player.GetFeetCenter();
+            Vector2? clickTarget = player.GetDebugClickTarget();
 
             string debugText =
-                $"Position: X={playerPos.X:0}, Y={playerPos.Y:0}\n" +
-                $"Draw Rect: {player.GetFeetHitbox()}\n" +
-                $"Outline: {(showDebugOutline ? "ON" : "OFF")}";
+                $"Feet Hitbox: {feetHitbox}\n" +
+                $"Feet Center: X={feetCenter.X:0}, Y={feetCenter.Y:0}\n" +
+                $"Feet Tile: X={(int)(feetCenter.X / MapTile.TileWidth)}, Y={(int)(feetCenter.Y / MapTile.TileHeight)}\n" +
+                $"Outline: {(showDebugOutline ? "ON" : "OFF")}\n";
 
+            if (clickTarget.HasValue)
+            {
+                debugText += $"Target Pos: X={clickTarget.Value.X:0}, Y={clickTarget.Value.Y:0}\n";
+                debugText += $"Target Tile: X={(int)(clickTarget.Value.X / MapTile.TileWidth)}, Y={(int)(clickTarget.Value.Y / MapTile.TileHeight)}";
+            }
 
-            _spriteBatch.DrawString(debugFont, debugText, new Vector2(10, 10), Color.Red);
-        }// houses the debug overlay text info
+            _spriteBatch.DrawString(debugFont, debugText, new Vector2(10, 10), Color.Blue);
+        }
+
 
 
 

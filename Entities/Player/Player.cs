@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
+using System.Collections.Generic;
 
 namespace PlayingAround.Entities.Player
 {
     public class Player
     {
-        public Vector2 Position { get; private set; }
         public float Speed { get; set; }
         public Texture2D Texture { get; private set; }
 
@@ -16,11 +16,21 @@ namespace PlayingAround.Entities.Player
         public int PlayerHeight { get; set; } = 64;
 
         private Vector2? moveTarget = null;
+        private Queue<Vector2> movementPath = new();
+        public Vector2 FeetCenter;
+        private Vector2? debugClickTarget = null;
+        public Vector2? GetDebugClickTarget()
+        {
+            return debugClickTarget;
+        }
+
+
+
 
         public Player(Texture2D idleTexture, Vector2 startPosition, float speed = 200f)
         {
             Texture = idleTexture;
-            Position = GenerateSpawnPoint(startPosition);
+            FeetCenter = GenerateSpawnPoint(startPosition);
             Speed = speed;
         }
 
@@ -33,62 +43,54 @@ namespace PlayingAround.Entities.Player
             Vector2 movement = Vector2.Zero;
 
             // Movement input
-            if (keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.A))
-                movement.X -= 1;
-            if (keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.D))
-                movement.X += 1;
-            if (keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.W))
-                movement.Y -= 1;
-            if (keyboard.IsKeyDown(Keys.Down) || keyboard.IsKeyDown(Keys.S))
-                movement.Y += 1;
+            if (keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.A)) { movement.X -= 1; movementPath.Clear(); }
+            if (keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.D)) { movement.X += 1; movementPath.Clear(); }
+            if (keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.W)) { movement.Y -= 1; movementPath.Clear(); }
+            if (keyboard.IsKeyDown(Keys.Down) || keyboard.IsKeyDown(Keys.S)) { movement.Y += 1; movementPath.Clear(); }
 
             // Normalize diagonal movement
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
-                Vector2 nextPos = Position + movement * Speed * delta;
+                Vector2 nextPos = FeetCenter + movement * Speed * delta;
 
                 if (CanMoveTo(nextPos))
                 {
-                    Position = nextPos;
+                    FeetCenter = nextPos;
                     moveTarget = null; // Cancel click-move if arrow keys are used
                 }
             }
 
-            // Mouse right-click movement
-            if (mouse.RightButton == ButtonState.Pressed)
+            // Follow path if one exists
+            if (movementPath.Count > 0)
             {
-                moveTarget = new Vector2(mouse.X, mouse.Y);
-            }
+                Vector2 target = movementPath.Peek();
+                float distance = Vector2.Distance(FeetCenter, target);
 
-            // Continue moving toward click target
-            if (moveTarget.HasValue)
-            {
-                Vector2 direction = moveTarget.Value - Position;
-
-                if (direction.Length() > 1f)
+                if (distance < 1f)
                 {
-                    direction.Normalize();
-                    Vector2 nextPos = Position + direction * Speed * delta;
-
-                    if (CanMoveTo(nextPos))
-                        Position = nextPos;
-                    else
-                        moveTarget = null; // stop if movement blocked
+                    // Snap to the tile and go to next one
+                    FeetCenter = target;
+                    movementPath.Dequeue();
                 }
                 else
                 {
-                    moveTarget = null; // close enough
+                    Vector2 direction = target - FeetCenter;
+                    direction.Normalize();
+                    FeetCenter += direction * Speed * delta;
                 }
             }
+
+
+
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destination = new Rectangle(
-                (int)Position.X,
-                (int)Position.Y,
+                (int)FeetCenter.X,
+                (int)FeetCenter.Y,
                 PlayerWidth,
                 PlayerHeight
             );
@@ -102,8 +104,8 @@ namespace PlayingAround.Entities.Player
             int hitboxHeight = PlayerHeight / 3;
 
             return new Rectangle(
-                (int)(Position.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
-                (int)(Position.Y + PlayerHeight - hitboxHeight),
+                (int)(FeetCenter.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
+                (int)(FeetCenter.Y + PlayerHeight - hitboxHeight),
                 hitboxWidth,
                 hitboxHeight
             );
@@ -175,6 +177,20 @@ namespace PlayingAround.Entities.Player
         }
 
 
+        public void SetPath(List<Vector2> path)
+        {
+            movementPath.Clear();
+            debugClickTarget = path.Count > 0 ? path[^1] : null;
+
+            //Vector2 offset = GetFeetOffsetWithinTile();
+
+            foreach (var point in path)
+            {
+                movementPath.Enqueue(point); // Already pixel-perfect!
+            }
+        }
+
+
 
         private Vector2 CenterOfCell(int x, int y)
         {
@@ -190,6 +206,37 @@ namespace PlayingAround.Entities.Player
 
             return IsCellWalkable(cellX, cellY, tile);
         }
+        public void DrawDebugPath(SpriteBatch spriteBatch, Texture2D debugPixel)
+        {
+            foreach (var point in movementPath)
+            {
+                Rectangle cellRect = new Rectangle(
+                    (int)(point.X - MapTile.TileWidth / 2),
+                    (int)(point.Y - MapTile.TileHeight / 2),
+                    MapTile.TileWidth,
+                    MapTile.TileHeight
+                );
+
+                // Draw a semi-transparent yellow box over the path
+                spriteBatch.Draw(debugPixel, cellRect, Color.Yellow * 0.4f);
+            }
+        }
+        //private Vector2 GetFeetOffsetWithinTile()
+        //{
+        //    var feet = GetFeetCenter();
+        //    float offsetX = feet.X % MapTile.TileWidth;
+        //    float offsetY = feet.Y % MapTile.TileHeight;
+        //    return new Vector2(offsetX, offsetY);
+        //}
+        public Vector2 GetFeetCenter()
+        {
+            return new Vector2(FeetCenter.X + PlayerWidth / 2f, FeetCenter.Y + PlayerHeight);
+        }
+
+
+
+
+
 
     }
 }

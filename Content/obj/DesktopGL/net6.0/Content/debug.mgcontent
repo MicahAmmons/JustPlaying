@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/File.spritefont</SourceFile>
-  <SourceTime>2025-04-01T15:34:22.7621479-04:00</SourceTime>
+  <SourceTime>2025-04-01T17:08:07.2051997-04:00</SourceTime>
   <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/bin/DesktopGL/Content/debug.xnb</DestFile>
-  <DestTime>2025-04-01T15:35:41.1562235-04:00</DestTime>
+  <DestTime>2025-04-01T17:08:18.2624087-04:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
