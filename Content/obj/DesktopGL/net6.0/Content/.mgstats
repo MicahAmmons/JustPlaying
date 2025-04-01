@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/debug.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1483333
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0,0.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Tiles/0,0.xnb","TextureProcessor","Texture2DContent",118211,8294485,0.2651526
