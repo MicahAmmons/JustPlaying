@@ -32,8 +32,7 @@
 /processorParam:TextureFormat=Color
 /build:HeroArt/BlonderHero.png
 
-
-#begin Tiles/0,0.png
+#begin Tiles/0_-1_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -43,6 +42,17 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/0,0.png
+/build:Tiles/0_-1_0.png
 
+#begin Tiles/0_0_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/0_0_0.png
 

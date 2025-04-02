@@ -14,13 +14,17 @@
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
-    <None Remove="World\MapTiles\TileJson\MapTile_0_0.json" />
+    <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0.json" />
+    <None Remove="World\MapTiles\TileJson\MapTile_0_0_0.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PlayerSprites\PlayerSprites.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="World\MapTiles\TileJson\MapTile_0_0.json">
+    <Content Include="World\MapTiles\TileJson\MapTile_0_0_0.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="World\MapTiles\TileJson\MapTile_0_-1_0.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -33,7 +37,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Tiles\" />
+    <Folder Include="Data\SaveJson\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

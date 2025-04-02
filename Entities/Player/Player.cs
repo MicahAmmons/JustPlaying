@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.Data;
+using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using System.Collections.Generic;
@@ -25,8 +27,17 @@ namespace PlayingAround.Entities.Player
         }
 
 
+        public static Player LoadFromSave(PlayerSaveData data)
+        {
+            var texture = AssetManager.GetTexture(data.TextureKey);
+            var player = new Player(texture, new Vector2(data.FeetCenterX, data.FeetCenterY), data.Speed)
+            {
+                PlayerWidth = data.Width,
+                PlayerHeight = data.Height
+            };
 
-
+            return player;
+        }
         public Player(Texture2D idleTexture, Vector2 startPosition, float speed = 200f)
         {
             Texture = idleTexture;
@@ -80,9 +91,6 @@ namespace PlayingAround.Entities.Player
                 }
             }
         }
-        
-
-
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destination = new Rectangle(
@@ -94,7 +102,6 @@ namespace PlayingAround.Entities.Player
 
             spriteBatch.Draw(Texture, destination, Color.White);
         }
-
         public Rectangle GetFeetHitbox()
         {
             int hitboxWidth = PlayerWidth;
@@ -107,8 +114,6 @@ namespace PlayingAround.Entities.Player
                 hitboxHeight
             );
         }
-
-
         public Vector2 GenerateSpawnPoint(Vector2 starting)
         {
             var tile = TileManager.CurrentMapTile;
@@ -172,8 +177,6 @@ namespace PlayingAround.Entities.Player
                    IsCornerWalkable(futureFeetBox.Left, futureFeetBox.Bottom - 1, tile) &&
                    IsCornerWalkable(futureFeetBox.Right - 1, futureFeetBox.Bottom - 1, tile);
         }
-
-
         public void SetPath(List<Vector2> path)
         {
             movementPath.Clear();
@@ -187,9 +190,6 @@ namespace PlayingAround.Entities.Player
                 movementPath.Enqueue(point); // Already pixel-perfect!
             }
         }
-
-
-
         private Vector2 CenterOfCell(int x, int y)
         {
             return new Vector2(
@@ -223,6 +223,20 @@ namespace PlayingAround.Entities.Player
         {
             return new Vector2(FeetCenter.X + PlayerWidth / 2f, FeetCenter.Y + PlayerHeight);
         }
+
+public PlayerSaveData Save()
+{
+            var feetCenter = GetFeetCenter();
+            return new PlayerSaveData
+            {
+                Speed = this.Speed,
+                Width = this.PlayerWidth,
+                Height = this.PlayerHeight,
+                TextureKey = "BlonderHero", // or store this in a field and use that
+                FeetCenterX = feetCenter.X,
+                FeetCenterY = feetCenter.Y
+    };
+}
 
 
 

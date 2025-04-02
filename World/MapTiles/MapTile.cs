@@ -7,7 +7,7 @@ namespace PlayingAround.Game.Map
 {
     public class MapTile
     {
-        public int Id { get; }
+        public string Id { get; }
         public Texture2D BackgroundTexture { get; }
         public List<Monster> Monsters { get; } = new();
         public List<Rectangle> Obstacles { get; } = new();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
@@ -8,95 +9,184 @@ namespace PlayingAround.Game.Pathfinding
 {
     public static class CustomPathfinder
     {
-        public static List<Vector2> BuildPixelPath(Vector2 start, Vector2 end, int playerWidth, int playerHeight)
-        { // Start is the FeetCenter
-            Vector2 offset = new Vector2(playerWidth / 2f, playerHeight);
-            end -= offset;
+        public static List<Vector2> BuildPixelPath(Rectangle start, Vector2 end)
+        {
+            List<Vector2> path = new();
+
+            // Step 1: Define foot hitbox corners
+            Vector2 topLeftFootHitbox = new Vector2(start.Left, start.Top);
+            Vector2 topRightFootHitbox = new Vector2(start.Right, start.Top);
+            Vector2 bottomLeftFootHitbox = new Vector2(start.Left, start.Bottom);
+            Vector2 bottomRightFootHitbox = new Vector2(start.Right, start.Bottom);
+            Vector2 feetBoxCenter = new Vector2(start.Left + start.Width / 2f, bottomLeftFootHitbox.Y);
             var tile = TileManager.CurrentMapTile;
             if (tile == null)
                 return new List<Vector2>();
 
-            List<Vector2> path = new();
-            float moveStep = MapTile.TileWidth/3; // movement in pixels (same as cell width)
-            float closeEnough = moveStep / 2f + 1;
-            Vector2 current = start;
-            Vector2? previousDirection = null;
+            float moveStep = start.Height;
+            float closeEnough = (start.Height/2) + 1; // if the character lands just over halfway the distancec
+            Vector2 currentTopLeft = topLeftFootHitbox;
+            Vector2 currentTopRight = topRightFootHitbox;
+            Vector2 currentBottomLeft = bottomLeftFootHitbox;
+            Vector2 currentBottomRight = bottomRightFootHitbox;
+            Vector2? previousTopLeft = null;
+            Vector2? previousTopRight = null;
+            Vector2? previousBottomLeft = null;
+            Vector2? previousBottomRight = null;
+            Vector2? previousFeetBoxCenter = null;
+
+            Vector2 offset = new Vector2(-start.Width / 2f, -start.Height*3);
+
             int maxSteps = 500;
             int stepCount = 0;
 
-            while (Vector2.Distance(current, end) > closeEnough && stepCount++ < maxSteps)
+            while (Vector2.Distance(feetBoxCenter, end) > closeEnough && stepCount++ < maxSteps)
             {
-                Vector2 direction = Vector2.Normalize(end - current);
-                Vector2 nextStep = (current + direction * moveStep) ;
-                Vector2 feetLandingPos = nextStep - offset;
-                int cellX = (int)(feetLandingPos.X / MapTile.TileWidth);
-                int cellY = (int)(feetLandingPos.Y / MapTile.TileHeight);
+                Vector2 direction = end - feetBoxCenter;
+                if (direction.Length() > 0)
+                    direction.Normalize();
 
-                if (IsWalkable(cellX, cellY))
+                Vector2 moveVector = direction * moveStep;
+
+                previousTopLeft = currentTopLeft;
+                previousTopRight = currentTopRight;
+                previousBottomLeft = currentBottomLeft;
+                previousBottomRight = currentBottomRight;
+                previousFeetBoxCenter = feetBoxCenter;
+
+                currentTopLeft += moveVector;
+                currentTopRight += moveVector;
+                currentBottomLeft += moveVector;
+                currentBottomRight += moveVector;
+                feetBoxCenter += moveVector;
+
+                if (IsCornerWalkable((int)currentTopLeft.X, (int)currentTopLeft.Y, tile) &&
+                    IsCornerWalkable((int)currentTopRight.X - 1, (int)currentTopRight.Y, tile) &&
+                    IsCornerWalkable((int)currentBottomLeft.X, (int)currentBottomLeft.Y - 1, tile) &&
+                    IsCornerWalkable((int)currentBottomRight.X - 1, (int)currentBottomRight.Y - 1, tile))
                 {
-                    path.Add(nextStep);   // this is the FeetCenter target
-                    previousDirection = direction;
-                    current = nextStep;
-                    continue;
+                    path.Add(feetBoxCenter);
                 }
-
-                // Diagonal case handling
-                List<Vector2> fallbacks = GetFallbackDirections(direction, previousDirection);
-
-                bool moved = false;
-                foreach (var fallback in fallbacks)
-                {
-                    Vector2 candidate = current + fallback * moveStep;
-                    int fallbackX = (int)(candidate.X / MapTile.TileWidth);
-                    int fallbackY = (int)(candidate.Y / MapTile.TileHeight);
-
-                    if (IsWalkable(fallbackX, fallbackY))
+                else 
+                { 
+                    for (int i = 1; i <= moveStep; i++)
                     {
-                        path.Add(candidate);
-                        previousDirection = fallback;
-                        current = candidate;
-                        moved = true;
-                        break;
+                        Vector2 trialVector = direction * (moveStep - i);
+
+                        Vector2 testTopLeft = previousTopLeft.Value + trialVector;
+                        Vector2 testTopRight = previousTopRight.Value + trialVector;
+                        Vector2 testBottomLeft = previousBottomLeft.Value + trialVector;
+                        Vector2 testBottomRight = previousBottomRight.Value + trialVector;
+                        Vector2 testCenter = previousFeetBoxCenter.Value + trialVector;
+
+                        if (IsCornerWalkable((int)testTopLeft.X, (int)testTopLeft.Y, tile) &&
+                            IsCornerWalkable((int)testTopRight.X - 1, (int)testTopRight.Y, tile) &&
+                            IsCornerWalkable((int)testBottomLeft.X, (int)testBottomLeft.Y - 1, tile) &&
+                            IsCornerWalkable((int)testBottomRight.X - 1, (int)testBottomRight.Y - 1, tile))
+                        {
+                            path.Add(testCenter);
+                            break;
+                        }
                     }
+                break; // Stop pathing if the next step is not valid
                 }
-
-                if (!moved)
-                    break; // blocked entirely
             }
 
-            if (Vector2.Distance(current, end) <= closeEnough)
+            // Add final destination if it's close enough
+            if (Vector2.Distance(feetBoxCenter, end) <= closeEnough)
             {
-                if (path.Count > 0)
-                    path[path.Count - 1] = end; // Replace the last point
-                else
-                    path.Add(end); // Edge case: if path is empty
-
-                return path;
+                path.Add(end);
             }
 
 
+            // Apply offset to each point
+            for (int i = 0; i < path.Count; i++)
+            {
+                path[i] += offset;
+            }
             return path;
         }
-        public struct MovementInstruction
-        {
-            public Vector2 Direction;
-            public float Distance;
 
-            public MovementInstruction(Vector2 direction, float distance)
-            {
-                Direction = direction;
-                Distance = distance;
-            }
+        private static bool IsCornerWalkable(int pixelX, int pixelY, MapTile tile)
+        {
+            int cellX = pixelX / MapTile.TileWidth;
+            int cellY = pixelY / MapTile.TileHeight;
+
+            return IsCellWalkable(cellX, cellY, tile);
         }
 
-
-        private static bool IsWalkable(int cellX, int cellY)
+        private static bool IsCellWalkable(int x, int y, MapTile tile)
         {
-            if (cellX < 0 || cellY < 0 || cellX >= MapTile.GridWidth || cellY >= MapTile.GridHeight)
+            if (x < 0 || y < 0 || x >= MapTile.GridWidth || y >= MapTile.GridHeight)
                 return false;
 
-            return TileManager.CurrentMapTile.TileGrid[cellX, cellY].IsWalkable;
+            return tile.TileGrid[x, y].IsWalkable;
         }
+
+        //// Start is the FeetCenter
+        //Vector2 offset = new Vector2(playerWidth / 2f, playerHeight);
+        //        end -= offset;
+        //        int maxSteps = 500;
+        //        int stepCount = 0;
+
+        //        while (Vector2.Distance(current, end) > closeEnough && stepCount++ < maxSteps)
+        //        {
+        //            Vector2 direction = Vector2.Normalize(end - current);
+        //            Vector2 nextStep = (current + direction * moveStep) ;
+        //            Vector2 feetLandingPos = nextStep - offset;
+        //            int cellX = (int)(feetLandingPos.X / MapTile.TileWidth);
+        //            int cellY = (int)(feetLandingPos.Y / MapTile.TileHeight);
+
+        //            if (IsWalkable(cellX, cellY))
+        //            {
+        //                path.Add(nextStep);   // this is the FeetCenter target
+        //                previousDirection = direction;
+        //                current = nextStep;
+        //                continue;
+        //            }
+
+        //            // Diagonal case handling
+        //            List<Vector2> fallbacks = GetFallbackDirections(direction, previousDirection);
+
+        //            bool moved = false;
+        //            foreach (var fallback in fallbacks)
+        //            {
+        //                Vector2 candidate = current + fallback * moveStep;
+        //                int fallbackX = (int)(candidate.X / MapTile.TileWidth);
+        //                int fallbackY = (int)(candidate.Y / MapTile.TileHeight);
+
+        //                if (IsWalkable(fallbackX, fallbackY))
+        //                {
+        //                    path.Add(candidate);
+        //                    previousDirection = fallback;
+        //                    current = candidate;
+        //                    moved = true;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (!moved)
+        //                break; // blocked entirely
+        //        }
+
+        //        if (Vector2.Distance(current, end) <= closeEnough)
+        //        {
+        //            if (path.Count > 0)
+        //                path[path.Count - 1] = end; // Replace the last point
+        //            else
+        //                path.Add(end); // Edge case: if path is empty
+
+        //            return path;
+        //        }
+
+
+        //        return path;
+
+
+
+
+
+
 
         private static List<Vector2> GetFallbackDirections(Vector2 dir, Vector2? previousDir)
         {

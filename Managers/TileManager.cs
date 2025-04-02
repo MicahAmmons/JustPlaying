@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Data;
 using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Utils;
@@ -10,12 +11,12 @@ namespace PlayingAround.Manager
 {
     public static class TileManager
     {
-        private static Dictionary<int, MapTile> tiles = new();
+        private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
 
         public static void LoadMapTiles(GraphicsDevice graphicsDevice, ContentManager content)
         {
-            var tileDataList = JsonLoader.LoadTileData("World/MapTiles/TileJson/MapTile_0_0.json");
+            var tileDataList = JsonLoader.LoadTileData("World/MapTiles/TileJson/MapTile_0_0_0.json");
 
             foreach (var data in tileDataList)
             {
@@ -34,16 +35,9 @@ namespace PlayingAround.Manager
                     CurrentMapTile = tile;
             }
         }
-
-        public static MapTile GetTile(int id)
+        public static void LoadMapTileById(string id)
         {
-            return tiles.ContainsKey(id) ? tiles[id] : null;
-        }
 
-        public static void SetCurrentTile(int id)
-        {
-            if (tiles.ContainsKey(id))
-                CurrentMapTile = tiles[id];
         }
     }
 }

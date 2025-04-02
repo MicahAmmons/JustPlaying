@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.Data;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
@@ -8,12 +9,14 @@ using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Utils;
 using System;
+using System.Reflection;
 using System.Text.Json;
 
 namespace PlayingAround
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player;
@@ -48,9 +51,9 @@ namespace PlayingAround
 
         protected override void LoadContent()
         {
-            var tileDataList = JsonLoader.LoadTileData("World/MapTiles/TileJson/MapTile_0_0.json");
-
-
+            GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
+            TileManager.LoadMapTileById(GameState.SaveData.CurrentTileId);
+            // Player.LoadFromSave(GameState.SaveData.Player);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -67,18 +70,43 @@ namespace PlayingAround
             TileManager.LoadMapTiles(GraphicsDevice, Content);
 
             // Set up player with animation frames
-            var idleTex = AssetManager.GetTexture("Hero_Idle");
-            player = new Player(idleTex, new Vector2(100, 100), 200f);
+            string textureKey = GameState.SaveData.Player.TextureKey;
+            AssetManager.LoadTexture(textureKey, $"HeroArt/{textureKey}");
+            Texture2D idleTex = AssetManager.GetTexture(textureKey);
+            if (GameState.SaveData.Player != null)
+            {
+
+               
+                player = Player.LoadFromSave(GameState.SaveData.Player);
+            }
+            else
+            {
+                idleTex = AssetManager.GetTexture("Hero_Idle");
+
+                player = new Player(idleTex, new Vector2(100, 100), 200f);
+            }
         }
 
+        
 
 
 
+        private void SaveState()
+        {
+            GameState.SaveData.Player = player.Save();
+            GameState.SaveData.CurrentTileId = TileManager.CurrentMapTile.Id;
+
+            // Collect other data...
+
+            SaveSystem.SaveGame(GameState.SaveData);
+
+        }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
     Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                SaveState();
                 Exit();
             }
 
@@ -94,9 +122,9 @@ namespace PlayingAround
             }
             if (mouse.RightButton == ButtonState.Pressed)
             {
-                Vector2 start = player.GetFeetCenter();
+                Rectangle start = player.GetFeetHitbox();
                 Vector2 target = new Vector2(mouse.X, mouse.Y);
-                var path = CustomPathfinder.BuildPixelPath(start, target, player.PlayerWidth, player.PlayerHeight);
+                var path = CustomPathfinder.BuildPixelPath(start, target);
                 player.SetPath(path);
             }
 

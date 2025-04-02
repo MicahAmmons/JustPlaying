@@ -1,0 +1,11 @@
+{
+  "CurrentTileId": "0_0_0",
+  "Player": {
+    "Speed": 200,
+    "Width": 64,
+    "Height": 64,
+    "TextureKey": "BlonderHero",
+    "FeetCenterX": 399,
+    "FeetCenterY": 788
+  }
+}

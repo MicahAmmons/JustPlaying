@@ -5,9 +5,11 @@ namespace PlayingAround.Game.Map
 {
     public class MapTileData
     {
-        public int Id { get; set; }
         public int GridX { get; set; }
         public int GridY { get; set; }
+        public int GridZ { get; set; }
+        [JsonIgnore]
+        public string Id => $"{GridX}_{GridY}_{GridZ}";
 
         [JsonPropertyName("background")]
         public string Background { get; set; }

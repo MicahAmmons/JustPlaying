@@ -1,0 +1,11 @@
+{
+  "CurrentTileId": "0_0_0",
+  "Player": {
+    "Speed": 200,
+    "Width": 64,
+    "Height": 64,
+    "TextureKey": "Hero_Idle",
+    "FeetCenterX": 353.77545,
+    "FeetCenterY": 715.1607
+  }
+}
