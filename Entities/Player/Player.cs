@@ -61,35 +61,32 @@ namespace PlayingAround.Entities.Player
                 }
             }
 
-            // Follow path if one exists
+            // Follow pixel path (no walkable re-check)
             if (movementPath.Count > 0)
             {
                 Vector2 target = movementPath.Peek();
-                float distance = Vector2.Distance(FeetCenter, target);
+                Vector2 direction = target - FeetCenter;
+                float distance = direction.Length();
 
-                if (distance < 1f)
+                if (distance <= Speed * delta)
                 {
-                    // Snap to the tile and go to next one
                     FeetCenter = target;
                     movementPath.Dequeue();
                 }
                 else
                 {
-                    Vector2 direction = target - FeetCenter;
                     direction.Normalize();
                     FeetCenter += direction * Speed * delta;
                 }
             }
-
-
-
         }
+        
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destination = new Rectangle(
-                (int)FeetCenter.X,
+                (int)(FeetCenter.X),
                 (int)FeetCenter.Y,
                 PlayerWidth,
                 PlayerHeight
@@ -186,6 +183,7 @@ namespace PlayingAround.Entities.Player
 
             foreach (var point in path)
             {
+               
                 movementPath.Enqueue(point); // Already pixel-perfect!
             }
         }
@@ -211,8 +209,8 @@ namespace PlayingAround.Entities.Player
             foreach (var point in movementPath)
             {
                 Rectangle cellRect = new Rectangle(
-                    (int)(point.X - MapTile.TileWidth / 2),
-                    (int)(point.Y - MapTile.TileHeight / 2),
+                    (int)(point.X ),
+                    (int)(point.Y ),
                     MapTile.TileWidth,
                     MapTile.TileHeight
                 );
@@ -221,13 +219,6 @@ namespace PlayingAround.Entities.Player
                 spriteBatch.Draw(debugPixel, cellRect, Color.Yellow * 0.4f);
             }
         }
-        //private Vector2 GetFeetOffsetWithinTile()
-        //{
-        //    var feet = GetFeetCenter();
-        //    float offsetX = feet.X % MapTile.TileWidth;
-        //    float offsetY = feet.Y % MapTile.TileHeight;
-        //    return new Vector2(offsetX, offsetY);
-        //}
         public Vector2 GetFeetCenter()
         {
             return new Vector2(FeetCenter.X + PlayerWidth / 2f, FeetCenter.Y + PlayerHeight);

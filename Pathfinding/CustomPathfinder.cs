@@ -8,14 +8,16 @@ namespace PlayingAround.Game.Pathfinding
 {
     public static class CustomPathfinder
     {
-        public static List<Vector2> BuildPixelPath(Vector2 start, Vector2 end)
-        {
+        public static List<Vector2> BuildPixelPath(Vector2 start, Vector2 end, int playerWidth, int playerHeight)
+        { // Start is the FeetCenter
+            Vector2 offset = new Vector2(playerWidth / 2f, playerHeight);
+            end -= offset;
             var tile = TileManager.CurrentMapTile;
             if (tile == null)
                 return new List<Vector2>();
 
             List<Vector2> path = new();
-            float moveStep = MapTile.TileWidth; // movement in pixels (same as cell width)
+            float moveStep = MapTile.TileWidth/3; // movement in pixels (same as cell width)
             float closeEnough = moveStep / 2f + 1;
             Vector2 current = start;
             Vector2? previousDirection = null;
@@ -25,15 +27,14 @@ namespace PlayingAround.Game.Pathfinding
             while (Vector2.Distance(current, end) > closeEnough && stepCount++ < maxSteps)
             {
                 Vector2 direction = Vector2.Normalize(end - current);
-                Vector2 nextStep = current + direction * moveStep;
-
-                // Determine which cell the next step lands in
-                int cellX = (int)(nextStep.X / MapTile.TileWidth);
-                int cellY = (int)(nextStep.Y / MapTile.TileHeight);
+                Vector2 nextStep = (current + direction * moveStep) ;
+                Vector2 feetLandingPos = nextStep - offset;
+                int cellX = (int)(feetLandingPos.X / MapTile.TileWidth);
+                int cellY = (int)(feetLandingPos.Y / MapTile.TileHeight);
 
                 if (IsWalkable(cellX, cellY))
                 {
-                    path.Add(nextStep);
+                    path.Add(nextStep);   // this is the FeetCenter target
                     previousDirection = direction;
                     current = nextStep;
                     continue;
@@ -63,12 +64,31 @@ namespace PlayingAround.Game.Pathfinding
                     break; // blocked entirely
             }
 
-            // Add final position
             if (Vector2.Distance(current, end) <= closeEnough)
-                path.Add(end);
+            {
+                if (path.Count > 0)
+                    path[path.Count - 1] = end; // Replace the last point
+                else
+                    path.Add(end); // Edge case: if path is empty
+
+                return path;
+            }
+
 
             return path;
         }
+        public struct MovementInstruction
+        {
+            public Vector2 Direction;
+            public float Distance;
+
+            public MovementInstruction(Vector2 direction, float distance)
+            {
+                Direction = direction;
+                Distance = distance;
+            }
+        }
+
 
         private static bool IsWalkable(int cellX, int cellY)
         {

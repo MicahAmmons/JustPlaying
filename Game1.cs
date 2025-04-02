@@ -94,9 +94,9 @@ namespace PlayingAround
             }
             if (mouse.RightButton == ButtonState.Pressed)
             {
-                Vector2 start = player.FeetCenter;
+                Vector2 start = player.GetFeetCenter();
                 Vector2 target = new Vector2(mouse.X, mouse.Y);
-                var path = CustomPathfinder.BuildPixelPath(start, target);
+                var path = CustomPathfinder.BuildPixelPath(start, target, player.PlayerWidth, player.PlayerHeight);
                 player.SetPath(path);
             }
 
