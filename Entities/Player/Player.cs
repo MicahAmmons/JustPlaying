@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Data;
-using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
+using PlayingAround.Managers;
+using PlayingAround.Managers.Assets;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PlayingAround.Entities.Player
 {
@@ -19,18 +21,25 @@ namespace PlayingAround.Entities.Player
 
         private Vector2? moveTarget = null;
         private Queue<Vector2> movementPath = new();
-        public Vector2 FeetCenter;
+        public Vector2 PlayerCord;
         private Vector2? debugClickTarget = null;
         public Vector2? GetDebugClickTarget()
         {
             return debugClickTarget;
         }
 
+        private Vector2 movement = Vector2.Zero;
+        private float deltaTime; // We’ll set this each frame
+        private TileCell PlayerCurrentTileCell;
+
+
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var texture = AssetManager.GetTexture(data.TextureKey);
-            var player = new Player(texture, new Vector2(data.FeetCenterX, data.FeetCenterY), data.Speed)
+            float offsetX = data.FeetCenterX - (data.Width/2);
+            float offsetY = data.FeetCenterY - data.Height;
+            var player = new Player(texture, new Vector2(offsetX, offsetY), data.Speed)
             {
                 PlayerWidth = data.Width,
                 PlayerHeight = data.Height
@@ -41,168 +50,137 @@ namespace PlayingAround.Entities.Player
         public Player(Texture2D idleTexture, Vector2 startPosition, float speed = 200f)
         {
             Texture = idleTexture;
-            FeetCenter = GenerateSpawnPoint(startPosition);
+            PlayerCord = startPosition; // Readd logic to move it from a nmon walkable spot
             Speed = speed;
+
+            InputManager.OnMoveLeft += () => movement.X -= 1;
+            InputManager.OnMoveRight += () => movement.X += 1;
+            InputManager.OnMoveUp += () => movement.Y -= 1;
+            InputManager.OnMoveDown += () => movement.Y += 1;
         }
 
         public void Update(GameTime gameTime)
         {
-            var keyboard = Keyboard.GetState();
-            var mouse = Mouse.GetState();
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            Vector2 movement = Vector2.Zero;
+ 
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Movement input
-            if (keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.A)) { movement.X -= 1; movementPath.Clear(); }
-            if (keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.D)) { movement.X += 1; movementPath.Clear(); }
-            if (keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.W)) { movement.Y -= 1; movementPath.Clear(); }
-            if (keyboard.IsKeyDown(Keys.Down) || keyboard.IsKeyDown(Keys.S)) { movement.Y += 1; movementPath.Clear(); }
+            MovePlayer();
+            movement = Vector2.Zero;
+            CheckCurrentPlayerCell();
+            
 
-            // Normalize diagonal movement
-            if (movement != Vector2.Zero)
+
+        }
+        private void CheckCurrentPlayerCell()
+        {
+            var currentCell = TileManager.GetCell(GetFeetCenter());
+            if (currentCell != PlayerCurrentTileCell)
             {
-                movement.Normalize();
-                Vector2 nextPos = FeetCenter + movement * Speed * delta;
-
-                if (CanMoveTo(nextPos))
-                {
-                    FeetCenter = nextPos;
-                    moveTarget = null; // Cancel click-move if arrow keys are used
-                }
-            }
-
-            // Follow pixel path (no walkable re-check)
-            if (movementPath.Count > 0)
-            {
-                Vector2 target = movementPath.Peek();
-                Vector2 direction = target - FeetCenter;
-                float distance = direction.Length();
-
-                if (distance <= Speed * delta)
-                {
-                    FeetCenter = target;
-                    movementPath.Dequeue();
-                }
-                else
-                {
-                    direction.Normalize();
-                    FeetCenter += direction * Speed * delta;
-                }
+                PlayerCurrentTileCell = currentCell;
+                TileCellManager.OnEnterNewCell(currentCell); 
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destination = new Rectangle(
-                (int)(FeetCenter.X),
-                (int)FeetCenter.Y,
+                (int)(PlayerCord.X),
+                (int)PlayerCord.Y,
                 PlayerWidth,
                 PlayerHeight
             );
 
             spriteBatch.Draw(Texture, destination, Color.White);
         }
-        public Rectangle GetFeetHitbox()
+
+        private void MovePlayer()   
+        {
+            // 🔄 Handle direct input movement (keyboard)
+            if (movement != Vector2.Zero)
+            {
+                movement.Normalize();
+                Vector2 nextPos = PlayerCord + movement * Speed * deltaTime;
+
+                if (CanMoveTo(nextPos) )
+                {
+                    nextPos.X = MathHelper.Clamp(nextPos.X, 0, ViewportManager.ScreenWidth - PlayerWidth);
+                    nextPos.Y = MathHelper.Clamp(nextPos.Y, -5, ViewportManager.ScreenHeight - PlayerHeight);
+
+                    PlayerCord = nextPos;
+                    moveTarget = null; // Cancel click-move if arrow keys are used
+                }
+
+                movementPath.Clear(); // Cancel pixel path movement
+                return; // Skip path following if manually moving
+            }
+
+                // 🧭 Handle path-based movement (click)
+                if (movementPath.Count > 0)
+                {
+                    Vector2 target = movementPath.Peek();
+                    Vector2 direction = target - PlayerCord;
+                    float distance = direction.Length();
+
+                    if (distance <= Speed * deltaTime)
+                    {
+                        PlayerCord = target;
+                        movementPath.Dequeue();
+                    }
+                    else
+                    {
+                        direction.Normalize();
+                        PlayerCord += direction * Speed * deltaTime;
+                    }
+                }
+            }
+        
+
+
+        public Rectangle GetHitbox()    
         {
             int hitboxWidth = PlayerWidth;
             int hitboxHeight = PlayerHeight / 3;
 
             return new Rectangle(
-                (int)(FeetCenter.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
-                (int)(FeetCenter.Y + PlayerHeight - hitboxHeight),
+                (int)(PlayerCord.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
+                (int)(PlayerCord.Y + PlayerHeight - hitboxHeight),
                 hitboxWidth,
                 hitboxHeight
             );
         }
-        public Vector2 GenerateSpawnPoint(Vector2 starting)
-        {
-            var tile = TileManager.CurrentMapTile;
-            if (tile == null)
-                return starting; // fallback
 
-            int cellX = (int)(starting.X / MapTile.TileWidth);
-            int cellY = (int)(starting.Y / MapTile.TileHeight);
 
-            if (IsCellWalkable(cellX, cellY, tile))
-                return CenterOfCell(cellX, cellY);
-
-            // Search outward for walkable cell
-            const int maxSearchRadius = 10;
-
-            for (int radius = 1; radius <= maxSearchRadius; radius++)
-            {
-                for (int dx = -radius; dx <= radius; dx++)
-                {
-                    for (int dy = -radius; dy <= radius; dy++)
-                    {
-                        int x = cellX + dx;
-                        int y = cellY + dy;
-
-                        if (IsCellWalkable(x, y, tile))
-                            return CenterOfCell(x, y);
-                    }
-                }
-            }
-
-            // If nothing found, fallback
-            return starting;
-        }
-        private bool IsCellWalkable(int x, int y, MapTile tile)
-        {
-            if (x < 0 || y < 0 || x >= MapTile.GridWidth || y >= MapTile.GridHeight)
-                return false;
-
-            return tile.TileGrid[x, y].IsWalkable;
-        }
         private bool CanMoveTo(Vector2 nextPos)
         {
-            var tile = TileManager.CurrentMapTile;
-            if (tile == null)
-                return false;
+            //if (SceneManager.IsState(SceneManager.SceneState.Play))
+            //{
+            //    return false;
+            //}
+            // Expand hitbox dimensions with buffer
+            int hitboxWidth = PlayerWidth;
+            int hitboxHeight = (PlayerHeight / 3);
 
             // Predict the new feet hitbox based on where the player would move
-            int hitboxWidth = PlayerWidth;
-            int hitboxHeight = PlayerHeight / 3;
-
             Rectangle futureFeetBox = new Rectangle(
-                (int)(nextPos.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
-                (int)(nextPos.Y + PlayerHeight - hitboxHeight),
+                (int)(nextPos.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)), // center X
+                (int)(nextPos.Y + PlayerHeight - (PlayerHeight / 3) ), // move hitbox up by buffer
                 hitboxWidth,
                 hitboxHeight
             );
-
-            // Check the 4 corners of the feet box
-            return IsCornerWalkable(futureFeetBox.Left, futureFeetBox.Top, tile) &&
-                   IsCornerWalkable(futureFeetBox.Right - 1, futureFeetBox.Top, tile) &&
-                   IsCornerWalkable(futureFeetBox.Left, futureFeetBox.Bottom - 1, tile) &&
-                   IsCornerWalkable(futureFeetBox.Right - 1, futureFeetBox.Bottom - 1, tile);
+            return TileManager.IsCellWalkable( futureFeetBox );
         }
+ 
         public void SetPath(List<Vector2> path)
         {
             movementPath.Clear();
+            if (path == null || path.Count == 0)
+                return;
             debugClickTarget = path.Count > 0 ? path[^1] : null;
-
-            //Vector2 offset = GetFeetOffsetWithinTile();
-
             foreach (var point in path)
             {
                
-                movementPath.Enqueue(point); // Already pixel-perfect!
+                movementPath.Enqueue(point);
             }
-        }
-        private Vector2 CenterOfCell(int x, int y)
-        {
-            return new Vector2(
-                x * MapTile.TileWidth + MapTile.TileWidth / 2,
-                y * MapTile.TileHeight + MapTile.TileHeight / 2
-            );
-        }
-        private bool IsCornerWalkable(int pixelX, int pixelY, MapTile tile)
-        {
-            int cellX = pixelX / MapTile.TileWidth;
-            int cellY = pixelY / MapTile.TileHeight;
-
-            return IsCellWalkable(cellX, cellY, tile);
         }
         public void DrawDebugPath(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
@@ -221,10 +199,10 @@ namespace PlayingAround.Entities.Player
         }
         public Vector2 GetFeetCenter()
         {
-            return new Vector2(FeetCenter.X + PlayerWidth / 2f, FeetCenter.Y + PlayerHeight);
+            return new Vector2(PlayerCord.X + PlayerWidth / 2f, PlayerCord.Y + PlayerHeight);
         }
 
-public PlayerSaveData Save()
+        public PlayerSaveData Save()
 {
             var feetCenter = GetFeetCenter();
             return new PlayerSaveData
@@ -232,11 +210,13 @@ public PlayerSaveData Save()
                 Speed = this.Speed,
                 Width = this.PlayerWidth,
                 Height = this.PlayerHeight,
-                TextureKey = "BlonderHero", // or store this in a field and use that
+                TextureKey = "Hero_Blonde", // or store this in a field and use that
                 FeetCenterX = feetCenter.X,
                 FeetCenterY = feetCenter.Y
     };
 }
+
+
 
 
 

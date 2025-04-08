@@ -23,7 +23,7 @@ namespace PlayingAround.Game.Map
 
         public MapTile(MapTileData data, Texture2D backgroundTexture)
         {
-            Id = data.Id;
+            Id = $"{data.GridX}_{data.GridY}_{data.GridZ}";
 
             BackgroundTexture = backgroundTexture;
 
@@ -43,17 +43,19 @@ namespace PlayingAround.Game.Map
                     cellData.FrontOverlay,
                     cellData.Npc,
                     cellData.Monster,
-                    cellData.Trigger
+                    cellData.Trigger,
+
+                    cellData.NextTile
                 );
             }
         }
 
 
-            public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(BackgroundTexture, Vector2.Zero, Color.White);
         }
-            public void DrawTileCellOutlines(SpriteBatch spriteBatch, Texture2D debugPixel)
+        public void DrawTileCellOutlines(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
             for (int y = 0; y < GridHeight; y++)
             {

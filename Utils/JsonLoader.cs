@@ -7,10 +7,11 @@ namespace PlayingAround.Utils
 {
     public static class JsonLoader
     {
-        public static List<MapTileData> LoadTileData(string filePath)
+        public static MapTileData LoadTileData(string filePath)
         {
             string json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<MapTileData>>(json);
-        } 
+            return JsonSerializer.Deserialize<MapTileData>(json);
+        }
+
     }
 }

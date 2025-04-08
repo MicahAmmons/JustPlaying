@@ -7,6 +7,8 @@ using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
+using PlayingAround.Managers;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Utils;
 using System;
 using System.Reflection;
@@ -28,6 +30,7 @@ namespace PlayingAround
         Texture2D debugPixel;
         private bool showDebugOutline = true;
         private bool showTileCellOutlines = true;
+
 
 
         public Game1()
@@ -52,39 +55,25 @@ namespace PlayingAround
         protected override void LoadContent()
         {
             GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
-            TileManager.LoadMapTileById(GameState.SaveData.CurrentTileId);
-            // Player.LoadFromSave(GameState.SaveData.Player);
+
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             debugPixel.SetData(new[] { Color.White });
+
             debugFont = Content.Load<SpriteFont>("debug");
 
-            // Initialize AssetManager
             AssetManager.Initialize(Content);
 
-            // Load hero textures
-            AssetManager.LoadTexture("Hero_Idle", "HeroArt/BlonderHero");
+            AssetLoader.LoadAllAssets();
 
-            // Load tiles
-            TileManager.LoadMapTiles(GraphicsDevice, Content);
+            TileCellManager.Initialize();
 
-            // Set up player with animation frames
-            string textureKey = GameState.SaveData.Player.TextureKey;
-            AssetManager.LoadTexture(textureKey, $"HeroArt/{textureKey}");
-            Texture2D idleTex = AssetManager.GetTexture(textureKey);
-            if (GameState.SaveData.Player != null)
-            {
+            ViewportManager.Initialize(GraphicsDevice);
 
-               
-                player = Player.LoadFromSave(GameState.SaveData.Player);
-            }
-            else
-            {
-                idleTex = AssetManager.GetTexture("Hero_Idle");
+            player = Player.LoadFromSave(GameState.SaveData.Player);
 
-                player = new Player(idleTex, new Vector2(100, 100), 200f);
-            }
+            TileManager.LoadMapTileById(GameState.SaveData.MapTile.CurrentTileId);
         }
 
         
@@ -94,45 +83,37 @@ namespace PlayingAround
         private void SaveState()
         {
             GameState.SaveData.Player = player.Save();
-            GameState.SaveData.CurrentTileId = TileManager.CurrentMapTile.Id;
-
-            // Collect other data...
-
+            GameState.SaveData.MapTile = TileManager.Save();
             SaveSystem.SaveGame(GameState.SaveData);
-
         }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-    Keyboard.GetState().IsKeyDown(Keys.Escape))
+    InputManager.IsKeyHeld(Keys.Escape))
+
             {
                 SaveState();
                 Exit();
             }
 
-            var mouse = Mouse.GetState();
-            var keyboard = Keyboard.GetState();
-            if (keyboard.IsKeyDown(Keys.F3) && previousKeyboardState.IsKeyUp(Keys.F3))
-            {
+            
+
+            if (InputManager.IsKeyPressed(Keys.F3))
                 showDebugOutline = !showDebugOutline;
-            }
-            if (keyboard.IsKeyDown(Keys.F4) && previousKeyboardState.IsKeyUp(Keys.F4))
-            {
+
+            if (InputManager.IsKeyPressed(Keys.F4))
                 showTileCellOutlines = !showTileCellOutlines;
-            }
-            if (mouse.RightButton == ButtonState.Pressed)
+
+            if (InputManager.IsRightClick())
             {
-                Rectangle start = player.GetFeetHitbox();
-                Vector2 target = new Vector2(mouse.X, mouse.Y);
+                Rectangle start = player.GetHitbox();
+                Vector2 target = new Vector2(InputManager.MouseX, InputManager.MouseY);
                 var path = CustomPathfinder.BuildPixelPath(start, target);
                 player.SetPath(path);
             }
-
-
-
+            InputManager.Update(gameTime);  
             player.Update(gameTime);
-
-            previousKeyboardState = keyboard;
+            TileCellManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -141,18 +122,19 @@ namespace PlayingAround
         {
             _spriteBatch.Begin();
             TileManager.CurrentMapTile?.Draw(_spriteBatch);
-
+            TileCellManager.Draw(_spriteBatch);
             if (showTileCellOutlines)
                 TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);
             if (showDebugOutline)
                 TileManager.CurrentMapTile?.DrawTileCellDebugOverlay(_spriteBatch, debugPixel);
 
             player.Draw(_spriteBatch);
+            TileCellManager.Draw(_spriteBatch);
 
             if (showDebugOutline)
             {
                 player.DrawDebugPath(_spriteBatch, debugPixel);
-                DrawRectangle(player.GetFeetHitbox(), Color.Red);
+                DrawRectangle(player.GetHitbox(), Color.Red);
                 DrawDebugOverlay();
                 
             }
@@ -179,7 +161,7 @@ namespace PlayingAround
 
         private void DrawDebugOverlay()
         {
-            Rectangle feetHitbox = player.GetFeetHitbox();
+            Rectangle feetHitbox = player.GetHitbox();
             Vector2 feetCenter = player.GetFeetCenter();
             Vector2? clickTarget = player.GetDebugClickTarget();
 

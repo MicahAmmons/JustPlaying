@@ -14,6 +14,8 @@ namespace PlayingAround.Game.Map
         public string? Npc { get; }
         public string? Monster { get; }
         public string? Trigger { get; }
+        public NextTileData? NextTile {  get; }
+        
 
 
         public TileCell(
@@ -26,7 +28,8 @@ namespace PlayingAround.Game.Map
             string? frontOverlay = null,
             string? npc = null,
             string? monster = null,
-            string? trigger = null)
+            string? trigger = null,
+            NextTileData? nextTile = null)
         {
             X = x;
             Y = y;
@@ -38,6 +41,7 @@ namespace PlayingAround.Game.Map
             Npc = npc;
             Monster = monster;
             Trigger = trigger;
+            NextTile = nextTile;
         }
 
     }

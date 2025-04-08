@@ -12,6 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
+    <None Remove="Content\TileCell\3arrows.png" />
+    <None Remove="Content\TileCell\arrow.png" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
     <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0.json" />
@@ -19,6 +21,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PlayerSprites\PlayerSprites.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\TileCell\3arrows.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\TileCell\arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_0_0_0.json">

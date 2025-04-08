@@ -12,4 +12,13 @@ public class TileCellData
     [JsonPropertyName("npc")] public string? Npc { get; set; }
     [JsonPropertyName("monster")] public string? Monster { get; set; }
     [JsonPropertyName("trigger")] public string? Trigger { get; set; }
+    [JsonPropertyName("nextTile")] public NextTileData? NextTile { get; set; }
+}
+
+public class NextTileData
+{
+    [JsonPropertyName("x")] public int NextX { get; set; }
+    [JsonPropertyName("y")] public int NextY { get; set; }
+    [JsonPropertyName("z")] public int NextZ { get; set; }
+    [JsonPropertyName("direction")] public string NextDirection { get; set; }
 }

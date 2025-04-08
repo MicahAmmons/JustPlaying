@@ -5,11 +5,16 @@ namespace PlayingAround.Game.Map
 {
     public class MapTileData
     {
+        [JsonPropertyName("gridX")]
         public int GridX { get; set; }
+
+        [JsonPropertyName("gridY")]
         public int GridY { get; set; }
+
+        [JsonPropertyName("gridZ")]
         public int GridZ { get; set; }
-        [JsonIgnore]
-        public string Id => $"{GridX}_{GridY}_{GridZ}";
+
+        public string Id { get; set; }
 
         [JsonPropertyName("background")]
         public string Background { get; set; }
@@ -17,6 +22,7 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("cells")]
         public List<TileCellData> Cells { get; set; } = new();
 
+        [JsonPropertyName("monsters")]
         public List<string> Monsters { get; set; } = new();
     }
 }

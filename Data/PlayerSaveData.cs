@@ -11,7 +11,7 @@ namespace PlayingAround.Data
         public float Speed { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public string TextureKey { get; set; }  // Used to reload the texture via AssetManager
+        public string TextureKey { get; set; }
         public float FeetCenterX { get; set; }
         public float FeetCenterY { get; set; }
     }

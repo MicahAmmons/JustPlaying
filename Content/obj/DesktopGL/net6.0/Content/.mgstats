@@ -1,5 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/debug.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.1729102
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/HeroArt/BlonderHero.xnb","TextureProcessor","Texture2DContent",1635053,4194389,0.1196332
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/3arrows.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/TileCell/3arrows.xnb","TextureProcessor","Texture2DContent",1681997,6291541,0.2157333
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/arrow.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/TileCell/arrow.xnb","TextureProcessor","Texture2DContent",1200763,4194389,0.1814261
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_-1_0.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Tiles/0_-1_0.xnb","TextureProcessor","Texture2DContent",123797,8355925,0.248278
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Tiles/0_0_0.xnb","TextureProcessor","Texture2DContent",118211,8294485,0.2880738
