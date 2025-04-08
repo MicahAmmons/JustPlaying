@@ -69,11 +69,14 @@ namespace PlayingAround
 
             TileCellManager.Initialize();
 
+            ScreenTransitionManager.Initialize(GraphicsDevice);
+
             ViewportManager.Initialize(GraphicsDevice);
 
             player = Player.LoadFromSave(GameState.SaveData.Player);
 
-            TileManager.LoadMapTileById(GameState.SaveData.MapTile.CurrentTileId);
+            TileManager.Initialize(GraphicsDevice, GameState.SaveData.MapTile.CurrentTileId);
+
         }
 
         
@@ -114,6 +117,7 @@ namespace PlayingAround
             InputManager.Update(gameTime);  
             player.Update(gameTime);
             TileCellManager.Update(gameTime);
+            ScreenTransitionManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -140,9 +144,11 @@ namespace PlayingAround
             }
 
 
-
+            ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
             _spriteBatch.End();
             base.Draw(gameTime);
+
+
         }
 
 

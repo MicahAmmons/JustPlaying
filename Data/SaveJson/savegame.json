@@ -1,13 +1,13 @@
 {
   "MapTile": {
-    "CurrentTileId": "0_-1_0"
+    "CurrentTileId": "0_0_0"
   },
   "Player": {
     "Speed": 200,
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "FeetCenterX": 1806.9254,
-    "FeetCenterY": 556.27576
+    "FeetCenterX": 1696.1438,
+    "FeetCenterY": 990.00055
   }
 }

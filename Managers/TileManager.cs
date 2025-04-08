@@ -5,7 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data;
+using PlayingAround.Entities.Monster;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Utils;
 
@@ -16,6 +19,19 @@ namespace PlayingAround.Manager
         private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
 
+
+
+        public static void Initialize(GraphicsDevice graphicsDevice, string id)
+        {
+            LoadMapTileById(id);
+            ScreenTransitionManager.OnFadeToBlackComplete += () =>
+            {
+                var next = TileCellManager.PlayerCurrentCell.NextTile;
+                string id = $"{next.NextX}_{next.NextY}_{next.NextZ}";
+                TileManager.LoadMapTileById(id);
+            };
+
+        }
         public static void LoadMapTileById(string id)
         {
             // If it's already loaded, use it
@@ -44,6 +60,8 @@ namespace PlayingAround.Manager
                 AssetManager.LoadTexture(data.Background, data.Background);
 
             Texture2D texture = AssetManager.GetTexture(data.Background);
+
+  
             var tile = new MapTile(data, texture);
 
             CurrentMapTile = tile;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Game.Map;
+using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using System;
@@ -11,6 +12,7 @@ public static class TileCellManager
     private static Vector2? arrowPosition;
     private static float arrowRotation;
     private static Rectangle? arrowHitbox;
+    public static TileCell PlayerClickedCell;
 
     public static TileCell PlayerCurrentCell;
 
@@ -25,8 +27,8 @@ public static class TileCellManager
             DisplayArrow();
         else
             ClearArrow();
+        HandleClick();
     }
-
     public static void OnEnterNewCell(TileCell cell)
     {
         if (PlayerCurrentCell != cell)
@@ -34,7 +36,6 @@ public static class TileCellManager
             PlayerCurrentCell = cell;
         }
     }
-
     private static void DisplayArrow()
     {
         Vector2 cellCenter = new Vector2(
@@ -70,17 +71,24 @@ public static class TileCellManager
         );
 
     }
-
-
-
-
-
     private static void ClearArrow()
     {
         arrowHitbox = null;
         arrowPosition = null;
     }
+    public static void HandleClick()
+    {
+        if (InputManager.IsLeftClick())
+        {
+            PlayerClickedCell = TileManager.GetCell(new Vector2(InputManager.MouseX, InputManager.MouseY));
 
+
+            if (PlayerCurrentCell.NextTile != null && PlayerCurrentCell == PlayerClickedCell)
+            {
+                SceneManager.SetState(SceneManager.SceneState.SceneTransition);
+            }
+        }
+    }
     public static void Draw(SpriteBatch spriteBatch)
     {
         if (arrowPosition.HasValue)

@@ -1,4 +1,5 @@
 ﻿using PlayingAround.Entities.Monster;
+using System.Collections.Generic;
 
 namespace PlayingAround.Game.Map
 {
@@ -12,10 +13,10 @@ namespace PlayingAround.Game.Map
         public string? BehindOverlay { get; }
         public string? FrontOverlay { get; }
         public string? Npc { get; }
-        public string? Monster { get; }
         public string? Trigger { get; }
         public NextTileData? NextTile {  get; }
-        
+        public bool CanSpawn { get; }
+
 
 
         public TileCell(
@@ -27,9 +28,10 @@ namespace PlayingAround.Game.Map
             string? behindOverlay = null,
             string? frontOverlay = null,
             string? npc = null,
-            string? monster = null,
             string? trigger = null,
             NextTileData? nextTile = null)
+
+           
         {
             X = x;
             Y = y;
@@ -39,9 +41,9 @@ namespace PlayingAround.Game.Map
             BehindOverlay = behindOverlay;
             FrontOverlay = frontOverlay;
             Npc = npc;
-            Monster = monster;
             Trigger = trigger;
             NextTile = nextTile;
+            CanSpawn = IsWalkable && NextTile == null;
         }
 
     }

@@ -31,6 +31,8 @@ namespace PlayingAround.Entities.Player
         private Vector2 movement = Vector2.Zero;
         private float deltaTime; // We’ll set this each frame
         private TileCell PlayerCurrentTileCell;
+        private bool allowedToMove = true;
+
 
 
 
@@ -57,6 +59,8 @@ namespace PlayingAround.Entities.Player
             InputManager.OnMoveRight += () => movement.X += 1;
             InputManager.OnMoveUp += () => movement.Y -= 1;
             InputManager.OnMoveDown += () => movement.Y += 1;
+            SceneManager.OnStateChanged += HandleSceneStateChange;
+            ScreenTransitionManager.OnFadeToBlackComplete += SetNewTilePosition;
         }
 
         public void Update(GameTime gameTime)
@@ -64,13 +68,14 @@ namespace PlayingAround.Entities.Player
 
  
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             MovePlayer();
             movement = Vector2.Zero;
             CheckCurrentPlayerCell();
-            
 
-
+        }
+        private void HandleSceneStateChange(SceneManager.SceneState newState)
+        {
+            allowedToMove = newState == SceneManager.SceneState.Play;
         }
         private void CheckCurrentPlayerCell()
         {
@@ -95,13 +100,17 @@ namespace PlayingAround.Entities.Player
 
         private void MovePlayer()   
         {
+            if (!allowedToMove)
+            {
+                return;
+            }
             // 🔄 Handle direct input movement (keyboard)
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Vector2 nextPos = PlayerCord + movement * Speed * deltaTime;
 
-                if (CanMoveTo(nextPos) )
+                if (CanMoveToCell(nextPos) )
                 {
                     nextPos.X = MathHelper.Clamp(nextPos.X, 0, ViewportManager.ScreenWidth - PlayerWidth);
                     nextPos.Y = MathHelper.Clamp(nextPos.Y, -5, ViewportManager.ScreenHeight - PlayerHeight);
@@ -133,9 +142,6 @@ namespace PlayingAround.Entities.Player
                     }
                 }
             }
-        
-
-
         public Rectangle GetHitbox()    
         {
             int hitboxWidth = PlayerWidth;
@@ -148,14 +154,8 @@ namespace PlayingAround.Entities.Player
                 hitboxHeight
             );
         }
-
-
-        private bool CanMoveTo(Vector2 nextPos)
+        private bool CanMoveToCell(Vector2 nextPos)
         {
-            //if (SceneManager.IsState(SceneManager.SceneState.Play))
-            //{
-            //    return false;
-            //}
             // Expand hitbox dimensions with buffer
             int hitboxWidth = PlayerWidth;
             int hitboxHeight = (PlayerHeight / 3);
@@ -169,7 +169,6 @@ namespace PlayingAround.Entities.Player
             );
             return TileManager.IsCellWalkable( futureFeetBox );
         }
- 
         public void SetPath(List<Vector2> path)
         {
             movementPath.Clear();
@@ -201,7 +200,31 @@ namespace PlayingAround.Entities.Player
         {
             return new Vector2(PlayerCord.X + PlayerWidth / 2f, PlayerCord.Y + PlayerHeight);
         }
+        public void SetNewTilePosition()
+        {
+            string dir = PlayerCurrentTileCell.NextTile.NextDirection.ToString();
+            float newX = PlayerCord.X;
+            float newY = PlayerCord.Y;
+            switch (dir)
+            {
+                case "Right":
+                    newX = 0; // Appear at far left
+                    break;
 
+                case "Left":
+                    newX = ViewportManager.ScreenWidth - PlayerWidth; // Appear at far right
+                    break;
+
+                case "Up":
+                    newY = ViewportManager.ScreenHeight - PlayerHeight; // Appear at bottom
+                    break;
+
+                case "Down":
+                    newY = 0; // Appear at top
+                    break;
+            }
+            PlayerCord = new Vector2(newX, newY);
+        }
         public PlayerSaveData Save()
 {
             var feetCenter = GetFeetCenter();

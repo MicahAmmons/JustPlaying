@@ -7,6 +7,7 @@
         public Monster(string type)
         {
             Type = type;
+            
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster;
+using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Managers;
 using System.Collections.Generic;
 
 namespace PlayingAround.Game.Map
@@ -9,10 +11,11 @@ namespace PlayingAround.Game.Map
     {
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
-        public List<Monster> Monsters { get; } = new();
+        public List<PlayMonsters> Monsters { get; } = new();
         public List<Rectangle> Obstacles { get; } = new();
 
         public TileCell[,] TileGrid { get; private set; }
+        public int Difficulty { get; }
 
 
         public const int GridWidth = 30;   // example number of cells per screen
@@ -24,8 +27,9 @@ namespace PlayingAround.Game.Map
         public MapTile(MapTileData data, Texture2D backgroundTexture)
         {
             Id = $"{data.GridX}_{data.GridY}_{data.GridZ}";
-
+            
             BackgroundTexture = backgroundTexture;
+            //Monsters = data.Monsters;
 
             // Initialize grid
             TileGrid = new TileCell[GridWidth, GridHeight];
@@ -42,12 +46,13 @@ namespace PlayingAround.Game.Map
                     cellData.BehindOverlay,
                     cellData.FrontOverlay,
                     cellData.Npc,
-                    cellData.Monster,
+
                     cellData.Trigger,
 
                     cellData.NextTile
                 );
             }
+            data.Monsters = PlayMonsterManager.GeneratePlayMonsters(data);
         }
 
 

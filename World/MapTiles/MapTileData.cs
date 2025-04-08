@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PlayingAround.Entities.Monster;
+using PlayingAround.Entities.Monster.PlayMonsters;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace PlayingAround.Game.Map
@@ -23,6 +25,10 @@ namespace PlayingAround.Game.Map
         public List<TileCellData> Cells { get; set; } = new();
 
         [JsonPropertyName("monsters")]
-        public List<string> Monsters { get; set; } = new();
+        public List<string> MonsterStrings { get; set; } = new();
+        [JsonPropertyName("difficulty")]
+        public int Difficulty { get; set; } = 0;
+        [JsonIgnore]
+        public List<PlayMonsters> Monsters { get; set; } = new();
     }
 }
