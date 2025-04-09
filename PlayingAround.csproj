@@ -11,6 +11,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
+    <None Remove="Content\MonsterIcons\OozeIcon.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Content\TileCell\3arrows.png" />
     <None Remove="Content\TileCell\arrow.png" />
@@ -20,6 +22,12 @@
     <None Remove="World\MapTiles\TileJson\MapTile_0_0_0.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\MonsterIcons\AngryPlantIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterIcons\OozeIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\PlayerSprites\PlayerSprites.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

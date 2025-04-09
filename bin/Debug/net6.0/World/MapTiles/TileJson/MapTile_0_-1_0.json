@@ -4,8 +4,9 @@
   "gridZ": 0,
   "background": "Tiles/0_-1_0",
   "monsters": [
-    "Goblin"
+    "Ooze"
   ],
+  "totalSpawns": 0,
   "obstacles": [],
   "cells": [
     {

@@ -11,11 +11,12 @@ namespace PlayingAround.Game.Map
     {
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
-        public List<PlayMonsters> Monsters { get; } = new();
+
         public List<Rectangle> Obstacles { get; } = new();
 
         public TileCell[,] TileGrid { get; private set; }
         public int Difficulty { get; }
+        public int TotalMonsterSpawns { get; }
 
 
         public const int GridWidth = 30;   // example number of cells per screen
@@ -30,7 +31,8 @@ namespace PlayingAround.Game.Map
             
             BackgroundTexture = backgroundTexture;
             //Monsters = data.Monsters;
-
+            Difficulty = data.Difficulty;
+            TotalMonsterSpawns = data.TotalMonsterSpawns;
             // Initialize grid
             TileGrid = new TileCell[GridWidth, GridHeight];
 
@@ -52,14 +54,11 @@ namespace PlayingAround.Game.Map
                     cellData.NextTile
                 );
             }
-            data.Monsters = PlayMonsterManager.GeneratePlayMonsters(data);
+            PlayMonsterManager.GeneratePlayMonsters(data);
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(BackgroundTexture, Vector2.Zero, Color.White);
-        }
+
         public void DrawTileCellOutlines(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
             for (int y = 0; y < GridHeight; y++)

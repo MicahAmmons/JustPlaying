@@ -114,10 +114,13 @@ namespace PlayingAround
                 var path = CustomPathfinder.BuildPixelPath(start, target);
                 player.SetPath(path);
             }
+
+
             InputManager.Update(gameTime);  
             player.Update(gameTime);
             TileCellManager.Update(gameTime);
             ScreenTransitionManager.Update(gameTime);
+            PlayMonsterManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -125,16 +128,21 @@ namespace PlayingAround
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
-            TileManager.CurrentMapTile?.Draw(_spriteBatch);
+
+            TileManager.Draw(_spriteBatch);
+
             TileCellManager.Draw(_spriteBatch);
+
+            player.Draw(_spriteBatch);
+
+            TileCellManager.Draw(_spriteBatch);
+
+            ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+
             if (showTileCellOutlines)
                 TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);
             if (showDebugOutline)
                 TileManager.CurrentMapTile?.DrawTileCellDebugOverlay(_spriteBatch, debugPixel);
-
-            player.Draw(_spriteBatch);
-            TileCellManager.Draw(_spriteBatch);
-
             if (showDebugOutline)
             {
                 player.DrawDebugPath(_spriteBatch, debugPixel);
@@ -144,7 +152,7 @@ namespace PlayingAround
             }
 
 
-            ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+            
             _spriteBatch.End();
             base.Draw(gameTime);
 

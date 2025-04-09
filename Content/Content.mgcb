@@ -32,6 +32,30 @@
 /processorParam:TextureFormat=Color
 /build:HeroArt/BlonderHero.png
 
+#begin MonsterIcons/AngryPlantIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterIcons/AngryPlantIcon.png
+
+#begin MonsterIcons/OozeIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterIcons/OozeIcon.png
+
 #begin TileCell/3arrows.png
 /importer:TextureImporter
 /processor:TextureProcessor

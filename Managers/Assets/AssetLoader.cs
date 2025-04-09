@@ -10,7 +10,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
             AssetManager.LoadTexture("Arrow", "TileCell/arrow");
             AssetManager.LoadTexture("3Arrows", "Tilecell/3arrows");
-
+            AssetManager.LoadTexture("MonsterIcons/OozeIcon", "MonsterIcons/OozeIcon");
+            AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
 
             // Add fonts, sounds, etc. later
         }

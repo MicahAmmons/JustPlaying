@@ -6,6 +6,7 @@
   "monsters": [ "Ooze", "AngryPlant" ],
   "obstacles": [],
   "difficulty": 1,
+  "totalSpawns":  4,
   "cells": [
     {
       "x": 0,

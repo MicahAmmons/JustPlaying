@@ -66,6 +66,7 @@ namespace PlayingAround.Manager
 
             CurrentMapTile = tile;
 
+
         }
 
         public static bool IsCellWalkable(int x, int y)
@@ -112,6 +113,13 @@ namespace PlayingAround.Manager
             {
                 CurrentTileId = CurrentMapTile.Id
             };
+        }
+
+        public static void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
+
+            PlayMonsterManager.Draw(spriteBatch);
         }
 
     }

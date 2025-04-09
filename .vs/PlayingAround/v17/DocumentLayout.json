@@ -3,124 +3,80 @@
   "WorkspaceRootPath": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\utils\\jsonloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:utils\\jsonloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\managers\\playmonstermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\playmonstermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\utils\\randomextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:utils\\randomextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\playmonsters\\playmonsters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\playmonsters\\playmonsterjson\\playmonsters.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsterjson\\playmonsters.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\tilemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\tilemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\maptiledata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\maptiledata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\inputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\inputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\scenemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\scenemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\playmonsters\\playmonsterdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsterdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\playmonsters\\playmonsters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\playmonsters\\playmonsterjson\\playmonsters.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsterjson\\playmonsters.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\tilejson\\maptile_0_-1_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\tilejson\\maptile_0_-1_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\viewportmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\viewportmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\tilecellmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\tilecellmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\world\\maptiles\\tilejson\\maptile_0_0_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\tilejson\\maptile_0_0_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\tilecell\\tilecelldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\tilecell\\tilecelldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\maptiledata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\maptiledata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\assets\\assetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\assets\\assetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\content\\tiles\\0_0_0.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:content\\tiles\\0_0_0.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\savejson\\savegame.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\savejson\\savegame.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\screentransition\\screentransitionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\screentransition\\screentransitionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\assets\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\assets\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\content\\tiles\\0_-1_0.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:content\\tiles\\0_-1_0.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\playmonsters\\playmonsterdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\playmonsters\\playmonsterdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\playersavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\playersavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\maptilesavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\maptilesavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\tilecellmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\tilecellmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\content\\tilecell\\arrow.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:content\\tilecell\\arrow.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\viewportmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\viewportmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\tilecellsavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\tilecellsavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\tilejson\\maptile_0_0_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\tilejson\\maptile_0_0_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\gamesavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\gamesavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\utils\\jsonloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:utils\\jsonloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\world\\maptiles\\tilejson\\maptile_0_-1_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\tilejson\\maptile_0_-1_0.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\screentransition\\screentransitionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\screentransition\\screentransitionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\gamestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 375,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -155,84 +111,127 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "RandomExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Utils\\RandomExtensions.cs",
+              "RelativeDocumentMoniker": "Utils\\RandomExtensions.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Utils\\RandomExtensions.cs",
+              "RelativeToolTip": "Utils\\RandomExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T16:03:31.364Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PlayMonsters.json",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
+              "RelativeDocumentMoniker": "Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
+              "RelativeToolTip": "Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-09T15:31:41.73Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayMonsters.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
+              "RelativeDocumentMoniker": "Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
+              "RelativeToolTip": "Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAIwBgAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T15:10:49.793Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
+              "RelativeDocumentMoniker": "Game1.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
+              "RelativeToolTip": "Game1.cs",
+              "ViewState": "AQIAAGQAAAAAAAAAAADwv3oAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T15:01:54.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MapTileData.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTileData.cs",
+              "RelativeDocumentMoniker": "World\\MapTiles\\MapTileData.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTileData.cs",
+              "RelativeToolTip": "World\\MapTiles\\MapTileData.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T15:00:52.649Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MapTile.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTile.cs",
+              "RelativeDocumentMoniker": "World\\MapTiles\\MapTile.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTile.cs",
+              "RelativeToolTip": "World\\MapTiles\\MapTile.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAMwAwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T14:41:13.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "PlayMonsterManager.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\PlayMonsterManager.cs",
               "RelativeDocumentMoniker": "Managers\\PlayMonsterManager.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\PlayMonsterManager.cs",
-              "RelativeToolTip": "Managers\\PlayMonsterManager.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAMwBQAAAAMAAAA",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\PlayMonsterManager.cs*",
+              "RelativeToolTip": "Managers\\PlayMonsterManager.cs*",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAqwGsAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T19:11:03.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 15,
               "Title": "JsonLoader.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Utils\\JsonLoader.cs",
               "RelativeDocumentMoniker": "Utils\\JsonLoader.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Utils\\JsonLoader.cs",
               "RelativeToolTip": "Utils\\JsonLoader.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAjwBMAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T19:00:48.492Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T19:00:48.492Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PlayMonsters.json",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
-              "RelativeDocumentMoniker": "Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
-              "RelativeToolTip": "Entities\\Monster\\PlayMonsters\\PlayMonsterJson\\PlayMonsters.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-08T18:56:45.581Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "PlayMonsterData.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterData.cs",
               "RelativeDocumentMoniker": "Entities\\Monster\\PlayMonsters\\PlayMonsterData.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsterData.cs",
               "RelativeToolTip": "Entities\\Monster\\PlayMonsters\\PlayMonsterData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T18:52:34.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T18:52:34.56Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 11,
               "Title": "CombatMonster.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "RelativeDocumentMoniker": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "RelativeToolTip": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T18:38:06.435Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T18:38:06.435Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PlayMonsters.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
-              "RelativeDocumentMoniker": "Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
-              "RelativeToolTip": "Entities\\Monster\\PlayMonsters\\PlayMonsters.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAA1wA8AAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T18:36:17.771Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "Monster.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\Monster.cs",
               "RelativeDocumentMoniker": "Entities\\Monster\\Monster.cs",
@@ -240,25 +239,23 @@
               "RelativeToolTip": "Entities\\Monster\\Monster.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T17:50:02.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T17:50:02.727Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "MapTile_0_-1_0.json",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\TileJson\\MapTile_0_-1_0.json",
               "RelativeDocumentMoniker": "World\\MapTiles\\TileJson\\MapTile_0_-1_0.json",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\TileJson\\MapTile_0_-1_0.json",
               "RelativeToolTip": "World\\MapTiles\\TileJson\\MapTile_0_-1_0.json",
-              "ViewState": "AQIAAOwMAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-08T16:22:26.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T16:22:26.255Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 18,
               "Title": "ScreenTransitionManager.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\ScreenTransition\\ScreenTransitionManager.cs",
               "RelativeDocumentMoniker": "Managers\\ScreenTransition\\ScreenTransitionManager.cs",
@@ -270,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ViewPortManager.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\ViewPortManager.cs",
               "RelativeDocumentMoniker": "Managers\\ViewPortManager.cs",
@@ -278,91 +275,19 @@
               "RelativeToolTip": "Managers\\ViewPortManager.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:28:07.168Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T07:28:07.168Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "InputManager.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\InputManager.cs",
-              "RelativeDocumentMoniker": "Managers\\InputManager.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\InputManager.cs",
-              "RelativeToolTip": "Managers\\InputManager.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAIAywBwAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T07:20:37.715Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "0_-1_0.png - PNG [1920x1088, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\Tiles\\0_-1_0.png",
-              "RelativeDocumentMoniker": "Content\\Tiles\\0_-1_0.png",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\Tiles\\0_-1_0.png - PNG [1920x1088, 32 bit, PNG]",
-              "RelativeToolTip": "Content\\Tiles\\0_-1_0.png - PNG [1920x1088, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-04-08T07:01:55.882Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "0_0_0.png - PNG [1920x1080, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\Tiles\\0_0_0.png",
-              "RelativeDocumentMoniker": "Content\\Tiles\\0_0_0.png",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\Tiles\\0_0_0.png - PNG [1920x1080, 32 bit, PNG]",
-              "RelativeToolTip": "Content\\Tiles\\0_0_0.png - PNG [1920x1080, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-04-08T07:01:36.785Z",
-              "EditorCaption": " - PNG [1920x1080, 32 bit, PNG]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "arrow.png - PNG [1024x1024, 32 bit, PNG]",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\TileCell\\arrow.png",
-              "RelativeDocumentMoniker": "Content\\TileCell\\arrow.png",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Content\\TileCell\\arrow.png - PNG [1024x1024, 32 bit, PNG]",
-              "RelativeToolTip": "Content\\TileCell\\arrow.png - PNG [1024x1024, 32 bit, PNG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-04-08T06:42:18.13Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 9,
               "Title": "AssetLoader.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Assets\\AssetLoader.cs",
               "RelativeDocumentMoniker": "Managers\\Assets\\AssetLoader.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Assets\\AssetLoader.cs",
               "RelativeToolTip": "Managers\\Assets\\AssetLoader.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAsAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T06:00:56.962Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "TileCellSaveData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\TileCellSaveData.cs",
-              "RelativeDocumentMoniker": "Data\\TileCellSaveData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\TileCellSaveData.cs",
-              "RelativeToolTip": "Data\\TileCellSaveData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T05:42:54.615Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "MapTileSaveData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\MapTileSaveData.cs",
-              "RelativeDocumentMoniker": "Data\\MapTileSaveData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\MapTileSaveData.cs",
-              "RelativeToolTip": "Data\\MapTileSaveData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T05:42:35.241Z"
             },
             {
               "$type": "Document",
@@ -372,100 +297,9 @@
               "RelativeDocumentMoniker": "Managers\\TileCellManager.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\TileCellManager.cs",
               "RelativeToolTip": "Managers\\TileCellManager.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAFAAAA",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAUwB4AAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:59:43.624Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MapTile.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTile.cs",
-              "RelativeDocumentMoniker": "World\\MapTiles\\MapTile.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTile.cs",
-              "RelativeToolTip": "World\\MapTiles\\MapTile.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAIwDYAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:07:50.599Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "TileCellData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\TileCell\\TileCellData.cs",
-              "RelativeDocumentMoniker": "World\\MapTiles\\TileCell\\TileCellData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\TileCell\\TileCellData.cs",
-              "RelativeToolTip": "World\\MapTiles\\TileCell\\TileCellData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T21:17:00.37Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "PlayerSaveData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\PlayerSaveData.cs",
-              "RelativeDocumentMoniker": "Data\\PlayerSaveData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\PlayerSaveData.cs",
-              "RelativeToolTip": "Data\\PlayerSaveData.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:59:19.266Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TileManager.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\TileManager.cs",
-              "RelativeDocumentMoniker": "Managers\\TileManager.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\TileManager.cs",
-              "RelativeToolTip": "Managers\\TileManager.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAewCwAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T20:40:40.885Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MapTileData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTileData.cs",
-              "RelativeDocumentMoniker": "World\\MapTiles\\MapTileData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\MapTileData.cs",
-              "RelativeToolTip": "World\\MapTiles\\MapTileData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwCAAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T21:13:25.933Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Player\\Player.cs",
-              "RelativeDocumentMoniker": "Entities\\Player\\Player.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Player\\Player.cs",
-              "RelativeToolTip": "Entities\\Player\\Player.cs",
-              "ViewState": "AQIAAE8AAAAAAAAAAAA2wMwAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T20:31:34.902Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Game1.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
-              "RelativeDocumentMoniker": "Game1.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
-              "RelativeToolTip": "Game1.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAAAjwE0AAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T20:50:49.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T22:59:43.624Z"
             },
             {
               "$type": "Document",
@@ -475,52 +309,25 @@
               "RelativeDocumentMoniker": "World\\MapTiles\\TileJson\\MapTile_0_0_0.json",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\World\\MapTiles\\TileJson\\MapTile_0_0_0.json",
               "RelativeToolTip": "World\\MapTiles\\TileJson\\MapTile_0_0_0.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAASAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-07T20:40:58.358Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T20:40:58.358Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 8,
               "Title": "AssetManager.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Assets\\AssetManager.cs",
               "RelativeDocumentMoniker": "Managers\\Assets\\AssetManager.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Assets\\AssetManager.cs",
               "RelativeToolTip": "Managers\\Assets\\AssetManager.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAADwvx0AAAAIAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABwAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T15:49:18.943Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T15:49:18.943Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "savegame.json",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\SaveJson\\savegame.json",
-              "RelativeDocumentMoniker": "Data\\SaveJson\\savegame.json",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\SaveJson\\savegame.json",
-              "RelativeToolTip": "Data\\SaveJson\\savegame.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-02T19:27:54.39Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "GameSaveData.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\GameSaveData.cs",
-              "RelativeDocumentMoniker": "Data\\GameSaveData.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\GameSaveData.cs",
-              "RelativeToolTip": "Data\\GameSaveData.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T18:48:14.858Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 19,
               "Title": "GameState.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\GameState.cs",
               "RelativeDocumentMoniker": "Data\\GameState.cs",
@@ -532,16 +339,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SceneManager.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\SceneManager.cs",
-              "RelativeDocumentMoniker": "Managers\\SceneManager.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\SceneManager.cs",
-              "RelativeToolTip": "Managers\\SceneManager.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAAAAAAAA",
+              "DocumentIndex": 4,
+              "Title": "TileManager.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\TileManager.cs",
+              "RelativeDocumentMoniker": "Managers\\TileManager.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\TileManager.cs",
+              "RelativeToolTip": "Managers\\TileManager.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAowGEAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T22:22:38.813Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T14:45:00.745Z"
             }
           ]
         }

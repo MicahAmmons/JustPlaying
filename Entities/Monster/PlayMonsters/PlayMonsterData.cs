@@ -15,14 +15,19 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
         [JsonPropertyName("movementPattern")]
         public string MovementPattern { get; set; }
-
-        [JsonPropertyName("monsterType")]
-        public string MonsterType { get; set; }
-
+        [JsonPropertyName("iconPath")]
+        public string IconPath { get; set; }
         [JsonPropertyName("difficulty")]
         public float Difficulty { get; set; }
 
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
+
+        // [JsonPropertyName("monsterType")]
+        //  public string MonsterType { get; set; }
+
+        // [JsonPropertyName("difficulty")]
+        // public string Difficulty { get; set; }
+
+        // [JsonPropertyName("name")]
+        // public string Name { get; set; }
     }
 }

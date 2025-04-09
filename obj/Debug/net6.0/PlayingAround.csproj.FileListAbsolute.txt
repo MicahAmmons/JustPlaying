@@ -84,3 +84,7 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Til
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\TileCell\arrow.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\TileCell\3arrows.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\TileCell\3arrows.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterIcons\OozeIcon.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterIcons\OozeIcon.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterIcons\AngryPlantIcon.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterIcons\AngryPlantIcon.xnb

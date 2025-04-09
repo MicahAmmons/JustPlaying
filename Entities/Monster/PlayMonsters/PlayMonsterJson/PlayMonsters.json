@@ -2,15 +2,17 @@
   "Ooze": [
     {
       "movementSpeed": 2.5,
+      "iconPath": "MonsterIcons/OozeIcon",
+      "name":  "Ooze",
       "pacingBoundary": {
         "x": 0,
         "y": 0,
-        "width": 100,
-        "height": 100
+        "width": 200,
+        "height": 200
       },
       "movementPattern": "arc",
       "monsterType": "Ooze",
-      "difficulty":  ".25"
+      "difficulty":  0.25
     }
   ],
   "AngryPlant": [
@@ -22,9 +24,11 @@
         "width": 150,
         "height": 150
       },
-      "movementPattern": "circle",
+      "movementPattern": "idle",
       "monsterType": "AngryPlant",
-      "difficulty": ".50"
+      "iconPath": "MonsterIcons/AngryPlantIcon",
+      "name":  "AngryPlant",
+      "difficulty": 0.50
     }
   ]
 }
