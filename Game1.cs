@@ -24,7 +24,7 @@ namespace PlayingAround
         private Player player;
 
         private KeyboardState previousKeyboardState; // Used to toggle debug info
-        private SpriteFont debugFont;
+        private SpriteFont mainFont;
 
         //Debugging
         Texture2D debugPixel;
@@ -61,7 +61,7 @@ namespace PlayingAround
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             debugPixel.SetData(new[] { Color.White });
 
-            debugFont = Content.Load<SpriteFont>("debug");
+            mainFont = Content.Load<SpriteFont>("mainFont");
 
             AssetManager.Initialize(Content);
 
@@ -139,6 +139,8 @@ namespace PlayingAround
 
             ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
 
+            PlayMonsterManager.Draw(_spriteBatch);
+
             if (showTileCellOutlines)
                 TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);
             if (showDebugOutline)
@@ -191,7 +193,7 @@ namespace PlayingAround
                 debugText += $"Target Tile: X={(int)(clickTarget.Value.X / MapTile.TileWidth)}, Y={(int)(clickTarget.Value.Y / MapTile.TileHeight)}";
             }
 
-            _spriteBatch.DrawString(debugFont, debugText, new Vector2(10, 10), Color.Blue);
+            _spriteBatch.DrawString(mainFont, debugText, new Vector2(10, 10), Color.Blue);
         }
 
 

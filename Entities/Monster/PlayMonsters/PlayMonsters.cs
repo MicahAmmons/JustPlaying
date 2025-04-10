@@ -18,17 +18,19 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public string MovementPattern { get; set; }
         public string IconPath { get; set; }
         public Texture2D Icon { get; set; }
-        public float TimeSinceLastJump { get; set; } // Time since the last jump
-        public float JumpCooldown { get; set; } // Time to wait before the next jump (seconds)
         public string Name { get; set; }
-        public Vector2 LandingPoint { get; set; } // The target landing position
-        public Vector2 JumpStartPosition { get; set; }
+        public Vector2 CurrentPos { get; set; }
+        public List<Vector2> MovePath { get; set; }
+        public bool IsPaused { get; set; } = false;
+        public float PauseTimer { get; set; } = 0f; // in seconds
+        public float PauseDuration { get; set; } = 1.5f; // how long to pause after a path ends
+
+
 
         // Constructor that takes a PlayMonsterData object for easy deserialization
         public PlayMonsters()
         {
-            TimeSinceLastJump = 0f;
-            JumpCooldown = 2f;
+
         }
     }
 }

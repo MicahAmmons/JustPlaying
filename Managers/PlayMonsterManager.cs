@@ -19,8 +19,10 @@ namespace PlayingAround.Managers
     public class PlayMonsterManager
     {
         private static List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
-        private const int IconWidth = 128;
-        private const int IconHeight = 128;
+        private static PlayMonsters _selectedMonster = null;
+
+        private const int IconWidth = 64;
+        private const int IconHeight = 64;
         public static void GeneratePlayMonsters(MapTileData data)
         {
             string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
@@ -33,17 +35,18 @@ namespace PlayingAround.Managers
             int totalSpawns = data.TotalMonsterSpawns;
 
             // Step 1: Create a list of all available CombatMonsters based on the JSON data
-            List<CombatMonster> allCombatMonsters = new List<CombatMonster>();
+            
 
             Random random = new Random();
             for (int i = 0; i < data.TotalMonsterSpawns; i++)
             {
-
+                List<CombatMonster> allCombatMonsters = new List<CombatMonster>();
                 totalDifficulty = data.Difficulty;
                 float moveSpeed = 0;
-                Rectangle pacingBound = new Rectangle(0, 0, 0, 0);
+                Rectangle pacingBound = new Rectangle(00, 0, 0, 0);
                 string movementPatter = null;
                 string iconPath = null;
+                float pauseDur = 0;
 
                 while (totalDifficulty > 0)
                 {
@@ -62,13 +65,15 @@ namespace PlayingAround.Managers
                         totalDifficulty -= monsterData.Difficulty;
                         allCombatMonsters.Add(combatMonster);
                         moveSpeed = monsterData.MovementSpeed;
-                        pacingBound = monsterData.PacingBoundary;
+                        pacingBound = monsterData.PacingBoundaryRect;
+                        pauseDur = monsterData.PauseDuration;
                         movementPatter = monsterData.MovementPattern;
                         iconPath = monsterData.IconPath;
 
                     }
 
                 }
+                Vector2 startPos = DeterminePlayMonsterSpawn(data.Cells);
                 PlayMonsters newPlayMon = new PlayMonsters()
                 {
                     Monsters = allCombatMonsters,
@@ -76,8 +81,10 @@ namespace PlayingAround.Managers
                     PacingBoundary = pacingBound,
                     MovementPattern = movementPatter,
                     IconPath = iconPath,
-                    SpawnPosition = DeterminePlayMonsterSpawn(data.Cells),
-                    Icon = AssetManager.GetTexture(iconPath)
+                    SpawnPosition = startPos,
+                    Icon = AssetManager.GetTexture(iconPath),
+                    CurrentPos = startPos,
+                    PauseDuration = pauseDur,
                 };
                 CurrentPlayMonsters.Add(newPlayMon);
             }
@@ -100,81 +107,48 @@ namespace PlayingAround.Managers
         {
             CurrentPlayMonsters.Add(mon);
         }
-        public static void MovePlayMonsters(GameTime gameTime)
+        private static void MovePlayMonsters(GameTime gameTime)
         {
-            foreach (var monster in CurrentPlayMonsters)
+            foreach (var mon in CurrentPlayMonsters)
             {
-                if (monster.MovementPattern == "arc")
+                if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
                 {
-                    // Increment time since last jump
-                    monster.TimeSinceLastJump += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (Movement.NPCMovement.HandlePause(mon, gameTime))
+                        continue;
 
-                    // Check if it's time to jump (after the cooldown)
-                    if (monster.TimeSinceLastJump >= monster.JumpCooldown)
-                    {
-                        // Select a random landing point within the PacingBoundary
-                        Random random = new Random();
-
-                        // Ensure that the new landing point is at least 1/5th of the boundary width away from the origin
-                        float minX = monster.PacingBoundary.X + monster.PacingBoundary.Width / 5f;
-                        float maxX = monster.PacingBoundary.X + monster.PacingBoundary.Width * 0.8f;
-
-                        float minY = monster.PacingBoundary.Y + monster.PacingBoundary.Height / 5f;
-                        float maxY = monster.PacingBoundary.Y + monster.PacingBoundary.Height * 0.8f;
-
-                        // Randomly select a landing point within these bounds
-                        monster.LandingPoint = new Vector2(
-                            random.NextFloat(minX, maxX),
-                            random.NextFloat(minY, maxY)
-                        );
-
-                        // Store the start position of the jump
-                        monster.JumpStartPosition = monster.SpawnPosition;
-
-                        // Reset the jump timer
-                        monster.TimeSinceLastJump = 0f;
-                    }
-
-                    // Calculate movement towards the landing point
-                    Vector2 direction = monster.LandingPoint - monster.SpawnPosition;
-
-                    // Normalize the direction vector to get the unit vector
-                    float distance = direction.Length();
-                    direction.Normalize();
-
-                    // Define the arc's curve: Use a sine function for vertical movement
-                    float arcHeight = (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * monster.MovementSpeed) * 50f;
-
-                    // Calculate the new position based on the direction and arc
-                    float progress = (float)(gameTime.TotalGameTime.TotalSeconds % 1); // Loop the movement after 1 second
-                    float horizontalMovement = progress * distance; // Smooth horizontal movement
-
-                    // Interpolating between the start and end positions
-                    Vector2 currentPosition = Vector2.Lerp(monster.JumpStartPosition, monster.LandingPoint, progress);
-
-                    // Apply the arc height as vertical movement
-                    currentPosition.Y += arcHeight;
-
-                    // Set the new position, ensuring it stays within the pacing boundary
-                    monster.SpawnPosition = new Vector2(
-                        MathHelper.Clamp(currentPosition.X, monster.PacingBoundary.X, monster.PacingBoundary.X + monster.PacingBoundary.Width),
-                        MathHelper.Clamp(currentPosition.Y, monster.PacingBoundary.Y, monster.PacingBoundary.Y + monster.PacingBoundary.Height)
-                    );
+                    Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
                 }
-                //else if (monster.MovementPattern == "idle")
-                //{
-                //    // Idle movement: slight left-right or staying in place
-                //    float idleMovement = (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 0.5f) * 10f; // Small horizontal movement
-                //    monster.SpawnPosition = new Vector2(monster.SpawnPosition.X + idleMovement, monster.SpawnPosition.Y);
-                //}
             }
         }
-    
+        private static void HandleMonsterSelection()
+        {
+            if (InputManager.IsLeftClick())
+            {
+                Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
 
+                foreach (var mon in CurrentPlayMonsters)
+                {
+                    Rectangle dest = new Rectangle(
+                        (int)(mon.CurrentPos.X - IconWidth / 2f),
+                        (int)(mon.CurrentPos.Y - IconHeight),
+                        IconWidth,
+                        IconHeight
+                    );
+
+                    if (dest.Contains(mousePos))
+                    {
+                        _selectedMonster = mon;
+                        return;
+                    }
+                }
+                _selectedMonster = null;
+            }
+        }
 
         public static void Update(GameTime gameTime)
         {
-           MovePlayMonsters(gameTime);
+            HandleMonsterSelection();
+            MovePlayMonsters(gameTime);
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
@@ -182,15 +156,35 @@ namespace PlayingAround.Managers
             {
                 if (monster.Icon != null)
                 {
-                    Vector2 origin = new Vector2(IconWidth / 2f, IconHeight / 2f);
+                    Rectangle dest = new Rectangle(
+                        (int)(monster.CurrentPos.X - IconWidth / 2f),
+                        (int)(monster.CurrentPos.Y - IconHeight),
+                        IconWidth,
+                        IconHeight
+                    );
 
-                    // Now draw the texture with the new size
-                    spriteBatch.Draw(monster.Icon, monster.SpawnPosition, null, Color.White, 0f, origin, new Vector2(IconWidth / (float)monster.Icon.Width, IconHeight / (float)monster.Icon.Height), SpriteEffects.None, 0f);
-
-
+                    // Draw icon
+                    spriteBatch.Draw(monster.Icon, dest, Color.White);
                 }
             }
+            if (_selectedMonster != null)
+            {
+                DrawCombatMonsterInfo(spriteBatch);
+            }
         }
-    }
+        private static void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
+        {
+            Vector2 uiPos = _selectedMonster.CurrentPos;
+            foreach (var combatMon in _selectedMonster.Monsters)
+            {
+                spriteBatch.DrawString(
+                    AssetManager.GetFont("mainFont"), // Make sure you load a SpriteFont
+                    combatMon.Name,
+                    uiPos,
+                    Color.Black
+                );
 
-}
+                uiPos.Y += 20; // Move down for the next line
+            }
+        }
+    }}

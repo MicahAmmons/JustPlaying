@@ -14,5 +14,13 @@ namespace PlayingAround.Managers
             ScreenWidth = graphicsDevice.Viewport.Width;
             ScreenHeight = graphicsDevice.Viewport.Height;
         }
+
+        public static bool IsPointWithinScreen(Vector2 point, int buffer)
+        {
+            return point.X >= -buffer &&
+                   point.X <= ScreenWidth + buffer &&
+                   point.Y >= -buffer &&
+                   point.Y <= ScreenHeight + buffer;
+        }
     }
 }

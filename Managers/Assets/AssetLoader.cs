@@ -12,6 +12,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("3Arrows", "Tilecell/3arrows");
             AssetManager.LoadTexture("MonsterIcons/OozeIcon", "MonsterIcons/OozeIcon");
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
+            AssetManager.LoadFont("mainFont", "mainFont");
+
 
             // Add fonts, sounds, etc. later
         }

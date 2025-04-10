@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,11 +10,16 @@ namespace PlayingAround.Managers.Assets
     {
         private static ContentManager _content;
         private static Dictionary<string, Texture2D> _textures = new();
+        private static Dictionary<string, SpriteFont> _fonts = new();
+      
+        
+
 
         // Step 1: Initialize with the Content pipeline
         public static void Initialize(ContentManager content)
         {
             _content = content;
+
         }
 
         // Step 2: Load a texture and store it in the dictionary
@@ -33,5 +39,9 @@ namespace PlayingAround.Managers.Assets
         {
             return _textures.ContainsKey(key);
         }
+        public static void LoadFont(string key, string path) =>
+            _fonts[key] = _content.Load<SpriteFont>(path);
+
+        public static SpriteFont GetFont(string key) => _fonts[key];
     }
 }

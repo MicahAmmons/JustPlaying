@@ -14,7 +14,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0.png</File>
   </SourceFiles>
   <DestFiles>
-    <File>debug.spritefont</File>
+    <File>mainFont.spritefont</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

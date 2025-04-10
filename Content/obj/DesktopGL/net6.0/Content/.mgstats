@@ -1,5 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/debug.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.1729102
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/mainFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.1575126
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/HeroArt/BlonderHero.xnb","TextureProcessor","Texture2DContent",1635053,4194389,0.1196332
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/MonsterIcons/AngryPlantIcon.xnb","TextureProcessor","Texture2DContent",1656899,4194389,0.1712875
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/MonsterIcons/OozeIcon.xnb","TextureProcessor","Texture2DContent",1498456,4194389,0.2003121

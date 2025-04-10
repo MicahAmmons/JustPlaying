@@ -94,6 +94,16 @@ namespace PlayingAround.Manager
             int x = (int)(cord.X / MapTile.TileWidth);
             int y = (int)(cord.Y / MapTile.TileHeight);
 
+            if (x < 0 || x >= 30 || y < 0 || y >= 17)
+            {
+                return new TileCell(
+                69,               
+                69,               
+                "Default/Blank",    
+                false,             
+                0                   
+                );
+            }
 
             return CurrentMapTile.TileGrid[x, y];
         }
