@@ -75,6 +75,7 @@ namespace PlayingAround.Entities.Player
         }
         private void HandleSceneStateChange(SceneManager.SceneState newState)
         {
+            movementPath.Clear();
             allowedToMove = newState == SceneManager.SceneState.Play;
         }
         private void CheckCurrentPlayerCell()

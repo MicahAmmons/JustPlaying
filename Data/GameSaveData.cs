@@ -1,4 +1,5 @@
-﻿using PlayingAround.Game.Map;
+﻿using PlayingAround.Data.MapTile;
+using PlayingAround.Game.Map;
 using System.Collections.Generic;
 
 namespace PlayingAround.Data

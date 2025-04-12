@@ -49,10 +49,12 @@ namespace PlayingAround.Managers
             switch (_phase)
             {
                 case TransitionPhase.FadeOut:
+                  
                     _fadeAlpha = MathHelper.Clamp(_timer / FadeOutDuration, 0f, 1f);
 
                     if (_timer >= FadeOutDuration)
                     {
+
                         _timer = 0f;
                         _phase = TransitionPhase.FadeIn;
                             // ✅ This is the trigger moment

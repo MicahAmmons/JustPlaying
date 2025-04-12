@@ -23,12 +23,10 @@ namespace PlayingAround.Managers
 
         private const int IconWidth = 64;
         private const int IconHeight = 64;
-        public static void GeneratePlayMonsters(MapTileData data)
+        public static List<PlayMonsters> GeneratePlayMonsters(MapTileData data)
         {
             string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
             Dictionary<string, List<PlayMonsterData>> jsonData = JsonLoader.LoadPlayMonsterData(path);
-
-
 
             // Difficulty of the MapTile
             float totalDifficulty = data.Difficulty;
@@ -88,6 +86,7 @@ namespace PlayingAround.Managers
                 };
                 CurrentPlayMonsters.Add(newPlayMon);
             }
+            return CurrentPlayMonsters;
         }
         public static Vector2 DeterminePlayMonsterSpawn(List<TileCellData> cells)
         {
@@ -149,6 +148,15 @@ namespace PlayingAround.Managers
         {
             HandleMonsterSelection();
             MovePlayMonsters(gameTime);
+        }
+        public static void UpdateCurrentPlayMonsters(List<PlayMonsters> mons)
+        {
+
+            CurrentPlayMonsters = mons;
+        }
+        public static void ClearMonsters()
+        {
+            CurrentPlayMonsters.Clear();
         }
         public static void Draw(SpriteBatch spriteBatch)
         {

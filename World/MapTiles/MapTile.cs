@@ -11,12 +11,12 @@ namespace PlayingAround.Game.Map
     {
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
-
         public List<Rectangle> Obstacles { get; } = new();
-
         public TileCell[,] TileGrid { get; private set; }
         public int Difficulty { get; }
         public int TotalMonsterSpawns { get; }
+
+        public List<PlayMonsters> PlayMonsters = new List<PlayMonsters>();
 
 
         public const int GridWidth = 30;   // example number of cells per screen
@@ -48,13 +48,13 @@ namespace PlayingAround.Game.Map
                     cellData.BehindOverlay,
                     cellData.FrontOverlay,
                     cellData.Npc,
-
                     cellData.Trigger,
-
                     cellData.NextTile
                 );
             }
-            PlayMonsterManager.GeneratePlayMonsters(data);
+
+
+            
         }
 
 

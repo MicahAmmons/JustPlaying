@@ -6,7 +6,8 @@
   "monsters": [
     "Ooze"
   ],
-  "totalSpawns": 0,
+  "difficulty": 2,
+  "totalSpawns": 2,
   "obstacles": [],
   "cells": [
     {

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using PlayingAround.Data;
+using PlayingAround.Data.MapTile;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
@@ -21,29 +21,34 @@ namespace PlayingAround.Manager
 
 
 
+
         public static void Initialize(GraphicsDevice graphicsDevice, string id)
         {
+
             LoadMapTileById(id);
             ScreenTransitionManager.OnFadeToBlackComplete += () =>
             {
                 var next = TileCellManager.PlayerCurrentCell.NextTile;
                 string id = $"{next.NextX}_{next.NextY}_{next.NextZ}";
+
                 TileManager.LoadMapTileById(id);
             };
 
         }
         public static void LoadMapTileById(string id)
         {
-            // If it's already loaded, use it
             if (tiles.TryGetValue(id, out var existingTile))
             {
                 CurrentMapTile = existingTile;
+                PlayMonsterManager.UpdateCurrentPlayMonsters(existingTile.PlayMonsters);
                 return;
             }
 
             // Try loading from disk
             string path = $"World/MapTiles/TileJson/MapTile_{id}.json";
             MapTileData data = JsonLoader.LoadTileData(path);
+
+
 
             if (data == null)
             {
@@ -60,13 +65,19 @@ namespace PlayingAround.Manager
                 AssetManager.LoadTexture(data.Background, data.Background);
 
             Texture2D texture = AssetManager.GetTexture(data.Background);
-
   
             var tile = new MapTile(data, texture);
+            if (tile.TotalMonsterSpawns != 0 )
+            {
+                tile.PlayMonsters = PlayMonsterManager.GeneratePlayMonsters(data);
+
+            }
+            tiles[id] = tile; // ✅ Cache the tile by its ID
+
 
             CurrentMapTile = tile;
-
-
+            PlayMonsterManager.ClearMonsters();
+            PlayMonsterManager.UpdateCurrentPlayMonsters(tile.PlayMonsters);
         }
 
         public static bool IsCellWalkable(int x, int y)
