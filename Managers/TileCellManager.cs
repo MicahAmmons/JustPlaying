@@ -5,6 +5,7 @@ using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using System;
+using System.Collections.Generic;
 
 public static class TileCellManager
 {
@@ -13,7 +14,6 @@ public static class TileCellManager
     private static float arrowRotation;
     private static Rectangle? arrowHitbox;
     public static TileCell PlayerClickedCell;
-
     public static TileCell PlayerCurrentCell;
 
     public static void Initialize()
@@ -26,9 +26,12 @@ public static class TileCellManager
         if (PlayerCurrentCell != null && PlayerCurrentCell.NextTile != null)
             DisplayArrow();
         else
-            ClearArrow();
-
+        ClearArrow();
         HandleClick();
+        if (PlayerCurrentCell.NextTile != null && PlayerCurrentCell == PlayerClickedCell)
+        {
+            SceneManager.SetState(SceneManager.SceneState.SceneTransition);
+        }
     }
 
     public static void OnEnterNewCell(TileCell cell)
@@ -36,6 +39,7 @@ public static class TileCellManager
         if (PlayerCurrentCell != cell)
         {
             PlayerCurrentCell = cell;
+            TileManager.PlayerCurrentCell = cell;
         }
     }
     private static void DisplayArrow()
@@ -85,10 +89,7 @@ public static class TileCellManager
             PlayerClickedCell = TileManager.GetCell(new Vector2(InputManager.MouseX, InputManager.MouseY));
 
 
-            if (PlayerCurrentCell.NextTile != null && PlayerCurrentCell == PlayerClickedCell)
-            {
-                SceneManager.SetState(SceneManager.SceneState.SceneTransition);
-            }
+
         }
     }
     public static void Draw(SpriteBatch spriteBatch)

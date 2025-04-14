@@ -24,7 +24,9 @@ namespace PlayingAround.Managers
         private const int IconWidth = 64;
         private const int IconHeight = 64;
         private Vector2? _selectedMonsterInfoAnchor = null;
-        private Texture2D _backgroundTexture; // Initialized in Initialize method or constructor
+        private Rectangle _fightButtonRect;
+        private bool _isHoveringFightButton;
+
 
 
 
@@ -157,6 +159,7 @@ namespace PlayingAround.Managers
         {
             HandleMonsterSelection();
             MovePlayMonsters(gameTime);
+
         }
 
         public void ClearMonsters()

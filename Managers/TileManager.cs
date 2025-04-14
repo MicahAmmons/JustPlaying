@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
@@ -18,6 +19,9 @@ namespace PlayingAround.Manager
     {
         private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
+        public static TileCell PlayerCurrentCell;
+
+       
 
 
 
@@ -138,7 +142,10 @@ namespace PlayingAround.Manager
         public static void Update(GameTime gameTime)
         {
             CurrentMapTile.PlayMonstersManager.Update(gameTime);
+            
         }
+
+
 
     }
 }
