@@ -15,14 +15,14 @@ namespace PlayingAround.Game.Map
         public TileCell[,] TileGrid { get; private set; }
         public int Difficulty { get; }
         public int TotalMonsterSpawns { get; }
+        public PlayMonsterManager PlayMonstersManager { get; } = new PlayMonsterManager();
 
-        public List<PlayMonsters> PlayMonsters = new List<PlayMonsters>();
 
 
-        public const int GridWidth = 30;   // example number of cells per screen
-        public const int GridHeight = 17;
-        public const int TileWidth = 64;
-        public const int TileHeight = 64;
+        public const int GridWidth = 60;   // example number of cells per screen
+        public const int GridHeight = 34;
+        public const int TileWidth = 32;
+        public const int TileHeight = 32;
 
 
         public MapTile(MapTileData data, Texture2D backgroundTexture)
@@ -52,9 +52,7 @@ namespace PlayingAround.Game.Map
                     cellData.NextTile
                 );
             }
-
-
-            
+            PlayMonstersManager.GeneratePlayMonsters(data);
         }
 
 

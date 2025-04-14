@@ -119,8 +119,8 @@ namespace PlayingAround
             InputManager.Update(gameTime);  
             player.Update(gameTime);
             TileCellManager.Update(gameTime);
+            TileManager.Update(gameTime);
             ScreenTransitionManager.Update(gameTime);
-            PlayMonsterManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -138,8 +138,6 @@ namespace PlayingAround
             TileCellManager.Draw(_spriteBatch);
 
             ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
-
-            PlayMonsterManager.Draw(_spriteBatch);
 
             if (showTileCellOutlines)
                 TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);

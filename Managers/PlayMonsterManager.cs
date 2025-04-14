@@ -18,12 +18,14 @@ namespace PlayingAround.Managers
 {
     public class PlayMonsterManager
     {
-        private static List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
-        private static PlayMonsters _selectedMonster = null;
+        private List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
+        private PlayMonsters _selectedMonster = null;
 
         private const int IconWidth = 64;
         private const int IconHeight = 64;
-        public static List<PlayMonsters> GeneratePlayMonsters(MapTileData data)
+
+
+        public void GeneratePlayMonsters(MapTileData data)
         {
             string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
             Dictionary<string, List<PlayMonsterData>> jsonData = JsonLoader.LoadPlayMonsterData(path);
@@ -86,9 +88,8 @@ namespace PlayingAround.Managers
                 };
                 CurrentPlayMonsters.Add(newPlayMon);
             }
-            return CurrentPlayMonsters;
         }
-        public static Vector2 DeterminePlayMonsterSpawn(List<TileCellData> cells)
+        public Vector2 DeterminePlayMonsterSpawn(List<TileCellData> cells)
         {
             List<TileCellData> tileCells = new List<TileCellData>();
             foreach (var cell in cells)
@@ -102,11 +103,11 @@ namespace PlayingAround.Managers
             int y = selectedCell.Y * MapTile.TileHeight;
             return new Vector2(x, y);
         }
-        public static void AddPlayMonster(PlayMonsters mon)
+        public void AddPlayMonster(PlayMonsters mon)
         {
             CurrentPlayMonsters.Add(mon);
         }
-        private static void MovePlayMonsters(GameTime gameTime)
+        private void MovePlayMonsters(GameTime gameTime)
         {
             foreach (var mon in CurrentPlayMonsters)
             {
@@ -119,7 +120,7 @@ namespace PlayingAround.Managers
                 }
             }
         }
-        private static void HandleMonsterSelection()
+        private void HandleMonsterSelection()
         {
             if (InputManager.IsLeftClick())
             {
@@ -144,21 +145,17 @@ namespace PlayingAround.Managers
             }
         }
 
-        public static void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             HandleMonsterSelection();
             MovePlayMonsters(gameTime);
         }
-        public static void UpdateCurrentPlayMonsters(List<PlayMonsters> mons)
-        {
 
-            CurrentPlayMonsters = mons;
-        }
-        public static void ClearMonsters()
+        public void ClearMonsters()
         {
             CurrentPlayMonsters.Clear();
         }
-        public static void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var monster in CurrentPlayMonsters)
             {
@@ -180,9 +177,9 @@ namespace PlayingAround.Managers
                 DrawCombatMonsterInfo(spriteBatch);
             }
         }
-        private static void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
+        private void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
         {
-            Vector2 uiPos = _selectedMonster.CurrentPos;
+            Vector2 uiPos = _selectedMonster.CurrentPos - new Vector2(0, 80);
             foreach (var combatMon in _selectedMonster.Monsters)
             {
                 spriteBatch.DrawString(

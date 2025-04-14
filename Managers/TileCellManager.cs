@@ -23,12 +23,14 @@ public static class TileCellManager
 
     public static void Update(GameTime gameTime)
     {
-        if (PlayerCurrentCell.NextTile != null)
+        if (PlayerCurrentCell != null && PlayerCurrentCell.NextTile != null)
             DisplayArrow();
         else
             ClearArrow();
+
         HandleClick();
     }
+
     public static void OnEnterNewCell(TileCell cell)
     {
         if (PlayerCurrentCell != cell)
@@ -93,7 +95,7 @@ public static class TileCellManager
     {
         if (arrowPosition.HasValue)
         {
-            float scale =  (MapTile.TileWidth / (float)arrowTexture.Width *2);
+            float scale =  (MapTile.TileWidth / (float)arrowTexture.Width *4);
 
             spriteBatch.Draw(
                 arrowTexture,
@@ -101,7 +103,7 @@ public static class TileCellManager
                 null,
                 Color.White,
                 arrowRotation,
-                new Vector2(arrowTexture.Width / 2f, arrowTexture.Height / 2f),
+                new Vector2(arrowTexture.Width / 2f, arrowTexture.Height / 4f),
                 scale,
                 SpriteEffects.None,
                 0f

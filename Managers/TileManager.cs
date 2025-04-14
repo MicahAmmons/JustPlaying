@@ -40,7 +40,6 @@ namespace PlayingAround.Manager
             if (tiles.TryGetValue(id, out var existingTile))
             {
                 CurrentMapTile = existingTile;
-                PlayMonsterManager.UpdateCurrentPlayMonsters(existingTile.PlayMonsters);
                 return;
             }
 
@@ -67,17 +66,10 @@ namespace PlayingAround.Manager
             Texture2D texture = AssetManager.GetTexture(data.Background);
   
             var tile = new MapTile(data, texture);
-            if (tile.TotalMonsterSpawns != 0 )
-            {
-                tile.PlayMonsters = PlayMonsterManager.GeneratePlayMonsters(data);
-
-            }
             tiles[id] = tile; // ✅ Cache the tile by its ID
 
 
             CurrentMapTile = tile;
-            PlayMonsterManager.ClearMonsters();
-            PlayMonsterManager.UpdateCurrentPlayMonsters(tile.PlayMonsters);
         }
 
         public static bool IsCellWalkable(int x, int y)
@@ -105,7 +97,7 @@ namespace PlayingAround.Manager
             int x = (int)(cord.X / MapTile.TileWidth);
             int y = (int)(cord.Y / MapTile.TileHeight);
 
-            if (x < 0 || x >= 30 || y < 0 || y >= 17)
+            if (x < 0 || x >= 60 || y < 0 || y >= 34)
             {
                 return new TileCell(
                 69,               
@@ -140,7 +132,12 @@ namespace PlayingAround.Manager
         {
             spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
 
-            PlayMonsterManager.Draw(spriteBatch);
+            CurrentMapTile.PlayMonstersManager.Draw(spriteBatch);
+        }
+
+        public static void Update(GameTime gameTime)
+        {
+            CurrentMapTile.PlayMonstersManager.Update(gameTime);
         }
 
     }
