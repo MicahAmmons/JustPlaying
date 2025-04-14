@@ -95,6 +95,8 @@ namespace PlayingAround.Entities.Player
             {
                 PlayerCurrentTileCell = currentCell;
                 TileCellManager.OnEnterNewCell(currentCell); 
+                TileManager.OnEnterNewCell(currentCell);
+                PlayMonsterManager.OnEnterNewCell(currentCell);
             }
         }
         public void Draw(SpriteBatch spriteBatch)

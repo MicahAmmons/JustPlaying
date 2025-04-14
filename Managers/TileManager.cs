@@ -19,6 +19,7 @@ namespace PlayingAround.Manager
     {
         private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
+
         public static TileCell PlayerCurrentCell;
 
        
@@ -123,6 +124,15 @@ namespace PlayingAround.Manager
 
             return GetCell(bottomCenter);
         }
+        public static void OnEnterNewCell(TileCell cell)
+        {
+            if (PlayerCurrentCell != cell)
+            {
+                PlayerCurrentCell = cell;
+
+            }
+        }
+
 
         public static MapTileSaveData Save()
         {
@@ -142,7 +152,6 @@ namespace PlayingAround.Manager
         public static void Update(GameTime gameTime)
         {
             CurrentMapTile.PlayMonstersManager.Update(gameTime);
-            
         }
 
 

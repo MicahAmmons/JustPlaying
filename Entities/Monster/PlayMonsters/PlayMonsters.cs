@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Game.Map;
 
 namespace PlayingAround.Entities.Monster.PlayMonsters
 {
@@ -20,6 +21,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public Texture2D Icon { get; set; }
         public string Name { get; set; }
         public Vector2 CurrentPos { get; set; }
+        public TileCell CurrentCell { get; set; }
+
         public List<Vector2> MovePath { get; set; }
         public bool IsPaused { get; set; } = false;
         public float PauseTimer { get; set; } = 0f; // in seconds

@@ -20,12 +20,12 @@ namespace PlayingAround.Managers
     {
         private List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
         private PlayMonsters _selectedMonster = null;
+        public static TileCell PlayerCurrentcell;
 
         private const int IconWidth = 64;
         private const int IconHeight = 64;
         private Vector2? _selectedMonsterInfoAnchor = null;
-        private Rectangle _fightButtonRect;
-        private bool _isHoveringFightButton;
+        private bool isPlayerInMonCell = false;
 
 
 
@@ -159,9 +159,33 @@ namespace PlayingAround.Managers
         {
             HandleMonsterSelection();
             MovePlayMonsters(gameTime);
-
+            UpdateTileCells();
+            CheckIfPlayerInPlayMonCell();
         }
 
+        public void CheckIfPlayerInPlayMonCell()
+        {
+            isPlayerInMonCell = false;
+            foreach (var mon in CurrentPlayMonsters)
+            {
+                if (mon.CurrentCell == PlayerCurrentcell)
+                {
+                    isPlayerInMonCell = true;
+                }
+            }
+        }
+        public void UpdateTileCells()
+        {
+            foreach (var mon in CurrentPlayMonsters)
+            {
+                mon.CurrentCell = TileManager.GetCell(mon.CurrentPos);
+            }
+        }
+
+        public void OnEnterNewCell(TileCell cell)
+        {
+            PlayerCurrentcell = cell;
+        }
         public void ClearMonsters()
         {
             CurrentPlayMonsters.Clear();
@@ -187,6 +211,10 @@ namespace PlayingAround.Managers
             {
                 DrawCombatMonsterInfo(spriteBatch);
             }
+            if (isPlayerInMonCell)
+            {
+                spriteBatch.Draw()
+            } 
         }
         private void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
         {

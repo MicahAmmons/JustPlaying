@@ -39,7 +39,7 @@ public static class TileCellManager
         if (PlayerCurrentCell != cell)
         {
             PlayerCurrentCell = cell;
-            TileManager.PlayerCurrentCell = cell;
+            
         }
     }
     private static void DisplayArrow()
