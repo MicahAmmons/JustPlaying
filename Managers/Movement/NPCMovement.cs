@@ -79,8 +79,15 @@ namespace PlayingAround.Managers.Movement
 
                 attempts++;
             } while (!walkable && attempts < maxAttempts);
-            if (attempts == maxAttempts) { return spawnPoint; }
-            else return end;
+            if (attempts == maxAttempts) 
+            { 
+                return spawnPoint; 
+            }
+            if (walkable == true)
+            {
+                return end;
+            }
+            else return spawnPoint;
         }
         public static void MoveTowardsNextPathPoint(PlayMonsters mon, GameTime gameTime)
         {

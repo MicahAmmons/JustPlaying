@@ -3,11 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Data;
 using PlayingAround.Game.Map;
+using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace PlayingAround.Entities.Player
 {
@@ -68,6 +71,13 @@ namespace PlayingAround.Entities.Player
 
  
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (InputManager.IsRightClick())
+            {
+                Rectangle start = GetHitbox();
+                Vector2 target = new Vector2(InputManager.MouseX, InputManager.MouseY);
+                var path = CustomPathfinder.BuildPixelPath(start, target);
+                SetPath(path);
+            }
             MovePlayer();
             movement = Vector2.Zero;
             CheckCurrentPlayerCell();

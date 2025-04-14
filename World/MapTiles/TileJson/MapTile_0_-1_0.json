@@ -6,6 +6,12 @@
   "monsters": [
     "Ooze"
   ],
+  "pacingBoundary": {
+    "x": 0,
+    "y": 0,
+    "width": 64,
+    "height": 64
+  },
   "difficulty": 2,
   "totalSpawns": 2,
   "obstacles": [],

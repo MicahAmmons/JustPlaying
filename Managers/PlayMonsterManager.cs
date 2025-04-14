@@ -23,11 +23,15 @@ namespace PlayingAround.Managers
 
         private const int IconWidth = 64;
         private const int IconHeight = 64;
+        private Vector2? _selectedMonsterInfoAnchor = null;
+        private Texture2D _backgroundTexture; // Initialized in Initialize method or constructor
+
 
 
         public void GeneratePlayMonsters(MapTileData data)
         {
-            string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
+           // string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
+            string path = "C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
             Dictionary<string, List<PlayMonsterData>> jsonData = JsonLoader.LoadPlayMonsterData(path);
 
             // Difficulty of the MapTile
@@ -138,12 +142,16 @@ namespace PlayingAround.Managers
                     if (dest.Contains(mousePos))
                     {
                         _selectedMonster = mon;
+                        _selectedMonsterInfoAnchor = mousePos; // Capture click position
                         return;
                     }
                 }
+
                 _selectedMonster = null;
+                _selectedMonsterInfoAnchor = null;
             }
         }
+
 
         public void Update(GameTime gameTime)
         {
@@ -179,17 +187,44 @@ namespace PlayingAround.Managers
         }
         private void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
         {
-            Vector2 uiPos = _selectedMonster.CurrentPos - new Vector2(0, 80);
-            foreach (var combatMon in _selectedMonster.Monsters)
-            {
-                spriteBatch.DrawString(
-                    AssetManager.GetFont("mainFont"), // Make sure you load a SpriteFont
-                    combatMon.Name,
-                    uiPos,
-                    Color.Black
-                );
+            if (_selectedMonster == null || _selectedMonsterInfoAnchor == null)
+                return;
 
-                uiPos.Y += 20; // Move down for the next line
+            var grouped = _selectedMonster.Monsters
+                .GroupBy(mon => mon.Name)
+                .Select(g => new { Name = g.Key, Count = g.Count() });
+
+            // Compute size of background
+            var font = AssetManager.GetFont("mainFont");
+            int lineHeight = 20;
+            int boxWidth = 160;
+            int boxHeight = grouped.Count() * lineHeight + 10;
+
+            Vector2 anchor = _selectedMonsterInfoAnchor.Value;
+            Rectangle backgroundBox = new Rectangle((int)anchor.X, (int)anchor.Y, boxWidth, boxHeight);
+
+            // Draw text over it
+            Vector2 textPos = anchor + new Vector2(5, 5);
+            foreach (var group in grouped)
+            {
+                string displayName = group.Count > 1 ? $"({group.Count}) {Pluralize(group.Name)}" : group.Name;
+
+                spriteBatch.DrawString(font, displayName, textPos, Color.Green);
+                textPos.Y += lineHeight;
             }
         }
-    }}
+
+        private string Pluralize(string name)
+        {
+            // Very basic pluralization. You can enhance this later.
+            if (name.EndsWith("y", StringComparison.OrdinalIgnoreCase) && !name.EndsWith("ey"))
+                return name.Substring(0, name.Length - 1) + "ies";
+            else if (name.EndsWith("s"))
+                return name;
+            else
+                return name + "s";
+        }
+
+
+    }
+}

@@ -107,13 +107,7 @@ namespace PlayingAround
             if (InputManager.IsKeyPressed(Keys.F4))
                 showTileCellOutlines = !showTileCellOutlines;
 
-            if (InputManager.IsRightClick())
-            {
-                Rectangle start = player.GetHitbox();
-                Vector2 target = new Vector2(InputManager.MouseX, InputManager.MouseY);
-                var path = CustomPathfinder.BuildPixelPath(start, target);
-                player.SetPath(path);
-            }
+
 
 
             InputManager.Update(gameTime);  
