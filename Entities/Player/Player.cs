@@ -1,15 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using PlayingAround.Data;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Proximity;
+using PlayingAround.Stats;
 using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace PlayingAround.Entities.Player
@@ -18,6 +17,10 @@ namespace PlayingAround.Entities.Player
     {
         public float Speed { get; set; }
         public Texture2D Texture { get; private set; }
+
+        public string Name { get; set; }    
+
+        public PlayerStats stats { get; set; }
 
         public int PlayerWidth { get; set; } = 64;
         public int PlayerHeight { get; set; } = 64;
@@ -57,6 +60,7 @@ namespace PlayingAround.Entities.Player
             Texture = idleTexture;
             PlayerCord = startPosition; // Readd logic to move it from a nmon walkable spot
             Speed = speed;
+            stats = new PlayerStats();
 
             InputManager.OnMoveLeft += () => movement.X -= 1;
             InputManager.OnMoveRight += () => movement.X += 1;
@@ -90,25 +94,29 @@ namespace PlayingAround.Entities.Player
         }
         private void CheckCurrentPlayerCell()
         {
-            var currentCell = TileManager.GetCell(GetFeetCenter());
+            Vector2 feet = GetFeetCenter();
+            var currentCell = TileManager.GetCell(feet);
             if (currentCell != PlayerCurrentTileCell)
             {
                 PlayerCurrentTileCell = currentCell;
                 TileCellManager.OnEnterNewCell(currentCell); 
                 TileManager.OnEnterNewCell(currentCell);
-                PlayMonsterManager.OnEnterNewCell(currentCell);
+                ProximityManager.OnEnterNewCell(currentCell, feet);
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle destination = new Rectangle(
-                (int)(PlayerCord.X),
-                (int)PlayerCord.Y,
-                PlayerWidth,
-                PlayerHeight
-            );
+            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
+            {
+                Rectangle destination = new Rectangle(
+                    (int)(PlayerCord.X),
+                    (int)PlayerCord.Y,
+                    PlayerWidth,
+                    PlayerHeight
+                );
 
-            spriteBatch.Draw(Texture, destination, Color.White);
+                spriteBatch.Draw(Texture, destination, Color.White);
+            }
         }
 
         private void MovePlayer()   
@@ -215,6 +223,7 @@ namespace PlayingAround.Entities.Player
         }
         public void SetNewTilePosition()
         {
+          
             string dir = PlayerCurrentTileCell.NextTile.NextDirection.ToString();
             float newX = PlayerCord.X;
             float newY = PlayerCord.Y;

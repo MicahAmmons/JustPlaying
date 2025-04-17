@@ -13,7 +13,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("MonsterIcons/OozeIcon", "MonsterIcons/OozeIcon");
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
             AssetManager.LoadFont("mainFont", "mainFont");
-            AssetManager.LoadTexture("fightButton", "UI/fightButton");
+            AssetManager.LoadTexture("fightBackground", "UI/fightBackground");
+           // AssetManager.LoadTexture("fightButton", "UI/fightButton");
 
 
             // Add fonts, sounds, etc. later

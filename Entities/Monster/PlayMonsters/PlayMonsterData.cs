@@ -8,13 +8,13 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 {
     public class PlayMonsterData
     {
-        [JsonPropertyName("movementSpeed")]
-        public float MovementSpeed { get; set; }
+        [JsonPropertyName("movementSpeed")] public float MovementSpeed { get; set; }
+        [JsonPropertyName("speed")] public float Speed { get; set; }
+        [JsonPropertyName("health")] public float Health {  get; set; }
 
-        [JsonIgnore]
-        public Rectangle PacingBoundaryRect => PacingBoundary?.ToRectangle() ?? new Rectangle();
-        [JsonPropertyName("pacingBoundary")]
-        public MonsterRectangle PacingBoundary { get; set; }
+
+        [JsonIgnore]public Rectangle PacingBoundaryRect => PacingBoundary?.ToRectangle() ?? new Rectangle();
+        [JsonPropertyName("pacingBoundary")] public MonsterRectangle PacingBoundary { get; set; }
 
         [JsonPropertyName("movementPattern")]
         public string MovementPattern { get; set; }

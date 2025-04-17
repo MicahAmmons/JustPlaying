@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
-using PlayingAround.Entities.Monster;
-using PlayingAround.Entities.Monster.PlayMonsters;
-using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Proximity;
 using PlayingAround.Utils;
 
 namespace PlayingAround.Manager
@@ -45,6 +42,7 @@ namespace PlayingAround.Manager
             if (tiles.TryGetValue(id, out var existingTile))
             {
                 CurrentMapTile = existingTile;
+                ProximityManager.UpdateMapTile(CurrentMapTile);
                 return;
             }
 
@@ -75,6 +73,7 @@ namespace PlayingAround.Manager
 
 
             CurrentMapTile = tile;
+            ProximityManager.UpdateMapTile(CurrentMapTile);
         }
 
         public static bool IsCellWalkable(int x, int y)
@@ -124,13 +123,15 @@ namespace PlayingAround.Manager
 
             return GetCell(bottomCenter);
         }
+        public static Vector2 GetCellCords(TileCell cell)
+        {
+            int x = cell.X * MapTile.TileWidth;
+            int y = cell.Y * MapTile.TileHeight;
+            return new Vector2( x, y );
+        }
         public static void OnEnterNewCell(TileCell cell)
         {
-            if (PlayerCurrentCell != cell)
-            {
                 PlayerCurrentCell = cell;
-
-            }
         }
 
 

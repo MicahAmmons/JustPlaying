@@ -9,6 +9,9 @@ using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
 using System;
 using System.Reflection;
@@ -63,6 +66,8 @@ namespace PlayingAround
 
             mainFont = Content.Load<SpriteFont>("mainFont");
 
+
+
             AssetManager.Initialize(Content);
 
             AssetLoader.LoadAllAssets();
@@ -76,6 +81,10 @@ namespace PlayingAround
             player = Player.LoadFromSave(GameState.SaveData.Player);
 
             TileManager.Initialize(GraphicsDevice, GameState.SaveData.MapTile.CurrentTileId);
+
+            UIManager.LoadContent(player);
+
+            CombatManager.Initialize();
 
         }
 
@@ -115,6 +124,8 @@ namespace PlayingAround
             TileCellManager.Update(gameTime);
             TileManager.Update(gameTime);
             ScreenTransitionManager.Update(gameTime);
+            ProximityManager.Update(gameTime);
+            CombatManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -132,6 +143,10 @@ namespace PlayingAround
             TileCellManager.Draw(_spriteBatch);
 
             ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+
+            UIManager.Draw(_spriteBatch, GraphicsDevice);
+
+            CombatManager.Draw(_spriteBatch, GraphicsDevice);
 
             if (showTileCellOutlines)
                 TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);

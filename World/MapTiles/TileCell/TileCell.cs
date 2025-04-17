@@ -16,6 +16,8 @@ namespace PlayingAround.Game.Map
         public string? Trigger { get; }
         public NextTileData? NextTile {  get; }
         public bool CanSpawn { get; }
+        public bool HeroSpawnable { get; }
+        public bool MonsterSpawnable { get; }
 
 
 
@@ -25,11 +27,14 @@ namespace PlayingAround.Game.Map
             string texturePath,
             bool walkable = true,
             int z = 0,
+            bool heroSpawnable = false,
+            bool monsterSpawnable = false,
             string? behindOverlay = null,
             string? frontOverlay = null,
             string? npc = null,
             string? trigger = null,
             NextTileData? nextTile = null)
+
 
            
         {
@@ -38,6 +43,8 @@ namespace PlayingAround.Game.Map
             TexturePath = texturePath;
             IsWalkable = walkable;
             Z = z;
+            HeroSpawnable = heroSpawnable;
+            MonsterSpawnable = monsterSpawnable;
             BehindOverlay = behindOverlay;
             FrontOverlay = frontOverlay;
             Npc = npc;

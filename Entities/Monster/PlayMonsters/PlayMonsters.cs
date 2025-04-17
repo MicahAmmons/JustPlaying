@@ -30,6 +30,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
 
 
+
         // Constructor that takes a PlayMonsterData object for easy deserialization
         public PlayMonsters()
         {

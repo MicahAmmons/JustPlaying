@@ -27,9 +27,11 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("monsters")]
         public List<string> MonsterStrings { get; set; } = new();
         [JsonPropertyName("difficulty")]
-        public int Difficulty { get; set; } = 0;
+        public float Difficulty { get; set; } = 0;
 
         [JsonPropertyName("totalSpawns")]
-        public int TotalMonsterSpawns { get; set; } 
+        public int TotalMonsterSpawns { get; set; }
+
+
     }
 }

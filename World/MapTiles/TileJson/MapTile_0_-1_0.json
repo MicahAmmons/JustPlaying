@@ -12,7 +12,7 @@
     "width": 64,
     "height": 64
   },
-  "difficulty": 2,
+  "difficulty": 1.5,
   "totalSpawns": 2,
   "obstacles": [],
   "cells": [
@@ -6134,6 +6134,7 @@
       "x": 29,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6146,6 +6147,7 @@
       "x": 31,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6158,6 +6160,7 @@
       "x": 33,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6170,18 +6173,21 @@
       "x": 35,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
       "x": 36,
       "y": 16,
       "walkable": true,
+
       "z": 0
     },
     {
       "x": 37,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6194,6 +6200,7 @@
       "x": 39,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6434,6 +6441,7 @@
       "x": 19,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6446,6 +6454,7 @@
       "x": 21,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6458,6 +6467,7 @@
       "x": 23,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6470,6 +6480,7 @@
       "x": 25,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6482,6 +6493,7 @@
       "x": 27,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6494,6 +6506,7 @@
       "x": 29,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
@@ -6506,6 +6519,7 @@
       "x": 31,
       "y": 17,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {

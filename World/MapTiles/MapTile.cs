@@ -13,7 +13,7 @@ namespace PlayingAround.Game.Map
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
         public TileCell[,] TileGrid { get; private set; }
-        public int Difficulty { get; }
+        public float Difficulty { get; }
         public int TotalMonsterSpawns { get; }
         public PlayMonsterManager PlayMonstersManager { get; } = new PlayMonsterManager();
 
@@ -45,6 +45,8 @@ namespace PlayingAround.Game.Map
                     "default", // You can optionally add TexturePath per cell later
                     cellData.Walkable,
                     cellData.Z,
+                    cellData.HeroSpawnable,
+                    cellData.MonsterSpawnable,
                     cellData.BehindOverlay,
                     cellData.FrontOverlay,
                     cellData.Npc,

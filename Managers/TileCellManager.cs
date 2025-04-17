@@ -36,11 +36,7 @@ public static class TileCellManager
 
     public static void OnEnterNewCell(TileCell cell)
     {
-        if (PlayerCurrentCell != cell)
-        {
             PlayerCurrentCell = cell;
-            
-        }
     }
     private static void DisplayArrow()
     {

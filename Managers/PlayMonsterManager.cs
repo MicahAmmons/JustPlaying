@@ -18,14 +18,12 @@ namespace PlayingAround.Managers
 {
     public class PlayMonsterManager
     {
-        private List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
-        private PlayMonsters _selectedMonster = null;
-        public static TileCell PlayerCurrentcell;
+        public List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
+        public PlayMonsters _selectedMonster = null;
 
         private const int IconWidth = 64;
         private const int IconHeight = 64;
         private Vector2? _selectedMonsterInfoAnchor = null;
-        private bool isPlayerInMonCell = false;
 
 
 
@@ -66,7 +64,10 @@ namespace PlayingAround.Managers
                         {
                             IconPath = monsterData.IconPath,
                             Difficulty = monsterData.Difficulty,
-                            Name = randomMonsterName
+                            Name = randomMonsterName,
+                            Health = monsterData.Health,
+                            Speed = monsterData.Speed,
+
                         };
                         totalDifficulty -= monsterData.Difficulty;
                         allCombatMonsters.Add(combatMonster);
@@ -160,20 +161,9 @@ namespace PlayingAround.Managers
             HandleMonsterSelection();
             MovePlayMonsters(gameTime);
             UpdateTileCells();
-            CheckIfPlayerInPlayMonCell();
         }
 
-        public void CheckIfPlayerInPlayMonCell()
-        {
-            isPlayerInMonCell = false;
-            foreach (var mon in CurrentPlayMonsters)
-            {
-                if (mon.CurrentCell == PlayerCurrentcell)
-                {
-                    isPlayerInMonCell = true;
-                }
-            }
-        }
+
         public void UpdateTileCells()
         {
             foreach (var mon in CurrentPlayMonsters)
@@ -182,39 +172,34 @@ namespace PlayingAround.Managers
             }
         }
 
-        public void OnEnterNewCell(TileCell cell)
-        {
-            PlayerCurrentcell = cell;
-        }
         public void ClearMonsters()
         {
             CurrentPlayMonsters.Clear();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var monster in CurrentPlayMonsters)
+            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
-                if (monster.Icon != null)
+                foreach (var monster in CurrentPlayMonsters)
                 {
-                    Rectangle dest = new Rectangle(
-                        (int)(monster.CurrentPos.X - IconWidth / 2f),
-                        (int)(monster.CurrentPos.Y - IconHeight),
-                        IconWidth,
-                        IconHeight
-                    );
+                    if (monster.Icon != null)
+                    {
+                        Rectangle dest = new Rectangle(
+                            (int)(monster.CurrentPos.X - IconWidth / 2f),
+                            (int)(monster.CurrentPos.Y - IconHeight),
+                            IconWidth,
+                            IconHeight
+                        );
 
-                    // Draw icon
-                    spriteBatch.Draw(monster.Icon, dest, Color.White);
+                        // Draw icon
+                        spriteBatch.Draw(monster.Icon, dest, Color.White);
+                    }
+                }
+                if (_selectedMonster != null)
+                {
+                    DrawCombatMonsterInfo(spriteBatch);
                 }
             }
-            if (_selectedMonster != null)
-            {
-                DrawCombatMonsterInfo(spriteBatch);
-            }
-            if (isPlayerInMonCell)
-            {
-                spriteBatch.Draw()
-            } 
         }
         private void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
         {
