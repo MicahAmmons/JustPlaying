@@ -8,13 +8,13 @@ namespace PlayingAround.Stats
 {
     public class PlayerStats
     {
-        public float speed {  get; set; }
+        public int speed {  get; set; }
         public float mana {  get; set; }
         public float health { get; set; }
 
         public PlayerStats() 
         {
-            speed = 5;
+            speed = 1;
             mana = 15;
             health = 25;
         }

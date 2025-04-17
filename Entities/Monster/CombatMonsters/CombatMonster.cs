@@ -15,7 +15,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public Vector2 currentPos;
 
         public Vector2 startingPos;
-        public float Speed { get; set; }
+        public int Speed { get; set; }
         public float Health { get; set; }
         public float Mana {  get; set; }
         public bool isPlayerControled { get; set; }

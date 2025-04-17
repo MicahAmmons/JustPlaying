@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
@@ -7,6 +8,7 @@ using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Movement.CombatGrid;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,6 +34,9 @@ namespace PlayingAround.Managers.CombatMan
         private static List<TileCell> _monsterSpawnableCells = new List<TileCell>();
         private static List<CombatMonster> _summonedMonsters = new List<CombatMonster>();
         private static Queue<CombatMonster> _turnOrder = new Queue<CombatMonster>();
+        private static Queue<string> orderOfActions = new Queue<string>();
+        private static int _startingSpeed;
+
 
 
 
@@ -41,7 +46,10 @@ namespace PlayingAround.Managers.CombatMan
             LocationSelection,
             RoundStart, // add new class here?
             AwaitingInput,
-            Moving,
+            MovingPlayerControlled,
+            MovingAIControlled,
+            AIAttacking,
+
             ExecutingAction,
             ResolvingEffects,
             EndingTurn,
@@ -181,19 +189,69 @@ namespace PlayingAround.Managers.CombatMan
                 }
                 if (!currentCombatant.isPlayerControled)
                 {
+                    _startingSpeed = _turnOrder.Peek().Speed;
                     DecideOrderOfOperations(currentCombatant);
+                    if (orderOfActions.Peek() == "moveClose")
+                    {
+                        _currentState = CombatState.MovingAIControlled;
+                    }
+                    if (orderOfActions.Peek() == "attack")
+                    {
+                        _currentState = CombatState.AIAttacking;
+                    }
+                    if (orderOfActions.Count == 0)
+                    {
+                        _currentState = CombatState.Waiting;
+                    }
+                }
+            }
+            if (_currentState == CombatState.MovingAIControlled)
+            {
+                if (_turnOrder.Peek().Speed > 0)
+                {
+                    Vector2 dest = GetDestination();
+                    List<Vector2> path = GridMovement.GetPath(_turnOrder.Peek().currentPos, dest, _turnOrder.Peek().Speed);
+                    ExecutePath(_turnOrder.Peek(), path);
                 }
             }
 
         }
 
+        private static void ExecutePath(CombatMonster mon, List<Vector2> path)
+        {
+            if (path == null || path.Count == 0)
+                return;
+
+            mon.currentPos = path.Last();
+            mon.Speed -= path.Count - 1;
+
+            orderOfActions.Dequeue(); // Finished this action
+            SetState(CombatState.RoundStart); // Continue to next action or state
+        }
+
+        private static Vector2 GetDestination() 
+        {
+            if (orderOfActions.Peek() == "moveCloser")
+            {
+                List<Vector2> playerControlledPositions = _turnOrder
+                 .Where(mon => mon.isPlayerControled)
+                 .Select(mon => mon.currentPos)
+                 .ToList();
+                if (playerControlledPositions.Count == 0)
+                    return _turnOrder.Peek().currentPos;
+
+                return GridMovement.GetMonsterMovePosition(_turnOrder.Peek().currentPos, playerControlledPositions, _turnOrder.Peek().Speed);
+            }
+            return new Vector2(0, 0);
+        }
         private static void DecideOrderOfOperations(CombatMonster mon)
         {
 
             if (mon.TurnBehavior == "getCloseAsPossible")
             {
-
+                orderOfActions = new Queue<string>(new[] { "moveClose", "attack" });
             }
+
         }
         public static void UpdateMouseClickedCell()
         {
