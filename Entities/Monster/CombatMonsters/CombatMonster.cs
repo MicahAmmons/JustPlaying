@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Stats;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
 {
@@ -8,14 +11,22 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float Difficulty { get; set; }
         public string IconPath { get; set; }
         public string Name { get; set; }
-        public Vector2 currentPos;
-        public Vector2 startingPos;
 
+        public Vector2 currentPos;
+
+        public Vector2 startingPos;
         public float Speed { get; set; }
         public float Health { get; set; }
         public float Mana {  get; set; }
         public bool isPlayerControled { get; set; }
         public bool Draw { get; set; } = true;
+        public string TurnBehavior { get; set; }
+        public string MovementPattern { get; set; }
+        public ListOfAttacks Attacks { get; set; }
+        public List<string> Immunities { get; set; }
+        public List<string> Resistances { get; set; }
+        public List<string> Vulnerabilities { get; set; }
+
 
 
         public CombatMonster() 

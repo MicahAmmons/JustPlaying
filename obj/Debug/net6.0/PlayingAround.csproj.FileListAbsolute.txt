@@ -105,3 +105,4 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\r
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.pdb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\ref\PlayingAround.dll
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\UI\fightBackground.xnb

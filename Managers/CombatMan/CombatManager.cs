@@ -39,7 +39,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             Waiting,
             LocationSelection,
-            RoundsBegin, // add new class here?
+            RoundStart, // add new class here?
             AwaitingInput,
             Moving,
             ExecutingAction,
@@ -171,9 +171,30 @@ namespace PlayingAround.Managers.CombatMan
                     CombatManager.SetState(CombatState.RoundStart);
                 }
             }
-            
+            if (_currentState == CombatState.RoundStart)
+            {
+                var currentCombatant = _turnOrder.Peek();
+
+                if (currentCombatant.isPlayerControled)
+                {
+
+                }
+                if (!currentCombatant.isPlayerControled)
+                {
+                    DecideOrderOfOperations(currentCombatant);
+                }
+            }
+
         }
 
+        private static void DecideOrderOfOperations(CombatMonster mon)
+        {
+
+            if (mon.TurnBehavior == "getCloseAsPossible")
+            {
+
+            }
+        }
         public static void UpdateMouseClickedCell()
         {
             if (InputManager.IsLeftClick())

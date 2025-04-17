@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
-using PlayingAround.Game.Assets;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
@@ -30,8 +30,8 @@ namespace PlayingAround.Managers
 
         public void GeneratePlayMonsters(MapTileData data)
         {
-           // string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
-            string path = "C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
+            string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
+           // string path = "C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
             Dictionary<string, List<PlayMonsterData>> jsonData = JsonLoader.LoadPlayMonsterData(path);
 
             // Difficulty of the MapTile
@@ -67,6 +67,12 @@ namespace PlayingAround.Managers
                             Name = randomMonsterName,
                             Health = monsterData.Health,
                             Speed = monsterData.Speed,
+                            TurnBehavior = monsterData.TurnBehavior,
+                            MovementPattern = monsterData.MovementPattern,
+                            Attacks = new ListOfAttacks(monsterData.Attacks),
+                            Immunities = monsterData.Immunities,
+                            Resistances = monsterData.Resistances,
+                            Vulnerabilities = monsterData.Vulnerabilities
 
                         };
                         totalDifficulty -= monsterData.Difficulty;

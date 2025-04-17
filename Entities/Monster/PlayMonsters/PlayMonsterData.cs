@@ -3,6 +3,8 @@ using System;
 using PlayingAround.Utils;
 
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 
 namespace PlayingAround.Entities.Monster.PlayMonsters
 {
@@ -12,18 +14,20 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         [JsonPropertyName("speed")] public float Speed { get; set; }
         [JsonPropertyName("health")] public float Health {  get; set; }
 
+        [JsonPropertyName("turnBehavior")] public string TurnBehavior { get; set; }
 
         [JsonIgnore]public Rectangle PacingBoundaryRect => PacingBoundary?.ToRectangle() ?? new Rectangle();
         [JsonPropertyName("pacingBoundary")] public MonsterRectangle PacingBoundary { get; set; }
 
-        [JsonPropertyName("movementPattern")]
-        public string MovementPattern { get; set; }
-        [JsonPropertyName("iconPath")]
-        public string IconPath { get; set; }
-        [JsonPropertyName("difficulty")]
-        public float Difficulty { get; set; }
-        [JsonPropertyName("pauseDuration")]
-        public float PauseDuration { get; set; }
+        [JsonPropertyName("movementPattern")] public string MovementPattern { get; set; }
+        [JsonPropertyName("iconPath")] public string IconPath { get; set; }
+        [JsonPropertyName("difficulty")] public float Difficulty { get; set; }
+        [JsonPropertyName("pauseDuration")] public float PauseDuration { get; set; }
+        [JsonPropertyName("attacks")] public List<SingleAttack> Attacks { get; set; }
+        [JsonPropertyName("immunities")] public List<string> Immunities { get; set; }
+        [JsonPropertyName("resistances")] public List<string> Resistances {  get; set; }
+        [JsonPropertyName("vulnerabilities")] public List<string> Vulnerabilities { get; set; }
+
     }
     public class MonsterRectangle
     {
