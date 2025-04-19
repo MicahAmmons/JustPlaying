@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
@@ -30,6 +31,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<string> Vulnerabilities { get; set; }
         public List<Vector2> MovePath { get; set; } = new();
         public bool PathGenerated { get; set; } = false;
+        public int ID { get; set; }
+        public TileCell CurrentCell { get; set; }
+
 
 
 

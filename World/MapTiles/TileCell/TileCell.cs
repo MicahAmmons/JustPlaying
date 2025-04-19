@@ -1,4 +1,5 @@
 ﻿using PlayingAround.Entities.Monster;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using System.Collections.Generic;
 
 namespace PlayingAround.Game.Map
@@ -18,6 +19,7 @@ namespace PlayingAround.Game.Map
         public bool CanSpawn { get; }
         public bool HeroSpawnable { get; }
         public bool MonsterSpawnable { get; }
+        public CombatMonster CombatMonster { get; set; }
 
 
 

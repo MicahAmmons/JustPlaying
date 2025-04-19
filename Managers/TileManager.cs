@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
@@ -133,16 +134,16 @@ namespace PlayingAround.Manager
         {
                 PlayerCurrentCell = cell;
         }
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell)
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell, CombatMonster self = null)
         {
             List<TileCell> neighbors = new();
 
             Point[] directions = new Point[]
             {
-            new(0, -1), // Up
-            new(0, 1),  // Down
-            new(-1, 0), // Left
-            new(1, 0)   // Right
+        new(0, -1),
+        new(0, 1),
+        new(-1, 0),
+        new(1, 0)
             };
 
             foreach (var dir in directions)
@@ -150,12 +151,40 @@ namespace PlayingAround.Manager
                 int newX = cell.X + dir.X;
                 int newY = cell.Y + dir.Y;
 
+                if (newX < 0 || newY < 0 || newX >= CurrentMapTile.TileGrid.GetLength(0) || newY >= CurrentMapTile.TileGrid.GetLength(1))
+                    continue;
+
                 TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
-                if (neighbor != null && neighbor.IsWalkable)
+
+                bool isBlockedByAnother = neighbor.CombatMonster != null && neighbor.CombatMonster != self;
+
+                if (neighbor != null && neighbor.IsWalkable && !isBlockedByAnother)
+                {
                     neighbors.Add(neighbor);
+                }
             }
 
             return neighbors;
+        }
+
+
+        public static void AddCombatMonsterToCell(CombatMonster mon, TileCell newCell)
+        {
+            if (mon == null || newCell == null)
+                return;
+
+            if (mon.CurrentCell == newCell)
+                return;
+
+            // Remove from old cell
+            if (mon.CurrentCell != null)
+            {
+                mon.CurrentCell.CombatMonster = null;
+            }
+
+            // Assign to new
+            newCell.CombatMonster = mon;
+            mon.CurrentCell = newCell;
         }
 
 
