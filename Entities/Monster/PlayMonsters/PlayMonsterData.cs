@@ -11,7 +11,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
     public class PlayMonsterData
     {
         [JsonPropertyName("movementSpeed")] public float MovementSpeed { get; set; }
-        [JsonPropertyName("speed")] public float Speed { get; set; }
+        [JsonPropertyName("speed")] public int Speed { get; set; }
         [JsonPropertyName("health")] public float Health {  get; set; }
 
         [JsonPropertyName("turnBehavior")] public string TurnBehavior { get; set; }

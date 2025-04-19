@@ -72,7 +72,8 @@ namespace PlayingAround.Managers
                             Attacks = new ListOfAttacks(monsterData.Attacks),
                             Immunities = monsterData.Immunities,
                             Resistances = monsterData.Resistances,
-                            Vulnerabilities = monsterData.Vulnerabilities
+                            Vulnerabilities = monsterData.Vulnerabilities,
+                            MovementQuickness = monsterData.MovementSpeed
 
                         };
                         totalDifficulty -= monsterData.Difficulty;
@@ -120,19 +121,7 @@ namespace PlayingAround.Managers
         {
             CurrentPlayMonsters.Add(mon);
         }
-        private void MovePlayMonsters(GameTime gameTime)
-        {
-            foreach (var mon in CurrentPlayMonsters)
-            {
-                if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
-                {
-                    if (Movement.NPCMovement.HandlePause(mon, gameTime))
-                        continue;
 
-                    Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
-                }
-            }
-        }
         private void HandleMonsterSelection()
         {
             if (InputManager.IsLeftClick())
@@ -165,7 +154,7 @@ namespace PlayingAround.Managers
         public void Update(GameTime gameTime)
         {
             HandleMonsterSelection();
-            MovePlayMonsters(gameTime);
+            Movement.NPCMovement.MoveMonsters(gameTime, CurrentPlayMonsters);
             UpdateTileCells();
         }
 

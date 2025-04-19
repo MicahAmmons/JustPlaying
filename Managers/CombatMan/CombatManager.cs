@@ -8,12 +8,15 @@ using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Movement.CombatGrid;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +39,8 @@ namespace PlayingAround.Managers.CombatMan
         private static Queue<CombatMonster> _turnOrder = new Queue<CombatMonster>();
         private static Queue<string> orderOfActions = new Queue<string>();
         private static int _startingSpeed;
+        private static int _numberOfCellsMoved;
+
 
 
 
@@ -45,6 +50,7 @@ namespace PlayingAround.Managers.CombatMan
             Waiting,
             LocationSelection,
             RoundStart, // add new class here?
+            ActiionNavigation,
             AwaitingInput,
             MovingPlayerControlled,
             MovingAIControlled,
@@ -75,6 +81,7 @@ namespace PlayingAround.Managers.CombatMan
             SetTurnOrder();
             FindSpawnablCellsForPlayerAndMons();
             SetCombatMonsterStartingPos();
+
             CombatManager.SetState(CombatState.LocationSelection);
         }
         private static void SetTurnOrder()
@@ -135,8 +142,8 @@ namespace PlayingAround.Managers.CombatMan
                 if (!combatMon.isPlayerControled)
                 {
                     Rectangle destination = new Rectangle(
-                        (int)(combatMon.startingPos.X),
-                        (int)(combatMon.startingPos.Y),
+                        (int)(combatMon.currentPos.X),
+                        (int)(combatMon.currentPos.Y),
                         32,
                         32);
                     spriteBatch.Draw(AssetManager.GetTexture($"{combatMon.IconPath}"), destination, Color.White);
@@ -168,6 +175,8 @@ namespace PlayingAround.Managers.CombatMan
         }
         public static void Update(GameTime gameTime)
         {
+            
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             UpdateMouseClickedCell();
             UpdateMouseHoverCell();
             if (_currentState == CombatState.LocationSelection)
@@ -189,8 +198,7 @@ namespace PlayingAround.Managers.CombatMan
                 }
                 if (!currentCombatant.isPlayerControled)
                 {
-                    _startingSpeed = _turnOrder.Peek().Speed;
-                    DecideOrderOfOperations(currentCombatant);
+                    if (orderOfActions == null || orderOfActions.Count == 0) { DecideOrderOfOperations(currentCombatant); }
                     if (orderOfActions.Peek() == "moveClose")
                     {
                         _currentState = CombatState.MovingAIControlled;
@@ -207,15 +215,67 @@ namespace PlayingAround.Managers.CombatMan
             }
             if (_currentState == CombatState.MovingAIControlled)
             {
-                if (_turnOrder.Peek().Speed > 0)
-                {
-                    Vector2 dest = GetDestination();
-                    List<Vector2> path = GridMovement.GetPath(_turnOrder.Peek().currentPos, dest, _turnOrder.Peek().Speed);
-                    ExecutePath(_turnOrder.Peek(), path);
-                }
+                _startingSpeed = _turnOrder.Peek().Speed;
+                MoveAIMonster(delta);
+               // orderOfActions.Dequeue();
+
+
             }
 
         }
+
+        private static void MoveAIMonster(float delta)
+        {
+            CombatMonster mon = _turnOrder.Peek();
+
+            // Only generate path once
+            if (!mon.PathGenerated && mon.Speed > 0)
+            {
+                TileCell dest = GetEndPoint();
+                List<TileCell> path = GridMovement.FindPath(mon.currentPos, dest, mon.Speed);
+                _numberOfCellsMoved = path.Count();
+                List<Vector2> fullVectorPath = new();
+                Vector2 current = mon.currentPos;
+
+                foreach (var endPos in path)
+                {
+                    List<Vector2> arc = NPCMovement.ArcMovement(TileManager.GetCellCords(endPos), current);
+                    fullVectorPath.AddRange(arc);
+                    current = arc.Last();
+                }
+
+                mon.MovePath = fullVectorPath;
+                mon.PathGenerated = true; // ✅ prevent regen
+            }
+
+            // Execute movement
+            if (mon.MovePath != null && mon.MovePath.Count > 0)
+            {
+                Vector2 target = mon.MovePath[0];
+                Vector2 direction = target - mon.currentPos;
+                float distance = direction.Length();
+                float step = mon.MovementQuickness * delta;
+
+                if (distance <= step)
+                {
+                    mon.currentPos = target;
+                    mon.MovePath.RemoveAt(0);
+                }
+                else
+                {
+                    direction.Normalize();
+                    mon.currentPos += direction * step;
+                }
+            }
+            else if (mon.PathGenerated) // ✅ only triggers after finishing path
+            {
+                _startingSpeed = _startingSpeed - _numberOfCellsMoved;
+                mon.PathGenerated = false;
+                orderOfActions.Dequeue();
+                SetState(CombatState.RoundStart);
+            }
+        }
+
 
         private static void ExecutePath(CombatMonster mon, List<Vector2> path)
         {
@@ -229,20 +289,25 @@ namespace PlayingAround.Managers.CombatMan
             SetState(CombatState.RoundStart); // Continue to next action or state
         }
 
-        private static Vector2 GetDestination() 
+        private static TileCell GetEndPoint()
         {
-            if (orderOfActions.Peek() == "moveCloser")
+            if (orderOfActions.Peek() == "moveClose")
             {
-                List<Vector2> playerControlledPositions = _turnOrder
-                 .Where(mon => mon.isPlayerControled)
-                 .Select(mon => mon.currentPos)
-                 .ToList();
-                if (playerControlledPositions.Count == 0)
-                    return _turnOrder.Peek().currentPos;
+                List<TileCell> playerControlledCells = _turnOrder
+                    .Where(mon => mon.isPlayerControled)
+                    .Select(mon => TileManager.GetCell(mon.currentPos))
+                    .Where(cell => cell != null)
+                    .ToList();
 
-                return GridMovement.GetMonsterMovePosition(_turnOrder.Peek().currentPos, playerControlledPositions, _turnOrder.Peek().Speed);
+                if (playerControlledCells.Count == 0)
+                    return TileManager.GetCell(_turnOrder.Peek().currentPos); // fallback to current cell
+
+                TileCell currentCell = TileManager.GetCell(_turnOrder.Peek().currentPos);
+
+                return GridMovement.GetMonsterMovePosition(currentCell, playerControlledCells);
             }
-            return new Vector2(0, 0);
+
+            return null; // fallback case
         }
         private static void DecideOrderOfOperations(CombatMonster mon)
         {

@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,10 +16,32 @@ namespace PlayingAround.Managers.Movement
     public static class NPCMovement
     {
         public const float ArcHeight = 50f;
-        public static List<Vector2> ArcMovement(Rectangle pacingBoundary, Vector2 start)
-        {
-            Vector2 end = FindEndPoint(pacingBoundary, start);
 
+        public static void MoveMonsters(GameTime gameTime, List<PlayMonsters> playMons)
+        {
+            foreach (var mon in playMons)
+            {
+                if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
+                {
+                    if (Movement.NPCMovement.HandlePause(mon, gameTime))
+                        continue;
+
+                    Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
+                }
+            }
+        }
+        public static List<Vector2> MoveMonsters(GameTime gameTime, CombatMonster mon, TileCell endTile)
+        {
+            if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
+            {
+                List<Vector2> result = NPCMovement.ArcMovement(TileManager.GetCellCords(endTile), mon.currentPos);
+                return result;
+            }
+            else return null;
+        }
+        public static List<Vector2> ArcMovement(Vector2 endPoint, Vector2 start)
+        {
+            Vector2 end = endPoint;
             // Create control point for arc — adjust the arc height (e.g., 50) for steeper arcs
             Vector2 control = new Vector2((start.X + end.X) / 2, MathF.Min(start.Y, end.Y) - ArcHeight);
 
@@ -111,6 +135,28 @@ namespace PlayingAround.Managers.Movement
                 mon.CurrentPos += direction * speed;
             }
         }
+        public static void MoveTowardsNextPathPoint(CombatMonster mon, List<Vector2> MovePath, GameTime gameTime)
+        {
+            if (MovePath == null || MovePath.Count == 0)
+                return;
+
+            Vector2 nextPoint = MovePath[0];
+            float speed = mon.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Vector2 direction = nextPoint - mon.currentPos;
+            float distance = direction.Length();
+
+            if (distance <= speed)
+            {
+                mon.currentPos = nextPoint;
+                MovePath.RemoveAt(0);
+            }
+            else
+            {
+                direction.Normalize();
+                mon.currentPos += direction * speed;
+            }
+        }
         public static bool HandlePause(PlayMonsters mon, GameTime gameTime)
         {
             if (mon.IsPaused)
@@ -119,7 +165,8 @@ namespace PlayingAround.Managers.Movement
                 if (mon.PauseTimer <= 0)
                 {
                     mon.IsPaused = false;
-                    mon.MovePath = Movement.NPCMovement.ArcMovement(mon.PacingBoundary, mon.CurrentPos);
+                    Vector2 end = FindEndPoint(mon.PacingBoundary, mon.CurrentPos);
+                    mon.MovePath = Movement.NPCMovement.ArcMovement(end, mon.CurrentPos);
                 }
 
                 return true; // Still paused this frame

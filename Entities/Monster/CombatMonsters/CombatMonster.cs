@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -16,6 +17,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public Vector2 startingPos;
         public int Speed { get; set; }
+        public float MovementQuickness { get; set; }
         public float Health { get; set; }
         public float Mana {  get; set; }
         public bool isPlayerControled { get; set; }
@@ -26,6 +28,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<string> Immunities { get; set; }
         public List<string> Resistances { get; set; }
         public List<string> Vulnerabilities { get; set; }
+        public List<Vector2> MovePath { get; set; } = new();
+        public bool PathGenerated { get; set; } = false;
 
 
 

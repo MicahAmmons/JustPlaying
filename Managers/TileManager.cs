@@ -133,6 +133,30 @@ namespace PlayingAround.Manager
         {
                 PlayerCurrentCell = cell;
         }
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell)
+        {
+            List<TileCell> neighbors = new();
+
+            Point[] directions = new Point[]
+            {
+            new(0, -1), // Up
+            new(0, 1),  // Down
+            new(-1, 0), // Left
+            new(1, 0)   // Right
+            };
+
+            foreach (var dir in directions)
+            {
+                int newX = cell.X + dir.X;
+                int newY = cell.Y + dir.Y;
+
+                TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
+                if (neighbor != null && neighbor.IsWalkable)
+                    neighbors.Add(neighbor);
+            }
+
+            return neighbors;
+        }
 
 
         public static MapTileSaveData Save()

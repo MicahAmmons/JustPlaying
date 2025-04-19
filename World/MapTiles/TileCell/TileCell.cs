@@ -53,5 +53,6 @@ namespace PlayingAround.Game.Map
             CanSpawn = IsWalkable && NextTile == null;
         }
 
+
     }
 }
