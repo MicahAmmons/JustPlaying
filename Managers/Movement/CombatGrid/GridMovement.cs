@@ -31,6 +31,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
         {
             TileCell startCell = TileManager.GetCell(startPos);
             TileCell endCell = endPos;
+            endCell.BlockedByMonster = false;
 
             if (startCell == null || endCell == null || !endCell.IsWalkable)
                 return new List<TileCell>();
@@ -49,8 +50,11 @@ namespace PlayingAround.Managers.Movement.CombatGrid
                 TileCell current = openSet.Dequeue();
 
                 if (current.X == endCell.X && current.Y == endCell.Y)
-                    
-                    return ReconstructPath(cameFrom, current, maxSteps);
+                {
+                    endCell.BlockedByMonster = true;
+                    return ReconstructPath(cameFrom, current, maxSteps); 
+                }
+
 
                 foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current))
                 {
@@ -67,8 +71,9 @@ namespace PlayingAround.Managers.Movement.CombatGrid
                     }
                 }
             }
-            
-            return new List<TileCell>(); // No path found
+
+            return new List<TileCell>();
+            // No path found
         }
 
         private static float Heuristic(TileCell a, TileCell b)
@@ -87,15 +92,25 @@ namespace PlayingAround.Managers.Movement.CombatGrid
             }
 
             path.Reverse();
+
             if (path.Count > 0)
-                path.RemoveAt(0);
+                path.RemoveAt(0); // Remove the starting cell (already on it)
 
             if (path.Count > 0 && path[^1] == path.Last())
+                path.RemoveAt(path.Count - 1); // Remove last if it's redundant
+
+            // 🔥 Stop at first blocked cell
+            List<TileCell> result = new();
+            foreach (var cell in path.Take(maxSteps))
             {
-                path.RemoveAt(path.Count - 1);
+                if (cell.BlockedByMonster)
+                    break;
+                result.Add(cell);
             }
-            return path.Take(maxSteps).ToList();
+
+            return result;
         }
+
         public class PriorityQueue<T>
         {
             private readonly List<(T item, float priority)> elements = new();

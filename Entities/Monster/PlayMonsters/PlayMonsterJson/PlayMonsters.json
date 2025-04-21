@@ -14,18 +14,23 @@
       },
       "movementPattern": "arc",
       "turnBehavior": "getCloseAsPossible",
+      "attackPower": 3,
       "attacks": [
         {
           "name": "slam",
           "type": "physical, bludgeoning",
           "range": 1,
-          "effect": null
+          "effect": null,
+          "cost": 3,
+          "damage":  4
+           
         },
         {
           "name": "acidProjectile",
           "type": "physical, acid",
           "range": 6,
-          "effect": "weakBurn"
+          "effect": "weakBurn",
+          "cost":  3
         }
       ],
       "monsterType": "Ooze",
@@ -51,12 +56,15 @@
       "monsterType": "AngryPlant",
       "iconPath": "MonsterIcons/AngryPlantIcon",
       "turnBehavior": "Attack",
+      "attackPower": 3,
       "attacks": [
         {
           "name": "rootAttack",
           "type": "physical, piercing",
           "range": 10,
-          "effect": "movementReducedHalf"
+          "effect": "movementReducedHalf",
+          "cost":  3
+
         }
       ],
 

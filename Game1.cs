@@ -126,6 +126,7 @@ namespace PlayingAround
             ScreenTransitionManager.Update(gameTime);
             ProximityManager.Update(gameTime);
             CombatManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 

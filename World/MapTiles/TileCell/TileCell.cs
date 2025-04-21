@@ -20,6 +20,7 @@ namespace PlayingAround.Game.Map
         public bool HeroSpawnable { get; }
         public bool MonsterSpawnable { get; }
         public CombatMonster CombatMonster { get; set; }
+        public bool BlockedByMonster { get; set; } = false;
 
 
 

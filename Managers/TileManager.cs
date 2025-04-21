@@ -156,9 +156,7 @@ namespace PlayingAround.Manager
 
                 TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
 
-                bool isBlockedByAnother = neighbor.CombatMonster != null && neighbor.CombatMonster != self;
-
-                if (neighbor != null && neighbor.IsWalkable && !isBlockedByAnother)
+                if (neighbor != null && neighbor.IsWalkable && !neighbor.BlockedByMonster)
                 {
                     neighbors.Add(neighbor);
                 }
@@ -166,6 +164,22 @@ namespace PlayingAround.Manager
 
             return neighbors;
         }
+
+        public static bool IsNeighbor(List<TileCell> targets, TileCell current)
+        {
+            foreach (var target in targets)
+            {
+                int dx = Math.Abs(target.X - current.X);
+                int dy = Math.Abs(target.Y - current.Y);
+
+                // Manhattan distance of 1 means direct neighbor (no diagonals)
+                if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1))
+                    return true;
+            }
+
+            return false;
+        }
+
 
 
         public static void AddCombatMonsterToCell(CombatMonster mon, TileCell newCell)
@@ -179,13 +193,41 @@ namespace PlayingAround.Manager
             // Remove from old cell
             if (mon.CurrentCell != null)
             {
+                mon.CurrentCell.BlockedByMonster = false;
                 mon.CurrentCell.CombatMonster = null;
             }
 
             // Assign to new
             newCell.CombatMonster = mon;
             mon.CurrentCell = newCell;
+            mon.CurrentCell.BlockedByMonster = true;
         }
+
+        public static List<TileCell> GetCellsInRange(TileCell origin, int range)
+        {
+            List<TileCell> result = new();
+
+            for (int dx = -range; dx <= range; dx++)
+            {
+                for (int dy = -range; dy <= range; dy++)
+                {
+                    if (Math.Abs(dx) + Math.Abs(dy) <= range) // Manhattan only
+                    {
+                        int x = origin.X + dx;
+                        int y = origin.Y + dy;
+
+                        if (x >= 0 && x < MapTile.GridWidth && y >= 0 && y < MapTile.GridHeight)
+                        {
+                            TileCell cell = TileManager.CurrentMapTile.TileGrid[x, y];
+                            result.Add(cell);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
 
 
         public static MapTileSaveData Save()

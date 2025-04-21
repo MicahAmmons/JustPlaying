@@ -33,6 +33,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool PathGenerated { get; set; } = false;
         public int ID { get; set; }
         public TileCell CurrentCell { get; set; }
+        public int AttackPower {  get; set; }
 
 
 
