@@ -49,6 +49,7 @@ namespace PlayingAround.Managers.UI
                 _spriteBatch.Draw(_fightBackground, new Vector2(960,15), Color.Black);
                 if (InputManager.IsKeyPressed(Keys.Enter))
                 {
+                    SceneManager.SetState(SceneManager.SceneState.Combat);
                     CombatManager.BeginCombat(_playMonsters, _player);
                 }
             }

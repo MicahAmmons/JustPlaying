@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
@@ -14,6 +15,7 @@ namespace PlayingAround.Managers.Proximity
     {
         private static Vector2 _currentPlayerCord;
         private static TileCell _currentPlayerCell;
+
         private static List<PlayMonsters> PlayMonsters;
         private static MapTile _currentMapTile;
 
@@ -21,14 +23,34 @@ namespace PlayingAround.Managers.Proximity
         public static event Action<PlayMonsters> OnPlayerNearMonster;
         public static event Action OnPlayerLeaveMonster;
 
+        public static Dictionary<CombatMonster, TileCell> CombatMonsterCells;
+
 
 
         public static void Update(GameTime gameTime)
         {
             if (_currentMapTile == null) return;
-            IsPlayerInMonsterRange();
-        }
 
+            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
+            {
+                IsPlayerInMonsterRange();
+                IsNPCInRange();
+                IsTrapInRange();
+            }
+            if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
+            {
+
+            }
+            
+        }
+        public static bool IsTrapInRange()
+        {
+            return true;
+        }
+        public static bool IsNPCInRange()
+        {
+            return false;
+        }
         public static void IsPlayerInMonsterRange()
         {
             bool monsterWasNear = false;
@@ -46,14 +68,11 @@ namespace PlayingAround.Managers.Proximity
                 OnPlayerLeaveMonster?.Invoke();
             }
         }
-
-
         public static void OnEnterNewCell(TileCell cell, Vector2 cord)
         {
             _currentPlayerCord = cord;
             _currentPlayerCell = cell;
         }
-
         public static void UpdateMapTile(MapTile mapTile)
         {
             _currentMapTile = mapTile;

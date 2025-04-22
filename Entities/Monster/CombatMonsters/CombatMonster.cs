@@ -34,6 +34,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int ID { get; set; }
         public TileCell CurrentCell { get; set; }
         public int AttackPower {  get; set; }
+        public int TurnNumber { get; set; } = 0;
+        public Queue<string> OrderOfActions { get; set; }
 
 
 

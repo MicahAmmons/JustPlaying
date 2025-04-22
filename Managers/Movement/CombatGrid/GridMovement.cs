@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
+using PlayingAround.Managers.CombatMan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,32 +10,32 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 {
     public static class GridMovement
     {
-        public static TileCell GetMonsterMovePosition(TileCell current, List<TileCell> targets)
+        public static List<TileCell> FindClosestTargetPath(TileCell current, List<TileCell> targets, int maxSteps)
         {
-            TileCell closest = null;
-            int bestDistance = int.MaxValue;
+            List<TileCell> bestPath = null;
+            int shortestPathLength = int.MaxValue;
 
             foreach (var target in targets)
             {
-                int distance = Math.Abs(current.X - target.X) + Math.Abs(current.Y - target.Y); // Manhattan distance
 
-                if (distance < bestDistance)
+                List<TileCell> path = FindPath(current, target, maxSteps);
+
+                if (path.Count > 0 && path.Count < shortestPathLength)
                 {
-                    bestDistance = distance;
-                    closest = target;
+                    shortestPathLength = path.Count;
+                    bestPath = path;
                 }
             }
 
-            return closest;
+            return bestPath ?? new List<TileCell>(); // return empty if none found
         }
-        public static List<TileCell> FindPath(Vector2 startPos, TileCell endPos, int maxSteps)
-        {
-            TileCell startCell = TileManager.GetCell(startPos);
-            TileCell endCell = endPos;
-            endCell.BlockedByMonster = false;
 
-            if (startCell == null || endCell == null || !endCell.IsWalkable)
-                return new List<TileCell>();
+
+
+        public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)
+        {
+            TileCell startCell = startPos;
+            TileCell endCell = endPos;
 
             var openSet = new PriorityQueue<TileCell>();
             var cameFrom = new Dictionary<TileCell, TileCell>();
@@ -54,9 +55,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
                     endCell.BlockedByMonster = true;
                     return ReconstructPath(cameFrom, current, maxSteps); 
                 }
-
-
-                foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current))
+                foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current, endCell))
                 {
                     int tentativeG = gScore[current] + 1;
 
@@ -68,18 +67,15 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
                         if (!openSet.Contains(neighbor))
                             openSet.Enqueue(neighbor, fScore[neighbor]);
+
                     }
                 }
             }
-
             return new List<TileCell>();
             // No path found
         }
 
-        private static float Heuristic(TileCell a, TileCell b)
-        {
-            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y); // Manhattan distance
-        }
+
         private static List<TileCell> ReconstructPath(Dictionary<TileCell, TileCell> cameFrom, TileCell current, int maxSteps)
         {
             List<TileCell> path = new();
@@ -93,24 +89,17 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             path.Reverse();
 
-            if (path.Count > 0)
-                path.RemoveAt(0); // Remove the starting cell (already on it)
+            if (path.Count > 0 )
+                path.RemoveAt(path.Count - 1); // optional redundancy check, can be removed too
 
-            if (path.Count > 0 && path[^1] == path.Last())
-                path.RemoveAt(path.Count - 1); // Remove last if it's redundant
-
-            // 🔥 Stop at first blocked cell
-            List<TileCell> result = new();
-            foreach (var cell in path.Take(maxSteps))
-            {
-                if (cell.BlockedByMonster)
-                    break;
-                result.Add(cell);
-            }
-
-            return result;
+            return path.Take(maxSteps).ToList();
         }
 
+
+        private static float Heuristic(TileCell a, TileCell b)
+        {
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y); // Manhattan distance
+        }
         public class PriorityQueue<T>
         {
             private readonly List<(T item, float priority)> elements = new();

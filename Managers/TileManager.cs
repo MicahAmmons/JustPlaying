@@ -134,7 +134,7 @@ namespace PlayingAround.Manager
         {
                 PlayerCurrentCell = cell;
         }
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell, CombatMonster self = null)
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal, CombatMonster self = null)
         {
             List<TileCell> neighbors = new();
 
@@ -156,7 +156,8 @@ namespace PlayingAround.Manager
 
                 TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
 
-                if (neighbor != null && neighbor.IsWalkable && !neighbor.BlockedByMonster)
+                if (neighbor != null && neighbor.IsWalkable &&
+                  (!neighbor.BlockedByMonster || neighbor == goal))
                 {
                     neighbors.Add(neighbor);
                 }
