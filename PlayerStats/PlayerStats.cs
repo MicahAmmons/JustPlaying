@@ -13,6 +13,7 @@ namespace PlayingAround.Stats
         public float CurrentHealth { get; set; }
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }
+        public float Initiation { get; set; }
 
         public PlayerStats() 
         {
@@ -21,6 +22,7 @@ namespace PlayingAround.Stats
             CurrentMana = MaxMana;
             MaxHealth = 25;
             CurrentHealth = MaxHealth;
+            Initiation = 15;
         }
 
     }

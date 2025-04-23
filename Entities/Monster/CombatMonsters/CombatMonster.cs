@@ -39,6 +39,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }
         public float CurrentHealth { get; set; }    
+        public TileCell PlayerMovementEndPoint { get; set; }
+        public float Initiation { get; set; } = 5;
 
 
 
@@ -59,6 +61,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CurrentMana = stats.CurrentMana;
             isPlayerControled = true;
             Draw = false;
+            AttackPower = 1;
+            Initiation = stats.Initiation;
         }
     }
 }
