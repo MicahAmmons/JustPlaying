@@ -19,8 +19,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public Vector2 startingPos;
         public int Speed { get; set; }
         public float MovementQuickness { get; set; }
-        public float Health { get; set; }
-        public float Mana {  get; set; }
         public bool isPlayerControled { get; set; }
         public bool Draw { get; set; } = true;
         public string TurnBehavior { get; set; }
@@ -36,7 +34,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int AttackPower {  get; set; }
         public int TurnNumber { get; set; } = 0;
         public Queue<string> OrderOfActions { get; set; }
-        public string ChooseAttackBehavior { get; set; }
+        public string ChooseAttackBehavior { get; set; } // add number of cells moved
+        public float MaxHealth { get; set; }
+        public float MaxMana { get; set; }
+        public float CurrentMana { get; set; }
+        public float CurrentHealth { get; set; }    
 
 
 
@@ -49,10 +51,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public CombatMonster(Player.Player player)
         {
             PlayerStats stats = player.stats;
-            Speed = stats.speed;
-            Health = stats.health;
+            Speed = stats.MovementSpeed;
+            MaxHealth = stats.MaxHealth;
+            CurrentHealth = stats.CurrentHealth;
             Name = player.Name;
-            Mana = stats.mana;
+            MaxMana = stats.MaxMana;
+            CurrentMana = stats.CurrentMana;
             isPlayerControled = true;
             Draw = false;
         }

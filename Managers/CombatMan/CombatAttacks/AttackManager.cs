@@ -26,11 +26,10 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                 if (AttackHits(attack, attacker, tar))
                 {
                     
-                    tar.Health -= CalculateDamage(attack, tar);
+                    tar.CurrentHealth -= CalculateDamage(attack, tar);
                 }
             }
-          
-                
+
 
         }
 
@@ -41,20 +40,6 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public static bool AttackHits(SingleAttack att, CombatMonster attacker, CombatMonster target)
         {
             return true;
-        }
-        public static CombatMonster ChooseTarget(List<CombatMonster> mons, SingleAttack att)
-        {
-            if (att.Name == "slam")
-            {
-                foreach (var mon in mons)
-                {
-                   if (mon.isPlayerControled)
-                    {
-                        return mon;
-                    }
-                }
-            }
-            return mons[1];
         }
 
         public static Dictionary<CombatMonster, List<TileCell>> GetAttackSpecificBehavior(string targetPhrase, string key, List<TileCell> inRangeCells, TileCell origin)
@@ -106,7 +91,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                             TileCell cell = kvp.Value;
                             if (inRangeCells.Contains(cell))
                             {
-                                float hp = mon.Health;
+                                float hp = mon.CurrentHealth;
                                 if (hp < lowestHP)
                                 {
                                     lowestHP = hp;
@@ -126,7 +111,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }
 
         // IF THE MOSNTER HAS MULTIPLE ATTACKS WITHIN RANGE TO USE, THIS METHOD DECIDES WHICH ONE
-            public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) GetAttackSpecificBehavior(Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attacks, TileCell origin, string chooseAttackPhrase)
+        public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) GetAttackSpecificBehavior(Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attacks, TileCell origin, string chooseAttackPhrase)
              {
             if (attacks.Count == 1)
             {

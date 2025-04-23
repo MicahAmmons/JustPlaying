@@ -134,7 +134,7 @@ namespace PlayingAround.Manager
         {
                 PlayerCurrentCell = cell;
         }
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal, CombatMonster self = null)
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null)
         {
             List<TileCell> neighbors = new();
 
@@ -156,8 +156,10 @@ namespace PlayingAround.Manager
 
                 TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
 
+                bool isGoal = goal != null && neighbor == goal;
+
                 if (neighbor != null && neighbor.IsWalkable &&
-                  (!neighbor.BlockedByMonster || neighbor == goal))
+                    (!neighbor.BlockedByMonster || isGoal))
                 {
                     neighbors.Add(neighbor);
                 }
@@ -165,6 +167,12 @@ namespace PlayingAround.Manager
 
             return neighbors;
         }
+
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell)
+        {
+            return GetWalkableNeighbors(cell, null);
+        }
+
 
         public static bool IsNeighbor(List<TileCell> targets, TileCell current)
         {
@@ -228,6 +236,42 @@ namespace PlayingAround.Manager
 
             return result;
         }
+        public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps)
+        {
+            {
+                List<TileCell> reachableCells = new();
+                Queue<(TileCell cell, int steps)> queue = new();
+                HashSet<TileCell> visited = new();
+
+                queue.Enqueue((origin, 0));
+                visited.Add(origin);
+
+                while (queue.Count > 0)
+                {
+                    var (current, steps) = queue.Dequeue();
+
+                    if (steps > maxSteps)
+                        continue;
+
+                    reachableCells.Add(current);
+
+                    foreach (TileCell neighbor in GetWalkableNeighbors(current))
+                    {
+                        if (!visited.Contains(neighbor))
+                        {
+                            visited.Add(neighbor);
+                            queue.Enqueue((neighbor, steps + 1));
+                        }
+                    }
+                }
+
+                // Optionally remove the origin if you don't want to include the starting tile
+                reachableCells.Remove(origin);
+
+                return reachableCells;
+            }
+        }
+
 
 
 

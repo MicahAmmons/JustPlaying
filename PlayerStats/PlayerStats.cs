@@ -8,15 +8,19 @@ namespace PlayingAround.Stats
 {
     public class PlayerStats
     {
-        public int speed {  get; set; }
-        public float mana {  get; set; }
-        public float health { get; set; }
+        public int MovementSpeed {  get; set; }
+        public float MaxHealth { get; set; }
+        public float CurrentHealth { get; set; }
+        public float MaxMana { get; set; }
+        public float CurrentMana { get; set; }
 
         public PlayerStats() 
         {
-            speed = 1;
-            mana = 15;
-            health = 25;
+            MovementSpeed = 4;
+            MaxMana = 15;
+            CurrentMana = MaxMana;
+            MaxHealth = 25;
+            CurrentHealth = MaxHealth;
         }
 
     }

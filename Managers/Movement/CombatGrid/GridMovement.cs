@@ -91,7 +91,10 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             if (path.Count > 0 )
                 path.RemoveAt(path.Count - 1); // optional redundancy check, can be removed too
-
+            if (path[0] == current)
+            {
+                path.Remove(path[0]);   
+            }
             return path.Take(maxSteps).ToList();
         }
         public static int CheckManhattanDistance(TileCell origin, TileCell destination)

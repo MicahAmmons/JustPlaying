@@ -113,7 +113,7 @@ namespace PlayingAround
 
 
 
-
+            UIManager.Update(gameTime);
             InputManager.Update(gameTime);  
             player.Update(gameTime);
             TileCellManager.Update(gameTime);
