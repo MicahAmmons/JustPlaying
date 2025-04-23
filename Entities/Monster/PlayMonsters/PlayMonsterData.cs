@@ -28,6 +28,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         [JsonPropertyName("resistances")] public List<string> Resistances {  get; set; }
         [JsonPropertyName("vulnerabilities")] public List<string> Vulnerabilities { get; set; }
         [JsonPropertyName("attackPower")] public int AttackPower { get; set; }
+        [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; }
     }
     public class MonsterRectangle
     {

@@ -12,8 +12,8 @@
     "width": 64,
     "height": 64
   },
-  "difficulty": 1.5,
-  "totalSpawns": 2,
+  "difficulty": 0.50,
+  "totalSpawns": 6,
   "obstacles": [],
   "cells": [
     {

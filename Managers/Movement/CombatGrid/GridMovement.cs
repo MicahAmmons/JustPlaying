@@ -94,6 +94,16 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             return path.Take(maxSteps).ToList();
         }
+        public static int CheckManhattanDistance(TileCell origin, TileCell destination)
+        {
+            if (origin == null || destination == null)
+                throw new ArgumentNullException("One or both TileCells are null.");
+
+            int dx = Math.Abs(origin.X - destination.X);
+            int dy = Math.Abs(origin.Y - destination.Y);
+
+            return dx + dy;
+        }
 
 
         private static float Heuristic(TileCell a, TileCell b)

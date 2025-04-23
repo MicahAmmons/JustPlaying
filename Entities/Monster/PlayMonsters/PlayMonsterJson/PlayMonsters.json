@@ -14,6 +14,7 @@
       },
       "movementPattern": "arc",
       "turnBehavior": "getCloseAsPossible",
+      "chooseAttackBehavior": "shortestRange",
       "attackPower": 3,
       "attacks": [
         {
@@ -22,7 +23,9 @@
           "range": 1,
           "effect": null,
           "cost": 3,
-          "damage":  4
+          "damage": 4,
+          "target":  "closestEnemy"
+
            
         },
         {
@@ -30,7 +33,9 @@
           "type": "physical, acid",
           "range": 6,
           "effect": "weakBurn",
-          "cost":  3
+          "cost": 3,
+          "damage": 1,
+          "target": "lowestHPInRange"
         }
       ],
       "monsterType": "Ooze",

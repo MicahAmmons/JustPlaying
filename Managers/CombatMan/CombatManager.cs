@@ -51,6 +51,7 @@ namespace PlayingAround.Managers.CombatMan
         private static CombatMonster _standInMonster = new CombatMonster();
         private static List<CombatMonster> _defeatedMonsters = new List<CombatMonster>();
         private static bool _firstRound = true;
+        private static bool _actionComplete = false;
 
 
         private static List<string> _log = new List<string>();
@@ -71,10 +72,9 @@ namespace PlayingAround.Managers.CombatMan
             MovingPlayerControlled,
             MovingAIControlled,
             AIAttacking,
-
-
-
             ExecutingAction,
+
+
             ResolvingEffects,
             EndingTurn,
             CombatOver
@@ -201,11 +201,11 @@ namespace PlayingAround.Managers.CombatMan
                 if (_currentState == CombatState.TurnStart) // Have to remove the previous turn before calling TurnStart, it'll reset everything
                 {
                     UpdateMonsterCellMap();
-                    if (_firstRound)
-                    {
-                        CombatMonster mon = _turnOrder.Dequeue();
-                        _turnOrder.Enqueue(mon);
-                    }
+                    //if (_firstRound)
+                    //{
+                    //    CombatMonster mon = _turnOrder.Dequeue();
+                    //    _turnOrder.Enqueue(mon);
+                    //}
                     _firstRound = false;
                     CopyCurrentMonToStandin();
                     DecideOrderOfOperations(); Add("Order Of Ops Set");
@@ -233,7 +233,7 @@ namespace PlayingAround.Managers.CombatMan
                 if (_currentState == CombatState.ActionNavigation)
                 {
                     UpdateMonsterCellMap();
-                    if (_standInMonster.OrderOfActions.Peek() == null || _standInMonster.OrderOfActions.Count == 0)
+                    if (_standInMonster.OrderOfActions.Count == 0)
                     {
                         Add("OrderOfAction is 00000");
                         SetState(CombatState.TurnStart);
@@ -285,6 +285,14 @@ namespace PlayingAround.Managers.CombatMan
                     _standInMonster.OrderOfActions.Dequeue();
                     _currentState = CombatState.ActionNavigation;
                 }
+                if (_currentState == CombatState.ExecutingAction)
+                {
+                    if (_actionComplete)
+                    {
+                        _turnOrder.Dequeue();
+                        _currentState = CombatState.ActionNavigation;
+                    }
+                }
 
             }
         }
@@ -292,59 +300,64 @@ namespace PlayingAround.Managers.CombatMan
         private static void AttackAIMonster(float delta)
         {
             Add("Deciding what attack)");
-            DecideWhichAttack();
+            AIMonsterAttack();
+            _currentState = CombatState.ExecutingAction;
         }
 
-        private static void DecideWhichAttack()
+        public static void AIMonsterAttack()
         {
-            var attackToTargets = GetPotentialAttackTargets();
-            CombatMonster attacker = _turnOrder.Peek();
-
-            do
+            (SingleAttack chosenAttack, Dictionary<CombatMonster, List<TileCell>> attackCells) finalAttack;
+            CombatMonster mon = _turnOrder.Peek();
+            List<SingleAttack> attackOptions = new List<SingleAttack>();
+            foreach (var attack in mon.Attacks.Attacks)
             {
-                foreach (var pair in attackToTargets)
-                {
-                    SingleAttack att = pair.Key;
-                    List<CombatMonster> targets = pair.Value;
-
-                    if (targets.Count > 0 && _attackPowerLeft > 0)
-                    {
-                        CombatMonster target = AttackManager.ChooseTarget(targets, att); // Pick first target for now
-                        Add("Target chosen");
-                        AttackManager.PerformAttack(att, attacker, target); // You’d implement this
-                        Add("AttackPerformed");
-                        attacker.AttackPower -= att.Cost;
-                        Add($"Current AttackPower {_attackPowerLeft}");
-                        break; // Prevent double-use per loop
-                    }
-                }
-
-            } while (attacker.AttackPower > 0);
+                if (attack.Cost <= _standInMonster.AttackPower)
+                attackOptions.Add(attack);
+            }
+            
+            Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attackAndCellOptions = DecideWhichAttacksInRange(attackOptions);
+            if (attackAndCellOptions.Count > 0)
+            {
+                finalAttack = AttackManager.GetAttackSpecificBehavior(attackAndCellOptions, _aIControlledMonsterMap[mon], mon.ChooseAttackBehavior);
+            }
+            else finalAttack = (null, null);
+            if (finalAttack == (null, null))
+            {
+                _actionComplete = true;
+                return;
+            }
+            SingleAttack chosenAttack = finalAttack.chosenAttack;
+            List<CombatMonster> targets = finalAttack.attackCells.Keys.ToList();
+            List<TileCell> affectedCells = finalAttack.attackCells.Values.SelectMany(c => c).ToList();
+            AttackManager.PerformAttack(chosenAttack, mon, targets, affectedCells);
         }
-        private static Dictionary<SingleAttack, List<CombatMonster>> GetPotentialAttackTargets()
+
+        private static Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> DecideWhichAttacksInRange(List<SingleAttack> attacks)
+        {
+            Dictionary<SingleAttack, Dictionary<CombatMonster , List<TileCell>>> attackDic = new Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>>();
+            foreach (var attack in attacks)
+            {
+                Dictionary<CombatMonster, List<TileCell>> targetCells = GetPotentialAttackTargets(attack);
+                if (targetCells.Count == 0)
+                {
+                    continue;
+                }
+                attackDic.Add(attack, targetCells);
+            }
+            return attackDic;
+        }
+
+        private static Dictionary<CombatMonster, List<TileCell>> GetPotentialAttackTargets(SingleAttack attack)
         {
             CombatMonster attacker = _turnOrder.Peek();
             TileCell origin = _aIControlledMonsterMap[attacker];
 
             Dictionary <SingleAttack, List<CombatMonster>> attackTargets = new();
+            List<TileCell> inRangeCells = TileManager.GetCellsInRange(origin, attack.Range);
 
-            foreach (var att in attacker.Attacks.Attacks)
-            {
-                List<CombatMonster> validTargets = new();
-                List<TileCell> inRangeCells = TileManager.GetCellsInRange(origin, att.Range);
-
-                foreach (var cell in inRangeCells)
-                {
-                    if (cell.CombatMonster != null && cell.CombatMonster != attacker)
-                    {
-                        validTargets.Add(cell.CombatMonster);
-                    }
-                }
-
-                attackTargets[att] = validTargets;
-            }
-
-            return attackTargets;
+            //This return a list of the cell (or cells if AOE) that this attack will target
+            Dictionary<CombatMonster, List<TileCell>> targetCells = AttackManager.GetAttackSpecificBehavior(attack.Target, "Target", inRangeCells, origin);
+            return targetCells;
         }
 
 
@@ -369,7 +382,19 @@ namespace PlayingAround.Managers.CombatMan
 
             }
         }
-
+        public static Dictionary<CombatMonster, TileCell> GetCombatMonMap(string playeOrAI)
+        {
+            if (playeOrAI == "player")
+            {
+                return _playerControlledMonsterMap;
+            }
+            else if (playeOrAI == "ai")
+            {
+                return _aIControlledMonsterMap;
+            }
+            Add("ERROR IN GETCOMBATMONMAP");
+            return _playerControlledMonsterMap;
+        }
 
         private static void MoveAIMonster(float delta)
         {
@@ -646,3 +671,31 @@ namespace PlayingAround.Managers.CombatMan
 
     }
 }
+
+//    if (attackToTargets.Count <= 0)
+//    {
+//        return;
+//    }
+//    CombatMonster attacker = _turnOrder.Peek();
+
+//    do
+//    {
+//        foreach (var pair in attackToTargets)
+//        {
+//            SingleAttack att = pair.Key;
+//            List<CombatMonster> targets = pair.Value;
+
+//            if (targets.Count > 0 && _attackPowerLeft > 0)
+//            {
+//                CombatMonster target = AttackManager.ChooseTarget(targets, att); // Pick first target for now
+//                Add("Target chosen");
+//                AttackManager.PerformAttack(att, attacker, target); // You’d implement this
+//                Add("AttackPerformed");
+//                attacker.AttackPower -= att.Cost;
+//                Add($"Current AttackPower {_attackPowerLeft}");
+//                break; // Prevent double-use per loop
+//            }
+//        }
+
+//    } while (attacker.AttackPower > 0);
+//}

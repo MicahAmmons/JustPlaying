@@ -212,7 +212,7 @@ namespace PlayingAround.Manager
             {
                 for (int dy = -range; dy <= range; dy++)
                 {
-                    if (Math.Abs(dx) + Math.Abs(dy) <= range) // Manhattan only
+                    if ((dx != 0 || dy != 0) && Math.Abs(dx) + Math.Abs(dy) <= range) // Manhattan only
                     {
                         int x = origin.X + dx;
                         int y = origin.Y + dy;

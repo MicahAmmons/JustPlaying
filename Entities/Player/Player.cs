@@ -17,14 +17,10 @@ namespace PlayingAround.Entities.Player
     {
         public float Speed { get; set; }
         public Texture2D Texture { get; private set; }
-
         public string Name { get; set; }    
-
         public PlayerStats stats { get; set; }
-
         public int PlayerWidth { get; set; } = 64;
         public int PlayerHeight { get; set; } = 64;
-
         private Vector2? moveTarget = null;
         private Queue<Vector2> movementPath = new();
         public Vector2 PlayerCord;

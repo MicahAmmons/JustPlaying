@@ -87,11 +87,6 @@ namespace PlayingAround
             CombatManager.Initialize();
 
         }
-
-        
-
-
-
         private void SaveState()
         {
             GameState.SaveData.Player = player.Save();
@@ -129,8 +124,6 @@ namespace PlayingAround
 
             base.Update(gameTime);
         }
-
-
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
@@ -168,9 +161,6 @@ namespace PlayingAround
 
 
         }
-
-
-
         private void DrawRectangle(Rectangle rect, Color color)
         {
             // Top
@@ -182,7 +172,6 @@ namespace PlayingAround
             // Bottom
             _spriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Bottom, rect.Width + 1, 1), color);
         } // Debugging Border Rectangle 
-
         private void DrawDebugOverlay()
         {
             Rectangle feetHitbox = player.GetHitbox();

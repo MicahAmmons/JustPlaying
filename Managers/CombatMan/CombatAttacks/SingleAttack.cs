@@ -21,6 +21,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         [JsonPropertyName("effect")] public string Effect { get; set; }
         [JsonPropertyName("cost")] public int Cost { get; set; }
         [JsonPropertyName("damage")] public int Damage { get; set; }
+        [JsonPropertyName("target")] public string Target { get; set; } 
 
     }
 }

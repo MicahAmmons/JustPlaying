@@ -36,6 +36,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int AttackPower {  get; set; }
         public int TurnNumber { get; set; } = 0;
         public Queue<string> OrderOfActions { get; set; }
+        public string ChooseAttackBehavior { get; set; }
 
 
 
