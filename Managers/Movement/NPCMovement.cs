@@ -30,15 +30,36 @@ namespace PlayingAround.Managers.Movement
                 }
             }
         }
-        public static List<Vector2> MoveMonsters(GameTime gameTime, CombatMonster mon, TileCell endTile)
+        public static List<Vector2> MoveMonsters(CombatMonster mon, TileCell startingTile, TileCell endTile)
         {
-            if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
+            Vector2 start = TileManager.GetCellCords(startingTile);
+            Vector2 destination = TileManager.GetCellCords(endTile);
+
+            return mon.MovementPattern switch
             {
-                List<Vector2> result = NPCMovement.ArcMovement(TileManager.GetCellCords(endTile), mon.currentPos);
-                return result;
-            }
-            else return null;
+                "arc" or "idle" => ArcMovement(destination, start),
+                "straight" => StraightMovement(destination, start),
+                _ => StraightMovement(destination, start) // Fallback to straight if unknown pattern
+            };
         }
+
+
+        public static List<Vector2> StraightMovement(Vector2 endPoint, Vector2 start)
+        {
+            int steps = 15; // More steps = smoother straight line
+            var path = new List<Vector2>();
+
+            for (int i = 0; i <= steps; i++)
+            {
+                float t = i / (float)steps;
+
+                Vector2 point = Vector2.Lerp(start, endPoint, t); // Simple linear interpolation
+                path.Add(point);
+            }
+
+            return path;
+        }
+
         public static List<Vector2> ArcMovement(Vector2 endPoint, Vector2 start)
         {
             Vector2 end = endPoint;

@@ -63,6 +63,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Draw = false;
             AttackPower = 1;
             Initiation = stats.Initiation;
+            MovementQuickness = 200f;
+            MovementPattern = "straight";
         }
     }
 }

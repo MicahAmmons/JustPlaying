@@ -89,7 +89,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             path.Reverse();
 
-            if (path.Count > 0 )
+            if (path.Count > 0 && maxSteps < 100 )
                 path.RemoveAt(path.Count - 1); // optional redundancy check, can be removed too
             if (path[0] == current)
             {

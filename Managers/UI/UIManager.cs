@@ -26,6 +26,7 @@ namespace PlayingAround.Managers.UI
         private static Texture2D _fightBackground;
         private static Player _player;
         private static CombatMonster _playerMonster;
+        private static CombatMonster _standInMonster;
 
 
         private static string _playerStats;
@@ -99,9 +100,10 @@ namespace PlayingAround.Managers.UI
             if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
             {
                 _playerMonster = CombatManager.GetPlayerMonster();
+                _standInMonster = CombatManager.GetStandInMonster();
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.MaxHealth}\n" +
                                $"Mana: {_playerMonster.CurrentMana} / {_playerMonster.CurrentMana}\n" +
-                               $"Speed: {_playerMonster.Speed}";
+                               $"Speed: {_standInMonster.Speed}";
             }
         }
     }
