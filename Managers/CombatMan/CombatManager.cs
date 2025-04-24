@@ -63,8 +63,7 @@ namespace PlayingAround.Managers.CombatMan
         private static List<string> _log = new List<string>();
         private static int _maxStrings = 50;
 
-
-
+        private static Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100); 
 
 
 
@@ -185,9 +184,12 @@ namespace PlayingAround.Managers.CombatMan
                          );
                         spriteBatch.Draw(_player.Texture, destination, Color.White);
                     }
+                    DrawPlayerButtonOptions(spriteBatch);
+
+
                 }
 
-                foreach (var combatMon in _turnOrder)
+                foreach (var combatMon in _turnOrder) // Always drawing in combat 
                 {
                     if (!combatMon.isPlayerControled)
                     {
@@ -356,6 +358,22 @@ namespace PlayingAround.Managers.CombatMan
             }
         }
 
+        private static void DrawPlayerButtonOptions(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_playerCellOptions, _backBackGroundButtonOptions, Color.Aqua);
+            string endTurnText = "End Turn";
+            Vector2 textSize = _font.MeasureString(endTurnText);
+            Vector2 endTurnPosition = new Vector2(
+                _backBackGroundButtonOptions.X + (_backBackGroundButtonOptions.Width - textSize.X) / 2,
+                _backBackGroundButtonOptions.Y + (_backBackGroundButtonOptions.Height - textSize.Y) / 2
+            );
+            spriteBatch.DrawString(_font, endTurnText, endTurnPosition, Color.White);
+            Vector2 attackTextPosition = new Vector2(
+    _backBackGroundButtonOptions.X + 2*(_backBackGroundButtonOptions.Width - textSize.X) / 2,
+    _backBackGroundButtonOptions.Y + 2*(_backBackGroundButtonOptions.Height - textSize.Y) / 2
+);
+            spriteBatch.Draw(_playerCellOptions, attackTextPosition, Color.Aqua);
+        }
         private static void UpdatePlayerMoveableCells()
         {
             CombatMonster mon = _turnOrder.Peek();
@@ -576,7 +594,6 @@ namespace PlayingAround.Managers.CombatMan
         {
             return GridMovement.FindPath(start, destination, int.MaxValue); // or -1 if your method supports it
         }
-
         private static List<TileCell> GetMovementCellPath()
         {
             if (_standInMonster.OrderOfActions.Peek() == "moveClose")
