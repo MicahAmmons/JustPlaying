@@ -56,15 +56,15 @@ namespace PlayingAround.Managers.CombatMan
         private static bool _actionComplete = false;
         private static bool _movementComplete = false;
         private static float _playerBaseSpeed;
-        private static bool _playerActing = false;
-
+        private static bool _playerIsSummoning = false;
+        private static Vector2 _currentMousePos;
 
 
         private static List<string> _log = new List<string>();
         private static int _maxStrings = 50;
 
-        private static Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100); 
-
+        private static Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
+        private static Rectangle _summonRect, _attackRect, _endTurnRect;
 
 
         public enum CombatState
@@ -85,6 +85,15 @@ namespace PlayingAround.Managers.CombatMan
             CombatOver
 
         }
+        private static PlayerTurnState _playerTurnState = PlayerTurnState.PlayerWaitingInput;
+        private enum PlayerTurnState
+        {
+            PlayerWaitingInput,
+            PlayerExecutingAction,
+            PlayerSummoning,
+            PlayerAttacking,
+            PlayerEndingTurn,
+        }
 
         private static CombatState _currentState = CombatState.Waiting;
         public static CombatState CurrentState => _currentState;
@@ -94,6 +103,7 @@ namespace PlayingAround.Managers.CombatMan
             _currentMapTile = TileManager.CurrentMapTile;
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
+            InitilizeUIElements();
         }
 
         public static void BeginCombat(PlayMonsters playMonsters, Player player)
@@ -114,125 +124,47 @@ namespace PlayingAround.Managers.CombatMan
 
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-
             OnScreenDebug(spriteBatch);
+            if (SceneManager.CurrentState != SceneState.Combat || _currentState == CombatState.Waiting)
+                return;
             if (_turnOrder != null && _turnOrder.Count > 0)
-            {
                 DisplayStats(spriteBatch);
-            }
-            if (SceneManager.CurrentState == SceneState.Combat && _currentState != CombatState.Waiting)
+
+            if (_currentState == CombatState.LocationSelection)
+                DrawLocationSelection(spriteBatch);
+
+            if (_currentState == CombatState.PlayerTurn )
+                DrawPlayerTurn(spriteBatch);
+
+            DrawAllCombatMonsters(spriteBatch);
+        }
+
+        public static void UpdateInput(GameTime gameTime)
+        {
+            switch (_currentState)
             {
+                case CombatState.LocationSelection:
+                    HandleLocationSelectionInput();
+                    break;
 
-                if (_currentState == CombatState.LocationSelection)
-                {
-                    foreach (var tile in _heroSpawnableCells)
-                    {
-                        Vector2 cords = TileManager.GetCellCords(tile);
-                        Rectangle destination = new Rectangle(
-                        (int)(cords.X),
-                        (int)cords.Y,
-                        32,
-                        32
-                         );
-                        spriteBatch.Draw(_playerCellOptions, destination, Color.White);
-                    }
-                    foreach (var cell in _monsterSpawnableCells)
-                    {
-                        Vector2 monCords = TileManager.GetCellCords(cell);
-                        Rectangle destination = new Rectangle(
-                        (int)(monCords.X),
-                        (int)monCords.Y,
-                        32,
-                        32
-                         );
-                        spriteBatch.Draw(_playerCellOptions, destination, Color.Black);
-                    }
-                    if (_currentMouseHoverCell != null && _currentMouseHoverCell.HeroSpawnable)
-                    {
-                        Vector2 cellCord = TileManager.GetCellCords(_currentMouseHoverCell);
-                        Rectangle destination = new Rectangle(
-                        (int)(cellCord.X),
-                        (int)cellCord.Y,
-                        32,
-                        32
-                         );
-                        spriteBatch.Draw(_player.Texture, destination, Color.White);
-                    }
-                }
-                if (_currentState == CombatState.PlayerTurn && !_playerActing)
-                {
-                    foreach (var cell in _playerMoveableCells)
-                    {
-                        if (cell.BlockedByMonster || !cell.IsWalkable) { continue; }
-                        Vector2 monCords = TileManager.GetCellCords(cell);
-                        Rectangle destination = new Rectangle(
-                        (int)(monCords.X),
-                        (int)monCords.Y,
-                        32,
-                        32
-                         );
-                        spriteBatch.Draw(_playerCellOptions, destination, Color.Black);
-                    }
-                    if (_currentMouseHoverCell != null && _playerMoveableCells.Contains(_currentMouseHoverCell))
-                    {
-                        Vector2 cellCord = TileManager.GetCellCords(_currentMouseHoverCell);
-                        Rectangle destination = new Rectangle(
-                        (int)(cellCord.X),
-                        (int)cellCord.Y,
-                        32,
-                        32
-                         );
-                        spriteBatch.Draw(_player.Texture, destination, Color.White);
-                    }
-                    DrawPlayerButtonOptions(spriteBatch);
+                case CombatState.PlayerTurn:
+                    HandlePlayerTurnInput();
+                    break;
 
-
-                }
-
-                foreach (var combatMon in _turnOrder) // Always drawing in combat 
-                {
-                    if (!combatMon.isPlayerControled)
-                    {
-                        Rectangle destination = new Rectangle(
-                            (int)(combatMon.currentPos.X),
-                            (int)(combatMon.currentPos.Y),
-                            32,
-                            32);
-                        spriteBatch.Draw(AssetManager.GetTexture($"{combatMon.IconPath}"), destination, Color.White);
-                    }
-                    if (combatMon.isPlayerControled)
-                    {
-                        Rectangle destination = new Rectangle(
-                            (int)(_playerMonster.currentPos.X),
-                            (int)(_playerMonster.currentPos.Y),
-                            32,
-                            32);
-                        spriteBatch.Draw(AssetManager.GetTexture("Hero_Blonde"), destination, Color.White);
-                    }
-                }
+                    // Add more as needed (Attacking, Summoning, etc.)
             }
         }
+
         public static void Update(GameTime gameTime)
         {
             if (SceneManager.CurrentState == SceneState.Combat)
             {
                 float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 UpdateDefeatedMonsters();
-
                 UpdateMouseClickedCell();
                 UpdateMouseHoverCell();
-                if (_currentState == CombatState.LocationSelection)
-                {
-                    if (_heroSpawnableCells.Contains(_currentClickedCell))
-                    {
-                        _playerMonster.currentPos = TileManager.GetCellCords(_currentClickedCell);
-                        _playerMonster.Draw = true;
+                UpdateInput(gameTime);
 
-                        CombatManager.SetState(CombatState.TurnStart);
-                        UpdateMonsterCellMap();
-                        Add("State = TurnStart");
-                    }
-                }
                 if (_currentState == CombatState.TurnStart) // Have to remove the previous turn before calling TurnStart, it'll reset everything
                 {
                     UpdateMonsterCellMap();
@@ -245,7 +177,7 @@ namespace PlayingAround.Managers.CombatMan
                         SetState(CombatState.PlayerTurn);
                         _turnEnd = false;
                         _turnOrder.Peek().PlayerMovementEndPoint = null;
-                        _playerActing = false;
+                        _playerTurnState = PlayerTurnState.PlayerWaitingInput;
                     }
 
                     else if (!_standInMonster.isPlayerControled)
@@ -333,16 +265,9 @@ namespace PlayingAround.Managers.CombatMan
                         _currentState = CombatState.TurnStart;
                         _turnEnd = false;
                     }
-                    CombatMonster mon = _turnOrder.Peek();
-                    if (!_playerActing && _standInMonster.Speed > 0)
-                    {
-                       if (_playerMoveableCells.Contains(_currentClickedCell))
-                        {
-                            mon.PlayerMovementEndPoint = _currentClickedCell;
-                            _playerActing = true;
-                        }
 
-                    }
+                    CombatMonster mon = _turnOrder.Peek();
+
                     if (mon.PlayerMovementEndPoint != null)
                     {
                         Add("GeneratedPath");
@@ -357,23 +282,161 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
         }
+        private static void HandleLocationSelectionInput()
+        {
+            if (_heroSpawnableCells.Contains(_currentClickedCell))
+            {
+                _playerMonster.currentPos = TileManager.GetCellCords(_currentClickedCell);
+                SetState(CombatState.TurnStart);
+                UpdateMonsterCellMap();
+                Add("State = TurnStart");
+            }
+        }
+
+        private static void HandlePlayerTurnInput()
+        {
+            CombatMonster mon = _turnOrder.Peek();
+            switch (_playerTurnState)
+            {
+                case PlayerTurnState.PlayerWaitingInput:
+                    HandleMovementClick(mon);
+                    break;
+
+                case PlayerTurnState.PlayerSummoning:
+                    //HandleSummonDropdownClick();
+                    break;
+
+                case PlayerTurnState.PlayerAttacking:
+                    //HandleAttackTargetingClick();
+                    break;
+
+                case PlayerTurnState.PlayerExecutingAction:
+                    // Optional — maybe wait for animations or effects to finish
+                    break;
+
+                case PlayerTurnState.PlayerEndingTurn:
+                    // Optional — confirm dialog, visual delay, etc.
+                    break;
+            }
+        }
+
+        private static void HandleMovementClick(CombatMonster mon)
+        {
+            if (_standInMonster.Speed > 0)
+            {
+                if (_currentClickedCell != null && _playerMoveableCells.Contains(_currentClickedCell))
+                {
+                    mon.PlayerMovementEndPoint = _currentClickedCell;
+                    _playerTurnState = PlayerTurnState.PlayerExecutingAction;
+                }
+                if (_summonRect.Contains(_currentMousePos))
+                {
+                    _playerTurnState = PlayerTurnState.PlayerSummoning;
+                }
+            }
+        }
+        private static void DrawPlayerTurn(SpriteBatch spriteBatch)
+        {
+            if (_playerTurnState == PlayerTurnState.PlayerWaitingInput)
+            {
+                if (_standInMonster.Speed > 0)
+                {
+                    foreach (var cell in _playerMoveableCells)
+                    {
+                        if (cell.BlockedByMonster || !cell.IsWalkable) continue;
+                        DrawCellHighlight(spriteBatch, cell, Color.Black);
+                    }
+
+                    if (_currentMouseHoverCell != null && _playerMoveableCells.Contains(_currentMouseHoverCell))
+                        DrawHeroPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+                }
+                DrawPlayerButtonOptions(spriteBatch);
+            }
+
+
+        }
+
+        private static void InitilizeUIElements()
+        {
+            // Button dimensions and spacing
+            int buttonHeight = _backBackGroundButtonOptions.Height;
+            int spacing = 10;
+
+            _endTurnRect = _backBackGroundButtonOptions;
+            _attackRect = new Rectangle(
+                _endTurnRect.X,
+                _endTurnRect.Y - buttonHeight - spacing,
+                _endTurnRect.Width,
+                buttonHeight);
+
+            _summonRect = new Rectangle(
+                _attackRect.X,
+                _attackRect.Y - buttonHeight - spacing,
+                _endTurnRect.Width,
+                buttonHeight);
+        }
+        private static void DrawLocationSelection(SpriteBatch spriteBatch)
+        {
+            DrawSpawnableTiles(spriteBatch);
+
+            if (_currentMouseHoverCell != null && _currentMouseHoverCell.HeroSpawnable)
+                DrawHeroPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+        }
+
+        private static void DrawAllCombatMonsters(SpriteBatch spriteBatch)
+        {
+            foreach (var combatMon in _turnOrder)
+            {
+                Rectangle destination = new Rectangle(
+                    (int)(combatMon.currentPos.X),
+                    (int)(combatMon.currentPos.Y),
+                    32, 32);
+
+                string textureKey = combatMon.isPlayerControled ? "Hero_Blonde" : combatMon.IconPath;
+                spriteBatch.Draw(AssetManager.GetTexture(textureKey), destination, Color.White);
+            }
+        }
+        private static void DrawCellHighlight(SpriteBatch spriteBatch, TileCell cell, Color color)
+        {
+            Vector2 coords = TileManager.GetCellCords(cell);
+            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 32, 32);
+            spriteBatch.Draw(_playerCellOptions, rect, color);
+        }
+        private static void DrawHeroPreviewOnCell(SpriteBatch spriteBatch, TileCell cell)
+        {
+            Vector2 coords = TileManager.GetCellCords(cell);
+            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 32, 32);
+            spriteBatch.Draw(_player.Texture, rect, Color.White);
+        }
+        private static void DrawSpawnableTiles(SpriteBatch spriteBatch)
+        {
+            foreach (var tile in _heroSpawnableCells)
+                DrawCellHighlight(spriteBatch, tile, Color.White);
+
+            foreach (var tile in _monsterSpawnableCells)
+                DrawCellHighlight(spriteBatch, tile, Color.Black);
+        }
 
         private static void DrawPlayerButtonOptions(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_playerCellOptions, _backBackGroundButtonOptions, Color.Aqua);
-            string endTurnText = "End Turn";
-            Vector2 textSize = _font.MeasureString(endTurnText);
-            Vector2 endTurnPosition = new Vector2(
-                _backBackGroundButtonOptions.X + (_backBackGroundButtonOptions.Width - textSize.X) / 2,
-                _backBackGroundButtonOptions.Y + (_backBackGroundButtonOptions.Height - textSize.Y) / 2
-            );
-            spriteBatch.DrawString(_font, endTurnText, endTurnPosition, Color.White);
-            Vector2 attackTextPosition = new Vector2(
-    _backBackGroundButtonOptions.X + 2*(_backBackGroundButtonOptions.Width - textSize.X) / 2,
-    _backBackGroundButtonOptions.Y + 2*(_backBackGroundButtonOptions.Height - textSize.Y) / 2
-);
-            spriteBatch.Draw(_playerCellOptions, attackTextPosition, Color.Aqua);
+            DrawButton(spriteBatch, _summonRect, "Summon");
+            DrawButton(spriteBatch, _attackRect, "Attack");
+            DrawButton(spriteBatch, _endTurnRect, "End Turn");
+            
         }
+        private static void DrawButton(SpriteBatch spriteBatch, Rectangle rect, string label)
+        {
+            spriteBatch.Draw(_playerCellOptions, rect, Color.Aqua);
+
+            Vector2 textSize = _font.MeasureString(label);
+            Vector2 textPosition = new Vector2(
+                rect.X + (rect.Width - textSize.X) / 2,
+                rect.Y + (rect.Height - textSize.Y) / 2
+            );
+
+            spriteBatch.DrawString(_font, label, textPosition, Color.White);
+        }
+
         private static void UpdatePlayerMoveableCells()
         {
             CombatMonster mon = _turnOrder.Peek();
@@ -530,7 +593,7 @@ namespace PlayingAround.Managers.CombatMan
                 {
                     UpdatePlayerMoveableCells();
                 }
-                _playerActing = false;
+                _playerTurnState = PlayerTurnState.PlayerWaitingInput;
                 _numberOfCellsMoved = 0;
 
             }
@@ -670,8 +733,8 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (InputManager.IsLeftClick())
             {
-                Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
-                _currentClickedCell = TileManager.GetCell(mousePos);
+                _currentMousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
+                _currentClickedCell = TileManager.GetCell(_currentMousePos);
             }
         }
         public static void UpdateMouseHoverCell()

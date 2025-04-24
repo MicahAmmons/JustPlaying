@@ -22,7 +22,7 @@ namespace PlayingAround.Stats
             CurrentMana = MaxMana;
             MaxHealth = 25;
             CurrentHealth = MaxHealth;
-            Initiation = 1;
+            Initiation = 100;
         }
 
     }
