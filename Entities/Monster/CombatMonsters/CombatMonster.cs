@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement.CombatGrid;
@@ -44,10 +46,29 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
 
 
-
-        public CombatMonster() 
+        public CombatMonster()
         {
 
+        }
+        public CombatMonster(PlayMonsterData monsterData, string monsterName) 
+        {
+            {
+                IconPath = monsterData.IconPath;
+                Difficulty = monsterData.Difficulty;
+                Name = monsterName;
+                MaxHealth = monsterData.MaxHealth;
+                CurrentHealth = monsterData.MaxHealth;
+                Speed = monsterData.Speed;
+                TurnBehavior = monsterData.TurnBehavior;
+                MovementPattern = monsterData.MovementPattern;
+                Attacks = new ListOfAttacks(monsterData.Attacks);
+                Immunities = monsterData.Immunities;
+                Resistances = monsterData.Resistances;
+                Vulnerabilities = monsterData.Vulnerabilities;
+                MovementQuickness = monsterData.MovementSpeed;
+                AttackPower = monsterData.AttackPower;
+                ChooseAttackBehavior = monsterData.ChooseAttackBehavior;
+            }
 
         }
         public CombatMonster(Player.Player player)
@@ -66,5 +87,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MovementQuickness = 200f;
             MovementPattern = "straight";
         }
+        //public CombatMonster (Summoner summon)
+        //{
+
+        //    isPlayerControled = true;
+        //}
     }
 }

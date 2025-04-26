@@ -60,25 +60,8 @@ namespace PlayingAround.Managers
                     if (jsonData.TryGetValue(randomMonsterName, out var monsterDataList) && monsterDataList.Count > 0)
                     {
                         var monsterData = monsterDataList[random.Next(monsterDataList.Count)];
-                        CombatMonster combatMonster = new CombatMonster
-                        {
-                            IconPath = monsterData.IconPath,
-                            Difficulty = monsterData.Difficulty,
-                            Name = randomMonsterName,
-                            MaxHealth = monsterData.MaxHealth,
-                            CurrentHealth = monsterData.MaxHealth,
-                            Speed = monsterData.Speed,
-                            TurnBehavior = monsterData.TurnBehavior,
-                            MovementPattern = monsterData.MovementPattern,
-                            Attacks = new ListOfAttacks(monsterData.Attacks),
-                            Immunities = monsterData.Immunities,
-                            Resistances = monsterData.Resistances,
-                            Vulnerabilities = monsterData.Vulnerabilities,
-                            MovementQuickness = monsterData.MovementSpeed,
-                            AttackPower = monsterData.AttackPower,
-                            ChooseAttackBehavior = monsterData.ChooseAttackBehavior
+                        CombatMonster combatMonster = new CombatMonster(monsterData, randomMonsterName);
 
-                        };
                         totalDifficulty -= monsterData.Difficulty;
                         allCombatMonsters.Add(combatMonster);
                         moveSpeed = monsterData.MovementSpeed;

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data;
+using PlayingAround.Data.Summons;
+using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
@@ -8,7 +10,10 @@ using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Stats;
+using PlayingAround.Utils;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace PlayingAround.Entities.Player
@@ -25,6 +30,7 @@ namespace PlayingAround.Entities.Player
         private Queue<Vector2> movementPath = new();
         public Vector2 PlayerCord;
         private Vector2? debugClickTarget = null;
+
         public Vector2? GetDebugClickTarget()
         {
             return debugClickTarget;
@@ -43,20 +49,41 @@ namespace PlayingAround.Entities.Player
             var texture = AssetManager.GetTexture(data.TextureKey);
             float offsetX = data.FeetCenterX - (data.Width/2);
             float offsetY = data.FeetCenterY - data.Height;
-            var player = new Player(texture, new Vector2(offsetX, offsetY), data.Speed)
+            var player = new Player(texture, new Vector2(offsetX, offsetY),  data.PlayerSummons, data.Speed)
             {
                 PlayerWidth = data.Width,
-                PlayerHeight = data.Height
+                PlayerHeight = data.Height,
+
             };
 
             return player;
         }
-        public Player(Texture2D idleTexture, Vector2 startPosition, float speed = 200f)
+        public Player(Texture2D idleTexture, Vector2 startPosition, List<SummonsSaveData> summs, float speed = 200f)
         {
             Texture = idleTexture;
             PlayerCord = startPosition; // Readd logic to move it from a nmon walkable spot
             Speed = speed;
-            stats = new PlayerStats();
+            var summonLoader = JsonLoader.LoadSummonProgressions();
+            stats = new PlayerStats()
+            {
+                LockedSummons = new List<SummonedMonster>(),
+                UnlockedSummons = new List<SummonedMonster>(),
+            };
+
+            foreach (var summon in summs)
+            {
+                SummonedMonster mon = new SummonedMonster(summon, summonLoader[summon.Name]);
+                if (mon.TotalXP <= 0)
+                {
+                    stats.LockedSummons.Add(mon);
+                }
+                if (mon.TotalXP > 0)
+                {
+                    stats.UnlockedSummons.Add(mon);
+                }
+            }
+            
+
 
             InputManager.OnMoveLeft += () => movement.X -= 1;
             InputManager.OnMoveRight += () => movement.X += 1;
@@ -64,6 +91,11 @@ namespace PlayingAround.Entities.Player
             InputManager.OnMoveDown += () => movement.Y += 1;
             SceneManager.OnStateChanged += HandleSceneStateChange;
             ScreenTransitionManager.OnFadeToBlackComplete += SetNewTilePosition;
+        }
+        public SummonedMonster FindSummon(string name)
+        {
+            return stats.UnlockedSummons.FirstOrDefault(s => s.Name == name)
+                ?? stats.LockedSummons.FirstOrDefault(s => s.Name == name);
         }
 
         public void Update(GameTime gameTime)

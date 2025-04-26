@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayingAround.Data.Summons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace PlayingAround.Data
         public string TextureKey { get; set; }
         public float FeetCenterX { get; set; }
         public float FeetCenterY { get; set; }
+        public List<SummonsSaveData> PlayerSummons { get; set; }
     }
 
 }

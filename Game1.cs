@@ -91,6 +91,7 @@ namespace PlayingAround
         {
             GameState.SaveData.Player = player.Save();
             GameState.SaveData.MapTile = TileManager.Save();
+
             SaveSystem.SaveGame(GameState.SaveData);
         }
         protected override void Update(GameTime gameTime)

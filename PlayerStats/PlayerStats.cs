@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayingAround.Entities.Summons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,22 @@ namespace PlayingAround.Stats
 {
     public class PlayerStats
     {
-        public int MovementSpeed {  get; set; }
-        public float MaxHealth { get; set; }
+        public int MovementSpeed { get; set; } = 4;
+        public float MaxHealth { get; set; } = 25;
         public float CurrentHealth { get; set; }
-        public float MaxMana { get; set; }
+        public float MaxMana { get; set; } = 15; 
         public float CurrentMana { get; set; }
-        public float Initiation { get; set; }
+        public float Initiation { get; set; } = 1;
+        public List<SummonedMonster> UnlockedSummons { get; set; }
+        public List<SummonedMonster> LockedSummons { get; set; }
+
+
 
         public PlayerStats() 
         {
-            MovementSpeed = 4;
-            MaxMana = 15;
             CurrentMana = MaxMana;
-            MaxHealth = 25;
             CurrentHealth = MaxHealth;
-            Initiation = 100;
+
         }
 
     }
