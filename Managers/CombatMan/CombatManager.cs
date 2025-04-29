@@ -346,7 +346,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         private static void HandleMovementClick(CombatMonster mon)
         {
-            if (_standInMonster.Speed > 0)
+            if (_standInMonster.MP > 0)
             {
                 if (_playerMoveableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
                 {
@@ -367,7 +367,7 @@ namespace PlayingAround.Managers.CombatMan
                 DrawPlayerButtonOptions(spriteBatch);
                 if (_playerTurnState != PlayerTurnState.PlayerSummoning) 
                 {
-                    if (_standInMonster.Speed > 0)
+                    if (_standInMonster.MP > 0)
                     {
                         foreach (var cell in _playerMoveableCells)
                         {
@@ -450,12 +450,13 @@ namespace PlayingAround.Managers.CombatMan
         {
             foreach (var combatMon in _turnOrder)
             {
+                if (combatMon.currentPos.X == 0 && combatMon.currentPos.Y == 0) {  continue; }
                 Rectangle destination = new Rectangle(
                     (int)(combatMon.currentPos.X),
                     (int)(combatMon.currentPos.Y),
                     32, 32);
 
-                string textureKey = combatMon.isPlayerControled ? "Hero_Blonde" : combatMon.IconPath;
+                string textureKey = combatMon.isPlayerControled ? "Hero_Blonde" : combatMon.IconTextureKey;
                 spriteBatch.Draw(AssetManager.GetTexture(textureKey), destination, Color.White);
             }
         }
@@ -505,7 +506,7 @@ namespace PlayingAround.Managers.CombatMan
             CombatMonster mon = _turnOrder.Peek();
             TileCell origin = _playerControlledMonsterMap[mon];
 
-            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, _standInMonster.Speed);
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, _standInMonster.MP);
 
             _playerMoveableCells = cells;
         }
@@ -521,9 +522,9 @@ namespace PlayingAround.Managers.CombatMan
             (SingleAttack chosenAttack, Dictionary<CombatMonster, List<TileCell>> attackCells) finalAttack;
             CombatMonster mon = _turnOrder.Peek();
             List<SingleAttack> attackOptions = new List<SingleAttack>();
-            foreach (var attack in mon.Attacks.Attacks)
+            foreach (var attack in mon.Attacks)
             {
-                if (attack.Cost <= _standInMonster.AttackPower)
+               // if (attack.Cost <= _standInMonster.AttackPower)
                 attackOptions.Add(attack);
             }
             
@@ -542,7 +543,7 @@ namespace PlayingAround.Managers.CombatMan
             List<CombatMonster> targets = finalAttack.attackCells.Keys.ToList();
             List<TileCell> affectedCells = finalAttack.attackCells.Values.SelectMany(c => c).ToList();
             AttackManager.PerformAttack(chosenAttack, mon, targets, affectedCells);
-            _standInMonster.AttackPower -= chosenAttack.Cost;
+            //_standInMonster.AttackPower -= chosenAttack.Cost;
             _actionComplete = true;
         }
         private static Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> DecideWhichAttacksInRange(List<SingleAttack> attacks)
@@ -621,7 +622,7 @@ namespace PlayingAround.Managers.CombatMan
             { 
                 mon = _turnOrder.Peek(); 
             }
-            if (!mon.PathGenerated && _standInMonster.Speed >= 0)
+            if (!mon.PathGenerated && _standInMonster.MP >= 0)
                 GenerateMovementPath(mon); ;
             
             ExecuteMovementPath(delta, mon);
@@ -646,10 +647,10 @@ namespace PlayingAround.Managers.CombatMan
                     mon.currentPos += direction * step;
                 }
             }
-            else if (mon.MovePath.Count <= 0 || _standInMonster.Speed == 0)
+            else if (mon.MovePath.Count <= 0 || _standInMonster.MP == 0)
             {
 
-                _standInMonster.Speed -= (int)_numberOfCellsMoved;
+                _standInMonster.MP -= (int)_numberOfCellsMoved;
                 mon.PathGenerated = false;
                 _movementComplete = true;
                 if (mon.isPlayerControled) 
@@ -736,7 +737,7 @@ namespace PlayingAround.Managers.CombatMan
                 if (TileManager.IsNeighbor(playerControlledCells, currentCell))
                     return new List<TileCell>();
 
-                List<TileCell> listOfCellsPathToTarget = GridMovement.FindClosestTargetPath(currentCell, playerControlledCells, _standInMonster.Speed) ;
+                List<TileCell> listOfCellsPathToTarget = GridMovement.FindClosestTargetPath(currentCell, playerControlledCells, _standInMonster.MP) ;
                 return listOfCellsPathToTarget;
             } 
 
@@ -774,7 +775,7 @@ namespace PlayingAround.Managers.CombatMan
             _standInMonster.CurrentMana = _turnOrder.Peek().CurrentMana;
             _standInMonster.AttackPower = _turnOrder.Peek().AttackPower;
             _standInMonster.isPlayerControled = _turnOrder.Peek().isPlayerControled;
-            _standInMonster.Speed = _turnOrder.Peek().Speed;
+            _standInMonster.MP = 4;
             _standInMonster.ID = _turnOrder.Peek().ID;
         }
         private static void SetTurnOrder()
@@ -894,7 +895,7 @@ namespace PlayingAround.Managers.CombatMan
                 Rectangle iconRect = new Rectangle((int)iconPos.X, (int)iconPos.Y, iconSize, iconSize);
 
                 // Draw icon
-                string iconKey = mon.isPlayerControled ? "Hero_Blonde" : mon.IconPath;
+                string iconKey = mon.isPlayerControled ? "Hero_Blonde" : mon.IconTextureKey;
                 Texture2D icon = AssetManager.GetTexture(iconKey);
                 spriteBatch.Draw(icon, iconRect, Color.White);
 

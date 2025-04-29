@@ -1,9 +1,8 @@
 ﻿using PlayingAround.Data.MapTile;
-using PlayingAround.Data.Summons;
 using PlayingAround.Game.Map;
 using System.Collections.Generic;
 
-namespace PlayingAround.Data
+namespace PlayingAround.Data.SaveData
 {
     public class GameSaveData
     {

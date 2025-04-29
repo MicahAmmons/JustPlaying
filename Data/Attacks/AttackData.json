@@ -1,0 +1,25 @@
+{
+  "slam": {
+    "elementDamage": "physical",
+    "baseDamageMin": 7,
+    "baseDamageMax": 13,
+    "range": 1,
+    "effect": null,
+    "typeOfAttack": "attack",
+    "target": "closestEnemy"
+  },
+  "acidSpit": {
+    "elementalDamage": "acid",
+    "baseDamageMin": 5,
+    "baseDamageMax": 5,
+    "range": 6,
+    "duration": 3,
+    "stackable":  true,
+    "effect": "weakBurn",
+    "typeOfAttack": "attack",
+    "target": "lowestHPInRange"
+  }
+
+  
+
+}

@@ -1,0 +1,50 @@
+{
+  "Fire": {
+    "superEffective": "Ice",
+    "mildlyEffective": "Earth",
+    "superVulnerable": "Water",
+    "mildlyVulnerable": "Electricity"
+  },
+  "Ice": {
+    "superEffective": "Earth",
+    "mildlyEffective": "Wind",
+    "superVulnerable": "Fire",
+    "mildlyVulnerable": "Water"
+  },
+  "Earth": {
+    "superEffective": "Wind",
+    "mildlyEffective": "Acid",
+    "superVulnerable": "Ice",
+    "mildlyVulnerable": "Fire"
+  },
+  "Wind": {
+    "superEffective": "Acid",
+    "mildlyEffective": "Metal",
+    "superVulnerable": "Earth",
+    "mildlyVulnerable": "Ice"
+  },
+  "Acid": {
+    "superEffective": "Metal",
+    "mildlyEffective": "Electricity",
+    "superVulnerable": "Wind",
+    "mildlyVulnerable": "Earth"
+  },
+  "Metal": {
+    "superEffective": "Electricity",
+    "mildlyEffective": "Water",
+    "superVulnerable": "Acid",
+    "mildlyVulnerable": "Wind"
+  },
+  "Electricity": {
+    "superEffective": "Water",
+    "mildlyEffective": "Fire",
+    "superVulnerable": "Metal",
+    "mildlyVulnerable": "Acid"
+  },
+  "Water": {
+    "superEffective": "Fire",
+    "mildlyEffective": "Ice",
+    "superVulnerable": "Electricity",
+    "mildlyVulnerable": "Metal"
+  }
+}

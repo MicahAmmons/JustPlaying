@@ -6,12 +6,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PlayingAround.Data
+namespace PlayingAround.Data.SaveData
 {
     public static class SaveSystem
     {
         private static readonly string SaveDirectory = Path.GetFullPath(Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\SaveJson"));
+            AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\SaveData\SaveJson"));
         private static readonly string SavePath = Path.Combine(SaveDirectory, "savegame.json");
 
 

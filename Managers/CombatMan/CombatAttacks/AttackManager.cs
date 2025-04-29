@@ -1,6 +1,7 @@
 ﻿using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Movement.CombatGrid;
+using PlayingAround.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
     public static class AttackManager
     {
 
+
+        private static Dictionary<string, SingleAttack> _attackData;
+
+        public static void LoadContent()
+        {
+            _attackData = JsonLoader.LoadAttackData();
+        }
 
         public static void PerformAttack(
            SingleAttack attack,
@@ -35,13 +43,22 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
         public static float CalculateDamage(SingleAttack attack, CombatMonster attacker)
         {
-            return attack.Damage;
+            return 1;
         }
         public static bool AttackHits(SingleAttack att, CombatMonster attacker, CombatMonster target)
         {
             return true;
         }
 
+        public static List<SingleAttack> GetAttacks(List<string> atts)
+        {
+            List<SingleAttack> attacks = new List<SingleAttack>();
+            foreach (var att in atts)
+            {
+                attacks.Add(_attackData[att]);
+            }  
+            return attacks;
+        }
         public static Dictionary<CombatMonster, List<TileCell>> GetAttackSpecificBehavior(string targetPhrase, string key, List<TileCell> inRangeCells, TileCell origin)
         
             {

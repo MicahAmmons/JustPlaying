@@ -1,0 +1,19 @@
+{
+  "Ooze": {
+    "mp": 4,
+    "movementQuickness": 100,
+    "turnBehavior": "getCloseAsPossible",
+    "movementPattern": "arc",
+    "chooseAttackBehavior": "shortestRange",
+    "attacks": [
+      "slam",
+      "acidSpit"
+    ],
+    "monsterType": "Ooze",
+    "baseDifficulty": 1,
+    "elementType": "Acid",
+    "elementalAffinity": 2,
+    "baseHealth": 50,
+    "initiation":  2
+  }
+}

@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace PlayingAround.Managers
 {
@@ -24,68 +25,43 @@ namespace PlayingAround.Managers
         private const int IconWidth = 64;
         private const int IconHeight = 64;
         private Vector2? _selectedMonsterInfoAnchor = null;
+        private static Dictionary<string, List<PlayMonsterData>> _playMonsterData;
 
 
 
-
+        public static void LoadContent()
+        {
+            _playMonsterData = JsonLoader.LoadPlayMonsterData();
+        }
         public void GeneratePlayMonsters(MapTileData data)
         {
-            string path = "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
-            //string path = "C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Entities/Monster/PlayMonsters/PlayMonsterJson/PlayMonsters.json";
-            Dictionary<string, List<PlayMonsterData>> jsonData = JsonLoader.LoadPlayMonsterData(path);
 
             // Difficulty of the MapTile
-            float totalDifficulty = data.Difficulty;
+            float difficultyMax = data.DifficultyMax;
+            float difficultyMin = data.DifficultyMin;   
             int totalSpawns = data.TotalMonsterSpawns;
 
             // Step 1: Create a list of all available CombatMonsters based on the JSON data
-            
+            List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(data.MonsterStrings);
 
             Random random = new Random();
             for (int i = 0; i < data.TotalMonsterSpawns; i++)
             {
-                List<CombatMonster> allCombatMonsters = new List<CombatMonster>();
-                totalDifficulty = data.Difficulty;
-                float moveSpeed = 0;
-                Rectangle pacingBound = new Rectangle(00, 0, 0, 0);
-                string movementPatter = null;
-                string iconPath = null;
-                float pauseDur = 0;
 
-                while (totalDifficulty > 0)
-                {
-
-                    string randomMonsterName = data.MonsterStrings[random.Next(data.MonsterStrings.Count)];
-
-                    if (jsonData.TryGetValue(randomMonsterName, out var monsterDataList) && monsterDataList.Count > 0)
-                    {
-                        var monsterData = monsterDataList[random.Next(monsterDataList.Count)];
-                        CombatMonster combatMonster = new CombatMonster(monsterData, randomMonsterName);
-
-                        totalDifficulty -= monsterData.Difficulty;
-                        allCombatMonsters.Add(combatMonster);
-                        moveSpeed = monsterData.MovementSpeed;
-                        pacingBound = monsterData.PacingBoundaryRect;
-                        pauseDur = monsterData.PauseDuration;
-                        movementPatter = monsterData.MovementPattern;
-                        iconPath = monsterData.IconPath;
-
-                    }
-
-                }
                 Vector2 startPos = DeterminePlayMonsterSpawn(data.Cells);
                 PlayMonsters newPlayMon = new PlayMonsters()
                 {
-                    Monsters = allCombatMonsters,
-                    MovementSpeed = moveSpeed,
-                    PacingBoundary = pacingBound,
-                    MovementPattern = movementPatter,
-                    IconPath = iconPath,
+                    Monsters = CombatMonsterManager.BalanceCombatMonsters(monsterOptions, difficultyMax, difficultyMin),
                     SpawnPosition = startPos,
-                    Icon = AssetManager.GetTexture(iconPath),
                     CurrentPos = startPos,
-                    PauseDuration = pauseDur,
+
                 };
+                CombatMonster comMon = newPlayMon.Monsters[0];
+                string name = comMon.Name;
+                newPlayMon.Icon = AssetManager.GetTexture(comMon.IconTextureKey);
+                newPlayMon.MovementPattern = comMon.MovementPattern;
+                newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
+                newPlayMon.PacingBoundary = _playMonsterData[name][0].PacingBoundaryRect;
                 CurrentPlayMonsters.Add(newPlayMon);
             }
         }
@@ -140,11 +116,15 @@ namespace PlayingAround.Managers
         public void Update(GameTime gameTime)
         {
             HandleMonsterSelection();
-            Movement.NPCMovement.MoveMonsters(gameTime, CurrentPlayMonsters);
+            MovePlayMonsters(gameTime);
+
             UpdateTileCells();
         }
 
-
+        public void MovePlayMonsters(GameTime gameTime)
+        {
+            Movement.NPCMovement.MoveMonsters(gameTime, CurrentPlayMonsters);
+        }
         public void UpdateTileCells()
         {
             foreach (var mon in CurrentPlayMonsters)
@@ -188,8 +168,10 @@ namespace PlayingAround.Managers
                 return;
 
             var grouped = _selectedMonster.Monsters
-                .GroupBy(mon => mon.Name)
-                .Select(g => new { Name = g.Key, Count = g.Count() });
+    .GroupBy(mon => mon.NamePlusLevel)
+    .Select(g => new { NamePlusLevel = g.Key, Count = g.Count() });
+
+
 
             // Compute size of background
             var font = AssetManager.GetFont("mainFont");
@@ -202,13 +184,19 @@ namespace PlayingAround.Managers
 
             // Draw text over it
             Vector2 textPos = anchor + new Vector2(5, 5);
+
             foreach (var group in grouped)
             {
-                string displayName = group.Count > 1 ? $"({group.Count}) {Pluralize(group.Name)}" : group.Name;
+                string displayName = group.Count > 1
+                    ? $"({group.Count}) {Pluralize(group.NamePlusLevel)}"
+                    : group.NamePlusLevel;
 
                 spriteBatch.DrawString(font, displayName, textPos, Color.Green);
                 textPos.Y += lineHeight;
             }
+
+
+
         }
 
         private string Pluralize(string name)

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PlayingAround.Data;
-using PlayingAround.Data.Summons;
+using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;

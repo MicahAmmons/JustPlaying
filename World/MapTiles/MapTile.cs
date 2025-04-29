@@ -13,7 +13,8 @@ namespace PlayingAround.Game.Map
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
         public TileCell[,] TileGrid { get; private set; }
-        public float Difficulty { get; }
+        public float DifficultyMax { get; }
+        public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
         public PlayMonsterManager PlayMonstersManager { get; } = new PlayMonsterManager();
 
@@ -31,7 +32,8 @@ namespace PlayingAround.Game.Map
             
             BackgroundTexture = backgroundTexture;
             //Monsters = data.Monsters;
-            Difficulty = data.Difficulty;
+            DifficultyMax = data.DifficultyMax;
+            DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
             // Initialize grid
             TileGrid = new TileCell[GridWidth, GridHeight];

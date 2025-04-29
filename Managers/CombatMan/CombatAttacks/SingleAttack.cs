@@ -9,18 +9,11 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
     public class SingleAttack
     {
-
-        [JsonPropertyName("name")] public string Name { get; set; }
-
-        [JsonPropertyName("type")] public string TypeRaw { get; set; }  // temporary raw field
-
-        public List<string> Type => TypeRaw?.Split(',').Select(t => t.Trim()).ToList() ?? new();
-
+        [JsonPropertyName("elementDamage")] public string ElementDamage { get; set; } 
         [JsonPropertyName("range")] public int Range { get; set; }
-
         [JsonPropertyName("effect")] public string Effect { get; set; }
-        [JsonPropertyName("cost")] public int Cost { get; set; }
-        [JsonPropertyName("damage")] public int Damage { get; set; }
+        [JsonPropertyName("baseDamageMin")] public int MinDamage { get; set; }
+        [JsonPropertyName("baseDamageMax")] public int MaxDamage { get; set; }
         [JsonPropertyName("target")] public string Target { get; set; } 
 
     }

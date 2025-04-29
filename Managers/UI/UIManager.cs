@@ -215,7 +215,7 @@ namespace PlayingAround.Managers.UI
                 _standInMonster = CombatManager.GetStandInMonster();
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.MaxHealth}\n" +
                                $"Mana: {_playerMonster.CurrentMana} / {_playerMonster.CurrentMana}\n" +
-                               $"Speed: {_standInMonster.Speed}";
+                               $"Speed: {_standInMonster.MP}";
             }
         }
 

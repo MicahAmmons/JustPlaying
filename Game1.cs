@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using PlayingAround.Data;
+using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
@@ -10,6 +10,7 @@ using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
@@ -57,6 +58,10 @@ namespace PlayingAround
 
         protected override void LoadContent()
         {
+            AttackManager.LoadContent();
+            ResistanceManager.LoadContent();
+            PlayMonsterManager.LoadContent();
+            CombatMonsterManager.LoadContent();
             GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
 
 

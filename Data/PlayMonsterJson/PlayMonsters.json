@@ -1,0 +1,29 @@
+{
+  "Ooze": [
+    {
+      "movementSpeed": 100,
+      "pacingBoundary": {
+        "x": 0,
+        "y": 0,
+        "width": 250,
+        "height": 250
+      },
+      "movementPattern": "arc",
+      "pauseDuration": 2.5
+
+    }
+  ],
+  "AngryPlant": [
+    {
+      "movementSpeed": 100,
+      "maxHealth": 15,
+      "pacingBoundary": {
+        "x": 0,
+        "y": 0,
+        "width": 150,
+        "height": 150
+      },
+      "movementPattern": "idle"
+    }
+  ]
+}

@@ -1,11 +1,10 @@
-﻿using PlayingAround.Data.Summons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayingAround.Data
+namespace PlayingAround.Data.SaveData
 {
     public class PlayerSaveData
     {
