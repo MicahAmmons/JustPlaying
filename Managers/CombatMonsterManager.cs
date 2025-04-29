@@ -17,7 +17,7 @@ namespace PlayingAround.Managers
         private static Dictionary<string, CombatMonster> _combatMonsterBaseData;
         private static float _difficultyIncreasePerLevel = 0.2f;
         private static float _hPIncreasePerLevel = 1f;
-        private static float _elementalAffinityIncreasePerLevel = 0.01f;
+        private static float _elementalAffinityIncreasePerLevel = 1f;
         public static void LoadContent()
         {
             _combatMonsterBaseData = JsonLoader.LoadCombatMonsterData();
@@ -60,7 +60,10 @@ namespace PlayingAround.Managers
                     finalMon.Add(MatchStatsToDifficulty(monster, flo));
                     }
                 }
-
+                foreach ( var mon in finalMon)
+            {
+                mon.NamePlusLevel = $"{mon.Name} Lvl {mon.Level}";
+            }
           
 
             return finalMon;
@@ -68,26 +71,28 @@ namespace PlayingAround.Managers
         private static CombatMonster MatchStatsToDifficulty(CombatMonster mon, float diff)
         {
             Random random = new Random();
-            float numberOfLevels = (diff - mon.BaseDifficulty) / 2 + 1;
-            mon.Level = numberOfLevels;
+            float numberOfLevels = (diff - mon.BaseDifficulty) / 0.2f + 1;
+            mon.Level = (float)Math.Floor(numberOfLevels);
 
-            do
+            if (mon.Level > 1)
             {
-                bool addHealth = random.Next(2) == 0;
-                if (addHealth)
+                do
                 {
-                    mon.BaseHealth += _hPIncreasePerLevel;
-                    mon.MaxHealth = mon.BaseHealth;
-                    mon.CurrentHealth = mon.BaseHealth;
-                }
-                else
-                {
-                    mon.ElementalAffinity += _elementalAffinityIncreasePerLevel;
-                }
-           
-                numberOfLevels --;
-            } while (numberOfLevels > 0);
+                    bool addHealth = random.Next(2) == 0;
+                    if (addHealth)
+                    {
+                        mon.BaseHealth += _hPIncreasePerLevel;
+                        mon.MaxHealth = mon.BaseHealth;
+                        mon.CurrentHealth = mon.BaseHealth;
+                    }
+                    else
+                    {
+                        mon.ElementalAffinity += _elementalAffinityIncreasePerLevel;
+                    }
 
+                    numberOfLevels--;
+                } while (numberOfLevels > 0);
+            }
             return mon;
         }
         public static float GetRandomDifficulty(Random rng, float min, float max)
@@ -107,26 +112,52 @@ namespace PlayingAround.Managers
             Random rng = new Random();
             const float step = 0.2f;
             const float tolerance = 0.4f;
+            float maxDiff = targetDiff;
 
             Dictionary<CombatMonster, List<float>> result = new();
-            float currentTotal = 0f;
-
             foreach (var mon in mons)
             {
-                float baseDiff = mon.BaseDifficulty;
-                result[mon] = new List<float> { baseDiff };
-                currentTotal += baseDiff;
+                result[mon] = new List<float> { };
             }
 
-            List<CombatMonster> editableMonsters = new List<CombatMonster>(mons);
-
-            while (currentTotal + step <= targetDiff + tolerance)
+            while (maxDiff > 0)
             {
-                var chosen = editableMonsters[rng.Next(editableMonsters.Count)];
-                result[chosen].Add(step);
-                currentTotal += step;
+                int index = rng.Next(0, mons.Count - 1);
+                float diff = 0;
+                CombatMonster mon = mons[index];
+ 
+                float baseDiff = mon.BaseDifficulty;
+                if (baseDiff < maxDiff)
+                {
+                    diff = GetRandomDifficulty(rng, baseDiff, maxDiff);
+                    result[mon].Add(diff);
+                }
+                else
+                {
+                    if (baseDiff - maxDiff <= tolerance)
+                    {
+                        diff = mon.BaseDifficulty;
+                        result[mon].Add(diff);
+                        maxDiff = 0;
+                    }
+                    else
+                    {
+                        foreach (var monster in mons)
+                        {
+                            if (monster == mon) { continue; }
+                            if (monster.BaseDifficulty - maxDiff <= tolerance)
+                            {
+                                diff = monster.BaseDifficulty;
+                                result[monster].Add(diff);
+                                maxDiff = 0;
+                            }
+                        }
+                        maxDiff = 0;
+                    }
+                }
+                    maxDiff -= diff;
+                
             }
-
             return result;
         }
 
