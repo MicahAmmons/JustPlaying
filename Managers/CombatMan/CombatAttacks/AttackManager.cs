@@ -1,13 +1,17 @@
-﻿using PlayingAround.Entities.Monster.CombatMonsters;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Utils;
+using PlayingAround.Visuals;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
@@ -35,8 +39,18 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                 tar.CurrentHealth -= damage;
                 if (damage > 0)
                 {
+                    var effect = new VisualEffect(
+                        tar.currentPos + new Vector2(0, -10),  // startPos
+                        new Vector2(0, -20),                   // velocity
+                        0.5f,        
+                        Color.Red,// duration
+                        damage.ToString(),                     // text
+                        null           
+                        // texture (or some texture if needed)
+                    );
+                    CombatManager.VisualEffectManager.AddEffect(effect);
                     tar.IsFlashingRed = true;
-                    tar.DamageFlashTimer = 0.25f; // 0.25 seconds of red flash
+                    tar.DamageFlashTimer = 0.35f; // 0.25 seconds of red flash
                 }
 
 
