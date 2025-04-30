@@ -126,7 +126,7 @@ namespace PlayingAround.Managers.UI
                     32,
                     32
                 );
-                spriteBatch.Draw(summon.IconTexture, iconRect, Color.White);
+                spriteBatch.Draw(AssetManager.GetTexture(summon.IconTextureString), iconRect, Color.White);
 
                 // 2. Draw Name + Level
                 string nameAndLevel = $"{summon.Name} (Lv {summon.Level})";
@@ -214,7 +214,7 @@ namespace PlayingAround.Managers.UI
                 _playerMonster = CombatManager.GetPlayerMonster();
                 _standInMonster = CombatManager.GetStandInMonster();
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.MaxHealth}\n" +
-                               $"Mana: {_playerMonster.CurrentMana} / {_playerMonster.CurrentMana}\n" +
+                               $"SP: {_playerMonster.SP} / {_playerMonster.SP}\n" +
                                $"Speed: {_standInMonster.MP}";
             }
         }

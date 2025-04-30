@@ -20,6 +20,7 @@ namespace PlayingAround.Entities.Player
     public class Player
     {
         public float Speed { get; set; }
+
         public Texture2D Texture { get; private set; }
         public string Name { get; set; }    
         public PlayerStats stats { get; set; }

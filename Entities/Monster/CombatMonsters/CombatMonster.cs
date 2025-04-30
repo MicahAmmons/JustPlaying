@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
@@ -18,6 +19,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public Vector2 currentPos;
 
         public Vector2 startingPos;
+        public int SP { get; set; }
         [JsonPropertyName("mp")] public int MP { get; set; }
         [JsonPropertyName("movementQuickness")] public float MovementQuickness { get; set; }
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
@@ -40,8 +42,40 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<SingleAttack> Attacks { get; set; }
         public Dictionary<string, float> Resistances { get; set; }
         public float Level { get; set; } = 1;
+        public Texture2D IconTexture { get; set; }
+        public bool isPlayerMovementControled { get; set; }
 
+        public bool IsSummon {  get; set; }
+        public List<Vector2> attackPath1 { get; set; } = null;
+        public List<Vector2> attackPath2 { get; set; } = null;
+        public SingleAttack CurrentAttack { get; set; } = null;
+        public List<CombatMonster> CurrentAttackEffectedMonsters { get; set; } = null;
+        public List<TileCell> CurrentAttackEffectedCells { get; set; } = null;
+        public bool IsFlashingRed;
+        public float DamageFlashTimer = 0f;
 
+        public CombatMonster(SummonedMonster mon, CombatMonster comMon)
+        {
+            BaseSummonCost = mon.SummonCost;
+            Name = mon.Name;
+            IconTextureKey = mon.IconTextureString;
+            MaxHealth = mon.MaxHealth;
+            CurrentHealth = mon.MaxHealth;
+            Level =  mon.Level;
+            isPlayerControled = true;
+            isPlayerMovementControled = true;
+            Attacks = comMon.Attacks;
+            BaseDifficulty = comMon.BaseDifficulty;
+            ElementType = comMon.ElementType;
+            Initiation = comMon.Initiation;
+            MP = comMon.MP;
+            MonsterType = comMon.MonsterType;
+            MovementPattern = comMon.MovementPattern;
+            MovementQuickness = comMon.MovementQuickness;
+            Resistances = comMon.Resistances;
+            IsSummon = true;
+
+        }
 
 
         public TileCell CurrentCell { get; set; }
@@ -55,7 +89,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool PathGenerated { get; set; } = false;
         public TileCell PlayerMovementEndPoint { get; set; }
         public List<Vector2> MovePath { get; set; } = new();
-
+        public int BaseSummonCost { get; set; }
         public float AttackPower { get; set; } = 1;
         public string Name { get; set; }
         public string NamePlusLevel { get; set; }
@@ -87,6 +121,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MonsterType = original.MonsterType;
             Resistances = original.Resistances;
             ElementalAffinity = original.ElementalAffinity;
+            BaseSummonCost = original.BaseSummonCost;
 
         }
 
@@ -96,7 +131,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             //Speed = stats.MovementSpeed;
             MaxHealth = stats.MaxHealth;
             CurrentHealth = stats.CurrentHealth;
-            //Name = player.Name;
+            Name = "Player";
             MaxMana = stats.MaxMana;
             CurrentMana = stats.CurrentMana;
             isPlayerControled = true;
@@ -104,6 +139,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Initiation = stats.Initiation;
             MovementQuickness = 200f;
             MovementPattern = "straight";
+            MP = player.stats.MP;
+            SP = player.stats.SP;
         }
 
 

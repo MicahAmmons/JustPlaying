@@ -9,6 +9,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
     public class SingleAttack
     {
+        [JsonPropertyName("name")] public string Name { get; set; } 
         [JsonPropertyName("elementDamage")] public string ElementDamage { get; set; } 
         [JsonPropertyName("range")] public int Range { get; set; }
         [JsonPropertyName("effect")] public string Effect { get; set; }

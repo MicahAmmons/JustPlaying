@@ -31,24 +31,23 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         {
             foreach (var tar in target)
             {
-                if (AttackHits(attack, attacker, tar))
+                float damage = CalculateDamage(attack, tar);
+                tar.CurrentHealth -= damage;
+                if (damage > 0)
                 {
-                    
-                    tar.CurrentHealth -= CalculateDamage(attack, tar);
+                    tar.IsFlashingRed = true;
+                    tar.DamageFlashTimer = 0.25f; // 0.25 seconds of red flash
                 }
+
+
             }
-
-
         }
 
         public static float CalculateDamage(SingleAttack attack, CombatMonster attacker)
         {
             return 1;
         }
-        public static bool AttackHits(SingleAttack att, CombatMonster attacker, CombatMonster target)
-        {
-            return true;
-        }
+
 
         public static List<SingleAttack> GetAttacks(List<string> atts)
         {

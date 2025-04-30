@@ -45,6 +45,15 @@ namespace PlayingAround.Managers
             }
             return mons;
         }
+
+        public static CombatMonster SummonMonsterToCombat(SummonedMonster mon)
+        {
+            CombatMonster comMon = new CombatMonster(mon, _combatMonsterBaseData[mon.Name]);
+
+
+
+            return comMon;
+        }
         public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
         {
             List<CombatMonster> finalMon = new List<CombatMonster>();

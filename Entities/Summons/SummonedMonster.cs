@@ -6,10 +6,8 @@ using PlayingAround.Managers.Assets;
 public class SummonedMonster
 {
     public string Name => _saveData.Name;
-    public Texture2D IconTexture { get; private set; }
+    public string IconTextureString { get; private set; }
     public int MaxHealth { get; private set; }
-    public int CurrentHealth { get; private set; }
-    public int Attack {  get; private set; }
     public int Defense { get; private set; }
     public int Level { get; private set; }
     public int CurrentXP {get ; private set; }
@@ -17,6 +15,8 @@ public class SummonedMonster
     public int XPNeededForNextLevel { get; private set; }
     public bool IsReadyToLevelUp => CurrentXP >= XPNeededForNextLevel;
     public float XPProgressPercent => (float)CurrentXP / XPNeededForNextLevel;
+
+    public int SummonCost {  get; private set; }
 
 
     // Internals
@@ -27,8 +27,7 @@ public class SummonedMonster
     {
         _saveData = saveData;
         _progressionData = progressionData;
-
-        IconTexture = AssetManager.GetTexture($"MonsterIcons/{saveData.Name}Icon"); // You can customize this
+        IconTextureString = $"MonsterIcons/{saveData.Name}Icon";
         CalculateLevel();
         CalculateStats();
        // CheckMilestones();
@@ -52,8 +51,8 @@ public class SummonedMonster
     public void CalculateStats()
     {
         MaxHealth = _saveData.AbilityPoints["Health"] * _progressionData.StatGainPerPoint["Health"] + _progressionData.BaseStats.Health;
-        CurrentHealth = MaxHealth;
-        Attack = _saveData.AbilityPoints["Attack"] * _progressionData.StatGainPerPoint["Attack"] + _progressionData.BaseStats.Attack;
+       // Attack = _saveData.AbilityPoints["Attack"] * _progressionData.StatGainPerPoint["Attack"] + _progressionData.BaseStats.Attack;
         Defense = _saveData.AbilityPoints["Defense"] * _progressionData.StatGainPerPoint["Defense"] + _progressionData.BaseStats.Defense;
+        SummonCost = 3;
     }
 }

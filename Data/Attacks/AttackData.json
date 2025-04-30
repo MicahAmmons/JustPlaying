@@ -1,6 +1,7 @@
 {
   "slam": {
     "elementDamage": "physical",
+    "name": "slam",
     "baseDamageMin": 7,
     "baseDamageMax": 13,
     "range": 1,

@@ -9,7 +9,8 @@ namespace PlayingAround.Stats
 {
     public class PlayerStats
     {
-        public int MovementSpeed { get; set; } = 4;
+        public int MP { get; set; } = 4;
+        public int SP { get; set; }
         public float MaxHealth { get; set; } = 25;
         public float CurrentHealth { get; set; }
         public float MaxMana { get; set; } = 15; 
@@ -24,8 +25,8 @@ namespace PlayingAround.Stats
         {
             CurrentMana = MaxMana;
             CurrentHealth = MaxHealth;
-
-        }
+            SP = 3;
+         }
 
     }
 }

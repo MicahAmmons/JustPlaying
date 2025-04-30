@@ -2,6 +2,7 @@
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,25 @@ namespace PlayingAround.Managers.Movement.CombatGrid
             return bestPath ?? new List<TileCell>(); // return empty if none found
         }
 
+        public static (List<Vector2>, List<Vector2>) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
+        {
+            List<Vector2> result1 = new List<Vector2>();
+            List<Vector2> result2 = new List<Vector2>();
+
+            switch (att.Name)
+            {
+                case "slam":
+                    int half = attackPath.Count / 2;
+                    for (int i = 0; i < half; i++)
+                        result1.Add(attackPath[i]);
+
+                    result2 = new List<Vector2>(result1);
+                    result2.Reverse(); 
+                    break;
+            }
+
+            return (result1, result2);
+        }
 
 
         public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)
