@@ -67,7 +67,6 @@ namespace PlayingAround.Managers.CombatMan
         private static List<TileCell> _summonSpawnableCells;
         private static int _tileWidth;
         private static int _tileHeight;
-        private static bool _endTurn = false;
         private static bool _attackComplete = false;
 
 
@@ -128,6 +127,7 @@ namespace PlayingAround.Managers.CombatMan
             _playerBaseSpeed = player.stats.MP;
             _playerBaseSP = player.stats.SP;
             _playerMonster = new CombatMonster(player);
+           // _playerMonster.OrderOfActions.Enqueue("player");
             _playerMonster.PathGenerated = false;
             SetTurnOrder();
             FindSpawnablCellsForPlayerAndMons();
@@ -204,13 +204,13 @@ namespace PlayingAround.Managers.CombatMan
                 UpdateMouseHoverCell();
                 UpdateMonsterTakingDamage(delta);
 
-                if (_currentState == CombatState.TurnStart) // Have to remove the previous turn before calling TurnStart, it'll reset everything
+                if (_currentState == CombatState.TurnStart) 
                 {
                     UpdateMonsterCellMap();
                     _turnOrder.Peek().TurnNumber++;
                     CopyCurrentMonToStandin();
 
-                    if (_standInMonster.isPlayerControled) // Don't use standinMonster for this turn, player controls
+                    if (_standInMonster.isPlayerControled) 
                     {
 
                         SetState(CombatState.PlayerTurn);
@@ -231,7 +231,7 @@ namespace PlayingAround.Managers.CombatMan
                 if (_currentState == CombatState.ActionNavigation)
                 {
                     UpdateMonsterCellMap();
-                    if (_standInMonster.OrderOfActions.Count == 0 || _endTurn)
+                    if (_standInMonster.OrderOfActions.Count == 0)
                     {
                         EndTurn();
 
@@ -277,8 +277,9 @@ namespace PlayingAround.Managers.CombatMan
                     SetMonsterAttackPathingInformation(delta);
                     if (_turnOrder.Peek().CurrentAttack == null)
                     {
-                        _currentState = CombatState.ActionNavigation;
-
+                        _attackComplete = true;
+                        EndTurn();
+                        return;
                     }
                     _attackComplete = false;
 
@@ -316,12 +317,6 @@ namespace PlayingAround.Managers.CombatMan
                     UpdatePlayerSummonRange();
                     UpdateMonsterCellMap();
                     UpdatePlayerMoveableCells();
-                    //if (_turnEnd)
-                    //{
-                    //    _currentState = CombatState.TurnStart;
-                    //    _turnEnd = false;
-                    //}
-
                     CombatMonster mon = _turnOrder.Peek();
 
                     if (mon.PlayerMovementEndPoint != null)
@@ -360,7 +355,6 @@ namespace PlayingAround.Managers.CombatMan
 
             CombatMonster mon = _turnOrder.Dequeue();
             _turnOrder.Enqueue(mon);
-
             _playerTurnState = PlayerTurnState.PlayerWaitingInput;
             SetState(CombatState.TurnStart);
         }
@@ -462,6 +456,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_endTurnRect.Contains(_currentMousePos) && InputManager.IsLeftClick())
             {
+                _movementComplete = false;
                 EndTurn();
             }
         }
@@ -1024,6 +1019,7 @@ namespace PlayingAround.Managers.CombatMan
             _standInMonster.MP = _turnOrder.Peek().MP;
             _standInMonster.ID = _turnOrder.Peek().ID;
             _standInMonster.SP = _turnOrder.Peek().SP;
+            
         }
         private static void SetTurnOrder()
         {

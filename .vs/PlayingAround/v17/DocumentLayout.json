@@ -7,19 +7,19 @@
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\combatman\\combatattacks\\attackmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatattacks\\attackmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\data\\attacks\\attackdata.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\combatman\\combatattacks\\attackmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatattacks\\attackmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\monster\\combatmonsters\\combatmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\attacks\\attackdata.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\attacks\\attackdata.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
@@ -31,7 +31,7 @@
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\summons\\summonedmonster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\playingaround\\managers\\ui\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\ui\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\ui\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -74,7 +74,7 @@
               "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatManager.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\CombatMan\\CombatManager.cs",
               "RelativeToolTip": "Managers\\CombatMan\\CombatManager.cs",
-              "ViewState": "AQIAAEoCAAAAAAAAAAAmwHsCAAA3AAAA",
+              "ViewState": "AQIAAHsBAAAAAAAAAAAnwGQBAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-26T14:50:42.965Z",
               "IsPinned": true,
@@ -90,8 +90,7 @@
               "RelativeToolTip": "Data\\Attacks\\AttackData.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-30T16:21:45.918Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T16:21:45.918Z"
             },
             {
               "$type": "Document",
@@ -103,12 +102,11 @@
               "RelativeToolTip": "Managers\\UI\\UIManager.cs",
               "ViewState": "AQIAAI0AAAAAAAAAAAD4v4AAAABSAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:41:49.96Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:41:49.96Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CombatMonster.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "RelativeDocumentMoniker": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
@@ -116,8 +114,7 @@
               "RelativeToolTip": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "ViewState": "AQIAACkAAAAAAAAAAAAAADcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:41:31.962Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:41:31.962Z"
             },
             {
               "$type": "Document",
@@ -129,25 +126,24 @@
               "RelativeToolTip": "Entities\\Summons\\SummonedMonster.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAwwB0AAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T13:57:34.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T13:57:34.434Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Game1.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
               "RelativeDocumentMoniker": "Game1.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Game1.cs",
               "RelativeToolTip": "Game1.cs",
-              "ViewState": "AQIAAGcAAAAAAAAAAAASwIAAAAAMAAAA",
+              "ViewState": "AQIAAG0AAAAAAAAAAAASwIAAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-26T15:21:44.535Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AttackManager.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\CombatMan\\CombatAttacks\\AttackManager.cs",
               "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatAttacks\\AttackManager.cs",
@@ -155,8 +151,7 @@
               "RelativeToolTip": "Managers\\CombatMan\\CombatAttacks\\AttackManager.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAcwCcAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T22:51:36.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-28T22:51:36.416Z"
             },
             {
               "$type": "Document",
@@ -168,8 +163,7 @@
               "RelativeToolTip": "Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T22:59:38.743Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-28T22:59:38.743Z"
             }
           ]
         }
