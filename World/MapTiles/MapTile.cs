@@ -20,10 +20,10 @@ namespace PlayingAround.Game.Map
 
 
 
-        public const int GridWidth = 60;   // example number of cells per screen
-        public const int GridHeight = 34;
-        public const int TileWidth = 32;
-        public const int TileHeight = 32;
+        public const int GridWidth = 30;   // example number of cells per screen
+        public const int GridHeight = 17;
+        public const int TileWidth = 64;
+        public const int TileHeight = 64;
 
 
         public MapTile(MapTileData data, Texture2D backgroundTexture)
@@ -41,6 +41,8 @@ namespace PlayingAround.Game.Map
             // Overwrite with actual data from JSON
             foreach (var cellData in data.Cells)
             {
+                if (cellData.X > 29) { continue; }
+                if (cellData.Y > 16) {  continue; }
                 TileGrid[cellData.X, cellData.Y] = new TileCell(
                     cellData.X,
                     cellData.Y,

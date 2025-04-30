@@ -5997,18 +5997,21 @@
       "x": 6,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
       "x": 7,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
       "x": 8,
       "y": 16,
       "walkable": true,
+      "heroSpawnable": true,
       "z": 0
     },
     {
@@ -6081,12 +6084,14 @@
       "x": 20,
       "y": 16,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {
       "x": 21,
       "y": 16,
       "walkable": true,
+      "monsterSpawnable": true,
       "z": 0
     },
     {

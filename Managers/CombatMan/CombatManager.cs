@@ -613,7 +613,7 @@ namespace PlayingAround.Managers.CombatMan
                 Rectangle destination = new Rectangle(
                     (int)(combatMon.currentPos.X),
                     (int)(combatMon.currentPos.Y),
-                    32, 32);
+                    64, 64);
 
                 string textureKey;
                 if (combatMon.IsSummon)
@@ -636,13 +636,13 @@ namespace PlayingAround.Managers.CombatMan
         private static void DrawCellHighlight(SpriteBatch spriteBatch, TileCell cell, Color color)
         {
             Vector2 coords = TileManager.GetCellCords(cell);
-            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 32, 32);
+            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 64, 64);
             spriteBatch.Draw(_playerCellOptions, rect, color);
         }
         private static void DrawHeroPreviewOnCell(SpriteBatch spriteBatch, TileCell cell)
         {
             Vector2 coords = TileManager.GetCellCords(cell);
-            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 32, 32);
+            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 64, 64);
             spriteBatch.Draw(_player.Texture, rect, Color.White);
         }
         private static void DrawSpawnableTiles(SpriteBatch spriteBatch)
@@ -1119,7 +1119,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         public static void DisplayStats(SpriteBatch spriteBatch)
         {
-            int iconSize = 48;
+            int iconSize = 64;
             int spacingX = 150; // Horizontal space between icons
             int topY = 20; // Vertical offset from the top of the screen
             SpriteFont font = AssetManager.GetFont("mainFont");

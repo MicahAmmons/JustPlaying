@@ -102,7 +102,7 @@ namespace PlayingAround.Manager
             int x = (int)(cord.X / MapTile.TileWidth);
             int y = (int)(cord.Y / MapTile.TileHeight);
 
-            if (x < 0 || x >= 60 || y < 0 || y >= 34)
+            if (x < 0 || x >= 30 || y < 0 || y >= 17)
             {
                 return new TileCell(
                 69,               
