@@ -69,6 +69,7 @@ namespace PlayingAround.Managers.CombatMan
         private static int _tileHeight;
         private static bool _attackComplete = false;
         private static VisualEffectManager _visualEffectManager = new VisualEffectManager();
+        private static List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
 
         public static VisualEffectManager VisualEffectManager => _visualEffectManager;
 
@@ -79,7 +80,7 @@ namespace PlayingAround.Managers.CombatMan
         private static int _maxStrings = 50;
 
         private static Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
-        private static Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect;
+        private static Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect, _attackOptionsRect;
 
 
         public enum CombatState
@@ -409,6 +410,7 @@ namespace PlayingAround.Managers.CombatMan
                     HandleSummonRectClick();
                     HandlePlayerEndTurn();
                     HandleMovementRectClick();
+                    HandleAttackRectClick();
                     break;
 
                 case PlayerTurnState.PlayerSummoning:
@@ -416,14 +418,15 @@ namespace PlayingAround.Managers.CombatMan
                     break;
 
                 case PlayerTurnState.PlayerAttacking:
-                    //HandleAttackTargetingClick();
+                    HandleDisplayAttackOptionsClick();
+                    
                     break;
                 case PlayerTurnState.PlayerMoving:
                     HandlePlayerControlMoveClick(mon);
                     break;
 
                 case PlayerTurnState.PlayerExecutingAction:
-                    
+                   
                     break;
 
                 case PlayerTurnState.PlayerEndingTurn:
@@ -431,7 +434,29 @@ namespace PlayingAround.Managers.CombatMan
                     break;
             }
         }
+        private static void HandleDisplayAttackOptionsClick()
+        {
+            if (InputManager.IsLeftClick())
+            {
+                foreach (var (rect, attack) in _attackButtons)
+                {
+                    if (rect.Contains(_currentMousePos))
+                    {
 
+                        // You could now set the selected attack, go to targeting mode, etc.
+                        _turnOrder.Peek().CurrentAttack = attack;
+          
+                    }
+                }
+            }
+        }
+        private static void HandleAttackRectClick()
+        {
+            if (InputManager.IsLeftClick() && _attackRect.Contains(_currentMousePos))
+            {
+                _playerTurnState = PlayerTurnState.PlayerAttacking;
+            }
+        }
         private static void HandleSummonDropdownClick()
         {
             if (_player.stats.UnlockedSummons == null || _player.stats.UnlockedSummons.Count == 0)
@@ -562,10 +587,55 @@ namespace PlayingAround.Managers.CombatMan
                         }
                     }
 
-
+                }
+                if (_playerTurnState == PlayerTurnState.PlayerAttacking)
+                {
+                    DrawAttackOptions(spriteBatch);
                 }
             }
         }
+
+        private static void DrawAttackOptions(SpriteBatch spriteBatch)
+        {
+            CombatMonster mon = _turnOrder.Peek();
+            if (mon == null || mon.Attacks == null || mon.Attacks.Count == 0)
+                return;
+
+            _attackButtons.Clear(); // Clear previous frame's buttons
+
+            int buttonWidth = 200;
+            int buttonHeight = 50;
+            int spacing = 10;
+            int totalWidth = mon.Attacks.Count * (buttonWidth + spacing) - spacing;
+            int screenWidth = 1920;
+            int startX = (screenWidth - totalWidth) / 2;
+            int bottomY = 1080 - buttonHeight - 40;
+
+            for (int i = 0; i < mon.Attacks.Count; i++)
+            {
+                var attack = mon.Attacks[i];
+                Rectangle buttonRect = new Rectangle(
+                    startX + i * (buttonWidth + spacing),
+                    bottomY,
+                    buttonWidth,
+                    buttonHeight
+                );
+
+                _attackButtons.Add((buttonRect, attack)); // 🧠 Save for click detection
+
+                spriteBatch.Draw(_playerCellOptions, buttonRect, Color.DarkSlateGray);
+
+                string attackName = attack.Name.ToUpper();
+                Vector2 textSize = _font.MeasureString(attackName);
+                Vector2 textPos = new Vector2(
+                    buttonRect.X + (buttonRect.Width - textSize.X) / 2,
+                    buttonRect.Y + (buttonRect.Height - textSize.Y) / 2
+                );
+
+                spriteBatch.DrawString(_font, attackName, textPos, Color.White);
+            }
+        }
+
 
         private static void DrawSummonSpawnOptions(SpriteBatch spriteBatch)
         {

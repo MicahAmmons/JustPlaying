@@ -11,6 +11,7 @@
   },
   "acidSpit": {
     "elementalDamage": "acid",
+    "name":  "acid Spit",
     "baseDamageMin": 5,
     "baseDamageMax": 5,
     "range": 6,
