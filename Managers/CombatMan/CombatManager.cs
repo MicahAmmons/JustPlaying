@@ -551,9 +551,13 @@ namespace PlayingAround.Managers.CombatMan
                     if (_playerTurnState == PlayerTurnState.PlayerSummoning)
                     {
                         DrawSummonOptions(spriteBatch);
-                        if (_playerSelectedSummon != null && _summonSpawnableCells.Contains(_currentMouseHoverCell))
+                        if (_playerSelectedSummon != null )
                         {
                             DrawSummonSpawnOptions(spriteBatch);
+                            
+                        }
+                        if (_summonSpawnableCells.Contains(_currentMouseHoverCell))
+                        {
                             DrawSummonHover(spriteBatch);
                         }
                     }

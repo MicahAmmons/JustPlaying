@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlayingAround")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdcd1df0c5fad875ea43da7a6c1ed689489a5f34")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f68a291734e7c205e6146f6a9c5f7999cf201b2")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlayingAround")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlayingAround")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

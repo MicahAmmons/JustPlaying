@@ -10,8 +10,7 @@
   },
   "background": "Tiles/0_0_0",
   "monsters": [
-    "Ooze",
-    "AngryPlant"
+    "Ooze"
   ],
   "obstacles": [],
   "difficulty": 1,
