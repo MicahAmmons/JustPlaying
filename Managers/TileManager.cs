@@ -134,7 +134,7 @@ namespace PlayingAround.Manager
         {
                 PlayerCurrentCell = cell;
         }
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null)
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null, bool includeMonsterTiles = false)
         {
             List<TileCell> neighbors = new();
 
@@ -146,20 +146,19 @@ namespace PlayingAround.Manager
         new(1, 0)
             };
 
-            foreach (var dir in directions)
+            for (int i = 0; i < directions.Length; i++)
             {
-                int newX = cell.X + dir.X;
-                int newY = cell.Y + dir.Y;
+                int newX = cell.X + directions[i].X;
+                int newY = cell.Y + directions[i].Y;
 
                 if (newX < 0 || newY < 0 || newX >= CurrentMapTile.TileGrid.GetLength(0) || newY >= CurrentMapTile.TileGrid.GetLength(1))
                     continue;
 
                 TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
-
                 bool isGoal = goal != null && neighbor == goal;
 
                 if (neighbor != null && neighbor.IsWalkable &&
-                    (!neighbor.BlockedByMonster || isGoal))
+                    (!neighbor.BlockedByMonster || includeMonsterTiles || isGoal))
                 {
                     neighbors.Add(neighbor);
                 }
@@ -167,6 +166,7 @@ namespace PlayingAround.Manager
 
             return neighbors;
         }
+
 
         public static List<TileCell> GetWalkableNeighbors(TileCell cell)
         {
@@ -236,41 +236,39 @@ namespace PlayingAround.Manager
 
             return result;
         }
-        public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps)
+        public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps, bool includeMonsterTiles = false)
         {
+            List<TileCell> reachableCells = new();
+            Queue<(TileCell cell, int steps)> queue = new();
+            HashSet<TileCell> visited = new();
+
+            queue.Enqueue((origin, 0));
+            visited.Add(origin);
+
+            while (queue.Count > 0)
             {
-                List<TileCell> reachableCells = new();
-                Queue<(TileCell cell, int steps)> queue = new();
-                HashSet<TileCell> visited = new();
+                var (current, steps) = queue.Dequeue();
 
-                queue.Enqueue((origin, 0));
-                visited.Add(origin);
+                if (steps > maxSteps)
+                    continue;
 
-                while (queue.Count > 0)
+                reachableCells.Add(current);
+
+                foreach (TileCell neighbor in GetWalkableNeighbors(current, null, null, includeMonsterTiles))
                 {
-                    var (current, steps) = queue.Dequeue();
-
-                    if (steps > maxSteps)
-                        continue;
-
-                    reachableCells.Add(current);
-
-                    foreach (TileCell neighbor in GetWalkableNeighbors(current))
+                    if (!visited.Contains(neighbor))
                     {
-                        if (!visited.Contains(neighbor))
-                        {
-                            visited.Add(neighbor);
-                            queue.Enqueue((neighbor, steps + 1));
-                        }
+                        visited.Add(neighbor);
+                        queue.Enqueue((neighbor, steps + 1));
                     }
                 }
-
-                // Optionally remove the origin if you don't want to include the starting tile
-                reachableCells.Remove(origin);
-
-                return reachableCells;
             }
+
+            reachableCells.Remove(origin); // Optional
+
+            return reachableCells;
         }
+
 
 
 

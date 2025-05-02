@@ -14,6 +14,7 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
             AssetManager.LoadFont("mainFont", "mainFont");
             AssetManager.LoadTexture("fightBackground", "UI/fightBackground");
+            AssetManager.LoadTexture("acidSpitIcon", "Attacks/acidSpit");
            // AssetManager.LoadTexture("fightButton", "UI/fightButton");
 
 

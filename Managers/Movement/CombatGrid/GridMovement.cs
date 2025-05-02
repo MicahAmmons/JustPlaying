@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
@@ -31,25 +33,37 @@ namespace PlayingAround.Managers.Movement.CombatGrid
             return bestPath ?? new List<TileCell>(); // return empty if none found
         }
 
-        public static (List<Vector2>, List<Vector2>) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
+        public static (List<Vector2>?, List<Vector2>?, List<Vector2>?, Texture2D?) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
         {
-            List<Vector2> result1 = new List<Vector2>();
-            List<Vector2> result2 = new List<Vector2>();
+            List<Vector2>? result1 = null;
+            List<Vector2>? result2 = null;
+            List<Vector2>? result3 = null;
+            Texture2D? texture = null;
 
-            switch (att.Name)
+            string name = att.Name.Replace(" ", "");
+
+            if (att.AttackHasIcon)
+                texture = AssetManager.GetTexture($"{name}Icon");
+
+            switch (name.ToLowerInvariant())
             {
                 case "slam":
+                    result1 = new List<Vector2>();
                     int half = attackPath.Count / 2;
                     for (int i = 0; i < half; i++)
                         result1.Add(attackPath[i]);
-
                     result2 = new List<Vector2>(result1);
-                    result2.Reverse(); 
+                    result2.Reverse();
+                    break;
+
+                case "acidspit":
+                    result3 = new List<Vector2>(attackPath);
                     break;
             }
 
-            return (result1, result2);
+            return (result1, result2, result3, texture);
         }
+
 
 
         public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)

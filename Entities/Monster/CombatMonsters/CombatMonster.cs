@@ -48,6 +48,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool IsSummon {  get; set; }
         public List<Vector2> attackPath1 { get; set; } = null;
         public List<Vector2> attackPath2 { get; set; } = null;
+        public List<Vector2> projectileAttackPath1 { get; set; } = null;
+        public Texture2D projectileTexture { get; set; } = null;
+        public List<Vector2> projectileMovePath {  get; set; } = null;
         public SingleAttack CurrentAttack { get; set; } = null;
         public List<CombatMonster> CurrentAttackEffectedMonsters { get; set; } = null;
         public List<TileCell> CurrentAttackEffectedCells { get; set; } = null;

@@ -106,3 +106,4 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\refint\Play
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.pdb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\ref\PlayingAround.dll
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Attacks\acidSpit.xnb
