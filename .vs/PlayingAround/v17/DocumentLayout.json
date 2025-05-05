@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\movement\\npcmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\movement\\npcmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\data\\savedata\\savejson\\savegame.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\savedata\\savejson\\savegame.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\managers\\assets\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,7 +82,7 @@
               "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatManager.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\CombatMan\\CombatManager.cs",
               "RelativeToolTip": "Managers\\CombatMan\\CombatManager.cs",
-              "ViewState": "AQIAAMcBAAAAAAAAAAAYwPcBAAAQAAAA",
+              "ViewState": "AQIAAKcBAAAAAAAAAAArwPcBAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-30T22:37:52.1Z",
               "IsPinned": true,
@@ -90,19 +90,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "NPCMovement.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Movement\\NPCMovement.cs",
               "RelativeDocumentMoniker": "Managers\\Movement\\NPCMovement.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Movement\\NPCMovement.cs",
               "RelativeToolTip": "Managers\\Movement\\NPCMovement.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAAACgAAAAZAAAA",
+              "ViewState": "AQIAACMAAAAAAAAAAIBZwCgAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T17:21:40.836Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ArchiveMOvement.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Pathfinding\\ArchiveMOvement.cs",
               "RelativeDocumentMoniker": "Pathfinding\\ArchiveMOvement.cs",
@@ -114,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "savegame.json",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\SaveData\\SaveJson\\savegame.json",
               "RelativeDocumentMoniker": "Data\\SaveData\\SaveJson\\savegame.json",
@@ -126,13 +126,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Player\\Player.cs",
               "RelativeDocumentMoniker": "Entities\\Player\\Player.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Player\\Player.cs",
               "RelativeToolTip": "Entities\\Player\\Player.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAYwDMAAAAdAAAA",
+              "ViewState": "AQIAAKgAAAAAAAAAAAAAALEAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T16:07:18.505Z"
             },
@@ -150,7 +150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "CombatMonster.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "RelativeDocumentMoniker": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
@@ -162,7 +162,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AttackData.json",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Data\\Attacks\\AttackData.json",
               "RelativeDocumentMoniker": "Data\\Attacks\\AttackData.json",
@@ -174,7 +174,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "SingleAttack.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
               "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
@@ -186,7 +186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GridMovement.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\PlayingAround\\Managers\\Movement\\CombatGrid\\GridMovement.cs",
               "RelativeDocumentMoniker": "Managers\\Movement\\CombatGrid\\GridMovement.cs",
