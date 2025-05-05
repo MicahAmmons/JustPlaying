@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         [JsonPropertyName("baseDamageMax")] public int MaxDamage { get; set; }
         [JsonPropertyName("target")] public string Target { get; set; }
         [JsonPropertyName("attacksHasIcon")] public bool AttackHasIcon { get; set; }
-        public List<Vector2> MovePath { get; set; }
-        public Vector2 CurrentPos { get; set; }
-        public float MoveQuickness { get; set; } = 200f;
+        [JsonPropertyName("visualVelocity")] public float VisualVelocity { get; set; } = 200f;
+        [JsonPropertyName("texturePath")] public string TexturePath {  get; set; }
+        [JsonPropertyName("animated")] public bool Animated { get; set; } = false;
+        [JsonConverter(typeof(JsonStringEnumConverter))] public VisualTiming VisualTiming { get; set; } = VisualTiming.DuringAttack; // default if missing
+
     }
 }

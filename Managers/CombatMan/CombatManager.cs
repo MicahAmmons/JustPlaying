@@ -13,6 +13,7 @@ using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -73,7 +74,8 @@ namespace PlayingAround.Managers.CombatMan
         private static VisualEffectManager _visualEffectManager = new VisualEffectManager();
         private static List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
         private static SingleAttack _drawnAttack = null;
-
+        private static bool _attackAnimationBeforeHit;
+        private static VisualEffect _currentAttackVisualEffect;
         public static VisualEffectManager VisualEffectManager => _visualEffectManager;
         
 
@@ -185,23 +187,7 @@ namespace PlayingAround.Managers.CombatMan
 
             if (_currentState == CombatState.PlayerTurn)
                 DrawPlayerTurn(spriteBatch);
-            if (_drawnAttack != null)
-            {
-               if (_drawnAttack.AttackHasIcon && _drawnAttack.MovePath != null )
-                {
-                    CombatMonster mon = _turnOrder.Peek();
-                    int size = 32;
-
-                    // Centered rectangle
-                    Rectangle rect = new Rectangle(
-                        (int)(_drawnAttack.CurrentPos.X - size / 2),
-                        (int)(_drawnAttack.CurrentPos.Y - size / 2),
-                        size,
-                        size);
-                    string textureKey = $"{_drawnAttack.Name.Replace(" ", "")}Icon";
-                    spriteBatch.Draw(AssetManager.GetTexture(textureKey), rect, Color.White);
-                }
-            }
+          
             DrawAllCombatMonsters(spriteBatch);
             _visualEffectManager.Draw(spriteBatch, _font);
 
@@ -330,6 +316,8 @@ namespace PlayingAround.Managers.CombatMan
                 if (_currentState == CombatState.ExecutingAttack)
                 {
                     CombatMonster mon = _turnOrder.Peek();
+                    if (HandleAttackVisualEffect())
+                        return;
                     if (mon.attackPath1 != null && mon.attackPath1.Count > 0)
                     {
                         mon.MovePath = mon.attackPath1;
@@ -344,6 +332,13 @@ namespace PlayingAround.Managers.CombatMan
                         mon.CurrentAttack = null;
                         mon.CurrentAttackEffectedMonsters = null;
                         mon.CurrentAttackEffectedCells = null;
+
+                        if (_currentAttackVisualEffect != null && _currentAttackVisualEffect.WhenToStart == VisualTiming.AfterAttack)
+                        {
+                            VisualEffectManager.AddEffect(_currentAttackVisualEffect);
+                            _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
+                            return;
+                        }
                         return;
                     }
                     else if (mon.attackPath2 != null && mon.attackPath2.Count > 0)
@@ -488,23 +483,14 @@ namespace PlayingAround.Managers.CombatMan
         {
             CombatMonster mon = _turnOrder.Peek();
 
+            // 🔄 Visual Effect Handling (returns true if we should pause execution)
+            if (HandleAttackVisualEffect())
+                return;
+
             if (mon.attackPath1 != null && mon.attackPath1.Count > 0)
             {
                 mon.MovePath = mon.attackPath1;
                 ExecuteMovementPath(delta, mon);
-                return;
-            }
-            else if (_drawnAttack != null)
-            {
-                if (_drawnAttack.MovePath == null)
-                {
-                    _drawnAttack.MovePath = NPCMovement.StraightMovement(GetCellCenterVector(TileManager.GetCellCords(FindCenterCell(mon.CurrentAttackEffectedCells))), _drawnAttack.CurrentPos);
-                }
-                ExecuteCurrentAttackPath(delta);
-                if (_drawnAttack.MovePath.Count == 0)
-                {
-                    _drawnAttack = null;
-                }
                 return;
             }
             else if (!_attackComplete)
@@ -515,6 +501,15 @@ namespace PlayingAround.Managers.CombatMan
                 mon.CurrentAttack = null;
                 mon.CurrentAttackEffectedMonsters = null;
                 mon.CurrentAttackEffectedCells = null;
+
+                // 👇 Handle "AfterAttack" visuals here
+                if (_currentAttackVisualEffect != null && _currentAttackVisualEffect.WhenToStart == VisualTiming.AfterAttack)
+                {
+                    VisualEffectManager.AddEffect(_currentAttackVisualEffect);
+                    _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
+                    return;
+                }
+
                 return;
             }
             else if (mon.attackPath2 != null && mon.attackPath2.Count > 0)
@@ -524,46 +519,66 @@ namespace PlayingAround.Managers.CombatMan
                 return;
             }
 
-                _playerTurnState = PlayerTurnState.PlayerWaitingInput;
-
+            _playerTurnState = PlayerTurnState.PlayerWaitingInput;
         }
-        private static void ExecuteCurrentAttackPath(float delta)
+
+        private static bool HandleAttackVisualEffect()
         {
-            List<Vector2> path = _drawnAttack.MovePath;
-           
-            if (path != null && path.Count > 0)
+            if (_currentAttackVisualEffect == null)
+                return false;
+            
+            switch (_currentAttackVisualEffect.WhenToStart)
             {
-                Vector2 target = path[0];
-                Vector2 direction = target - _drawnAttack.CurrentPos;
-                float distance = direction.Length();
-                float step = _drawnAttack.MoveQuickness * delta;
+                case VisualTiming.BeforeAttack:
+                    
+                    _visualEffectManager.AddEffect(_currentAttackVisualEffect);
+                    _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
+                    return true; // Hold until finished
 
-                if (distance <= step || distance < 0.01f)
-                {
-                    _drawnAttack.CurrentPos = target;
-                    path.RemoveAt(0);
-                }
-                else
-                {
-                    direction.Normalize();
-                    _drawnAttack.CurrentPos += direction * step;
-                }
+                case VisualTiming.DuringAttack:
+                    CombatMonster mon = _turnOrder.Peek();
+                    if (!_attackComplete && (mon.attackPath1 == null || mon.attackPath1.Count <= 0))
+                    {
+                        _visualEffectManager.AddEffect(_currentAttackVisualEffect);
+                        _currentAttackVisualEffect = null;
+                    }
+                    return false;
+
+                case VisualTiming.AfterAttack:
+                    return false; // We'll handle this after the attack completes
+
+                case VisualTiming.IsRunning:
+                    if (!_currentAttackVisualEffect.IsFinished)
+                        return true;
+                    else
+                        _currentAttackVisualEffect.WhenToStart = VisualTiming.Complete;
+                    return true;
+
+                case VisualTiming.Complete:
+                    _currentAttackVisualEffect = null;
+                    return false;
             }
-            else if (path.Count <= 0 || _standInMonster.MP == 0)
-            {
-                _drawnAttack = null;
-            }
+
+            return false;
         }
+
+        private static void ExecuteAttackAnimation()
+        {
+
+        }
+      
         private static void HandlePlayerTargetingAttackClick()
         {
             if (InputManager.IsLeftClick() && _playerCurrentAttackRangeOptions.Contains(_currentMouseHoverCell) && _currentMouseHoverCell.BlockedByMonster)
             {
                 _playerTurnState = PlayerTurnState.PlayerExecutingAttack;
                 _currentTarget = _currentMouseHoverCell;
-                _drawnAttack = _playerCurrentAttack;
-                _drawnAttack.CurrentPos = GetCellCenterVector(_turnOrder.Peek().currentPos);
                 _attackComplete = false;
                 SetPlayerAttackEffectCellsAndMonsters();
+                CombatMonster mon = _turnOrder.Peek();
+                SetAttackPathForPlayer();
+                if (_playerCurrentAttack.Animated)
+                _currentAttackVisualEffect = new VisualEffect(GetMonsterCurrentCell(mon), _playerCurrentAttack, FindCenterCell(mon.CurrentAttackEffectedCells ));
                
             }
         }
@@ -594,15 +609,7 @@ namespace PlayingAround.Managers.CombatMan
             var paths = GridMovement.SplitAttackPath(path, _playerCurrentAttack);
             mon.attackPath1 = paths.Item1;
             mon.attackPath2 = paths.Item2;
-            mon.projectileAttackPath1 = paths.Item3;
-            mon.projectileTexture = paths.Item4;
 
-            // NEW: Disable monster movement if using a projectile-only attack
-            if (paths.Item3 != null)
-            {
-                mon.attackPath1 = null;
-                mon.attackPath2 = null;
-            }
         }
         private static void HandleDisplayAttackOptionsClick()
         {
@@ -1040,17 +1047,21 @@ namespace PlayingAround.Managers.CombatMan
             }
                 TileCell currentCell = GetMonsterCurrentCell(mon);
 
-
-            List<Vector2> path = NPCMovement.MoveMonsters(mon, currentCell, FindCenterCell(attackDetails.Item3));
+            TileCell centerCell = FindCenterCell(attackDetails.Item3);
+            List<Vector2> path = NPCMovement.MoveMonsters(mon, currentCell, centerCell);
                 var paths = Movement.CombatGrid.GridMovement.SplitAttackPath(path, attackDetails.Item1);
                 mon.attackPath1 = paths.Item1;
                 mon.attackPath2 = paths.Item2;
-                mon.projectileAttackPath1 = paths.Item3;
-                mon.projectileTexture = paths.Item4;
                 mon.CurrentAttack = attackDetails.Item1;
                 mon.CurrentAttackEffectedMonsters = attackDetails.Item2;
                 mon.CurrentAttackEffectedCells = attackDetails.Item3;
-            
+            if (mon.CurrentAttack.Animated)
+            {
+                UpdateMonsterCellMap();
+                _currentAttackVisualEffect = new VisualEffect(GetMonsterCurrentCell(mon), mon.CurrentAttack, centerCell);
+            }
+
+
         }
 
         private static TileCell GetMonsterCurrentCell(CombatMonster mon)
@@ -1149,6 +1160,7 @@ namespace PlayingAround.Managers.CombatMan
                 {
                     cell.BlockedByMonster = true;
                     _playerControlledMonsterMap[mon] = cell;
+
                 }
                 else if (!mon.isPlayerControled)
                 {
