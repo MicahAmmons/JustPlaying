@@ -9,6 +9,7 @@ using PlayingAround.Game.Assets;
 using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Movement.CombatGrid;
@@ -237,6 +238,7 @@ namespace PlayingAround.Managers.CombatMan
                     UpdateMonsterCellMap();
                     _turnOrder.Peek().TurnNumber++;
                     CopyCurrentMonToStandin();
+                    ResolveAspects(TickedTiming.StartOfTurn);
 
                     if (_standInMonster.isPlayerControled) 
                     {
@@ -329,6 +331,7 @@ namespace PlayingAround.Managers.CombatMan
                         _attackComplete = true;
                         AttackManager.PerformAttack(mon.CurrentAttack, mon, mon.CurrentAttackEffectedMonsters, mon.CurrentAttackEffectedCells);
                         
+                        
                         mon.CurrentAttack = null;
                         mon.CurrentAttackEffectedMonsters = null;
                         mon.CurrentAttackEffectedCells = null;
@@ -371,6 +374,16 @@ namespace PlayingAround.Managers.CombatMan
                 
 
             }
+        }
+
+
+
+        private static void ResolveAspects(TickedTiming tick)
+        {
+            CombatMonster mon = _turnOrder.Peek();
+            AspectManager.ResolveAspect(mon, tick);
+
+        
         }
         private static void UpdateMonsterTakingDamage(float delta)
         {

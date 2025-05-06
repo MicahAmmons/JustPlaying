@@ -1,0 +1,14 @@
+{
+  "weakAcidBurn": {
+    "name": "Weak Acid Burn",
+    "description": "Deals minor acid damage over time.",
+    "duration": 3,
+    "damage": 1,
+    "damageType": "acid",
+    "isBuff": false,
+    "whenTicked": 0,
+    "isStackable": true,
+    "iconKey": "acidIcon",
+    "devNote": "StartOfTurn = 0, EndOfTurn = 1, AfterAttack = 2, AfterMovement = 3, OnDamage = 4, OnBeingHit = 5"
+  }
+}

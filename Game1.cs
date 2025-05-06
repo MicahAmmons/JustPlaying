@@ -10,6 +10,7 @@ using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.UI;
@@ -63,6 +64,7 @@ namespace PlayingAround
             PlayMonsterManager.LoadContent();
             CombatMonsterManager.LoadContent();
             GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
+            AspectManager.LoadAspects();
 
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);

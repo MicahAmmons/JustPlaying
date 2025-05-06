@@ -6,6 +6,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 
 namespace PlayingAround.Utils
@@ -66,6 +67,14 @@ namespace PlayingAround.Utils
         {
             string json = File.ReadAllText(PlayMonsterPath);
             return JsonSerializer.Deserialize<Dictionary<string, List<PlayMonsterData>>>(json);
+        }
+
+        private static readonly string AspectDataPath = Path.GetFullPath(Path.Combine(
+AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Aspects\AspectData.json"));
+        public static Dictionary<string, Aspect> LoadAspectData()
+        {
+            string json = File.ReadAllText(AspectDataPath);
+            return JsonSerializer.Deserialize<Dictionary<string, Aspect>>(json);
         }
     }
 }

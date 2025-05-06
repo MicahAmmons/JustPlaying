@@ -23,6 +23,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         [JsonPropertyName("texturePath")] public string TexturePath {  get; set; }
         [JsonPropertyName("animated")] public bool Animated { get; set; } = false;
         [JsonConverter(typeof(JsonStringEnumConverter))] public VisualTiming VisualTiming { get; set; } = VisualTiming.DuringAttack; // default if missing
+        [JsonPropertyName("whenApplyAspect")] public string WhenApplyAspect { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Utils;
 using PlayingAround.Visuals;
@@ -51,6 +52,10 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                     CombatManager.VisualEffectManager.AddEffect(effect);
                     tar.IsFlashingRed = true;
                     tar.DamageFlashTimer = 0.35f; // 0.25 seconds of red flash
+                    if (attack.WhenApplyAspect == "OnDamage")
+                    {
+                        AspectManager.ApplyAspect(attacker, target, attack);
+                    }
                 }
 
 

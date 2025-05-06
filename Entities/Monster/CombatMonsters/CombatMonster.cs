@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
@@ -96,6 +97,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float AttackPower { get; set; } = 1;
         public string Name { get; set; }
         public string NamePlusLevel { get; set; }
+        public List<Aspect> Aspects { get; set; } = new List<Aspect>();
 
 
         public CombatMonster()

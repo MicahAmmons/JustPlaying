@@ -4,18 +4,20 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Attacks/acidSpit.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/File.spritefont</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/HeroArt/BlonderHero.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterIcons/AngryPlantIcon.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterIcons/OozeIcon.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TileCell/3arrows.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TileCell/arrow.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/0_-1_0.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/0_0_0.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/UI/fightBackground.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Aspects/acidIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Attacks/acidSpit.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/3arrows.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/arrow.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_-1_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/UI/fightBackground.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
     <File xsi:nil="true" />
