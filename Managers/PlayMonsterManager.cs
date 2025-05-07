@@ -14,12 +14,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using PlayingAround.Managers.Movement;
 
 namespace PlayingAround.Managers
 {
     public class PlayMonsterManager
     {
-        public List<PlayMonsters> CurrentPlayMonsters = new List<PlayMonsters>();
+        public  List<PlayMonsters> CurrentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         public PlayMonsters _selectedMonster = null;
 
         private const int IconWidth = 64;
@@ -33,9 +34,9 @@ namespace PlayingAround.Managers
         {
             _playMonsterData = JsonLoader.LoadPlayMonsterData();
         }
-        public void GeneratePlayMonsters(MapTileData data)
+        public List<PlayMonsters> GeneratePlayMonsters(MapTileData data)
         {
-
+            List<PlayMonsters> monsters = new List<PlayMonsters>();
             // Difficulty of the MapTile
             float difficultyMax = data.DifficultyMax;
             float difficultyMin = data.DifficultyMin;   
@@ -62,8 +63,10 @@ namespace PlayingAround.Managers
                 newPlayMon.MovementPattern = comMon.MovementPattern;
                 newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
                 newPlayMon.PacingBoundary = _playMonsterData[name][0].PacingBoundaryRect;
-                CurrentPlayMonsters.Add(newPlayMon);
+                monsters.Add(newPlayMon);
+
             }
+            return monsters;
         }
         public Vector2 DeterminePlayMonsterSpawn(List<TileCellData> cells)
         {
@@ -123,7 +126,10 @@ namespace PlayingAround.Managers
 
         public void MovePlayMonsters(GameTime gameTime)
         {
-            Movement.NPCMovement.MoveMonsters(gameTime, CurrentPlayMonsters);
+            if (CurrentPlayMonsters.Count > 0)
+            {
+                NPCMovement.GetPlayMonsterMovementPath(CurrentPlayMonsters, gameTime);
+            }
         }
         public void UpdateTileCells()
         {
@@ -141,24 +147,30 @@ namespace PlayingAround.Managers
         {
             if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
-                foreach (var monster in CurrentPlayMonsters)
-                {
-                    if (monster.Icon != null)
-                    {
-                        Rectangle dest = new Rectangle(
-                            (int)(monster.CurrentPos.X - IconWidth / 2f),
-                            (int)(monster.CurrentPos.Y - IconHeight),
-                            IconWidth,
-                            IconHeight
-                        );
-
-                        // Draw icon
-                        spriteBatch.Draw(monster.Icon, dest, Color.White);
-                    }
-                }
+                DrawPlayMonsters(spriteBatch);
+              
                 if (_selectedMonster != null)
                 {
                     DrawCombatMonsterInfo(spriteBatch);
+                }
+            }
+        }
+        public void DrawPlayMonsters(SpriteBatch spriteBatch)
+        {
+            if (CurrentPlayMonsters == null || CurrentPlayMonsters.Count == 0) return;
+            foreach (var monster in CurrentPlayMonsters)
+            {
+                if (monster.Icon != null)
+                {
+                    Rectangle dest = new Rectangle(
+                        (int)(monster.CurrentPos.X - IconWidth / 2f),
+                        (int)(monster.CurrentPos.Y - IconHeight),
+                        IconWidth,
+                        IconHeight
+                    );
+
+                    // Draw icon
+                    spriteBatch.Draw(monster.Icon, dest, Color.White);
                 }
             }
         }

@@ -16,6 +16,7 @@ namespace PlayingAround.Game.Map
         public float DifficultyMax { get; }
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
+        public List<PlayMonsters> PlayMonstersList { get; } = new List<PlayMonsters> ();
         public PlayMonsterManager PlayMonstersManager { get; } = new PlayMonsterManager();
 
 
@@ -58,7 +59,7 @@ namespace PlayingAround.Game.Map
                     cellData.NextTile
                 );
             }
-            PlayMonstersManager.GeneratePlayMonsters(data);
+            PlayMonstersList = PlayMonstersManager.GeneratePlayMonsters(data);
         }
 
 

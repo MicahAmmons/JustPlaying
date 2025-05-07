@@ -12,6 +12,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
@@ -129,6 +130,7 @@ namespace PlayingAround
             ScreenTransitionManager.Update(gameTime);
             ProximityManager.Update(gameTime);
             CombatManager.Update(gameTime);
+            MovementManager.Update(gameTime);
 
             base.Update(gameTime);
         }

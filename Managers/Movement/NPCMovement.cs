@@ -17,19 +17,20 @@ namespace PlayingAround.Managers.Movement
     {
         public const float ArcHeight = 50f;
 
-        public static void MoveMonsters(GameTime gameTime, List<PlayMonsters> playMons)
+        public static void GetPlayMonsterMovementPath(List<PlayMonsters> playMons, GameTime gameTime)
         {
             foreach (var mon in playMons)
             {
                 if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
                 {
-                    if (Movement.NPCMovement.HandlePause(mon, gameTime))
+                    if (HandlePause(mon, gameTime))
                         continue;
 
-                    Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
+                    //Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
                 }
             }
         }
+
         public static List<Vector2> MoveMonsters(CombatMonster mon, TileCell startingTile, TileCell endTile)
         {
             Vector2 start = TileManager.GetCellCords(startingTile);
@@ -134,28 +135,28 @@ namespace PlayingAround.Managers.Movement
             }
             else return spawnPoint;
         }
-        public static void MoveTowardsNextPathPoint(PlayMonsters mon, GameTime gameTime)
-        {
-            if (mon.MovePath == null || mon.MovePath.Count == 0)
-                return;
+        //public static void MoveTowardsNextPathPoint(PlayMonsters mon, GameTime gameTime)
+        //{
+        //    if (mon.MovePath == null || mon.MovePath.Count == 0)
+        //        return;
 
-            Vector2 nextPoint = mon.MovePath[0];
-            float speed = mon.MovementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        //    Vector2 nextPoint = mon.MovePath[0];
+        //    float speed = mon.MovementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            Vector2 direction = nextPoint - mon.CurrentPos;
-            float distance = direction.Length();
+        //    Vector2 direction = nextPoint - mon.CurrentPos;
+        //    float distance = direction.Length();
 
-            if (distance <= speed)
-            {
-                mon.CurrentPos = nextPoint;
-                mon.MovePath.RemoveAt(0);
-            }
-            else
-            {
-                direction.Normalize();
-                mon.CurrentPos += direction * speed;
-            }
-        }
+        //    if (distance <= speed)
+        //    {
+        //        mon.CurrentPos = nextPoint;
+        //        mon.MovePath.RemoveAt(0);
+        //    }
+        //    else
+        //    {
+        //        direction.Normalize();
+        //        mon.CurrentPos += direction * speed;
+        //    }
+        //}
         public static void MoveTowardsNextPathPoint(CombatMonster mon, List<Vector2> MovePath, GameTime gameTime)
         {
             if (MovePath == null || MovePath.Count == 0)
