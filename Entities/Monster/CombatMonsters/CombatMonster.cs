@@ -57,6 +57,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> CurrentAttackEffectedCells { get; set; } = null;
         public bool IsFlashingRed;
         public float DamageFlashTimer = 0f;
+        public bool AllowedToMove = true;
 
         public CombatMonster(SummonedMonster mon, CombatMonster comMon)
         {

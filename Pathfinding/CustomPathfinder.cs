@@ -12,10 +12,10 @@ namespace PlayingAround.Game.Pathfinding
     public static class CustomPathfinder
     {
         private static float bufferDistance = 5f;
-        public static List<Vector2> BuildPixelPath(Rectangle start, Vector2 end)
+        public static List<Vector2> BuildPixelPath(Rectangle start, Vector2? endd)
         {
             List<Vector2> path = new();
-
+            Vector2 end = (Vector2)endd;
             float moveStep = start.Height;
             float closeEnough = (start.Height / 2f) + 1;
 

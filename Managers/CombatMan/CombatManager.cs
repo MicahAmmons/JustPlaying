@@ -45,13 +45,9 @@ namespace PlayingAround.Managers.CombatMan
         private static List<TileCell> _monsterSpawnableCells = new List<TileCell>();
         private static List<TileCell> _playerMoveableCells = new List<TileCell>();
         private static List<CombatMonster> _summonedMonsters = new List<CombatMonster>();
-        private static Queue<CombatMonster> _turnOrder = new Queue<CombatMonster>();
-        private static int _startingSpeed;
+        public static Queue<CombatMonster> _turnOrder = new Queue<CombatMonster>();
         private static int? _numberOfCellsMoved = 0;
         private static TileCell _currentTarget;
-        private static bool _turnEnd = false;
-        private static int _attackPowerLeft;
-        private static int _test = 0;
         private static Dictionary<CombatMonster, TileCell> _playerControlledMonsterMap = new();
         private static Dictionary<CombatMonster, TileCell> _aIControlledMonsterMap = new();
         private static CombatMonster _standInMonster = new CombatMonster();
@@ -99,6 +95,7 @@ namespace PlayingAround.Managers.CombatMan
             MovingAIControlled,
             AIAttacking,
             ExecutingAttack,
+            ExecutingMove,
             AwaitingPlayerInput,
             PlayerTurn,
 
@@ -113,6 +110,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             PlayerWaitingInput,
             PlayerExecutingAction,
+            PlayerExecutingMove,
             PlayerMoving,
             PlayerSummoning,
             PlayerAttacking,
@@ -144,7 +142,6 @@ namespace PlayingAround.Managers.CombatMan
             _playerBaseSP = player.stats.SP;
             _playerMonster = new CombatMonster(player);
            // _playerMonster.OrderOfActions.Enqueue("player");
-            _playerMonster.PathGenerated = false;
             SetTurnOrder();
             FindSpawnablCellsForPlayerAndMons();
             SetCombatMonsterStartingPos();
@@ -244,7 +241,6 @@ namespace PlayingAround.Managers.CombatMan
                     {
 
                         SetState(CombatState.PlayerTurn);
-                        _turnEnd = false;
                         _turnOrder.Peek().PlayerMovementEndPoint = null;
                         CopyCurrentMonToStandin();
                         _playerTurnState = PlayerTurnState.PlayerWaitingInput;
@@ -268,7 +264,6 @@ namespace PlayingAround.Managers.CombatMan
                     }
                     else if (_standInMonster.OrderOfActions.Peek() == "moveClose")
                     {
-                        Add($"mon.{_turnOrder.Peek().ID} moveCloser Begin. State = MovingAIControlled");
                         SetState(CombatState.MovingAIControlled);
                     }
                     else if (_standInMonster.OrderOfActions.Peek() == "moveFurther")
@@ -277,7 +272,6 @@ namespace PlayingAround.Managers.CombatMan
                     }
                     else if (_standInMonster.OrderOfActions.Peek() == "attack")
                     {
-                        Add($"mon.{_turnOrder.Peek().ID} Attack Begin. State = AIAttacking");
                         SetState(CombatState.AIAttacking);
                     }
                     else if (_standInMonster.OrderOfActions.Count == 0)
@@ -291,14 +285,20 @@ namespace PlayingAround.Managers.CombatMan
                 if (_currentState == CombatState.MovingAIControlled)
                 {
                     UpdateMonsterCellMap();
-                    if (!_movementComplete)
+                    // MoveMonster(delta);
+                    CombatMonster mon = _turnOrder.Peek();
+                    if (_standInMonster.MP >= 0)
                     {
-                        MoveMonster(delta);
-                        return;
+                        GenerateMovementPath();
                     }
-                    _movementComplete = false;
-                    FinishedAction();
-
+                    _currentState = CombatState.ExecutingMove;
+                }
+                if (_currentState == CombatState.ExecutingMove)
+                {
+                    if (_turnOrder.Peek().MovePath == null || _turnOrder.Peek().MovePath.Count <= 0)
+                    {
+                        FinishedAction();
+                    }
                 }
                 if (_currentState == CombatState.AIAttacking)
                 {
@@ -361,15 +361,17 @@ namespace PlayingAround.Managers.CombatMan
 
                     if (mon.PlayerMovementEndPoint != null)
                     {
-                        Add("GeneratedPath");
                         PopulatePath(delta, mon.PlayerMovementEndPoint);
                         mon.PlayerMovementEndPoint = null;
                     }
-                    if (mon.PathGenerated)
+                    if (_playerTurnState == PlayerTurnState.PlayerExecutingMove)
                     {
-                        ExecuteMovementPath(delta, mon);
-
+                        if (_turnOrder.Peek().MovePath == null || _turnOrder.Peek().MovePath.Count <= 0)
+                        {
+                            _playerTurnState = PlayerTurnState.PlayerWaitingInput;
+                        }
                     }
+
                 }
                 
 
@@ -468,6 +470,7 @@ namespace PlayingAround.Managers.CombatMan
                 case PlayerTurnState.PlayerTargeting:
                     HandlePlayerTargetingAttackClick();
                     break;
+
                 case PlayerTurnState.PlayerExecutingAction:
 
                     break;
@@ -744,7 +747,7 @@ namespace PlayingAround.Managers.CombatMan
                 if (_playerMoveableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
                 {
                     mon.PlayerMovementEndPoint = _currentMouseHoverCell;
-                    _playerTurnState = PlayerTurnState.PlayerExecutingAction;
+                    _playerTurnState = PlayerTurnState.PlayerExecutingMove;
                 }
             }
         }
@@ -1198,13 +1201,6 @@ namespace PlayingAround.Managers.CombatMan
         }
         private static void MoveMonster(float delta, CombatMonster mon = null)
         {
-            if (mon == null) 
-            { 
-                mon = _turnOrder.Peek(); 
-            }
-            if (!mon.PathGenerated && _standInMonster.MP >= 0)
-                GenerateMovementPath(mon); ;
-            
             ExecuteMovementPath(delta, mon);
         }
         public static void ExecuteMovementPath(float delta, CombatMonster mon, bool isProjectile = false)
@@ -1232,7 +1228,6 @@ namespace PlayingAround.Managers.CombatMan
             else if (path.Count <= 0 || _standInMonster.MP == 0)
             {
                 _standInMonster.MP -= (int)_numberOfCellsMoved;
-                mon.PathGenerated = false;
                 _movementComplete = true;
 
                 if (mon.isPlayerControled)
@@ -1250,8 +1245,9 @@ namespace PlayingAround.Managers.CombatMan
         }
 
 
-        private static void GenerateMovementPath(CombatMonster mon, List<TileCell> tileCellPath = null)
+        private static void GenerateMovementPath(List<TileCell> tileCellPath = null)
         {
+            CombatMonster mon = _turnOrder.Peek();
             if (tileCellPath == null)
             {
                 tileCellPath = GetMovementCellPath();
@@ -1259,7 +1255,6 @@ namespace PlayingAround.Managers.CombatMan
             if (tileCellPath.Count == 0)
             {
                 mon.MovePath.Clear();
-                mon.PathGenerated = true;
                 Add("Monster decides not to move");
                 return;
             }
@@ -1287,20 +1282,14 @@ namespace PlayingAround.Managers.CombatMan
             }
             
             mon.MovePath = fullVectorPath;
-            mon.PathGenerated = true;
+
         }
         private static void PopulatePath(float delta, TileCell end)
         {
             CombatMonster mon = _turnOrder.Peek();
-
-                if (!mon.PathGenerated)
-                {
-                    if (end != null)
-                    {
-                        List<TileCell> cellPath = GetPathToPlayerSelectedCell(_playerControlledMonsterMap[mon], end);
-                        GenerateMovementPath(mon, cellPath);
-                    }
-                }
+            List<TileCell> cellPath = GetPathToPlayerSelectedCell(_playerControlledMonsterMap[mon], end);
+            GenerateMovementPath(cellPath);
+                
         }
 
 

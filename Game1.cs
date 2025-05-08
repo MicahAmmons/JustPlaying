@@ -27,7 +27,7 @@ namespace PlayingAround
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Player player;
+
 
         private KeyboardState previousKeyboardState; // Used to toggle debug info
         private SpriteFont mainFont;
@@ -86,18 +86,19 @@ namespace PlayingAround
 
             ViewportManager.Initialize(GraphicsDevice);
 
-            player = Player.LoadFromSave(GameState.SaveData.Player);
+            PlayerManager.LoadContent(GameState.SaveData.Player);
+
 
             TileManager.Initialize(GraphicsDevice, GameState.SaveData.MapTile.CurrentTileId);
 
-            UIManager.LoadContent(player);
+            UIManager.LoadContent();
 
             CombatManager.Initialize();
 
         }
         private void SaveState()
         {
-            GameState.SaveData.Player = player.Save();
+            GameState.SaveData.Player = PlayerManager.Save();
             GameState.SaveData.MapTile = TileManager.Save();
 
             SaveSystem.SaveGame(GameState.SaveData);
@@ -124,7 +125,7 @@ namespace PlayingAround
 
             UIManager.Update(gameTime);
             InputManager.Update(gameTime);  
-            player.Update(gameTime);
+            PlayerManager.Update(gameTime);
             TileCellManager.Update(gameTime);
             TileManager.Update(gameTime);
             ScreenTransitionManager.Update(gameTime);
@@ -142,7 +143,7 @@ namespace PlayingAround
 
             TileCellManager.Draw(_spriteBatch);
 
-            player.Draw(_spriteBatch);
+            PlayerManager.Draw(_spriteBatch);
 
             TileCellManager.Draw(_spriteBatch);
 
@@ -158,8 +159,8 @@ namespace PlayingAround
                 TileManager.CurrentMapTile?.DrawTileCellDebugOverlay(_spriteBatch, debugPixel);
             if (showDebugOutline)
             {
-                player.DrawDebugPath(_spriteBatch, debugPixel);
-                DrawRectangle(player.GetHitbox(), Color.Red);
+                PlayerManager.CurrentPlayer.DrawDebugPath(_spriteBatch, debugPixel);
+                DrawRectangle(PlayerManager.CurrentPlayer.HitBox, Color.Red);
                 DrawDebugOverlay();
                 
             }
@@ -184,9 +185,9 @@ namespace PlayingAround
         } // Debugging Border Rectangle 
         private void DrawDebugOverlay()
         {
-            Rectangle feetHitbox = player.GetHitbox();
-            Vector2 feetCenter = player.GetFeetCenter();
-            Vector2? clickTarget = player.GetDebugClickTarget();
+            Rectangle feetHitbox = PlayerManager.CurrentPlayer.HitBox;
+            Vector2 feetCenter = PlayerManager.CurrentPlayer.HitBoxCenter;
+            Vector2? clickTarget = PlayerManager.CurrentPlayer.GetDebugClickTarget();
 
             string debugText =
                 $"Feet Hitbox: {feetHitbox}\n" +

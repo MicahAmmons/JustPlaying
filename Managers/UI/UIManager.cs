@@ -20,7 +20,7 @@ namespace PlayingAround.Managers.UI
         private static bool _fightBox = false;
         private static PlayMonsters _playMonsters;
         private static Texture2D _fightBackground;
-        private static Player _player;
+        private static Player _player => PlayerManager.CurrentPlayer;
         private static CombatMonster _playerMonster;
         private static CombatMonster _standInMonster;
 
@@ -48,13 +48,12 @@ namespace PlayingAround.Managers.UI
 
 
 
-        public static void LoadContent(Player player)
+        public static void LoadContent()
         {
             _mainFont = AssetManager.GetFont("mainFont");
             _fightBackground = AssetManager.GetTexture("fightBackground");
             ProximityManager.OnPlayerNearMonster += HandleFightPrompt;
             ProximityManager.OnPlayerLeaveMonster += HandlePlayerExit;
-            _player = player;
             int screenWidth = ViewportManager.ScreenWidth;
             int screenHeight = ViewportManager.ScreenHeight;
 
@@ -206,6 +205,7 @@ namespace PlayingAround.Managers.UI
         {
             if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
+
                 _playerStats = $"Health: {_player.stats.CurrentHealth} / {_player.stats.CurrentHealth}\n" +
                                $"Mana: {_player.stats.CurrentMana} / {_player.stats.CurrentMana}";
             }
