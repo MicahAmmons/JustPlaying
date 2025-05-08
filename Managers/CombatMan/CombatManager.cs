@@ -317,39 +317,8 @@ namespace PlayingAround.Managers.CombatMan
                 }
                 if (_currentState == CombatState.ExecutingAttack)
                 {
-                    CombatMonster mon = _turnOrder.Peek();
-                    if (HandleAttackVisualEffect())
-                        return;
-                    if (mon.attackPath1 != null && mon.attackPath1.Count > 0)
-                    {
-                        mon.MovePath = mon.attackPath1;
-                        ExecuteMovementPath(delta, mon);
-                        return;
-                    }
-                    else if (!_attackComplete)
-                    {
-                        _attackComplete = true;
-                        AttackManager.PerformAttack(mon.CurrentAttack, mon, mon.CurrentAttackEffectedMonsters, mon.CurrentAttackEffectedCells);
-                        
-                        
-                        mon.CurrentAttack = null;
-                        mon.CurrentAttackEffectedMonsters = null;
-                        mon.CurrentAttackEffectedCells = null;
+                    WaitForAttackToFinish(delta);
 
-                        if (_currentAttackVisualEffect != null && _currentAttackVisualEffect.WhenToStart == VisualTiming.AfterAttack)
-                        {
-                            VisualEffectManager.AddEffect(_currentAttackVisualEffect);
-                            _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
-                            return;
-                        }
-                        return;
-                    }
-                    else if (mon.attackPath2 != null && mon.attackPath2.Count > 0)
-                    {
-                        mon.MovePath = mon.attackPath2;
-                        ExecuteMovementPath(delta, mon);
-                        return;
-                    }
                     FinishedAction();
                 }
                 if (_currentState == CombatState.PlayerTurn)
@@ -371,6 +340,16 @@ namespace PlayingAround.Managers.CombatMan
                             _playerTurnState = PlayerTurnState.PlayerWaitingInput;
                         }
                     }
+                    if (_playerTurnState == PlayerTurnState.PlayerExecutingAttack)
+                    {
+                        if (_turnOrder.Peek().MovePath == null || _turnOrder.Peek().MovePath.Count == 0)
+                        {
+                            WaitForAttackToFinish(delta);
+                        }
+                        return;
+                            
+                    }
+
 
                 }
                 
@@ -475,7 +454,7 @@ namespace PlayingAround.Managers.CombatMan
 
                     break;
                 case PlayerTurnState.PlayerExecutingAttack:
-                    WaitForPlayerToFinishAttack(delta);
+                    
                     break;
 
                 case PlayerTurnState.PlayerEndingTurn:
@@ -495,7 +474,7 @@ namespace PlayingAround.Managers.CombatMan
             _playerCurrentAttackRangeOptions = null;
 
         }
-        private static void WaitForPlayerToFinishAttack(float delta)
+        private static void WaitForAttackToFinish(float delta)
         {
             CombatMonster mon = _turnOrder.Peek();
 
@@ -506,8 +485,13 @@ namespace PlayingAround.Managers.CombatMan
             if (mon.attackPath1 != null && mon.attackPath1.Count > 0)
             {
                 mon.MovePath = mon.attackPath1;
-                ExecuteMovementPath(delta, mon);
-                return;
+                mon.attackPath1 = null;
+                if (mon.isPlayerControled) 
+                { 
+                _playerTurnState = PlayerTurnState.PlayerExecutingAttack; 
+                }
+    
+                    return;
             }
             else if (!_attackComplete)
             {
@@ -531,11 +515,21 @@ namespace PlayingAround.Managers.CombatMan
             else if (mon.attackPath2 != null && mon.attackPath2.Count > 0)
             {
                 mon.MovePath = mon.attackPath2;
-                ExecuteMovementPath(delta, mon);
+                mon.attackPath2 = null;
+                _playerTurnState = PlayerTurnState.PlayerExecutingAttack;
                 return;
             }
+            if (mon.isPlayerControled)
+            {
+                _playerTurnState = PlayerTurnState.PlayerExecutingAttack;
+            }
 
-            _playerTurnState = PlayerTurnState.PlayerWaitingInput;
+            if (!mon.isPlayerControled)
+            {
+                FinishedAction();
+            }
+
+
         }
 
         private static bool HandleAttackVisualEffect()
@@ -578,10 +572,6 @@ namespace PlayingAround.Managers.CombatMan
             return false;
         }
 
-        private static void ExecuteAttackAnimation()
-        {
-
-        }
       
         private static void HandlePlayerTargetingAttackClick()
         {
@@ -695,26 +685,7 @@ namespace PlayingAround.Managers.CombatMan
             }
         }
 
-        private static Vector2 GetCellCenterVector(object cellOrVector)
-        {
-            Vector2 basePos;
-
-            if (cellOrVector is TileCell cell)
-            {
-                basePos = TileManager.GetCellCords(cell);
-            }
-            else if (cellOrVector is Vector2 vec)
-            {
-                TileCell celll = TileManager.GetCell(vec);
-                basePos = TileManager.GetCellCords(celll);
-            }
-            else
-            {
-                throw new ArgumentException("Input must be of type TileCell or Vector2.");
-            }
-
-            return basePos + new Vector2(MapTile.TileWidth / 2f, MapTile.TileHeight / 2f);
-        }
+      
 
         public static void SummonSummonMonster(TileCell cell)
         {
@@ -1198,10 +1169,6 @@ namespace PlayingAround.Managers.CombatMan
             }
             Add("ERROR IN GETCOMBATMONMAP");
             return _playerControlledMonsterMap;
-        }
-        private static void MoveMonster(float delta, CombatMonster mon = null)
-        {
-            ExecuteMovementPath(delta, mon);
         }
         public static void ExecuteMovementPath(float delta, CombatMonster mon, bool isProjectile = false)
         {

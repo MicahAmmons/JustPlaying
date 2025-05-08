@@ -18,7 +18,7 @@ namespace PlayingAround.Managers.Movement
     public static class MovementManager
     {
 
-        public static Queue<CombatMonster> _combatMonsters = CombatManager._turnOrder;
+        public static Queue<CombatMonster> _combatMonsters => CombatManager._turnOrder;
         public static Player _player => PlayerManager.CurrentPlayer;
         public static List<PlayMonsters> _playerMonsters => TileManager.CurrentMapTile.PlayMonstersManager.CurrentPlayMonsters;
 

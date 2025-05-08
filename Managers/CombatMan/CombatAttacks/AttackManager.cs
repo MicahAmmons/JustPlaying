@@ -52,10 +52,10 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                     CombatManager.VisualEffectManager.AddEffect(effect);
                     tar.IsFlashingRed = true;
                     tar.DamageFlashTimer = 0.35f; // 0.25 seconds of red flash
-                    if (attack.WhenApplyAspect == "OnDamage")
-                    {
-                        AspectManager.ApplyAspect(attacker, target, attack);
-                    }
+                    //if (attack.WhenApplyAspect == "OnDamage")
+                    //{
+                    //    AspectManager.ApplyAspect(attacker, target, attack);
+                    //}
                 }
 
 
