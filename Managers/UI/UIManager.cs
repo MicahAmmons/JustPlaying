@@ -211,11 +211,12 @@ namespace PlayingAround.Managers.UI
             }
             if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
             {
+                CombatMonster mon = CombatManager._turnOrder.Peek();
                 _playerMonster = CombatManager.GetPlayerMonster();
-                _standInMonster = CombatManager.GetStandInMonster();
+                _standInMonster = mon;
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.MaxHealth}\n" +
                                $"SP: {_playerMonster.SP} / {_playerMonster.SP}\n" +
-                               $"Speed: {_standInMonster.MP}";
+                               $"Speed: {_playerMonster.CurrentMP} / {_playerMonster.MP}";
             }
         }
 

@@ -21,11 +21,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public Vector2 startingPos;
         public int SP { get; set; }
+        public int CurrentSP;
         [JsonPropertyName("mp")] public int MP { get; set; }
         [JsonPropertyName("movementQuickness")] public float MovementQuickness { get; set; }
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
 
         [JsonPropertyName("turnBehavior")] public string TurnBehavior { get; set; }
+        public string CurrentTurnBehavior;
         [JsonPropertyName("movementPattern")] public string MovementPattern { get; set; }
         [JsonPropertyName("attacks")] public List<string> AttackStrings { get; set; }
 
@@ -39,6 +41,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         [JsonPropertyName("initiation")] public float Initiation { get; set; }
         [JsonPropertyName("elementalAffinity")] public float ElementalAffinity { get; set; }
+        public float CurrentMP;
+        public float CurrentHP;
+        public bool CurrentIsPlayerControlled;
+
+
         public bool isPlayerControled { get; set; } = false;
         public List<SingleAttack> Attacks { get; set; }
         public Dictionary<string, float> Resistances { get; set; }
@@ -49,7 +56,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool IsSummon {  get; set; }
         public List<Vector2> attackPath1 { get; set; } = null;
         public List<Vector2> attackPath2 { get; set; } = null;
-        public List<Vector2> projectileAttackPath1 { get; set; } = null;
         public Texture2D projectileTexture { get; set; } = null;
         public List<Vector2> projectileMovePath {  get; set; } = null;
         public SingleAttack CurrentAttack { get; set; } = null;
@@ -86,6 +92,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public TileCell CurrentCell { get; set; }
         public int TurnNumber { get; set; } = 0;
         public Queue<string> OrderOfActions { get; set; }
+        public Queue<string> CurrentOrderOfActions;
          public float MaxHealth { get; set; }
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }

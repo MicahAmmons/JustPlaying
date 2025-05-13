@@ -12,8 +12,8 @@
     "monsterType": "Ooze",
     "baseDifficulty": 1,
     "elementType": "Acid",
-    "elementalAffinity": 2,
-    "baseHealth": 50,
+    "elementalAffinity": 1,
+    "baseHealth": 6,
     "initiation": 2,
     "baseSummonCost": 3
 
