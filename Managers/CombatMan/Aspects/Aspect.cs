@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Managers.Assets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace PlayingAround.Managers.CombatMan.Aspects
 
         [JsonPropertyName("isStackable")] public bool isStackable { get; set; }
         [JsonPropertyName("iconKey")] public string IconKey { get; set; }
+        [JsonPropertyName("isDamage")] public bool IsDamage { get; set; }
         [JsonIgnore] public Texture2D Icon { get; set; } // Loaded separately at runtime
 
 
@@ -48,7 +50,8 @@ namespace PlayingAround.Managers.CombatMan.Aspects
             WhenTicked = aspect.WhenTicked;
             isStackable = aspect.isStackable;
             IconKey = aspect.IconKey;
-            Icon = aspect.Icon;
+            Icon = AssetManager.GetTexture($"{aspect.IconKey}");
+            IsDamage = aspect.IsDamage;
         }
 
     }

@@ -106,6 +106,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public string Name { get; set; }
         public string NamePlusLevel { get; set; }
         public List<Aspect> Aspects { get; set; } = new List<Aspect>();
+        public bool isDead { get; set; } = false;
 
 
         public CombatMonster()
@@ -154,6 +155,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MovementPattern = "straight";
             MP = player.stats.MP;
             SP = player.stats.SP;
+            Resistances = player.PlayerResistances;
         }
 
 

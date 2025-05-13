@@ -23,6 +23,7 @@ namespace PlayingAround.Managers
         {
             _playerData = data;
             _currentPlayer = Player.LoadFromSave(data);
+            ResistanceManager.GetPlayerResistances(_currentPlayer);
         }
 
         public static void Update(GameTime gameTime)

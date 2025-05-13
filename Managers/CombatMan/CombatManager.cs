@@ -154,32 +154,13 @@ namespace PlayingAround.Managers.CombatMan
         {
 
             OnScreenDebug(spriteBatch);
-            // 🆕 Display current PlayerTurnState at top-right
-            if (SceneManager.CurrentState == SceneState.Combat)
-            {
-                string stateText = $"State: {_playerTurnState}";
-                string combatStateText = $"CombatState: {_currentState}";
-                if (_playerCurrentAttack != null)
-                {
-                    int screenWidthh = graphicsDevice.Viewport.Width;
-                    SpriteFont fontt = AssetManager.GetFont("mainFont");
-                    Vector2 textSizer = fontt.MeasureString(stateText);
-                    string currentAttack = $"Current Attack: {_playerCurrentAttack.Name}";
-                    spriteBatch.DrawString(fontt, currentAttack, new Vector2(screenWidthh - textSizer.X - 20, 60), Color.Orange);
-                }
-                SpriteFont font = AssetManager.GetFont("mainFont");
-                Vector2 textSize = font.MeasureString(stateText);
-                int screenWidth = graphicsDevice.Viewport.Width;
-
-                Vector2 position = new Vector2(screenWidth - textSize.X - 20, 10);
-                spriteBatch.DrawString(font, stateText, position, Color.Orange);
-                spriteBatch.DrawString(font, combatStateText, new Vector2(screenWidth - textSize.X - 20, 30), Color.Orange);
-
-            }
             if (SceneManager.CurrentState != SceneState.Combat || _currentState == CombatState.Waiting)
                 return;
+           
+            DrawTurnStateOverlay(spriteBatch, graphicsDevice);
+
             if (_turnOrder != null && _turnOrder.Count > 0)
-                DisplayStats(spriteBatch);
+                DrawDisplayStats(spriteBatch);
 
             if (_currentState == CombatState.LocationSelection)
                 DrawLocationSelection(spriteBatch);
@@ -237,7 +218,7 @@ namespace PlayingAround.Managers.CombatMan
                     UpdateMonsterCellMap();
                     mon.TurnNumber++;
                     CopyCurrentMonToStandin();
-                    ResolveAspects(TickedTiming.StartOfTurn);
+
 
                     if (mon.isPlayerControled) 
                     {
@@ -362,6 +343,7 @@ namespace PlayingAround.Managers.CombatMan
         private static void ResolveAspects(TickedTiming tick)
         {
             CombatMonster mon = _turnOrder.Peek();
+            if (mon.Aspects == null || mon.Aspects.Count == 0) return;
             AspectManager.ResolveAspect(mon, tick);
 
         
@@ -384,11 +366,11 @@ namespace PlayingAround.Managers.CombatMan
         private static void EndTurn()
         {
             SetState(CombatState.ResolvingEffects);
-            Add("OrderOfAction is 00000");
 
             CombatMonster mon = _turnOrder.Dequeue();
             _turnOrder.Enqueue(mon);
             _playerTurnState = PlayerTurnState.PlayerWaitingInput;
+            ResolveAspects(TickedTiming.StartOfTurn);
             SetState(CombatState.TurnStart);
         }
         private static void FinishedAction()
@@ -582,7 +564,9 @@ namespace PlayingAround.Managers.CombatMan
                 _currentTarget = _currentMouseHoverCell;
                 _attackComplete = false;
                 SetPlayerAttackEffectCellsAndMonsters();
+                
                 CombatMonster mon = _turnOrder.Peek();
+                mon.CurrentAttack = _playerCurrentAttack;
                 SetAttackPathForPlayer();
                 if (_playerCurrentAttack.Animated)
                 _currentAttackVisualEffect = new VisualEffect(GetMonsterCurrentCell(mon), _playerCurrentAttack, FindCenterCell(mon.CurrentAttackEffectedCells ));
@@ -993,6 +977,28 @@ namespace PlayingAround.Managers.CombatMan
                 DrawCellHighlight(spriteBatch, tile, Color.Black);
         }
 
+        private static void DrawTurnStateOverlay(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        {
+            string stateText = $"State: {_playerTurnState}";
+            string combatStateText = $"CombatState: {_currentState}";
+            if (_playerCurrentAttack != null)
+            {
+                int screenWidthh = graphicsDevice.Viewport.Width;
+                SpriteFont fontt = AssetManager.GetFont("mainFont");
+                Vector2 textSizer = fontt.MeasureString(stateText);
+                string currentAttack = $"Current Attack: {_playerCurrentAttack.Name}";
+                spriteBatch.DrawString(fontt, currentAttack, new Vector2(screenWidthh - textSizer.X - 20, 60), Color.Orange);
+            }
+            SpriteFont font = AssetManager.GetFont("mainFont");
+            Vector2 textSize = font.MeasureString(stateText);
+            int screenWidth = graphicsDevice.Viewport.Width;
+
+            Vector2 position = new Vector2(screenWidth - textSize.X - 20, 10);
+            spriteBatch.DrawString(font, stateText, position, Color.Orange);
+            spriteBatch.DrawString(font, combatStateText, new Vector2(screenWidth - textSize.X - 20, 30), Color.Orange);
+
+        }
+
         private static void DrawPlayerButtonOptions(SpriteBatch spriteBatch)
         {
             DrawButton(spriteBatch, _moveRect, "Move");
@@ -1262,19 +1268,19 @@ namespace PlayingAround.Managers.CombatMan
         }
         private static void UpdateDefeatedMonsters()
         {
-            List<CombatMonster> stillAlive = new();
-            foreach (var monster in _turnOrder)
+
+            foreach (var mon in _turnOrder)
             {
-                if (monster.CurrentHealth <= 0)
+                if (mon.CurrentHealth <= 0)
                 {
-                    _defeatedMonsters.Add(monster);
+                    mon.isDead = true;
                 }
-                else
+                if (mon.isDead)
                 {
-                    stillAlive.Add(monster);
+
                 }
             }
-            _turnOrder = new Queue<CombatMonster>(stillAlive);
+            
         }
 
         private static void AddComMonToTurnOrder(CombatMonster mon)
@@ -1420,7 +1426,7 @@ namespace PlayingAround.Managers.CombatMan
                 spriteBatch.DrawString(_font, text, pos, Color.White);
             }
         }
-        public static void DisplayStats(SpriteBatch spriteBatch)
+        public static void DrawDisplayStats(SpriteBatch spriteBatch)
         {
             int iconSize = 64;
             int spacingX = 150; // Horizontal space between icons
@@ -1440,24 +1446,30 @@ namespace PlayingAround.Managers.CombatMan
                 Vector2 iconPos = startingPos + new Vector2(index * spacingX, 0);
                 Rectangle iconRect = new Rectangle((int)iconPos.X, (int)iconPos.Y, iconSize, iconSize);
 
-                // Draw icon
-                string textureKey;
-
-                if (mon.IsSummon)
-                {
-                    textureKey = mon.IconTextureKey; // Summons use their own icon texture
-                }
-                else
-                {
-                    textureKey = mon.isPlayerControled ? "Hero_Blonde" : mon.IconTextureKey;
-                }
-                Color col = Color.White;
-                if (mon.IsSummon)
-                {
-                    col = new Color(Color.Blue, 0.3f); // 0.3f = 30% opacity
-                }
+                // Determine texture key
+                string textureKey = mon.IsSummon ? mon.IconTextureKey : (mon.isPlayerControled ? "Hero_Blonde" : mon.IconTextureKey);
                 Texture2D icon = AssetManager.GetTexture(textureKey);
+
+                // Set color depending on isDead
+                Color col = mon.IsSummon ? new Color(Color.Blue, 0.3f) : Color.White;
+                if (mon.isDead)
+                    col = Color.Gray * 0.5f;
+
+                // Draw monster icon
                 spriteBatch.Draw(icon, iconRect, col);
+
+                // ❌ Draw red X overlay if dead
+                if (mon.isDead)
+                {
+                    var lineTex = AssetManager.GetTexture("fightBackground"); // A 1x1 white pixel texture in your assets
+                    Vector2 lineStart1 = new Vector2(iconRect.Left, iconRect.Top);
+                    Vector2 lineEnd1 = new Vector2(iconRect.Right, iconRect.Bottom);
+                    Vector2 lineStart2 = new Vector2(iconRect.Right, iconRect.Top);
+                    Vector2 lineEnd2 = new Vector2(iconRect.Left, iconRect.Bottom);
+
+                    DrawLine(spriteBatch, lineTex, lineStart1, lineEnd1, Color.Red, 4f);
+                    DrawLine(spriteBatch, lineTex, lineStart2, lineEnd2, Color.Red, 4f);
+                }
 
                 // Draw health below
                 string hpText = $"{mon.CurrentHealth} / {mon.MaxHealth}";
@@ -1467,11 +1479,44 @@ namespace PlayingAround.Managers.CombatMan
                     iconRect.Bottom + 2
                 );
 
-                spriteBatch.DrawString(font, hpText, textPos, Color.Black);
+                // Draw aspects below icon
+                int aspectSize = 24;
+                int aspectSpacing = 4;
+                for (int i = 0; i < mon.Aspects.Count; i++)
+                {
+                    var aspect = mon.Aspects[i];
+                    Vector2 aspectPos = new Vector2(
+                        iconRect.X + i * (aspectSize + aspectSpacing),
+                        iconRect.Bottom + 25
+                    );
+                    Rectangle aspectRect = new Rectangle((int)aspectPos.X, (int)aspectPos.Y, aspectSize, aspectSize);
 
+                    spriteBatch.Draw(aspect.Icon, aspectRect, Color.White);
+
+                    // Overlay duration
+                    string turnsLeft = MathF.Ceiling(aspect.Duration).ToString();
+                    Vector2 numSize = font.MeasureString(turnsLeft);
+                    Vector2 numPos = new Vector2(
+                        aspectRect.Center.X - numSize.X / 2,
+                        aspectRect.Center.Y - numSize.Y / 2
+                    );
+
+                    spriteBatch.DrawString(font, turnsLeft, numPos, Color.Yellow);
+                }
+
+                spriteBatch.DrawString(font, hpText, textPos, Color.Black);
                 index++;
             }
         }
+        private static void DrawLine(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 end, Color color, float thickness)
+        {
+            Vector2 delta = end - start;
+            float angle = MathF.Atan2(delta.Y, delta.X);
+            float length = delta.Length();
+
+            spriteBatch.Draw(texture, start, null, color, angle, Vector2.Zero, new Vector2(length, thickness), SpriteEffects.None, 0f);
+        }
+
         public static CombatMonster GetPlayerMonster()
         {
             return _playerMonster;

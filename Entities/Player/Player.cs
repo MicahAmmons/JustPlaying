@@ -31,6 +31,7 @@ namespace PlayingAround.Entities.Player
 
         private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
+        public Dictionary<string, float> PlayerResistances;
         public Rectangle HitBox;
         public Vector2 HitBoxCenter;
         

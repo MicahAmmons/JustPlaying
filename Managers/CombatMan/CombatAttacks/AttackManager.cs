@@ -37,35 +37,63 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             foreach (var tar in target)
             {
                 float damage = CalculateDamage(attack, tar);
-                tar.CurrentHealth -= damage;
                 if (damage > 0)
                 {
-                    var effect = new VisualEffect(
-                        tar.currentPos + new Vector2(0, -10),  // startPos
-                        new Vector2(0, -20),                   // velocity
-                        0.5f,        
-                        Color.Red,// duration
-                        damage.ToString(),                     // text
-                        null           
-                        // texture (or some texture if needed)
-                    );
-                    CombatManager.VisualEffectManager.AddEffect(effect);
-                    tar.IsFlashingRed = true;
-                    tar.DamageFlashTimer = 0.35f; // 0.25 seconds of red flash
-                    //if (attack.WhenApplyAspect == "OnDamage")
-                    //{
-                    //    AspectManager.ApplyAspect(attacker, target, attack);
-                    //}
+                    ApplyDamage(damage, tar);
+                    ApplyAspect(attack, tar);
                 }
+               
 
 
             }
         }
-
+        public static void ApplyAspect(SingleAttack attack, CombatMonster target)
+        {
+            switch (attack.WhenApplyAspect)
+            {
+                case "OnDamage":
+                    AspectManager.ApplyAspect(target, attack);
+                    break;
+            }
+        }
+        public static void ApplyDamageVisualEffect(CombatMonster tar, float damage)
+        {
+            var effect = new VisualEffect(
+                 tar.currentPos + new Vector2(0, -10),  // startPos
+                 new Vector2(0, -20),                   // velocity
+                 0.5f,
+                 Color.Red,// duration
+                 damage.ToString(),                     // text
+                 null
+             // texture (or some texture if needed)
+             );
+            CombatManager.VisualEffectManager.AddEffect(effect);
+            tar.IsFlashingRed = true;
+            tar.DamageFlashTimer = 0.35f; // 0.35 seconds of red flash
+        }
+        public static void ApplyDamage(float damage, CombatMonster tar)
+        {
+            tar.CurrentHealth -= damage;
+            ApplyDamageVisualEffect(tar, damage );
+          
+        }
         public static float CalculateDamage(SingleAttack attack, CombatMonster attacker)
         {
-            return 1;
+            float minDam = attack.MinDamage;
+            float maxDam = attack.MaxDamage;
+            string damageType = attack.ElementDamage.ToLower();
+            Dictionary<string, float> resistances = attacker.Resistances;
+
+            Random random = new Random();
+            float baseDamage = random.Next((int)minDam, (int)maxDam + 1); 
+
+            float resistanceMultiplier = resistances.TryGetValue(damageType, out float resistance) ? resistance : 1.0f;
+
+            float finalDamage = baseDamage * resistanceMultiplier;
+
+            return finalDamage;
         }
+
 
 
         public static List<SingleAttack> GetAttacks(List<string> atts)

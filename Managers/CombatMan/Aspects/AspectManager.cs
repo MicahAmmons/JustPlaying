@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PlayingAround.Managers.CombatMan.Aspects
 {
-    public class AspectManager
+    public static class AspectManager
     {
 
         public static Dictionary<string, Aspect>  _aspectData;
@@ -27,8 +27,8 @@ namespace PlayingAround.Managers.CombatMan.Aspects
                 if (asp.WhenTicked != timing)
                     continue;
 
-                if (!asp.IsBuff)
-                    mon.CurrentHealth -= asp.Damage;
+                if (asp.IsDamage)
+                    AttackManager.ApplyDamage(asp.Damage, mon);
 
                 asp.Duration -= 1;
             }
@@ -39,7 +39,7 @@ namespace PlayingAround.Managers.CombatMan.Aspects
 
 
 
-        public static void ApplyAspect(CombatMonster attacker, List<CombatMonster> target, SingleAttack attack)
+        public static void ApplyAspect(CombatMonster target, SingleAttack attack, CombatMonster attacker = null)
         {
             string effect = attack.Effect;
             Aspect aspectTempl = _aspectData[effect];
@@ -48,10 +48,8 @@ namespace PlayingAround.Managers.CombatMan.Aspects
                 Damage = aspectTempl.Damage,
             };
 
-            foreach (var comMon in target)
-            {
-                comMon.Aspects.Add(asp);
-            }
+                target.Aspects.Add(asp);
+            
             
         }
 

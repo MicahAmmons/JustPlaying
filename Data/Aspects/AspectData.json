@@ -6,6 +6,7 @@
     "damage": 1,
     "damageType": "acid",
     "isBuff": false,
+    "isDamage" :true,
     "whenTicked": 0,
     "isStackable": true,
     "iconKey": "acidIcon",

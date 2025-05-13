@@ -1,4 +1,5 @@
-﻿using PlayingAround.Utils;
+﻿using PlayingAround.Entities.Player;
+using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,22 @@ namespace PlayingAround.Managers
             }
         }
 
+        public static void GetPlayerResistances(Player player)
+        {
+            Dictionary<string, float> resistances = new Dictionary<string, float>
+    {
+        { "fire", 1.0f },
+        { "ice", 1.0f },
+        { "earth", 1.0f },
+        { "wind", 1.0f },
+        { "acid", 1.0f },
+        { "metal", 1.0f },
+        { "electric", 1.0f },
+        { "water", 1.0f }
+    };
+
+            player.PlayerResistances = resistances;
+        }
 
         public static Dictionary<string, float> GetResistances(string element)
         {
