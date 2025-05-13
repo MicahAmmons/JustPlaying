@@ -99,6 +99,8 @@ namespace PlayingAround.Managers.CombatMan
             ExecutingMove,
             AwaitingPlayerInput,
             PlayerTurn,
+            ResolvingStartOfTurnEffects,
+            ResolvingEndOfTurnEffects,  
 
             ResolvingEffects,
             EndingTurn,
@@ -333,17 +335,45 @@ namespace PlayingAround.Managers.CombatMan
 
 
                 }
+                if (_currentState == CombatState.ResolvingEndOfTurnEffects)
+                {
+
+                    if (_turnOrder.Peek().AspectsResolved)
+                    {
+                        _turnOrder.Peek().AspectsResolved = false;
+                        SendMonsterToBackOfQueue();
+                        ResolveAspects(TickedTiming.StartOfTurn, _turnOrder.Peek());
+                        _currentState = CombatState.ResolvingStartOfTurnEffects;
+
+                    }
+                }
+                if (_currentState == CombatState.ResolvingStartOfTurnEffects)
+                {
+                    if (_turnOrder.Peek().AspectsResolved)
+                    {
+                        _turnOrder.Peek().AspectsResolved = false;
+                        _currentState = CombatState.TurnStart;
+                    }
+
+                }
                 
 
             }
         }
 
 
-
-        private static void ResolveAspects(TickedTiming tick)
+        private static void SendMonsterToBackOfQueue()
         {
-            CombatMonster mon = _turnOrder.Peek();
-            if (mon.Aspects == null || mon.Aspects.Count == 0) return;
+            CombatMonster mon = _turnOrder.Dequeue();
+            _turnOrder.Enqueue(mon);
+        }
+        private static void ResolveAspects(TickedTiming tick, CombatMonster mon)
+        {
+            if (mon.Aspects == null || mon.Aspects.Count == 0)
+            {
+                mon.AspectsResolved = true;
+                return;
+            }
             AspectManager.ResolveAspect(mon, tick);
 
         
@@ -365,13 +395,14 @@ namespace PlayingAround.Managers.CombatMan
         }
         private static void EndTurn()
         {
-            SetState(CombatState.ResolvingEffects);
 
-            CombatMonster mon = _turnOrder.Dequeue();
-            _turnOrder.Enqueue(mon);
+            CombatMonster mon = _turnOrder.Peek();
+            ResolveAspects(TickedTiming.EndOfTurn, mon);
+
+
             _playerTurnState = PlayerTurnState.PlayerWaitingInput;
-            ResolveAspects(TickedTiming.StartOfTurn);
-            SetState(CombatState.TurnStart);
+            SetState(CombatState.ResolvingEndOfTurnEffects);
+
         }
         private static void FinishedAction()
         {
