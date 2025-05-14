@@ -34,7 +34,6 @@ namespace PlayingAround.Managers.CombatMan.Aspects
             }
 
             mon.Aspects.RemoveAll(a => a.Duration <= 0);
-            mon.AspectsResolved = true;
         }
 
 

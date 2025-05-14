@@ -107,7 +107,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public string NamePlusLevel { get; set; }
         public List<Aspect> Aspects { get; set; } = new List<Aspect>();
         public bool isDead { get; set; } = false;
-        public bool AspectsResolved { get; set; } = false;  
 
 
         public CombatMonster()
