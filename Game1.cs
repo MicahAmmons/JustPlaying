@@ -14,6 +14,7 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
 using System;
@@ -60,31 +61,32 @@ namespace PlayingAround
 
         protected override void LoadContent()
         {
-            AttackManager.LoadContent();
-            ResistanceManager.LoadContent();
-            PlayMonsterManager.LoadContent();
-            CombatMonsterManager.LoadContent();
-            GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
-            AspectManager.LoadAspects();
 
-
+            //Data that is not dependent on Save State
+            AssetManager.Initialize(Content);
+            AssetLoader.LoadAllAssets();
+            AttackManager.LoadContent(); //Loads attack data
+            ResistanceManager.LoadContent(); // Loads Resistance Data
+            PlayMonsterManager.LoadContent(); // Loads Play Monster Data
+            CombatMonsterManager.LoadContent(); // Loads Combat Monster Data
+            AspectManager.LoadAspects(); // Load Aspect Data
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             debugPixel.SetData(new[] { Color.White });
-
             mainFont = Content.Load<SpriteFont>("mainFont");
+            ViewportManager.Initialize(GraphicsDevice);
+            TitleScreenManager.LoadContent();
+
+            GameState.SaveData = SaveSystem.LoadGame() ?? new GameSaveData();
 
 
 
-            AssetManager.Initialize(Content);
-
-            AssetLoader.LoadAllAssets();
 
             TileCellManager.Initialize();
 
             ScreenTransitionManager.Initialize(GraphicsDevice);
 
-            ViewportManager.Initialize(GraphicsDevice);
+
 
             PlayerManager.LoadContent(GameState.SaveData.Player);
 
@@ -121,6 +123,10 @@ namespace PlayingAround
             if (InputManager.IsKeyPressed(Keys.F4))
                 showTileCellOutlines = !showTileCellOutlines;
 
+            if (SceneManager.CurrentState == SceneManager.SceneState.TitleScreen)
+            {
+                TitleScreenManager.Update(gameTime);
+            }
 
 
             UIManager.Update(gameTime);
@@ -138,35 +144,40 @@ namespace PlayingAround
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
-
-            TileManager.Draw(_spriteBatch);
-
-            TileCellManager.Draw(_spriteBatch);
-
-            PlayerManager.Draw(_spriteBatch);
-
-            TileCellManager.Draw(_spriteBatch);
-
-            ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
-
-            UIManager.Draw(_spriteBatch, GraphicsDevice);
-
-            CombatManager.Draw(_spriteBatch, GraphicsDevice);
-
-            if (showTileCellOutlines)
-                TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);
-            if (showDebugOutline)
-                TileManager.CurrentMapTile?.DrawTileCellDebugOverlay(_spriteBatch, debugPixel);
-            if (showDebugOutline)
+            if (SceneManager.CurrentState == SceneManager.SceneState.TitleScreen)
             {
-                PlayerManager.CurrentPlayer.DrawDebugPath(_spriteBatch, debugPixel);
-                DrawRectangle(PlayerManager.CurrentPlayer.HitBox, Color.Red);
-                DrawDebugOverlay();
-                
+                TitleScreenManager.Draw(_spriteBatch);
             }
+            if (SceneManager.CurrentState != SceneManager.SceneState.TitleScreen)
+            {
+                TileManager.Draw(_spriteBatch);
+
+                TileCellManager.Draw(_spriteBatch);
+
+                PlayerManager.Draw(_spriteBatch);
+
+                TileCellManager.Draw(_spriteBatch);
+
+                ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+
+                UIManager.Draw(_spriteBatch, GraphicsDevice);
+
+                CombatManager.Draw(_spriteBatch, GraphicsDevice);
+
+                if (showTileCellOutlines)
+                    TileManager.CurrentMapTile?.DrawTileCellOutlines(_spriteBatch, debugPixel);
+                if (showDebugOutline)
+                    TileManager.CurrentMapTile?.DrawTileCellDebugOverlay(_spriteBatch, debugPixel);
+                if (showDebugOutline)
+                {
+                    PlayerManager.CurrentPlayer.DrawDebugPath(_spriteBatch, debugPixel);
+                    DrawRectangle(PlayerManager.CurrentPlayer.HitBox, Color.Red);
+                    DrawDebugOverlay();
+
+                }
 
 
-            
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
 

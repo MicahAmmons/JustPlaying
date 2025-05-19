@@ -10,6 +10,7 @@ namespace PlayingAround.Managers
     {
         public enum SceneState
         {
+            TitleScreen,
             Play,
             Pause,
             Dialogue,
@@ -17,7 +18,7 @@ namespace PlayingAround.Managers
             Combat
         }
 
-        private static SceneState _currentState = SceneState.Play;
+        private static SceneState _currentState = SceneState.TitleScreen;
         public static SceneState CurrentState => _currentState;
 
         public static event Action<SceneState> OnStateChanged;

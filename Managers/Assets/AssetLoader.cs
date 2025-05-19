@@ -12,12 +12,15 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("3Arrows", "Tilecell/3arrows");
             AssetManager.LoadTexture("MonsterIcons/OozeIcon", "MonsterIcons/OozeIcon");
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
-            AssetManager.LoadFont("mainFont", "mainFont");
+
             AssetManager.LoadTexture("fightBackground", "UI/fightBackground");
             AssetManager.LoadTexture("AcidSpitIcon", "Attacks/acidSpit");
             AssetManager.LoadTexture("acidIcon", "Aspects/acidIcon");
+            AssetManager.LoadTexture("TitleScreenBackGround", "TitleScreen/TitleScreenBackGround");
 
-            // AssetManager.LoadTexture("fightButton", "UI/fightButton");
+
+            AssetManager.LoadFont("mainFont", "mainFont");
+            AssetManager.LoadFont("titleScreenButtonFont", "TitleScreenButtonFont");
 
 
             // Add fonts, sounds, etc. later

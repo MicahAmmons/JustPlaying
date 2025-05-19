@@ -2,6 +2,7 @@
   "MapTile": {
     "CurrentTileId": "0_-1_0"
   },
+  "Day": 0,
   "Player": {
     "Speed": 200,
     "Width": 64,
