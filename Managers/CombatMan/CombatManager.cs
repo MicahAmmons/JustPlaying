@@ -162,7 +162,8 @@ namespace PlayingAround.Managers.CombatMan
             DrawTurnStateOverlay(spriteBatch, graphicsDevice);
 
             if (_turnOrder != null && _turnOrder.Count > 0)
-                DrawDisplayStats(spriteBatch);
+                spriteBatch.Draw(_currentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
+            DrawDisplayStats(spriteBatch);
 
             if (_currentState == CombatState.LocationSelection)
                 DrawLocationSelection(spriteBatch);

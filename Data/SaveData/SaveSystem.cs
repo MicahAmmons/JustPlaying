@@ -12,22 +12,25 @@ namespace PlayingAround.Data.SaveData
     {
         private static readonly string SaveDirectory = Path.GetFullPath(Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\SaveData\SaveJson"));
-        private static readonly string SavePath = Path.Combine(SaveDirectory, "savegame.json");
 
 
-        public static void SaveGame(GameSaveData saveData)
+
+        public static void SaveGame(GameSaveData data, string filename)
         {
-            var json = JsonSerializer.Serialize(saveData, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(SavePath, json);
+            var path = Path.Combine(SaveDirectory, filename);
+            var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(path, json);
         }
 
-        public static GameSaveData LoadGame()
+        public static GameSaveData LoadGame(string filename)
         {
-            if (!File.Exists(SavePath)) return null;
+            var path = Path.Combine(SaveDirectory, filename);
+            if (!File.Exists(path)) return null;
 
-            var json = File.ReadAllText(SavePath);
+            var json = File.ReadAllText(path);
             return JsonSerializer.Deserialize<GameSaveData>(json);
         }
+
     }
 
 }

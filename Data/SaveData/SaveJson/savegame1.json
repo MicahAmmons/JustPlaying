@@ -1,0 +1,34 @@
+{
+  "MapTile": {
+    "CurrentTileId": "0_-1_0"
+  },
+  "Day": 1,
+  "Player": {
+    "Speed": 200,
+    "Width": 64,
+    "Height": 64,
+    "TextureKey": "Hero_Blonde",
+    "FeetCenterX": 1408.4844,
+    "FeetCenterY": 400.82452,
+    "PlayerSummons": [
+      {
+        "Name": "Ooze",
+        "XP": 220,
+        "AbilityPoints": {
+          "Health": 1,
+          "Attack": 0,
+          "Defense": 1
+        }
+      },
+      {
+        "Name": "AngryPlant",
+        "XP": 1600,
+        "AbilityPoints": {
+          "Health": 4,
+          "Attack": 1,
+          "Defense": 0
+        }
+      }
+    ]
+  }
+}

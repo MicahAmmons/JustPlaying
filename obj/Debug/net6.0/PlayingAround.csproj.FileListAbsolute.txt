@@ -112,3 +112,7 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Asp
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Aspects\acidIcon.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\TitleScreen\TitleScreenBackGround.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\TitleScreenButtonFont.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame1.json
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame2.json
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame3.json
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\SaveData\SaveJson\saveGameTemplate.json

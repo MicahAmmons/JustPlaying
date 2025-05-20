@@ -25,7 +25,7 @@ namespace PlayingAround.Manager
 
 
 
-        public static void Initialize(GraphicsDevice graphicsDevice, string id)
+        public static void Initialize( string id)
         {
 
             LoadMapTileById(id);
