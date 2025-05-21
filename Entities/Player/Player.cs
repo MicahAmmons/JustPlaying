@@ -186,10 +186,29 @@ namespace PlayingAround.Entities.Player
                 Height = this.PlayerHeight,
                 TextureKey = "Hero_Blonde",
                 FeetCenterX = feetCenter.X,
-                FeetCenterY = feetCenter.Y
+                FeetCenterY = feetCenter.Y,
             };
         }
 
+        public List<SummonsSaveData> SavePlayerSummons()
+        {
+            List<SummonsSaveData> summs = new List<SummonsSaveData>();
+            foreach (var sum in this.stats.UnlockedSummons)
+            {
+                //Dictionary <string, int> abilityPoints = new Dictionary<string, int>();
+                //abilityPoints.Add("Defense", sum.Defense);
+                //abilityPoints.Add("MaxHealth", sum.MaxHealth);
+                //abilityPoints.Add("")
+
+                SummonsSaveData data = new SummonsSaveData()
+                {
+                    Name = sum.Name,
+                    NumberOfKills = sum.NumberOfKills
+                };
+                summs.Add(data);
+            }
+            return summs;
+        }
         public Vector2? GetDebugClickTarget() => debugClickTarget;
     }
 }

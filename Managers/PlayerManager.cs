@@ -78,9 +78,13 @@ namespace PlayingAround.Managers
         }
 
 
-        public static PlayerSaveData Save()
+        public static PlayerSaveData SavePlayer()
         {
-            return _currentPlayer.Save();
+            PlayerSaveData saveData = new PlayerSaveData();
+
+            saveData = _currentPlayer.Save();
+            saveData.PlayerSummons = _currentPlayer.SavePlayerSummons();
+            return saveData;
         }
 
 

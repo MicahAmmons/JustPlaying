@@ -273,7 +273,7 @@ namespace PlayingAround.Manager
 
 
 
-        public static MapTileSaveData Save()
+        public static MapTileSaveData SaveMapTile()
         {
             return new MapTileSaveData
             {

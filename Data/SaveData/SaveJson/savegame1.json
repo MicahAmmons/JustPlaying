@@ -2,7 +2,9 @@
   "MapTile": {
     "CurrentTileId": "0_-1_0"
   },
-  "Day": 1,
+  "DayCycle": {
+    "Day": 1
+  },
   "Player": {
     "Speed": 200,
     "Width": 64,
@@ -13,21 +15,11 @@
     "PlayerSummons": [
       {
         "Name": "Ooze",
-        "XP": 220,
-        "AbilityPoints": {
-          "Health": 1,
-          "Attack": 0,
-          "Defense": 1
-        }
+        "NumberOfKills": 0
       },
       {
         "Name": "AngryPlant",
-        "XP": 1600,
-        "AbilityPoints": {
-          "Health": 4,
-          "Attack": 1,
-          "Defense": 0
-        }
+        "NumberOfKills": 0
       }
     ]
   }

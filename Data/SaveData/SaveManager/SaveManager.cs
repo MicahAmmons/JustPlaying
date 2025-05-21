@@ -11,6 +11,7 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.UI;
+using PlayingAround.Managers.DayManager;
 
 public class SaveManager
 {
@@ -18,13 +19,14 @@ public class SaveManager
 
     private static readonly string saveFolder = Path.Combine(AppContext.BaseDirectory, "Data", "SaveData", "SaveJson");
     public static GameSaveData CurrentGameSaveData;
+    public static string CurrentSaveKey { get; private set; }
 
     public static void LoadAllSaves()
     {
         SaveFiles.Clear();
 
-        var saveFiles = Directory.GetFiles(saveFolder, "saveGame*.json")
-                                 .Concat(Directory.GetFiles(saveFolder, "saveGameTemplate.json"));
+        var saveFiles = Directory.GetFiles(saveFolder, "saveGame*.json");
+
 
         foreach (var path in saveFiles)
         {
@@ -47,11 +49,10 @@ public class SaveManager
 
     public static void SetCurrentGameSave(string key)
     {
+        CurrentSaveKey = key;
         CurrentGameSaveData = SaveFiles[key];
 
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
-       
-
         TileCellManager.Initialize();
         UIManager.LoadContent();
         ResistanceManager.LoadContent(); // Loads Resistance Data
@@ -61,11 +62,67 @@ public class SaveManager
         CombatMonsterManager.LoadContent(); // Loads Combat Monster Data
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
         SceneManager.SetState(SceneManager.SceneState.Play);
-
-      
-
- 
+        DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
         CombatManager.Initialize();
 
+    }
+    public static string CreateNewGame()
+    {
+        string templatePath = Path.Combine(saveFolder, "saveGameTemplate.json");
+
+        if (!File.Exists(templatePath))
+        {
+            Console.WriteLine("Template save file not found.");
+            return null;
+        }
+
+        // Find the next available gameSave#.json
+        int saveIndex = 1;
+        string newSavePath;
+        string newKey;
+
+        do
+        {
+            newKey = $"savegame{saveIndex}";
+            newSavePath = Path.Combine(saveFolder, newKey + ".json");
+            saveIndex++;
+        } while (File.Exists(newSavePath));
+
+        // Copy the template to the new save slot
+        File.Copy(templatePath, newSavePath);
+
+        // Deserialize the new file and add it to SaveFiles
+        try
+        {
+            var json = File.ReadAllText(newSavePath);
+            var newSaveData = JsonSerializer.Deserialize<GameSaveData>(json);
+
+            if (newSaveData != null)
+            {
+                SaveFiles[newKey] = newSaveData;
+                Console.WriteLine($"New save created: {newKey}");
+                return newKey;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to create new game: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    public static void SaveGame()
+    {
+        GameSaveData data = new GameSaveData
+        {
+            Player = PlayerManager.SavePlayer(),
+            MapTile = TileManager.SaveMapTile(),
+            DayCycle = DayCycleManager.SaveDayCycle()
+        };
+
+        var path = Path.Combine(saveFolder, CurrentSaveKey + ".json");
+        var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(path, json);
     }
 }

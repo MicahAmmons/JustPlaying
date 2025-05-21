@@ -9,8 +9,7 @@ namespace PlayingAround.Data.SaveData
     public class SummonsSaveData
     {
         public string Name { get; set; }
-        public int XP { get; set; }
-        public int Level { get; set; }
+        public int NumberOfKills { get; set; }
         public Dictionary<string, int> AbilityPoints { get; set; } = new Dictionary<string, int>
         {
             { "Health", 0 },

@@ -36,22 +36,19 @@ namespace PlayingAround.Managers.TitleScreen
         public static void LoadContent()
         {
             _backGroundTexture = AssetManager.GetTexture("TitleScreenBackGround");
-            _backGroundArt = new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight);
-
-            _buttonSize = new Point(100, 50);
+            _backgroundTexture = AssetManager.GetTexture("fightBackground");
             _mainFont = AssetManager.GetFont("titleScreenButtonFont");
 
-            // Margin from left and top edges
+            _backGroundArt = new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight);
+            _buttonSize = new Point(100, 50);
+
+            // Layout constants
             int marginLeft = 90;
             int marginTop = 50;
             int verticalSpacing = 10;
 
             int x = marginLeft;
             int y = marginTop;
- 
-            int centerX = ViewportManager.ScreenWidth / 2;
-            int centerY = ViewportManager.ScreenHeight / 2;
-
 
             _buttonRects["NewGame"] = new Rectangle(x, y, _buttonSize.X, _buttonSize.Y);
             y += _buttonSize.Y + verticalSpacing;
@@ -60,42 +57,60 @@ namespace PlayingAround.Managers.TitleScreen
             y += _buttonSize.Y + verticalSpacing;
 
             _backgroundPopupForLoadFiles = new Rectangle(x, y, 500, 500);
-            y += 10;
 
+            int previewWidth = 400;
+            int previewHeight = 250;
 
+            int screenCenterX = ViewportManager.ScreenWidth / 2;
+            int screenCenterY = ViewportManager.ScreenHeight / 2 - 200;
 
-            int newGameCenterOffSet = 600;
-            int newGameHeight = 200;
+            int previewX = screenCenterX - previewWidth / 2;
+            int previewY = screenCenterY + previewHeight / 2;
 
-            _loadGamePreviewBackground = new Rectangle(centerX, centerY - 200, 300, 300);
-            _loadGamePreviewOptions["Yes"] = new Rectangle()
-            _loadGamePreviewOptions["No"] = new Rectangle()
+            _loadGamePreviewBackground = new Rectangle(previewX, previewY, previewWidth, previewHeight);
 
-            _newGameRects["Yes"] = new Rectangle(centerX - (newGameCenterOffSet / 2), centerY, newGameHeight / 3, newGameHeight);
-            _newGameRects["No"] = new Rectangle(centerX , centerY, newGameCenterOffSet / 3, newGameHeight);
-            _newGameRects["Start a New Game?"] = new Rectangle(centerX - newGameCenterOffSet/2 -70, centerY - newGameHeight/2, newGameCenterOffSet, newGameHeight);
+            // Yes button (bottom right of popup)
+            _newGameRects["Yes"] = new Rectangle(
+                previewX + previewWidth - _buttonSize.X - 20,
+                previewY + previewHeight - _buttonSize.Y - 20,
+                _buttonSize.X,
+                _buttonSize.Y
+            );
 
+            // No button (bottom left of popup)
+            _newGameRects["No"] = new Rectangle(
+                previewX + 20,
+                previewY + previewHeight - _buttonSize.Y - 20,
+                _buttonSize.X,
+                _buttonSize.Y
+            );
+
+            // Text label box (for centered confirmation text)
+            _newGameRects["ConfirmText"] = new Rectangle(
+                previewX,
+                previewY + 30,
+                previewWidth,
+                40
+            );
+
+            // -----------------------------------
+            // Generate Load Game Rectangles
+            // -----------------------------------
 
             _loadGameRects.Clear();
-            x += 70;
+            int loadX = x + 70;
+            int loadY = y + 10;
+
             foreach (var save in SaveManager.SaveFiles.Keys)
             {
                 if (save != "saveGameTemplate")
                 {
-                    _loadGameRects[save] = new Rectangle(x, y, _buttonSize.X, _buttonSize.Y);
-                    y += _buttonSize.Y + verticalSpacing;
+                    _loadGameRects[save] = new Rectangle(loadX, loadY, _buttonSize.X, _buttonSize.Y);
+                    loadY += _buttonSize.Y + verticalSpacing;
                 }
             }
-
-
-            _backgroundTexture = AssetManager.GetTexture("fightBackground");
-
-        
-
-
-
-
         }
+
 
 
         public static void Update(GameTime gameTime)
@@ -127,7 +142,16 @@ namespace PlayingAround.Managers.TitleScreen
         }
         public static void UpdatePlayerClickLoadGameConfirmation(Point mousePoint)
         {
+            if (InputManager.IsLeftClick() && _newGameRects["Yes"].Contains(mousePoint))
+            {
+                PickSaveDataSource();
+                _currentGameStateDataKey = null;
 
+            }
+            if (InputManager.IsLeftClick() && _newGameRects["No"].Contains(mousePoint))
+            {
+                SetState(TitleScreenState.MainPage);
+            }
         }
         public static void UpdatePlayerClickedConstantButtons(Point mousePoint)
         {
@@ -159,8 +183,9 @@ namespace PlayingAround.Managers.TitleScreen
                 }
                 else if (_newGameRects["Yes"].Contains(mousePoint))
                 {
-                PickSaveDataSource("saveGameTemplate");
-                    
+                _currentGameStateDataKey = SaveManager.CreateNewGame();
+
+                PickSaveDataSource();
                 }
            
         }
@@ -174,8 +199,9 @@ namespace PlayingAround.Managers.TitleScreen
                     {
                         _currentGameStateDataKey = saveKey;
                     SetState(TitleScreenState.ConfirmLoadGame);
-                    }
                     return;
+                }
+                   
                 }
             
         }
@@ -189,17 +215,18 @@ namespace PlayingAround.Managers.TitleScreen
         {
 
             DrawTitleScreenBackGround(spriteBatch);
+            DrawMainButtons(spriteBatch);
             switch (_titleScreenState)
             {
                 case TitleScreenState.MainPage:
-                    DrawMainButtons(spriteBatch);
+                   // DrawMainButtons(spriteBatch);
                     break;
                 case TitleScreenState.LoadGame:
-                    DrawMainButtons(spriteBatch);
+                 //   DrawMainButtons(spriteBatch);
                     DrawLoadGameOptions(spriteBatch);
                     break;
                 case TitleScreenState.NewGame:
-                    DrawMainButtons(spriteBatch);
+                  //  DrawMainButtons(spriteBatch);
                     DrawNewGameOption(spriteBatch); 
                     break;
                 case TitleScreenState.ConfirmLoadGame:
@@ -211,13 +238,13 @@ namespace PlayingAround.Managers.TitleScreen
 
         public static void DrawLoadGameConfirmation(SpriteBatch spriteBatch)
         {
-            DrawSaveStatePreview(spriteBatch);
+
             DrawLoadYesOrNo(spriteBatch);
+            DrawSaveStatePreview(spriteBatch);
         }
         public static void DrawLoadYesOrNo(SpriteBatch spriteBatch)
         {
-            var current = _currentGameStateDataKey;
-            spriteBatch.Draw(_backgroundTexture, _loadGamePreviewBackground, Color.White);
+        //    spriteBatch.Draw(_backgroundTexture, _loadGamePreviewBackground, Color.White);
             DrawButton(spriteBatch, _newGameRects["Yes"], "Yes");
             DrawButton(spriteBatch, _newGameRects["No"], "No");
         }
@@ -225,9 +252,22 @@ namespace PlayingAround.Managers.TitleScreen
 
         public static void DrawSaveStatePreview(SpriteBatch spriteBatch)
         {
+          //  spriteBatch.Draw(_backgroundTexture, _loadGamePreviewBackground, Color.White * 0.95f);
 
+            // Draw confirmation text
+            string confirmText = "Would you like to load this save file?";
+            Rectangle textRect = _newGameRects["ConfirmText"];
+            Vector2 textSize = _mainFont.MeasureString(confirmText);
 
+            Vector2 textPos = new Vector2(
+                textRect.X + (textRect.Width - textSize.X) / 2,
+                textRect.Y
+            );
+
+            spriteBatch.DrawString(_mainFont, confirmText, textPos + new Vector2(2, 2), ColorPalette.DarkColor);
+            spriteBatch.DrawString(_mainFont, confirmText, textPos, ColorPalette.LightColor);
         }
+
         public static void DrawNewGameOption(SpriteBatch spriteBatch)
         {
 
@@ -301,9 +341,9 @@ namespace PlayingAround.Managers.TitleScreen
             _titleScreenState = state;
         }
 
-        private static void PickSaveDataSource(string key)
+        private static void PickSaveDataSource()
         {
-            SaveManager.SetCurrentGameSave("saveGameTemplate");
+            SaveManager.SetCurrentGameSave(_currentGameStateDataKey);
             SceneManager.SetState(SceneManager.SceneState.LoadingScreen);
 
         }
