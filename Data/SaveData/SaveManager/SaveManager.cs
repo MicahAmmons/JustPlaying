@@ -64,7 +64,7 @@ public class SaveManager
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
         SceneManager.SetState(SceneManager.SceneState.Play);
         DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
-        CombatManager.Initialize();
+     //   CombatManager.Initialize();
 
     }
     public static string CreateNewGame()

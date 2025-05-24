@@ -22,24 +22,27 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static CombatStateMachine;
+using static PlayingAround.Managers.CombatMan.CombatStateMachine;
 using static PlayingAround.Managers.SceneManager;
 
 namespace PlayingAround.Managers.CombatMan
 {
-    public static class CombatManager
+    public class CombatManager
     {
         private static PlayMonsters _playMonsters;//brought in at start, deleted or ignored at end
         private static Player _player; // Copied to local _playerMonster
         private static CombatMonster _playerMonster; // Need to update _player at the end of combat accordingly
-        private static MapTile _currentMapTile;
-        private static Texture2D _playerCellOptions;//placeholder texture
-        private static SpriteFont _font;
+
+
+       
         private static TileCell _currentClickedCell;
         private static TileCell _currentMouseHoverCell;
         private static Vector2 _currentMousePos;
@@ -68,8 +71,7 @@ namespace PlayingAround.Managers.CombatMan
         private static List<TileCell> _summonSpawnableCells;
         private static SingleAttack _playerCurrentAttack;
         private static List<TileCell> _playerCurrentAttackRangeOptions;
-        private static int _tileWidth;
-        private static int _tileHeight;
+
         private static bool _attackComplete = false;
         private static VisualEffectManager _visualEffectManager = new VisualEffectManager();
         private static List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
@@ -82,55 +84,35 @@ namespace PlayingAround.Managers.CombatMan
 
 
 
-
         private static List<string> _log = new List<string>();
         private static int _maxStrings = 50;
 
         private static Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
         private static Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect, _attackOptionsRect;
 
-
-        public enum CombatState
-        {
-            Waiting,
-            LocationSelection,
-            TurnStart, // Once at the top of each turn 
-            ActionNavigation,
-            MovingPlayerControlled,
-            MovingAIControlled,
-            AIAttacking,
-            ExecutingAttack,
-            ExecutingMove,
-            AwaitingPlayerInput,
-            PlayerTurn,
-            ResolvingStartOfTurnEffects,
-            ResolvingEndOfTurnEffects,  
-
-            ResolvingEffects,
-            EndingTurn,
-            CombatOver
-                
-        }
-        
-        private static PlayerTurnState _playerTurnState = PlayerTurnState.PlayerWaitingInput;
-        private enum PlayerTurnState
-        {
-            PlayerWaitingInput,
-            PlayerExecutingAction,
-            PlayerExecutingMove,
-            PlayerMoving,
-            PlayerSummoning,
-            PlayerAttacking,
-            PlayerTargeting,
-            PlayerExecutingAttack,
-            PlayerEndingTurn,
-        }
-
         private static CombatState _currentState = CombatState.Waiting;
         public static CombatState CurrentState => _currentState;
 
-        public static void Initialize()
+
+
+
+        private CombatUIManager _combatUIManager;
+        private CombatStateMachine _stateMachine;
+        public PlayerTurnState StatePlayerTurn => _stateMachine.CurrentPlayerTurnState;
+        public CombatState StateCombat => _stateMachine.CurrentCombatState;
+        public SummonedTurnState StateSummoned => _stateMachine.CurrentSummonedTurnState;
+        public AITurnState StateAI => _stateMachine.CurrentAITurnState;
+
+        private MapTile _currentMapTile;
+        private Texture2D _playerCellOptions;//placeholder texture
+        private SpriteFont _font;
+        private int _tileWidth;
+        private int _tileHeight;
+        public CombatManager()
         {
+            _stateMachine = new CombatStateMachine();
+            _combatUIManager = new CombatUIManager(_stateMachine, _turnOrder);
+
             _currentMapTile = TileManager.CurrentMapTile;
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
@@ -138,6 +120,32 @@ namespace PlayingAround.Managers.CombatMan
             _tileWidth = MapTile.TileWidth;
             InitilizeUIElements();
         }
+
+
+        public void SetCombatState(CombatState state)
+        {
+            _stateMachine.SetCombatState(state);
+        }
+        public void SetPlayerTurnState(PlayerTurnState state)
+        {
+            _stateMachine.SetPlayerTurnState(state);
+        }
+        public void SetSummonedTurnState(SummonedTurnState state)
+        {
+            _stateMachine.SetSummonedTurnState(state);
+        }
+        public void SetAITurnState(AITurnState state)
+        {
+            _stateMachine.SetAITurnState(state);
+        }
+
+
+
+
+
+
+
+
 
         public static void BeginCombat(PlayMonsters playMonsters, Player player)
         {
@@ -154,8 +162,11 @@ namespace PlayingAround.Managers.CombatMan
             CombatManager.SetState(CombatState.LocationSelection);
         }
 
-        public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+            _combatUIManager.Draw(spriteBatch);
+
+            _visualEffectManager.Draw(spriteBatch, _font);
 
             OnScreenDebug(spriteBatch);
             if (SceneManager.CurrentState != SceneState.Combat || _currentState == CombatState.Waiting)
@@ -174,7 +185,7 @@ namespace PlayingAround.Managers.CombatMan
                 DrawPlayerTurn(spriteBatch);
           
             DrawAllCombatMonsters(spriteBatch);
-            _visualEffectManager.Draw(spriteBatch, _font);
+
 
         }
 
