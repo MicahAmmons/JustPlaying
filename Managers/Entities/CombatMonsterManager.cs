@@ -9,7 +9,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Utils;
 
-namespace PlayingAround.Managers
+namespace PlayingAround.Managers.Entities
 {
     public static class CombatMonsterManager
     {
@@ -174,7 +174,7 @@ namespace PlayingAround.Managers
 
         public static float GetMonsterDifficulty(CombatMonster mon)
         {
-            return (mon.MP / 4f * 0.25f) + (mon.BaseHealth / 10f * 0.5f) + (mon.ElementalAffinity / 1f * 0.25f);
+            return mon.MP / 4f * 0.25f + mon.BaseHealth / 10f * 0.5f + mon.ElementalAffinity / 1f * 0.25f;
         }
 
 

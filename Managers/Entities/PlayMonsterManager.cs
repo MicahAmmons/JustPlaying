@@ -15,8 +15,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using PlayingAround.Managers.Movement;
+using PlayingAround.Managers.Tiles;
 
-namespace PlayingAround.Managers
+namespace PlayingAround.Managers.Entities
 {
     public class PlayMonsterManager
     {

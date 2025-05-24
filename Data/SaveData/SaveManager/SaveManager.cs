@@ -4,7 +4,6 @@ using System;
 using System.Text.Json;
 using PlayingAround.Data.SaveData;
 using System.Linq;
-using PlayingAround.Manager;
 using PlayingAround.Managers;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Managers.CombatMan.Aspects;
@@ -12,6 +11,8 @@ using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.DayManager;
+using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.Tiles;
 
 public class SaveManager
 {

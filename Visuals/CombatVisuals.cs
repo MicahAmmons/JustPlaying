@@ -1,14 +1,14 @@
-﻿    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using PlayingAround.Entities.Monster.CombatMonsters;
-    using PlayingAround.Game.Map;
-    using PlayingAround.Manager;
-    using PlayingAround.Managers.Assets;
-    using PlayingAround.Managers.CombatMan.CombatAttacks;
-    using PlayingAround.Managers.CombatMan.CombatBehaviors;
-    using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Game.Map;
+using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.CombatMan.CombatBehaviors;
+using PlayingAround.Managers.Tiles;
+using System;
 
-    namespace PlayingAround.Visuals
+namespace PlayingAround.Visuals
     {
         public class VisualEffect
         {

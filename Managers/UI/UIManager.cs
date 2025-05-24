@@ -11,6 +11,7 @@ using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.DayManager;
 using System;
 using System.Collections.Generic;
+using PlayingAround.Managers.Entities;
 
 
 namespace PlayingAround.Managers.UI
@@ -98,11 +99,16 @@ namespace PlayingAround.Managers.UI
             DrawPlayerStatsUI(spriteBatch);
             DrawPlayerSummons(spriteBatch);
             DrawDayCount(spriteBatch);
+            DrawEscapeState(spriteBatch);
         }
 
         public static void DrawDayCount(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(_mainFont, $"Day {DayManager.DayCycleManager.FetchDays()}", new Vector2(1700, 50 ), ColorPalette.DarkColor);
+        }
+        public static void DrawEscapeState(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(_mainFont, $"{EscapeOverseer.EscapeOverseer.CurrentEscapeState}", new Vector2(1700, 100), ColorPalette.DarkColor);
         }
         private static void DrawSummonOverlay(SpriteBatch spriteBatch)
         {

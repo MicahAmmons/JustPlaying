@@ -11,7 +11,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Utils;
 
-namespace PlayingAround.Manager
+namespace PlayingAround.Managers.Tiles
 {
     public static class TileManager
     {
@@ -34,7 +34,7 @@ namespace PlayingAround.Manager
                 var next = TileCellManager.PlayerCurrentCell.NextTile;
                 string id = $"{next.NextX}_{next.NextY}_{next.NextZ}";
 
-                TileManager.LoadMapTileById(id);
+                LoadMapTileById(id);
             };
 
         }
@@ -182,7 +182,7 @@ namespace PlayingAround.Manager
                 int dy = Math.Abs(target.Y - current.Y);
 
                 // Manhattan distance of 1 means direct neighbor (no diagonals)
-                if ((dx == 1 && dy == 0) || (dx == 0 && dy == 1))
+                if (dx == 1 && dy == 0 || dx == 0 && dy == 1)
                     return true;
             }
 
@@ -227,7 +227,7 @@ namespace PlayingAround.Manager
 
                         if (x >= 0 && x < MapTile.GridWidth && y >= 0 && y < MapTile.GridHeight)
                         {
-                            TileCell cell = TileManager.CurrentMapTile.TileGrid[x, y];
+                            TileCell cell = CurrentMapTile.TileGrid[x, y];
                             result.Add(cell);
                         }
                     }

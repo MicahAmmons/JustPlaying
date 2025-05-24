@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Game.Map;
-using PlayingAround.Manager;
+using PlayingAround.Managers.Tiles;
 
 namespace PlayingAround.Game.Pathfinding
 {

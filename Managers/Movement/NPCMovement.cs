@@ -2,7 +2,7 @@
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
-using PlayingAround.Manager;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -12,14 +12,18 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.EscapeOverseer;
 using PlayingAround.Managers.LoadingScreen;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace PlayingAround
@@ -75,6 +79,7 @@ namespace PlayingAround
             ViewportManager.Initialize(GraphicsDevice);
             TitleScreenManager.LoadContent();
             ScreenTransitionManager.Initialize(GraphicsDevice);
+            EscapeOverseer.LoadContent();
 
 
         }
@@ -93,6 +98,7 @@ namespace PlayingAround
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             InputManager.Update(gameTime);
+            EscapeOverseer.Update(gameTime);
             switch (SceneManager.CurrentState)
             {
                 case (SceneManager.SceneState.TitleScreen):
@@ -123,13 +129,18 @@ namespace PlayingAround
                     break;
                 
             }
-
             base.Update(gameTime);
+        }
+
+
+        public void EndGame()
+        {
+            this.Exit();
         }
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
-
+           
             switch (SceneManager.CurrentState)
             {
                 case (SceneManager.SceneState.TitleScreen):
@@ -157,11 +168,13 @@ namespace PlayingAround
                 case (SceneManager.SceneState.LoadingScreen):
                     LoadingScreenManager.Draw(_spriteBatch);
                     break;
+
                     case (SceneManager.SceneState.Combat):
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
                     CombatManager.Draw(_spriteBatch, GraphicsDevice);
                     break;
             }
+            EscapeOverseer.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
 

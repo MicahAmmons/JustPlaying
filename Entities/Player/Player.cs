@@ -4,10 +4,10 @@ using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
-using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.Tiles;
 using PlayingAround.Stats;
 using PlayingAround.Utils;
 using System.Collections.Generic;
@@ -65,7 +65,7 @@ namespace PlayingAround.Entities.Player
             foreach (var summon in summs)
             {
                 var mon = new SummonedMonster(summon, summonLoader[summon.Name]);
-                if (mon.TotalXP > 0)
+                if (mon.NumberOfKills > 0)
                     stats.UnlockedSummons.Add(mon);
                 else
                     stats.LockedSummons.Add(mon);

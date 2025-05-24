@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Game.Map;
-using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

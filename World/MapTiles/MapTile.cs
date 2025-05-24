@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
-using PlayingAround.Managers;
+using PlayingAround.Managers.Entities;
 using System.Collections.Generic;
 
 namespace PlayingAround.Game.Map

@@ -7,9 +7,10 @@ using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Tiles;
 using System.Collections.Generic;
 
-namespace PlayingAround.Managers
+namespace PlayingAround.Managers.Entities
 {
     public static class PlayerManager
     {

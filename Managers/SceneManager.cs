@@ -13,7 +13,6 @@ namespace PlayingAround.Managers
             TitleScreen,
             LoadingScreen,
             Play,
-            Pause,
             Dialogue,
             SceneTransition,
             Combat

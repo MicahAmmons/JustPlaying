@@ -4,6 +4,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 

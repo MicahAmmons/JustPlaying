@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
-using PlayingAround.Manager;
-using PlayingAround.Managers;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 
