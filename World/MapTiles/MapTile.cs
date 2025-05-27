@@ -13,6 +13,8 @@ namespace PlayingAround.Game.Map
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
         public TileCell[,] TileGrid { get; private set; }
+        public List<TileCell> MonsterSpawnableCells { get; private set; } = new List<TileCell> { };
+        public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
         public float DifficultyMax { get; }
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
@@ -58,6 +60,9 @@ namespace PlayingAround.Game.Map
                     cellData.Trigger,
                     cellData.NextTile
                 );
+                if (cellData.MonsterSpawnable) MonsterSpawnableCells.Add(TileGrid[cellData.X, cellData.Y]);
+                if (cellData.HeroSpawnable) PlayerSpawnableCells.Add(TileGrid[cellData.X, cellData.Y]);
+
             }
             PlayMonstersList = PlayMonstersManager.GeneratePlayMonsters(data);
         }

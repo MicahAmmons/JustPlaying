@@ -9,6 +9,8 @@ using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using static PlayingAround.Entities.Monster.CombatMonsters.MonsterChooseWhichAttack;
+using static PlayingAround.Entities.Monster.CombatMonsters.MonsterOrderOfOperations;
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
 {
@@ -41,6 +43,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         [JsonPropertyName("initiation")] public float Initiation { get; set; }
         [JsonPropertyName("elementalAffinity")] public float ElementalAffinity { get; set; }
+        [JsonPropertyName("actionOrder")] public List<MonsterActionOrder> ActionOrderList { get; set; }
+        [JsonPropertyName("decideWhichAttack")] public List<ChooseWhichMonsterAttack> ChooseWhichAttacks { get; set; }
+        public Queue<MonsterActionOrder> CurrentOrderOfActions {  get; set; }
+        public Queue<ChooseWhichMonsterAttack> CurrentChooseWhichAttack {  get; set; }
         public float CurrentMP;
         public float CurrentHP;
         public bool CurrentIsPlayerControlled;
@@ -67,15 +73,18 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float DamageFlashTimer = 0f;
         public bool AllowedToMove = true;
 
+
+        
         public CombatMonster(SummonedMonster mon, CombatMonster comMon)
         {
+            //Summoned monster
             BaseSummonCost = mon.SummonCost;
             Name = mon.Name;
             IconTextureKey = mon.IconTextureString;
             MaxHealth = mon.MaxHealth;
             CurrentHealth = mon.MaxHealth;
             Level =  mon.Level;
-            isPlayerControled = true;
+            isSummoned = true;
             isPlayerMovementControled = true;
             Attacks = comMon.Attacks;
             BaseDifficulty = comMon.BaseDifficulty;
@@ -93,8 +102,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public TileCell CurrentCell { get; set; }
         public int TurnNumber { get; set; } = 0;
-        public Queue<string> OrderOfActions { get; set; }
-        public Queue<string> CurrentOrderOfActions;
+ 
          public float MaxHealth { get; set; }
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }
@@ -118,10 +126,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public CombatMonster(CombatMonster original)
         {
+            //Monster monster CombatMonster CombatMONster
             Difficulty = original.Difficulty;
             IconTextureKey = original.IconTextureKey;
             MovementQuickness = original.MovementQuickness;
-            isPlayerControled = original.isPlayerControled;
+            isMonster = true;
             TurnBehavior = original.TurnBehavior;
             MovementPattern = original.MovementPattern;
             ChooseAttackBehavior = original.ChooseAttackBehavior;
@@ -138,6 +147,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Resistances = original.Resistances;
             ElementalAffinity = original.ElementalAffinity;
             BaseSummonCost = original.BaseSummonCost;
+            ActionOrderList = original.ActionOrderList;
+            ChooseWhichAttacks = original.ChooseWhichAttacks;
 
         }
 

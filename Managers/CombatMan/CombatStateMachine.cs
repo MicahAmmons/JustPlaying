@@ -3,7 +3,7 @@
     // Backing fields
     private PlayerTurnState _currentPlayerTurnState = PlayerTurnState.None;
     private SummonedTurnState _currentSummonedTurnState = SummonedTurnState.None;
-    private CombatState _currentCombatState = CombatState.Waiting;
+    private CombatState _currentCombatState = CombatState.LocationSelection;
     private AITurnState _currentAITurnState = AITurnState.None;
 
     // Public accessors
@@ -30,6 +30,7 @@
         PlayerExecutingMove,
         PlayerMoving,
         PlayerSummoning,
+        PlayerExecutingSummoning,
         PlayerAttacking,
         PlayerTargeting,
         PlayerExecutingAttack,

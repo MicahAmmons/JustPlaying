@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.Movement.CombatGrid;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PlayingAround.Entities.Monster.CombatMonsters.MonsterChooseWhichAttack;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PlayingAround.Managers.CombatMan.CombatAttacks
@@ -67,7 +69,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                  null
              // texture (or some texture if needed)
              );
-            CombatManager.VisualEffectManager.AddEffect(effect);
+            CombatGuard.CurrentCombat.VisualEffectManager.AddEffect(effect);
             tar.IsFlashingRed = true;
             tar.DamageFlashTimer = 0.35f; // 0.35 seconds of red flash
         }
@@ -105,12 +107,46 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }  
             return attacks;
         }
+
+        public static (CombatMonster, List<TileCell>) TargetClosestEnemy(List<TileCell> inRangeCells, TileCell origin)
+        {
+            CombatMonster closestMon = null;
+            TileCell closestCell = null;
+            int shortestDistance = int.MaxValue;
+            (CombatMonster, List<TileCell>) result = new();
+            Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
+            Dictionary<CombatMonster, TileCell> aiMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+
+
+            foreach (var kvp in playerMonsters)
+            {
+                CombatMonster mon = kvp.Key;
+                TileCell cell = kvp.Value;
+
+                if (inRangeCells.Contains(cell))
+                {
+                    int distance = GridMovement.CheckManhattanDistance(origin, cell);
+
+                    if (distance < shortestDistance)
+                    {
+                        shortestDistance = distance;
+                        closestMon = mon;
+                        closestCell = cell;
+                    }
+                }
+            }
+            if (closestMon != null && closestCell != null)
+            {
+                result = (closestMon, new List<TileCell> { closestCell });
+            }
+            return result;
+        }
         public static Dictionary<CombatMonster, List<TileCell>> GetAttackSpecificBehavior(string targetPhrase, string key, List<TileCell> inRangeCells, TileCell origin)
         
             {
                 Dictionary<CombatMonster, List<TileCell>> result = new();
-                Dictionary<CombatMonster, TileCell> playerMonsters = CombatManager.GetCombatMonMap("player");
-                Dictionary < CombatMonster, TileCell > aiMonsters = CombatManager.GetCombatMonMap("ai");
+                Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
+                Dictionary < CombatMonster, TileCell > aiMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
             if (key == "Target")
                 {
                     switch (targetPhrase)
@@ -174,30 +210,56 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }
 
         // IF THE MOSNTER HAS MULTIPLE ATTACKS WITHIN RANGE TO USE, THIS METHOD DECIDES WHICH ONE
-        public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) GetAttackSpecificBehavior(Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attacks, TileCell origin, string chooseAttackPhrase)
-             {
-            if (attacks.Count == 1)
-            {
-                return (attacks.First().Key, attacks.First().Value);
-            }
-            switch (chooseAttackPhrase)
-            {
-                case "shortestRange":
-                    int shortestRange = int.MaxValue;
-                    SingleAttack chosenAttack = null;
+        public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) ChooseWhichAttack(
+      Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attacks,
+      TileCell origin,
+      Queue<ChooseWhichMonsterAttack> key)
+        {
+            if (attacks == null || attacks.Count == 0)
+                return (null, new Dictionary<CombatMonster, List<TileCell>>());
 
-                    foreach (var attack in attacks.Keys)
-                    {
-                        if (attack.Range < shortestRange)
+            if (attacks.Count == 1)
+                return (attacks.First().Key, attacks.First().Value);
+
+            Queue<ChooseWhichMonsterAttack> strategyQueue = new Queue<ChooseWhichMonsterAttack>(key); // clone it
+
+            while (strategyQueue.Count > 0)
+            {
+                ChooseWhichMonsterAttack strategy = strategyQueue.Dequeue();
+
+                switch (strategy)
+                {
+                    case ChooseWhichMonsterAttack.ShortestRange:
+                        int shortestRange = int.MaxValue;
+                        SingleAttack chosenShortest = null;
+
+                        foreach (var attack in attacks.Keys)
                         {
-                            shortestRange = attack.Range;
-                            chosenAttack = attack;
+                            if (attack.Range < shortestRange)
+                            {
+                                shortestRange = attack.Range;
+                                chosenShortest = attack;
+                            }
                         }
-                    }
-                        return (chosenAttack, attacks[chosenAttack]);
+
+                        if (chosenShortest != null)
+                            return (chosenShortest, attacks[chosenShortest]);
+
+                        break;
+
+                    // case ChooseWhichMonsterAttack.HighestDamage:
+                    // case ChooseWhichMonsterAttack.PriorityAttackName:
+                    // Add more cases here later
+
+                    default:
+                        continue; // move to next strategy
+                }
             }
+
+            // If no strategy matched
             return (null, new Dictionary<CombatMonster, List<TileCell>>());
         }
+
 
     }
 }

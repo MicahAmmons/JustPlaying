@@ -88,7 +88,7 @@ namespace PlayingAround.Managers.UI
                 if (InputManager.IsKeyPressed(Keys.Enter))
                 {
                     SceneManager.SetState(SceneManager.SceneState.Combat);
-                    CombatManager.BeginCombat(_playMonsters, _player);
+                    CombatGuard.CreateNewCombat(_playMonsters, _player);
                 }
             }
             if (_summonOverlayOpen)
@@ -225,8 +225,8 @@ namespace PlayingAround.Managers.UI
             }
             if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
             {
-                CombatMonster mon = CombatManager._turnOrder.Peek();
-                _playerMonster = CombatManager.GetPlayerMonster();
+                CombatMonster mon = CombatGuard.CurrentCombat.CurrentMonster;
+                _playerMonster = CombatGuard.CurrentCombat.GetPlayerMonster();
                 _standInMonster = mon;
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.MaxHealth}\n" +
                                $"SP: {_playerMonster.SP} / {_playerMonster.SP}\n" +

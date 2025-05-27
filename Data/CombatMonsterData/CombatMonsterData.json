@@ -2,7 +2,6 @@
   "Ooze": {
     "mp": 4,
     "movementQuickness": 200,
-    "turnBehavior": "getCloseAsPossible",
     "movementPattern": "arc",
     "chooseAttackBehavior": "shortestRange",
     "attacks": [
@@ -15,7 +14,13 @@
     "elementalAffinity": 1,
     "baseHealth": 6,
     "initiation": 2,
-    "baseSummonCost": 3
-
+    "baseSummonCost": 3,
+    "actionOrder": [
+      "MoveTowardsClosestEnemy",
+      "AttackClosestEnemy"
+    ],
+    "decideWhichAttack": [
+      "ShortestRange"
+    ]
   }
 }

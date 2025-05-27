@@ -124,7 +124,7 @@ namespace PlayingAround
                         showTileCellOutlines = !showTileCellOutlines;
                     break; 
                 case (SceneManager.SceneState.Combat):
-                    CombatManager.Update(gameTime);
+                    if (CombatGuard.CurrentCombat != null) CombatGuard.CurrentCombat.Update(gameTime);
                     MovementManager.Update(gameTime);
                     break;
                 
@@ -171,7 +171,7 @@ namespace PlayingAround
 
                     case (SceneManager.SceneState.Combat):
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
-                    CombatManager.Draw(_spriteBatch, GraphicsDevice);
+                    if (CombatGuard.CurrentCombat != null) CombatGuard.CurrentCombat.Draw(_spriteBatch, GraphicsDevice);
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);
