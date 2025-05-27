@@ -22,6 +22,9 @@
     public enum PlayerTurnState
     {
         None,
+        PlayerChoosingSummoned,
+        PlayerClickedMoveButton,
+        PlayerClickedAttacking,
         PlayerWaitingInput,
         PlayerExecutingAction,
         PlayerExecutingMove,
@@ -36,6 +39,10 @@
     public enum SummonedTurnState
     {
         None,
+        SummonedWaitingInput,
+        SummonClickedAttack,
+        SummonTargetingAttack,
+        SummonExecutingAttack,
         SummonWaitingInput,
         SummonMoving,
         SummonAttacking,
@@ -44,20 +51,19 @@
 
     public enum CombatState
     {
-        Waiting,
+        None,
         LocationSelection,
         TurnStart,
-        ActionNavigation,
-        MovingPlayerControlled,
-        MovingAIControlled,
-        AIAttacking,
-        ExecutingAttack,
-        ExecutingMove,
-        AwaitingPlayerInput,
         PlayerTurn,
+        AITurn,
+        SummonedTurn,
+        Debug,
         ResolvingStartOfTurnEffects,
         ResolvingEndOfTurnEffects,
-        ResolvingEffects,
+
+
+        MovingPlayerControlled,
+
         EndingTurn,
         CombatOver
     }
@@ -65,6 +71,12 @@
     public enum AITurnState
     {
         None,
+        ActionNavigation,
+        MovingAIControlled,
+        ExecutingMove,
+        AIAttacking,
+        ExecutingAttack,
+
 
     }
 }

@@ -46,7 +46,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool CurrentIsPlayerControlled;
 
 
-        public bool isPlayerControled { get; set; } = false;
+        public bool isPlayer { get; set; } = false;
+        public bool isSummoned { get; set; } = false;
+        public bool isMonster { get; set; } = false;
         public List<SingleAttack> Attacks { get; set; }
         public Dictionary<string, float> Resistances { get; set; }
         public float Level { get; set; } = 1;
@@ -148,7 +150,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Name = "Player";
             MaxMana = stats.MaxMana;
             CurrentMana = stats.CurrentMana;
-            isPlayerControled = true;
+            isPlayer = true;
             AttackPower = 1;
             Initiation = stats.Initiation;
             MovementQuickness = 200f;
