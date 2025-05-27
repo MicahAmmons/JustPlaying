@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static PlayingAround.Entities.Monster.CombatMonsters.MonsterChooseWhichAttack;
+using static PlayingAround.Entities.Monster.CombatMonsters.CombatMonster;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PlayingAround.Managers.CombatMan.CombatAttacks
@@ -114,8 +114,8 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             TileCell closestCell = null;
             int shortestDistance = int.MaxValue;
             (CombatMonster, List<TileCell>) result = new();
-            Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
-            Dictionary<CombatMonster, TileCell> aiMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+            Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+            Dictionary<CombatMonster, TileCell> aiMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
 
 
             foreach (var kvp in playerMonsters)

@@ -3,7 +3,6 @@
     "mp": 4,
     "movementQuickness": 200,
     "movementPattern": "arc",
-    "chooseAttackBehavior": "shortestRange",
     "attacks": [
       "slam",
       "acidSpit"

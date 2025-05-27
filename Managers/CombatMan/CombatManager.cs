@@ -31,7 +31,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using static CombatStateMachine;
-using static PlayingAround.Entities.Monster.CombatMonsters.MonsterOrderOfOperations;
+using static PlayingAround.Entities.Monster.CombatMonsters.CombatMonster;
 using static PlayingAround.Managers.SceneManager;
 
 namespace PlayingAround.Managers.CombatMan
@@ -639,14 +639,14 @@ namespace PlayingAround.Managers.CombatMan
             UpdateMouseWhereabouts();
             UpdateInput(gameTime, delta);
             _visualEffectManager.Update(delta);
-
+            UpdateCurrentMonster();
             UpdateMonsterTakingDamage(delta);
             UpdateMonsterCellMap();
             switch (StateCombat)
             {
                 case CombatState.TurnStart:
 
-                    UpdateCurrentMonster();
+  
                     ToggleIsDead(); // toggles ISDead as well as clears aspects
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
                     _currentMonster.TurnNumber++;
@@ -769,9 +769,6 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void EndTurn()
         {
-            ResolveAspects(TickedTiming.EndOfTurn);
-
-
             ResetAllStatesToNone();
             SetCombatState(CombatState.ResolvingEndOfTurnEffects);
 
@@ -781,6 +778,7 @@ namespace PlayingAround.Managers.CombatMan
             SetPlayerTurnState(PlayerTurnState.None);
             SetAITurnState(AITurnState.None);
             SetSummonedTurnState(SummonedTurnState.None);
+            SetCombatState(CombatState.None);
         }
         public void DecideAINextAction()
         {
@@ -807,6 +805,7 @@ namespace PlayingAround.Managers.CombatMan
             CombatMonster mon = _currentMonster;
             TileCell origin = _aIControlledMonsterMap[mon];
 
+            //inRangeMap send any and all attacks that have a valid range, including non monster cells
             var inRangeMap = GetInRangeCellsByAttack(mon.Attacks, origin);
             if (inRangeMap.Count == 0)
             {
@@ -1248,10 +1247,10 @@ namespace PlayingAround.Managers.CombatMan
             mon.CurrentSP = mon.SP;
             if (mon.isMonster)
             {
-                foreach (var str in mon.ChooseWhichAttacks) {
+                foreach (var str in mon.BaseChooseWhichAttack) {
                     mon.CurrentChooseWhichAttack.Enqueue(str);
                         }
-                foreach (var str in mon.ActionOrderList)
+                foreach (var str in mon.BaseOrderOfActions)
                 {
                     mon.CurrentOrderOfActions.Enqueue(str);
                 }
@@ -1263,12 +1262,14 @@ namespace PlayingAround.Managers.CombatMan
             if (mon.isPlayer)
             {
                 SetCombatState(CombatState.PlayerTurn);
+                SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
                 mon.PlayerMovementEndPoint = null;
                 return;
             }
             else if (mon.isSummoned)
             {
                 SetCombatState(CombatState.SummonedTurn);
+                SetSummonedTurnState(SummonedTurnState.SummonWaitingInput);
                 mon.PlayerMovementEndPoint = null;
                 return;
             }
@@ -1362,6 +1363,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void UpdateCurrentMonster()
         {
+            if (_currentMonster == _turnOrder.Peek()) return;
             _currentMonster = _turnOrder.Peek();
         }
 

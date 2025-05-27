@@ -54,12 +54,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingArou
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\ref\PlayingAround.dll
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Attacks\acidSpit.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Aspects\acidIcon.xnb
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.csproj.AssemblyReference.cache
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.AssemblyInfoInputs.cache
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.AssemblyInfo.cs
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.csproj.CoreCompileInputs.cache
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.sourcelink.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterIcons\AngryPlantIcon.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterIcons\OozeIcon.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\PlayerSprites.png
@@ -110,6 +104,12 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\r
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\runtimes\win-x64\native\soft_oal.dll
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\runtimes\win-x86\native\SDL2.dll
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\runtimes\win-x86\native\soft_oal.dll
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.csproj.AssemblyReference.cache
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.AssemblyInfoInputs.cache
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.AssemblyInfo.cs
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.csproj.CoreCompileInputs.cache
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.sourcelink.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingA.77B4FBCF.Up2Date
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.dll
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\refint\PlayingAround.dll

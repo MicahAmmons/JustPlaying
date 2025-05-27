@@ -7,10 +7,10 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using static PlayingAround.Entities.Monster.CombatMonsters.MonsterChooseWhichAttack;
-using static PlayingAround.Entities.Monster.CombatMonsters.MonsterOrderOfOperations;
+
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
 {
@@ -28,8 +28,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("movementQuickness")] public float MovementQuickness { get; set; }
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
 
-        [JsonPropertyName("turnBehavior")] public string TurnBehavior { get; set; }
-        public string CurrentTurnBehavior;
         [JsonPropertyName("movementPattern")] public string MovementPattern { get; set; }
         [JsonPropertyName("attacks")] public List<string> AttackStrings { get; set; }
 
@@ -43,10 +41,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         [JsonPropertyName("initiation")] public float Initiation { get; set; }
         [JsonPropertyName("elementalAffinity")] public float ElementalAffinity { get; set; }
-        [JsonPropertyName("actionOrder")] public List<MonsterActionOrder> ActionOrderList { get; set; }
-        [JsonPropertyName("decideWhichAttack")] public List<ChooseWhichMonsterAttack> ChooseWhichAttacks { get; set; }
-        public Queue<MonsterActionOrder> CurrentOrderOfActions {  get; set; }
-        public Queue<ChooseWhichMonsterAttack> CurrentChooseWhichAttack {  get; set; }
+        [JsonPropertyName("actionOrder")]public List<string> ActionOrderList { get; set; }
+
+        [JsonPropertyName("decideWhichAttack")] public List<string> ChooseWhichAttacks { get; set; }
+
+        public Queue<MonsterActionOrder> BaseOrderOfActions { get; set; }
+        public Queue<ChooseWhichMonsterAttack> BaseChooseWhichAttack { get; set; }
+        public Queue<MonsterActionOrder> CurrentOrderOfActions {  get; set; } = new Queue<MonsterActionOrder>();
+        public Queue<ChooseWhichMonsterAttack> CurrentChooseWhichAttack {  get; set; } = new Queue<ChooseWhichMonsterAttack> ();
         public float CurrentMP;
         public float CurrentHP;
         public bool CurrentIsPlayerControlled;
@@ -97,6 +99,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Resistances = comMon.Resistances;
             IsSummon = true;
 
+
         }
 
 
@@ -131,7 +134,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             IconTextureKey = original.IconTextureKey;
             MovementQuickness = original.MovementQuickness;
             isMonster = true;
-            TurnBehavior = original.TurnBehavior;
             MovementPattern = original.MovementPattern;
             ChooseAttackBehavior = original.ChooseAttackBehavior;
             BaseHealth = original.BaseHealth;
@@ -149,7 +151,40 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             BaseSummonCost = original.BaseSummonCost;
             ActionOrderList = original.ActionOrderList;
             ChooseWhichAttacks = original.ChooseWhichAttacks;
+            BaseOrderOfActions = ConvertStringOrderOfActionToEnum(original.ActionOrderList);
+            BaseChooseWhichAttack = ConvertStringWhichAttackToEnum(original.ChooseWhichAttacks);
 
+        }
+        private Queue<MonsterActionOrder> ConvertStringOrderOfActionToEnum(List<string> orderStri)
+        {
+            var queue = new Queue<MonsterActionOrder>();
+            foreach (var str in orderStri)
+            {
+                if (Enum.TryParse(typeof(MonsterActionOrder), str, true, out var result))
+                {
+                    queue.Enqueue((MonsterActionOrder)result);
+                }
+
+
+            }
+
+            return queue;
+        }
+
+        private Queue<ChooseWhichMonsterAttack> ConvertStringWhichAttackToEnum(List<string> orderStri)
+        {
+            var queue = new Queue<ChooseWhichMonsterAttack>();
+
+                foreach (var str in orderStri)
+                {
+                    if (Enum.TryParse(typeof(ChooseWhichMonsterAttack), str, true, out var result))
+                    {
+                        queue.Enqueue((ChooseWhichMonsterAttack)result);
+                    }
+                
+            }
+
+            return queue;
         }
 
         public CombatMonster(Player.Player player)
@@ -178,5 +213,15 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         //    isPlayerControled = true;
         //}
+    }
+    public enum MonsterActionOrder
+    {
+        AttackClosestEnemy,
+        MoveTowardsClosestEnemy,
+        Attack,
+    }
+    public enum ChooseWhichMonsterAttack
+    {
+        ShortestRange
     }
 }
