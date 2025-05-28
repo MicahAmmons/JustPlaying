@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
+using PlayingAround.Debug;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
@@ -55,7 +56,7 @@ namespace PlayingAround.Managers.Tiles
 
             if (data == null)
             {
-                Debug.WriteLine($"Failed to load tile data for ID '{id}', falling back to '0_0_0'.");
+                DebugBugger.Add($"Failed to load tile data for ID '{id}', falling back to '0_0_0'.");
                 if (tiles.TryGetValue("0_0_0", out var fallback))
                     CurrentMapTile = fallback;
                 return;

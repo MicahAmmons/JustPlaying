@@ -22,7 +22,7 @@
     public enum PlayerTurnState
     {
         None,
-        PlayerChoosingSummoned,
+        PlayerClickedSpecificSummoned,
         PlayerClickedMoveButton,
         PlayerExecutingMove,
 
@@ -31,7 +31,7 @@
         PlayerExecutingAction,
 
 
-        PlayerSummoning,
+        PlayerClickedSummonButton,
         PlayerExecutingSummoning,
         PlayerAttacking,
         PlayerTargeting,
@@ -43,12 +43,13 @@
     {
         None,
         SummonedWaitingInput,
-        SummonClickedAttack,
-        SummonTargetingAttack,
-        SummonExecutingAttack,
-        SummonMoving,
-        SummonAttacking,
-        SummonEndingTurn
+        SummonedClickedAttackButton,
+        SummonedClickedMoveButton,
+        SummonedClickedSpecificAttackButton,
+        SummonedChoosingTarget,
+        SummonedExecutingAttack,
+        SummonedExecutingMove,
+        SummonedEndingTurn
     }
 
     public enum CombatState

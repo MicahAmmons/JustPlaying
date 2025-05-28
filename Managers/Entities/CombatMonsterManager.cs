@@ -46,7 +46,8 @@ namespace PlayingAround.Managers.Entities
             }
             return mons;
         }
-
+        
+        //PAssing in the start of game compiled template monster
         public static CombatMonster SummonMonsterToCombat(SummonedMonster mon)
         {
             CombatMonster comMon = new CombatMonster(mon, _combatMonsterBaseData[mon.Name]);
@@ -92,7 +93,7 @@ namespace PlayingAround.Managers.Entities
                     if (addHealth)
                     {
                         mon.BaseHealth += _hPIncreasePerLevel;
-                        mon.MaxHealth = mon.BaseHealth;
+                        mon.BaseHealth = mon.BaseHealth;
                         mon.CurrentHealth = mon.BaseHealth;
                     }
                     else

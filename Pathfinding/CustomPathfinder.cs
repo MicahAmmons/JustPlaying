@@ -347,7 +347,7 @@ namespace PlayingAround.Game.Pathfinding
 
             }
             // If all directions are blocked or we reach the border, break out and stop trying
-            Debug.WriteLine("Blocked in all directions or reached the screen border, breaking...");
+   
             return new Vector2[] { Vector2.Zero, Vector2.Zero };  // Return zero vectors as a failure result
         }
 

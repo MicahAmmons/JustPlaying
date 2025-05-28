@@ -79,12 +79,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         
         public CombatMonster(SummonedMonster mon, CombatMonster comMon)
         {
+            //Passes in a copy 
             //Summoned monster
             BaseSummonCost = mon.SummonCost;
             Name = mon.Name;
             IconTextureKey = mon.IconTextureString;
-            MaxHealth = mon.MaxHealth;
-            CurrentHealth = mon.MaxHealth;
+            BaseHealth = comMon.BaseHealth;
+            CurrentHealth = comMon.BaseHealth;
             Level =  mon.Level;
             isSummoned = true;
             isPlayerMovementControled = true;
@@ -93,11 +94,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             ElementType = comMon.ElementType;
             Initiation = comMon.Initiation;
             MP = comMon.MP;
+            CurrentMP = comMon.MP;
             MonsterType = comMon.MonsterType;
             MovementPattern = comMon.MovementPattern;
             MovementQuickness = comMon.MovementQuickness;
             Resistances = comMon.Resistances;
             IsSummon = true;
+            isMonster = false;
+            isPlayer = false;
 
 
         }
@@ -105,8 +109,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public TileCell CurrentCell { get; set; }
         public int TurnNumber { get; set; } = 0;
- 
-         public float MaxHealth { get; set; }
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }
         public float CurrentHealth { get; set; }
@@ -142,7 +144,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             ElementType = original.ElementType;
             Attacks = original.Attacks;
             Name = original.Name;
-            MaxHealth = original.BaseHealth;
+            BaseHealth = original.BaseHealth;
             CurrentHealth = original.BaseHealth;
             MP = original.MP;
             MonsterType = original.MonsterType;
@@ -191,7 +193,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             PlayerStats stats = player.stats;
             //Speed = stats.MovementSpeed;
-            MaxHealth = stats.MaxHealth;
+            BaseHealth = stats.MaxHealth;
             CurrentHealth = stats.CurrentHealth;
             Name = "Player";
             MaxMana = stats.MaxMana;
