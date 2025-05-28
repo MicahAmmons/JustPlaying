@@ -36,6 +36,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
            List<TileCell> affectedCells)
 
         {
+            if (attack == null) return;
             foreach (var tar in target)
             {
                 float damage = CalculateDamage(attack, tar);

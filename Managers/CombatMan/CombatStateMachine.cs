@@ -24,11 +24,13 @@
         None,
         PlayerChoosingSummoned,
         PlayerClickedMoveButton,
+        PlayerExecutingMove,
+
         PlayerClickedAttacking,
         PlayerWaitingInput,
         PlayerExecutingAction,
-        PlayerExecutingMove,
-        PlayerMoving,
+
+
         PlayerSummoning,
         PlayerExecutingSummoning,
         PlayerAttacking,
@@ -44,7 +46,6 @@
         SummonClickedAttack,
         SummonTargetingAttack,
         SummonExecutingAttack,
-        SummonWaitingInput,
         SummonMoving,
         SummonAttacking,
         SummonEndingTurn
@@ -61,10 +62,6 @@
         Debug,
         ResolvingStartOfTurnEffects,
         ResolvingEndOfTurnEffects,
-
-
-        MovingPlayerControlled,
-
         EndingTurn,
         CombatOver
     }
