@@ -52,7 +52,10 @@ public class SaveManager
     {
         CurrentSaveKey = key;
         CurrentGameSaveData = SaveFiles[key];
+    }
 
+    public static void LoadCurrentGameSave() 
+    { 
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
         TileCellManager.Initialize();
         UIManager.LoadContent();

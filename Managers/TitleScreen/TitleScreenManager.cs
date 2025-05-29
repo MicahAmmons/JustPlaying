@@ -184,10 +184,13 @@ namespace PlayingAround.Managers.TitleScreen
                 else if (_newGameRects["Yes"].Contains(mousePoint))
                 {
                 _currentGameStateDataKey = SaveManager.CreateNewGame();
-
                 PickSaveDataSource();
-                }
-           
+                SceneManager.SetState(SceneManager.SceneState.Cinematic);
+                CinematicRuler.Play(CurrentCinematic.NewGameIntro);
+
+
+            }
+
         }
         public static void UpdatePlayerClickLoadGame(Point mousePoint)
         {
@@ -344,16 +347,17 @@ namespace PlayingAround.Managers.TitleScreen
         private static void PickSaveDataSource()
         {
             SaveManager.SetCurrentGameSave(_currentGameStateDataKey);
-            SceneManager.SetState(SceneManager.SceneState.LoadingScreen);
+
 
         }
-        public enum TitleScreenState
-        {
-            MainPage,
-            Play,
-            NewGame,
-            LoadGame,
-            ConfirmLoadGame
-        }
+
     }
+}
+public enum TitleScreenState
+{
+    MainPage,
+    Play,
+    NewGame,
+    LoadGame,
+    ConfirmLoadGame
 }

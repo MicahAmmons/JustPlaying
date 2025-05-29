@@ -11,6 +11,7 @@ namespace PlayingAround.Managers
         public enum SceneState
         {
             TitleScreen,
+            Cinematic,
             LoadingScreen,
             Play,
             Dialogue,

@@ -93,6 +93,9 @@ namespace PlayingAround
             EscapeOverseer.Update(gameTime);
             switch (SceneManager.CurrentState)
             {
+                case (SceneManager.SceneState.Cinematic):
+                    CinematicRuler.Update(gameTime);
+                    break;
                 case (SceneManager.SceneState.TitleScreen):
 
                     TitleScreenManager.Update(gameTime);
@@ -152,6 +155,9 @@ namespace PlayingAround
                     CombatGuard.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
 
+                    break;
+                case SceneManager.SceneState.Cinematic:
+                    CinematicRuler.Draw(_spriteBatch);
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);

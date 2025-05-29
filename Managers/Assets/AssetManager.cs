@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace PlayingAround.Managers.Assets
 {
@@ -11,6 +12,7 @@ namespace PlayingAround.Managers.Assets
         private static ContentManager _content;
         private static Dictionary<string, Texture2D> _textures = new();
         private static Dictionary<string, SpriteFont> _fonts = new();
+        private static Dictionary<string, Song> _songs = new();
       
         
 
@@ -39,6 +41,12 @@ namespace PlayingAround.Managers.Assets
         {
             return _textures.ContainsKey(key);
         }
+        public static Song GetSong(string key)
+        {
+            return _songs[key];
+        }
+        public static void LoadSong(string key, string path) =>
+            _songs[key] = _content.Load<Song>(path);
         public static void LoadFont(string key, string path) =>
             _fonts[key] = _content.Load<SpriteFont>(path);
 

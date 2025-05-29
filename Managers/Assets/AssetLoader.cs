@@ -22,6 +22,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadFont("mainFont", "mainFont");
             AssetManager.LoadFont("titleScreenButtonFont", "TitleScreenButtonFont");
 
+            AssetManager.LoadSong("newGameIntroCinBackground", "Songs/newGameIntroCinBackground");
+
 
             // Add fonts, sounds, etc. later
         }
