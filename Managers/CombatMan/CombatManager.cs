@@ -20,6 +20,7 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -98,11 +99,13 @@ namespace PlayingAround.Managers.CombatMan
         private Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
         private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
         private Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect, _attackOptionsRect;
+        private Dictionary<CombatMonster, Rectangle> _displayStatRectangles = new Dictionary<CombatMonster, Rectangle>();
 
         private PlayMonsters _playMonsters; // kept as reference as needed
         private Player _player; // reference of player to update stats at end
         private List<TileCell> _playerSpawnableCells = new List<TileCell>();
         private List<TileCell> _monsterSpawnableCells = new List<TileCell>();
+        private TileCell _statHoverCellHighlight;
 
         private TileCell _currentClickedCell;
         private TileCell _currentMouseHoverCell;
@@ -125,6 +128,7 @@ namespace PlayingAround.Managers.CombatMan
         private CombatMonster _currentMonster;
 
         private SingleAttack _playerCurrentAttack;
+        public WhoWon TheWinner = WhoWon.None;
 
 
         private float _timer = 0;
@@ -177,6 +181,10 @@ namespace PlayingAround.Managers.CombatMan
         public void SetSummonedTurnState(SummonedTurnState state)
         {
             _stateMachine.SetSummonedTurnState(state);
+        }
+        public void SetWhoWon(WhoWon whoWon)
+        {
+            TheWinner = whoWon;
         }
         public void SetAITurnState(AITurnState state)
         {
@@ -270,8 +278,16 @@ namespace PlayingAround.Managers.CombatMan
             }
             DrawDebugInfo(spriteBatch);
             DrawDisplayStats(spriteBatch);
+            DrawStatHoverHighlight(spriteBatch);
             _visualEffectManager.Draw(spriteBatch, _font);
             DrawAllCombatMonsters(spriteBatch);
+        }
+        public void DrawStatHoverHighlight(SpriteBatch spriteBatch)
+        {
+            if (_statHoverCellHighlight != null)
+            {
+                DrawCellHighlight(spriteBatch, _statHoverCellHighlight, ColorPalette.DarkColor);
+            }
         }
         public void DrawDisplayStats(SpriteBatch spriteBatch)
         {
@@ -292,16 +308,20 @@ namespace PlayingAround.Managers.CombatMan
             {
                 Vector2 iconPos = startingPos + new Vector2(index * spacingX, 0);
                 Rectangle iconRect = new Rectangle((int)iconPos.X, (int)iconPos.Y, iconSize, iconSize);
-
+                if (!_displayStatRectangles.TryGetValue(mon, out Rectangle existingRect) || existingRect != iconRect)
+                {
+                    _displayStatRectangles[mon] = iconRect;
+                }
                 // Determine texture key
                 string textureKey = mon.IsSummon ? mon.IconTextureKey : (mon.isPlayer || mon.isSummoned ? "Hero_Blonde" : mon.IconTextureKey);
                 Texture2D icon = AssetManager.GetTexture(textureKey);
 
                 // Set color depending on isDead
-                Color col = mon.IsSummon ? new Color(Color.Blue, 0.3f) : Color.White;
+                Color col = mon.IsSummon ? new Color(Color.White, 0.8f) : Color.White;
                 if (mon.isDead)
-                    col = Color.Gray * 0.5f;
+                    col = Color.Gray * 0.4f;
 
+                if (mon == _currentMonster) spriteBatch.Draw(_playerCellOptions, iconRect, col);
                 // Draw monster icon
                 spriteBatch.Draw(icon, iconRect, col);
 
@@ -393,13 +413,16 @@ namespace PlayingAround.Managers.CombatMan
             DrawSpawnableTiles(spriteBatch);
 
             if (_currentMouseHoverCell != null && _currentMouseHoverCell.HeroSpawnable)
-                DrawHeroPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
         }
-        private void DrawHeroPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, Color col = default)
+        private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, Color col = default)
         {
+            Texture2D texture = _player.Texture;
+
+            if (_currentMonster != null && _currentMonster.isSummoned) texture = _currentMonster.IconTexture;
             Vector2 coords = TileManager.GetCellCords(cell);
             Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 64, 64);
-            spriteBatch.Draw(_player.Texture, rect, col == default ? Color.White : col);
+            spriteBatch.Draw(texture, rect, col == default ? Color.White : col);
         }
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {
@@ -509,7 +532,7 @@ namespace PlayingAround.Managers.CombatMan
 
                 if (_currentMouseHoverCell != null && _playerMoveableCells.Contains(_currentMouseHoverCell))
                 {
-                    DrawHeroPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+                    DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
                 }
             }
         }
@@ -666,21 +689,25 @@ namespace PlayingAround.Managers.CombatMan
             UpdateMouseWhereabouts();
             UpdateInput(gameTime, delta);
             _visualEffectManager.Update(delta);
-            UpdateCurrentMonster();
             UpdateMonsterTakingDamage(delta);
+            ToggleIsDead(); // toggles ISDead as well as clears aspects
+            UpdateCurrentMonster();
             UpdateMonsterCellMap();
-            switch (StateCombat)
+            if (WinnerChosen()) { SetCombatState(CombatState.WinnerChosen); }
+                switch (StateCombat)
             {
+                case CombatState.WinnerChosen:
+
+                    break;
                 case CombatState.TurnStart:
 
   
-                    ToggleIsDead(); // toggles ISDead as well as clears aspects
+                   
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
                     _currentMonster.TurnNumber++;
                     UpdateMonsterTopOfRoundStats();
                     PickWhichEntitiesTurn();
                     break;
-
                 case CombatState.AITurn:
 
                     switch (StateAI)
@@ -713,20 +740,26 @@ namespace PlayingAround.Managers.CombatMan
                     }
                     break;
                 case CombatState.SummonedTurn:
+                    UpdatePlayerMoveableCells();
                     switch (StateSummoned)
                     {
                         case SummonedTurnState.SummonedWaitingInput:
 
                             break;
-                            case SummonedTurnState.SummonedExecutingAttack:
+                        case SummonedTurnState.SummonedExecutingAttack:
                             if (!PlayerHasMovePath()) WaitForAttackToFinish(delta);
                             break;
-
+                        case SummonedTurnState.SummonedClickedMoveButton:
+                            if (PlayerHasEndPoint()) PopulatePath(delta, _currentMonster.PlayerMovementEndPoint);
+                            if (PlayerHasMovePath()) SetSummonedTurnState(SummonedTurnState.SummonedExecutingMove);
+                            break;
+                            case SummonedTurnState.SummonedExecutingMove:
+                            if (!PlayerHasMovePath()) { FinishedMoving(); SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput); }
+                            break;
                     }
                     break;
                 case CombatState.PlayerTurn:
                     UpdatePlayerMoveableCells();
-                    
                     switch (StatePlayerTurn)
                     {
                         case PlayerTurnState.PlayerWaitingInput:
@@ -766,7 +799,12 @@ namespace PlayingAround.Managers.CombatMan
                     
             }
         }
-
+        private bool WinnerChosen()
+        {
+            if (AIControlledMonsterMap.Count == 0) { SetWhoWon(WhoWon.Player); return true; }
+            if (_playerMonster.isDead){ SetWhoWon(WhoWon.Monster);  return true; }
+            return false;
+        }
         private void FinishedMoving()
         {
             CombatMonster mon = _currentMonster;
@@ -1080,7 +1118,8 @@ namespace PlayingAround.Managers.CombatMan
             }
             else if (mon.isSummoned)
             {
-                SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
+                SummonedFinishedAttack();
+
             }
 
             else if (mon.isMonster)
@@ -1090,6 +1129,12 @@ namespace PlayingAround.Managers.CombatMan
             
 
 
+        }
+        private void SummonedFinishedAttack()
+        {
+            _attackComplete = true;
+            _attackPerformed = false;
+            SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
         }
         private bool HandleAttackVisualEffect()
         {
@@ -1136,8 +1181,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public void UpdateInput(GameTime gameTime, float delta)
         {
-
-
+      
             switch (StateCombat)
             {
                 case CombatState.LocationSelection:
@@ -1163,6 +1207,7 @@ namespace PlayingAround.Managers.CombatMan
             CombatMonster mon = _currentMonster;
             if (StateSummoned is not (SummonedTurnState.SummonedExecutingMove or SummonedTurnState.SummonedExecutingAttack))
             {
+                UpdateStatHoverMonsterCell();
                 if (InputManager.IsRightClick()) SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
             }
 
@@ -1186,7 +1231,8 @@ namespace PlayingAround.Managers.CombatMan
                     break;
                 case SummonedTurnState.SummonedClickedMoveButton:
                     HandleMovementRectClick();
-                    UpdatePlayerMoveableCells();
+                    UpdatePlayerClickedMoveDestination();
+
                     break;
                     
                     //case PlayerTurnState.PlayerExecutingMove:
@@ -1207,6 +1253,7 @@ namespace PlayingAround.Managers.CombatMan
             CombatMonster mon = _currentMonster;
             if (StatePlayerTurn is not (PlayerTurnState.PlayerExecutingMove or PlayerTurnState.PlayerExecutingAttack or PlayerTurnState.PlayerExecutingSummoning))
             {
+                UpdateStatHoverMonsterCell();
                 if (InputManager.IsRightClick()) SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
             }
 
@@ -1225,16 +1272,25 @@ namespace PlayingAround.Managers.CombatMan
                 case PlayerTurnState.PlayerClickedSpecificSummoned:
                     HandlePlayerChooseSummonedCell();
                     break;
-                case PlayerTurnState.PlayerAttacking:
-                    //HandleDisplayAttackOptionsClick();
-                    
-                    break;
                 case PlayerTurnState.PlayerClickedMoveButton:
                     HandleMovementRectClick();
                     UpdatePlayerClickedMoveDestination();
                     break;
                  
             }
+        }
+        private void UpdateStatHoverMonsterCell()
+        {
+            foreach (var kvp in _displayStatRectangles)
+            {
+                CombatMonster mon = kvp.Key;
+                Rectangle rect = kvp.Value;
+                if (rect.Contains(_currentMousePos))
+                {
+                    _statHoverCellHighlight = GetMonsterCurrentCell(mon);
+                }
+            }
+            _statHoverCellHighlight = null;
         }
         private void HandlePlayerChooseSummonedCell()
         {
@@ -1432,18 +1488,33 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void ToggleIsDead()
         {
-
+            bool someOneDied = false;
             foreach (var mon in _turnOrder)
             {
                 if (mon.CurrentHealth <= 0)
                 {
                     mon.isDead = true;
                     mon.Aspects.Clear();
+                    someOneDied = true;
+                }
+            }
+            if (someOneDied) RebuildTurnOrderExcludingDead();
+        }
+        private void RebuildTurnOrderExcludingDead()
+        {
+            Queue<CombatMonster> newQueue = new Queue<CombatMonster>();
+
+            foreach (var mon in _turnOrder)
+            {
+                if (!mon.isDead)
+                {
+                    newQueue.Enqueue(mon);
                 }
             }
 
-
+            _turnOrder = newQueue;
         }
+
         private void SkipMonsterIfDead()
         {
             int maxTries = _turnOrder.Count;
@@ -1729,6 +1800,12 @@ namespace PlayingAround.Managers.CombatMan
 
 
     }
+}
+public enum WhoWon
+{
+    None,
+    Player,
+    Monster
 }
 
 //    if (attackToTargets.Count <= 0)

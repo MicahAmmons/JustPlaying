@@ -113,7 +113,7 @@ namespace PlayingAround
                   
                     break; 
                 case (SceneManager.SceneState.Combat):
-                    if (CombatGuard.CurrentCombat != null) CombatGuard.CurrentCombat.Update(gameTime);
+                    CombatGuard.Update(gameTime);
                     MovementManager.Update(gameTime);
                     break;
                 
@@ -149,8 +149,9 @@ namespace PlayingAround
                     break;
 
                     case (SceneManager.SceneState.Combat):
+                    CombatGuard.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
-                    if (CombatGuard.CurrentCombat != null) CombatGuard.CurrentCombat.Draw(_spriteBatch, GraphicsDevice);
+
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);

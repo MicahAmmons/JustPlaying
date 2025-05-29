@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement.CombatGrid;
@@ -83,7 +84,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             //Summoned monster
             BaseSummonCost = mon.SummonCost;
             Name = mon.Name;
-            IconTextureKey = mon.IconTextureString;
+            IconTextureKey = comMon.IconTextureKey;
+            IconTexture = AssetManager.GetTexture(mon.IconTextureString);
             BaseHealth = comMon.BaseHealth;
             CurrentHealth = comMon.BaseHealth;
             Level =  mon.Level;
@@ -102,6 +104,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             IsSummon = true;
             isMonster = false;
             isPlayer = false;
+            isDead = false;
 
 
         }

@@ -64,7 +64,7 @@
         ResolvingStartOfTurnEffects,
         ResolvingEndOfTurnEffects,
         EndingTurn,
-        CombatOver
+        WinnerChosen,
     }
 
     public enum AITurnState
@@ -78,4 +78,5 @@
 
 
     }
+   
 }
