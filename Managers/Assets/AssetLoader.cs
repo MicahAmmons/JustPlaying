@@ -1,10 +1,17 @@
-﻿using PlayingAround.Managers.Assets;
+﻿using Microsoft.Xna.Framework.Media;
+using PlayingAround.Managers.Assets;
+using System.Collections.Generic;
 
 namespace PlayingAround.Game.Assets
 {
     public static class AssetLoader
     {
-        public static void LoadAllAssets()
+        public static void LoadAllFonts()
+        {
+            AssetManager.LoadFont("mainFont", "mainFont");
+            AssetManager.LoadFont("titleScreenButtonFont", "TitleScreenButtonFont");
+        }
+        public static void LoadAllTextures()
         {
             AssetManager.LoadTexture("Hero_Idle", "HeroArt/BlonderHero");
             AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
@@ -17,15 +24,16 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("AcidSpitIcon", "Attacks/acidSpit");
             AssetManager.LoadTexture("acidIcon", "Aspects/acidIcon");
             AssetManager.LoadTexture("TitleScreenBackGround", "TitleScreen/TitleScreenBackGround");
-
-
-            AssetManager.LoadFont("mainFont", "mainFont");
-            AssetManager.LoadFont("titleScreenButtonFont", "TitleScreenButtonFont");
-
-            AssetManager.LoadSong("newGameIntroCinBackground", "Songs/newGameIntroCinBackground");
-
-
             // Add fonts, sounds, etc. later
+        }
+        public static Dictionary<string, Song> LoadAllSongs()
+        {
+            Dictionary<string, Song> songs = new Dictionary<string, Song>()
+            {
+                ["newGameIntroCinBackground"] = AssetManager.LoadSong("Songs/newGameIntroCinBackground"),
+                ["titleScreenBG"] = AssetManager.LoadSong("Songs/titleScreenBG"),
+            };
+            return songs;
         }
     }
 }

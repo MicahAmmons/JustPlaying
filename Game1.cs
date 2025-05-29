@@ -15,6 +15,7 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.EscapeOverseer;
+using PlayingAround.Managers.JukeBox;
 using PlayingAround.Managers.LoadingScreen;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Proximity;
@@ -64,7 +65,9 @@ namespace PlayingAround
 
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
-            AssetLoader.LoadAllAssets();
+            AssetLoader.LoadAllFonts();
+            AssetLoader.LoadAllTextures();
+            JukeBoxManager.InitializeJukeBox();
             DebugBugger.LoadContent(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
           
@@ -89,6 +92,7 @@ namespace PlayingAround
         protected override void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            JukeBoxManager.Update(gameTime);
             InputManager.Update(gameTime);
             EscapeOverseer.Update(gameTime);
             switch (SceneManager.CurrentState)

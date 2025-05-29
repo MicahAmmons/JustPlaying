@@ -161,14 +161,13 @@
 /build:TitleScreen/TitleScreenBackGround.png
 
 #begin Songs/newGameIntroCinBackground.mp3
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/importer:Mp3Importer
+/processor:SongProcessor
 /build:Songs/newGameIntroCinBackground.mp3
+
+#begin Songs/titleScreenBG.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/build:Songs/titleScreenBG.mp3
+
 

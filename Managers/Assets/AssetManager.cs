@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,8 +46,11 @@ namespace PlayingAround.Managers.Assets
         {
             return _songs[key];
         }
-        public static void LoadSong(string key, string path) =>
-            _songs[key] = _content.Load<Song>(path);
+        public static Song LoadSong(string path)
+        {
+            return _content.Load<Song>(path);
+        }
+   
         public static void LoadFont(string key, string path) =>
             _fonts[key] = _content.Load<SpriteFont>(path);
 

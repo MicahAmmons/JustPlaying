@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.JukeBox;
 using System.Collections.Generic;
 
 public class NewGameIntroCin : ICinematic
@@ -10,19 +11,20 @@ public class NewGameIntroCin : ICinematic
     private float _timer = 0f;
     private bool _isFinished = false;
     private SpriteFont _font;
-    private Song _backgroundMusic;
 
     private readonly float _fadeDuration = 1.5f; // Seconds to fade in/out
     private readonly float _textDuration = 2.5f; // Seconds at full opacity
 
     private List<string> _messages = new()
     {
-        "Welcome to the Chasm.",
-        "This is the story.",
-        "This is more information for the story.",
+        "Welcome",
+        "This your the story...",
+        "Your journey into the depths of the chasm",
         "Ancient ruins lie in wait...",
         "Echoes whisper of battles past.",
-        "Your journey begins here."
+        "Monsters beyond comprhensions",
+        "Worlds to explore...",
+        "Your journey starts here"
     };
 
     private int _currentMessageIndex = 0;
@@ -36,8 +38,7 @@ public class NewGameIntroCin : ICinematic
     public void Start()
     {
         _font = AssetManager.GetFont("mainFont");
-        _backgroundMusic = AssetManager.GetSong("newGameIntroCinBackground");
-        MediaPlayer.Play(_backgroundMusic);
+        JukeBoxManager.SetSongTo("newGameIntroCinBackground");
         MediaPlayer.IsRepeating = false;
 
         _timer = 0f;

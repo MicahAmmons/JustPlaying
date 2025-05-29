@@ -146,6 +146,7 @@ namespace PlayingAround.Managers.TitleScreen
             {
                 PickSaveDataSource();
                 _currentGameStateDataKey = null;
+                SaveManager.LoadCurrentGameSave();
 
             }
             if (InputManager.IsLeftClick() && _newGameRects["No"].Contains(mousePoint))
@@ -347,8 +348,6 @@ namespace PlayingAround.Managers.TitleScreen
         private static void PickSaveDataSource()
         {
             SaveManager.SetCurrentGameSave(_currentGameStateDataKey);
-
-
         }
 
     }
