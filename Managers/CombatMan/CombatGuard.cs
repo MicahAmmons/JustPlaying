@@ -25,23 +25,30 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (CurrentCombat != null) 
             {
-                if (CurrentCombat.StateCombat != CombatStateMachine.CombatState.WinnerChosen)
+                if (CurrentCombat.StateCombat == CombatStateMachine.CombatState.ExitingCombat)
                 {
-                    CurrentCombat.Update(gameTime);
-                }
-                switch (CurrentCombat.StateCombat)
-                {
-                    case CombatStateMachine.CombatState.WinnerChosen:
-                        
-                        break;
 
+                    return;
                 }
+                CurrentCombat.Update(gameTime);
+
 
             }
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            CurrentCombat.Draw(spriteBatch, graphicsDevice);
+
+            if (CurrentCombat != null)
+            {
+                if (CurrentCombat.StateCombat == CombatStateMachine.CombatState.ExitingCombat)
+                {
+
+                    return;
+                }
+                CurrentCombat.Draw(spriteBatch, graphicsDevice);
+
+
+            }
         }
     }
 }

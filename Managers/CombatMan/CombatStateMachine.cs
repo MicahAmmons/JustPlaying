@@ -65,6 +65,7 @@
         ResolvingEndOfTurnEffects,
         EndingTurn,
         WinnerChosen,
+        ExitingCombat,
     }
 
     public enum AITurnState

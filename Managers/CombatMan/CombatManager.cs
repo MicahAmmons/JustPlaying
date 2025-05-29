@@ -27,6 +27,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -97,9 +98,12 @@ namespace PlayingAround.Managers.CombatMan
         private int _tileWidth;
         private int _tileHeight;
         private Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
+ 
         private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
         private Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect, _attackOptionsRect;
         private Dictionary<CombatMonster, Rectangle> _displayStatRectangles = new Dictionary<CombatMonster, Rectangle>();
+        private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
+        private Rectangle _exitCombatButtonRect = new Rectangle(885, 580, 150, 50);
 
         private PlayMonsters _playMonsters; // kept as reference as needed
         private Player _player; // reference of player to update stats at end
@@ -275,6 +279,9 @@ namespace PlayingAround.Managers.CombatMan
                 case CombatState.SummonedTurn:
                     DrawSummonedTurn(spriteBatch);
                     break;
+                case CombatState.WinnerChosen:
+                    DrawCombatEndScreen(spriteBatch);
+                    break;
             }
             DrawDebugInfo(spriteBatch);
             DrawDisplayStats(spriteBatch);
@@ -282,6 +289,56 @@ namespace PlayingAround.Managers.CombatMan
             _visualEffectManager.Draw(spriteBatch, _font);
             DrawAllCombatMonsters(spriteBatch);
         }
+        public void DrawCombatEndScreen(SpriteBatch spriteBatch)
+        {
+            // Background panel
+            spriteBatch.Draw(_playerCellOptions, _endScreenRect, Color.DarkSlateGray * 0.9f);
+
+            // Determine outcome and text
+            string headerText = TheWinner == WhoWon.Player ? "Victory" : "Defeat";
+            Color headerColor = TheWinner == WhoWon.Player ? Color.LightGreen : Color.Red;
+
+            Vector2 headerSize = _font.MeasureString(headerText);
+            Vector2 headerPos = new Vector2(
+                _endScreenRect.X + (_endScreenRect.Width - headerSize.X) / 2,
+                _endScreenRect.Y + 20
+            );
+
+            spriteBatch.DrawString(_font, headerText, headerPos, headerColor);
+
+            // If player won, list defeated monsters
+            if (TheWinner == WhoWon.Player)
+            {
+                Dictionary<string, int> defeated = CountDefeatedMonsters();
+                int yOffset = 70;
+
+                foreach (var entry in defeated)
+                {
+                    string line = $"{entry.Value}x {entry.Key}";
+                    Vector2 textSize = _font.MeasureString(line);
+                    Vector2 linePos = new Vector2(
+                        _endScreenRect.X + (_endScreenRect.Width - textSize.X) / 2,
+                        _endScreenRect.Y + yOffset
+                    );
+
+                    spriteBatch.DrawString(_font, line, linePos, Color.White);
+                    yOffset += 25;
+                }
+            }
+
+            // Exit Combat button
+            spriteBatch.Draw(_playerCellOptions, _exitCombatButtonRect, Color.DarkRed);
+
+            string buttonText = "Exit Combat";
+            Vector2 buttonTextSize = _font.MeasureString(buttonText);
+            Vector2 buttonTextPos = new Vector2(
+                _exitCombatButtonRect.X + (_exitCombatButtonRect.Width - buttonTextSize.X) / 2,
+                _exitCombatButtonRect.Y + (_exitCombatButtonRect.Height - buttonTextSize.Y) / 2
+            );
+
+            spriteBatch.DrawString(_font, buttonText, buttonTextPos, Color.White);
+        }
+
         public void DrawStatHoverHighlight(SpriteBatch spriteBatch)
         {
             if (_statHoverCellHighlight != null)
@@ -688,17 +745,18 @@ namespace PlayingAround.Managers.CombatMan
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             UpdateMouseWhereabouts();
             UpdateInput(gameTime, delta);
+            if (StateCombat == CombatState.WinnerChosen)
+            {
+                return;
+            }
             _visualEffectManager.Update(delta);
             UpdateMonsterTakingDamage(delta);
             ToggleIsDead(); // toggles ISDead as well as clears aspects
             UpdateCurrentMonster();
             UpdateMonsterCellMap();
-            if (WinnerChosen()) { SetCombatState(CombatState.WinnerChosen); }
+            if (WinnerChosen()) { SetCombatState(CombatState.WinnerChosen); return; }
                 switch (StateCombat)
             {
-                case CombatState.WinnerChosen:
-
-                    break;
                 case CombatState.TurnStart:
 
   
@@ -1199,8 +1257,18 @@ namespace PlayingAround.Managers.CombatMan
 
                     break;
 
+                case CombatState.WinnerChosen:
+                    HandlePlayerClickLeaveCombat();
+                    break;
             }
 
+        }
+        private void HandlePlayerClickLeaveCombat()
+        {
+            if (InputManager.IsLeftClick() && _exitCombatButtonRect.Contains(_currentMousePos))
+            {
+                SetCombatState(CombatState.ExitingCombat);
+            }
         }
         private void HandleSummonedTurnInput(float delta)
         {
@@ -1288,6 +1356,7 @@ namespace PlayingAround.Managers.CombatMan
                 if (rect.Contains(_currentMousePos))
                 {
                     _statHoverCellHighlight = GetMonsterCurrentCell(mon);
+                    return;
                 }
             }
             _statHoverCellHighlight = null;
@@ -1752,7 +1821,25 @@ namespace PlayingAround.Managers.CombatMan
         {
             return GridMovement.FindPath(start, destination, int.MaxValue); // or -1 if your method supports it
         }
-
+        public Dictionary<string, int> CountDefeatedMonsters()
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var mon in _referenceTurnOrder)
+            {
+                if (mon.isDead && mon.isMonster)
+                {
+                    if (dict.ContainsKey(mon.Name))
+                    {
+                        dict[mon.Name]++;
+                    }
+                    else
+                    {
+                         dict.Add(mon.Name, 1);
+                    }
+                }
+            }
+            return dict;
+        }
 
 
         public  void Add(string message)
