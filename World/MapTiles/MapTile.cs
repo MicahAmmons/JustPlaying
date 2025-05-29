@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace PlayingAround.Game.Map
@@ -23,10 +24,10 @@ namespace PlayingAround.Game.Map
 
 
 
-        public const int GridWidth = 30;   // example number of cells per screen
-        public const int GridHeight = 17;
+        public const int GridWidth = 120;   // example number of cells per screen
+        public const int GridHeight = 34;
         public const int TileWidth = 64;
-        public const int TileHeight = 64;
+        public const int TileHeight = 32;
 
 
         public MapTile(MapTileData data, Texture2D backgroundTexture)
@@ -76,24 +77,40 @@ namespace PlayingAround.Game.Map
                 for (int x = 0; x < GridWidth; x++)
                 {
                     var cell = TileGrid[x, y];
+                    if (cell == null) continue;
 
-                    // Isometric position (you can replace with top-down if needed for now)
-                    int screenX = x * TileWidth;
-                    int screenY = y * TileHeight;
+                    int screenX = (x - y) * (TileWidth / 2);
+                    int screenY = (x + y) * (TileHeight / 2);
 
-                    var rect = new Rectangle(screenX, screenY, TileWidth, TileHeight);
+                    // Define the 4 corners of the diamond
+                    Point top = new(screenX + TileWidth / 2, screenY);
+                    Point right = new(screenX + TileWidth, screenY + TileHeight / 2);
+                    Point bottom = new(screenX + TileWidth / 2, screenY + TileHeight);
+                    Point left = new(screenX, screenY + TileHeight / 2);
 
-                    // Top
-                    spriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Y, rect.Width, 1), Color.Black);
-                    // Left
-                    spriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Y, 1, rect.Height), Color.Black);
-                    // Right
-                    spriteBatch.Draw(debugPixel, new Rectangle(rect.Right, rect.Y, 1, rect.Height), Color.Black);
-                    // Bottom
-                    spriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Bottom, rect.Width, 1), Color.Black);
+                    // Draw lines between the corners
+                    DrawLine(spriteBatch, debugPixel, top, right, Color.Black);
+                    DrawLine(spriteBatch, debugPixel, right, bottom, Color.Black);
+                    DrawLine(spriteBatch, debugPixel, bottom, left, Color.Black);
+                    DrawLine(spriteBatch, debugPixel, left, top, Color.Black);
                 }
             }
         }
+        private void DrawLine(SpriteBatch spriteBatch, Texture2D pixel, Point p1, Point p2, Color color)
+        {
+            float distance = Vector2.Distance(p1.ToVector2(), p2.ToVector2());
+            float angle = (float)Math.Atan2(p2.Y - p1.Y, p2.X - p1.X);
+
+            spriteBatch.Draw(pixel,
+                new Rectangle(p1.X, p1.Y, (int)distance, 1),
+                null,
+                color,
+                angle,
+                Vector2.Zero,
+                SpriteEffects.None,
+                0);
+        }
+
         public void DrawTileCellDebugOverlay(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
             for (int y = 0; y < GridHeight; y++)
@@ -105,8 +122,8 @@ namespace PlayingAround.Game.Map
                         continue;
 
                     Rectangle rect = new Rectangle(
-                        x * TileWidth,
-                        y * TileHeight,
+                            (x - y) * TileWidth / 2,
+                            (x + y) * (TileHeight / 2),
                         TileWidth,
                         TileHeight
                     );
