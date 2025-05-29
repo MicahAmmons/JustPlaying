@@ -116,3 +116,9 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\r
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.pdb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\ref\PlayingAround.dll
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame1.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame2.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\SaveData\SaveJson\savegame3.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\SaveData\SaveJson\saveGameTemplate.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\TitleScreenButtonFont.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\TitleScreen\TitleScreenBackGround.xnb
