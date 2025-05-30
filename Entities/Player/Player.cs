@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
@@ -32,8 +33,9 @@ namespace PlayingAround.Entities.Player
         private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
         public Dictionary<string, float> PlayerResistances;
-        public Rectangle HitBox;
+        public Vector2[] HitBox ;
         public Vector2 HitBoxCenter;
+        public Rectangle RectHitBox;
         
 
         public static Player LoadFromSave(PlayerSaveData data)
@@ -87,7 +89,7 @@ namespace PlayingAround.Entities.Player
             {
                 Vector2? endDes = MoveTarget;
                 MoveTarget = null;
-                List<Vector2> list = CustomPathfinder.BuildPixelPath(HitBox, endDes);
+                List<Vector2> list = CustomPathfinder.BuildPixelPath(RectHitBox, endDes);
                 if (list.Count > 0 && list != null)
                 {
                     MovementPath = list;
@@ -160,6 +162,17 @@ namespace PlayingAround.Entities.Player
 
         public void GetHitbox()
         {
+            Rectangle rect = GetRectangleHitBox();
+            Vector2 top = new Vector2(rect.Center.X, rect.Top);
+            Vector2 bottom = new Vector2(rect.Center.X, rect.Bottom);
+            Vector2 left = new Vector2(rect.Left, rect.Center.Y);
+            Vector2 right = new Vector2(rect.Right, rect.Center.Y);
+
+            HitBox = new Vector2[] { top, right, bottom, left };
+        }
+
+        public Rectangle GetRectangleHitBox()
+        {
             int hitboxWidth = PlayerWidth;
             int hitboxHeight = PlayerHeight / 3;
 
@@ -169,7 +182,8 @@ namespace PlayingAround.Entities.Player
                 hitboxWidth,
                 hitboxHeight
             );
-            HitBox = hit;
+            RectHitBox = hit;
+            return hit;
         }
 
         public void GetFeetCenter()
