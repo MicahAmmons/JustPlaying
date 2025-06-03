@@ -63,6 +63,7 @@ namespace PlayingAround
 
             //Data that is not dependent on Save State
 
+            DrawDiamondTexture.LoadContent(GraphicsDevice);
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
             AssetLoader.LoadAllFonts();
@@ -123,6 +124,7 @@ namespace PlayingAround
                 case (SceneManager.SceneState.Combat):
                     CombatGuard.Update(gameTime);
                     MovementManager.Update(gameTime);
+                    DebugBugger.Update(gameTime);
                     break;
                 
             }
@@ -159,6 +161,7 @@ namespace PlayingAround
                     case (SceneManager.SceneState.Combat):
                     CombatGuard.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
+                    DebugBugger.Draw(_spriteBatch);
 
                     break;
                 case SceneManager.SceneState.Cinematic:

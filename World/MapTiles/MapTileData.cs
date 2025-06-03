@@ -26,5 +26,6 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("totalSpawns")] public int TotalMonsterSpawns { get; set; }
 
 
+
     }
 }

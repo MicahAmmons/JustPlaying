@@ -33,8 +33,8 @@ namespace PlayingAround.Managers.Movement
 
         public static List<Vector2> MoveMonsters(CombatMonster mon, TileCell startingTile, TileCell endTile)
         {
-            Vector2 start = TileManager.GetCellCords(startingTile);
-            Vector2 destination = TileManager.GetCellCords(endTile);
+            Vector2 start = startingTile.CenterPoint;
+            Vector2 destination = endTile.CenterPoint;
 
             return mon.MovementPattern switch
             {

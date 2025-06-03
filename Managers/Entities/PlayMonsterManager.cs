@@ -35,22 +35,22 @@ namespace PlayingAround.Managers.Entities
         {
             _playMonsterData = JsonLoader.LoadPlayMonsterData();
         }
-        public List<PlayMonsters> GeneratePlayMonsters(MapTileData data)
+        public List<PlayMonsters> GeneratePlayMonsters(float diffMax, float diffMin, int maxSpawn, List<TileCell> cells, List<string> monsterString)
         {
             List<PlayMonsters> monsters = new List<PlayMonsters>();
             // Difficulty of the MapTile
-            float difficultyMax = data.DifficultyMax;
-            float difficultyMin = data.DifficultyMin;   
-            int totalSpawns = data.TotalMonsterSpawns;
+            float difficultyMax = diffMax;
+            float difficultyMin = diffMin;   
+            int totalSpawns = maxSpawn;
 
             // Step 1: Create a list of all available CombatMonsters based on the JSON data
-            List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(data.MonsterStrings);
+            List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
 
             Random random = new Random();
-            for (int i = 0; i < data.TotalMonsterSpawns; i++)
+            for (int i = 0; i < maxSpawn; i++)
             {
 
-                Vector2 startPos = DeterminePlayMonsterSpawn(data.Cells);
+                Vector2 startPos = DeterminePlayMonsterSpawn(cells);
                 PlayMonsters newPlayMon = new PlayMonsters()
                 {
                     Monsters = CombatMonsterManager.BalanceCombatMonsters(monsterOptions, difficultyMax, difficultyMin),
@@ -69,19 +69,16 @@ namespace PlayingAround.Managers.Entities
             }
             return monsters;
         }
-        public Vector2 DeterminePlayMonsterSpawn(List<TileCellData> cells)
+        public Vector2 DeterminePlayMonsterSpawn(List<TileCell> cells)
         {
-            List<TileCellData> tileCells = new List<TileCellData>();
-            foreach (var cell in cells)
-            {
-                if (cell.CanSpawn) { tileCells.Add(cell); }
-            }
-            Random random = new Random();
-            TileCellData selectedCell = tileCells[random.Next(tileCells.Count)];
+            List<TileCell> tileCells = new List<TileCell>(cells);
 
-            int x = selectedCell.X * MapTile.TileWidth;
-            int y = selectedCell.Y * MapTile.TileHeight;
-            return new Vector2(x, y);
+            Random random = new Random();
+            TileCell selectedCell = tileCells[random.Next(tileCells.Count)];
+
+
+
+            return selectedCell.CenterPoint;
         }
         public void AddPlayMonster(PlayMonsters mon)
         {

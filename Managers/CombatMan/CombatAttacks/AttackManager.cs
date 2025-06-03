@@ -260,7 +260,5 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             // If no strategy matched
             return (null, new Dictionary<CombatMonster, List<TileCell>>());
         }
-
-
     }
 }

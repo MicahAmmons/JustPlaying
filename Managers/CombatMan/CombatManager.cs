@@ -17,6 +17,7 @@ using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Utils;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,7 @@ namespace PlayingAround.Managers.CombatMan
 
         private MapTile _currentMapTile;
         private Texture2D _playerCellOptions;//placeholder texture
+        private Texture2D _diamondHighlight;
         private SpriteFont _font;
 
         private int _tileWidth;
@@ -142,11 +144,10 @@ namespace PlayingAround.Managers.CombatMan
         {
             _stateMachine = new CombatStateMachine();
             _currentMapTile = TileManager.CurrentMapTile;
-          //  _combatUIManager = new CombatUIManager(_stateMachine, _turnOrder, _referenceTurnOrder);
             _visualEffectManager = new VisualEffectManager();
 
 
-
+            _diamondHighlight = DrawDiamondTexture.GetDiamond(128, 64, Color.White * 0.5f);
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
             _tileHeight = MapTile.TileHeight;
@@ -155,6 +156,8 @@ namespace PlayingAround.Managers.CombatMan
             _playMonsters = playMonsters;
             _player = player;
             _playerMonster = new CombatMonster(player);
+            _playerMonster.DrawEnlargementFacetor = 20;
+           // _playerMonster.Initiation = 5;
             SetSpawnableCells();
             SetCombatMonsterStartingPos();
             SetTurnOrder();
@@ -213,7 +216,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void SetCombatMonsterStartingPos()
         {
-            if (_monsterSpawnableCells.Count < _playMonsters.Monsters.Count) { }
+            if (_monsterSpawnableCells.Count < _playMonsters.Monsters.Count) return;
             Random ran = new Random();
             List<TileCell> spawnableCells = new List<TileCell>(_monsterSpawnableCells);
             List<CombatMonster> comMon = new List<CombatMonster>(_playMonsters.Monsters);
@@ -222,7 +225,7 @@ namespace PlayingAround.Managers.CombatMan
                 foreach (var mon in comMon)
                 {
                     int index = ran.Next(spawnableCells.Count);
-                    Vector2 pos = (TileManager.GetCellCords(spawnableCells[index]));
+                    Vector2 pos = spawnableCells[index].CenterPoint;
                     mon.startingPos = pos;
                     mon.currentPos = pos;
                     spawnableCells.RemoveAt(index);
@@ -469,46 +472,48 @@ namespace PlayingAround.Managers.CombatMan
         {
             DrawSpawnableTiles(spriteBatch);
 
-            if (_currentMouseHoverCell != null && _currentMouseHoverCell.HeroSpawnable)
-                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+            if (_currentMouseHoverCell != null && _currentMouseHoverCell.PlayerSpawnable)
+                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, _playerMonster);
         }
-        private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, Color col = default)
+        private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, CombatMonster mon, Color col = default )
         {
-            Texture2D texture = _player.Texture;
+            if (mon == null) return;
+            Texture2D texture = mon.IconTexture;
 
             if (_currentMonster != null && _currentMonster.isSummoned) texture = _currentMonster.IconTexture;
-            Vector2 coords = TileManager.GetCellCords(cell);
+            Vector2 coords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
             Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 64, 64);
             spriteBatch.Draw(texture, rect, col == default ? Color.White : col);
         }
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {
             foreach (var tile in _playerSpawnableCells)
-                DrawCellHighlight(spriteBatch, tile, Color.White);
+                DrawCellHighlight(spriteBatch, tile, Color.Green, 5);
 
             foreach (var tile in _monsterSpawnableCells)
-                DrawCellHighlight(spriteBatch, tile, Color.Black);
+                DrawCellHighlight(spriteBatch, tile, Color.Red, 5);
         }
         private void DrawCellHighlight(SpriteBatch spriteBatch, TileCell cell, Color color, int shrink = 0)
         {
-            Vector2 coords = TileManager.GetCellCords(cell);
+            Vector2 coords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
             Rectangle rect = new Rectangle(
-                (int)coords.X + shrink,
+                (int)coords.X + shrink - MapTile.TileWidth/2,
                 (int)coords.Y + shrink,
-                64 - shrink * 2,
+                128 - shrink * 2,
                 64 - shrink * 2
             );
-            spriteBatch.Draw(_playerCellOptions, rect, color);
+            spriteBatch.Draw(_diamondHighlight, rect, color);
         }
         private void DrawAllCombatMonsters(SpriteBatch spriteBatch)
         {
             foreach (var combatMon in _turnOrder)
             {
                 if (combatMon.currentPos.X == 0 && combatMon.currentPos.Y == 0) { continue; }
-                Rectangle destination = new Rectangle(
-                    (int)(combatMon.currentPos.X),
-                    (int)(combatMon.currentPos.Y),
-                    64, 64);
+
+                Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(combatMon.currentPos, combatMon.DrawEnlargementFacetor);
+
+                
+                Rectangle destination = new Rectangle((int)drawPoint.X , (int)drawPoint.Y , 64 + combatMon.DrawEnlargementFacetor, 64 + combatMon.DrawEnlargementFacetor  );
 
                 string textureKey;
                 if (combatMon.isSummoned)
@@ -547,7 +552,7 @@ namespace PlayingAround.Managers.CombatMan
                     DrawPlayerClickedMoveButton(spriteBatch);
                     break;
                 case PlayerTurnState.PlayerClickedSummonButton:
-                    DrawSummonOptions(spriteBatch);
+                    DrawPlayClickedSummonButton(spriteBatch);
                     break;
    
                 case PlayerTurnState.PlayerClickedSpecificSummoned:
@@ -584,16 +589,16 @@ namespace PlayingAround.Managers.CombatMan
                 foreach (var cell in _playerMoveableCells)
                 {
                     if (cell.BlockedByMonster || !cell.IsWalkable) continue;
-                    DrawCellHighlight(spriteBatch, cell, Color.Black, 5);
+                    DrawCellHighlight(spriteBatch, cell, Color.Green, 5);
                 }
 
                 if (_currentMouseHoverCell != null && _playerMoveableCells.Contains(_currentMouseHoverCell))
                 {
-                    DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
+                    DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, _playerMonster);
                 }
             }
         }
-        private void DrawSummonOptions(SpriteBatch spriteBatch)
+        private void DrawPlayClickedSummonButton(SpriteBatch spriteBatch)
         {
             CombatMonster mon = _turnOrder.Peek();
 
@@ -625,10 +630,9 @@ namespace PlayingAround.Managers.CombatMan
 
             foreach (var cell in _summonSpawnableCells)
             {
-                Vector2 cellCoords = TileManager.GetCellCords(cell);
+                Vector2 cellCoords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
                 Rectangle cellRect = new Rectangle((int)cellCoords.X, (int)cellCoords.Y, _tileWidth - 5, _tileHeight - 5);
-
-                spriteBatch.Draw(_playerCellOptions, cellRect, Color.Red * 0.4f);
+                DrawCellHighlight(spriteBatch, cell, Color.LimeGreen, 5);
             }
 
         }
@@ -639,10 +643,10 @@ namespace PlayingAround.Managers.CombatMan
             // Step 2: Only if we're hovering over a summonable cell, draw the summon icon
             if (_currentMouseHoverCell != null && _summonSpawnableCells.Contains(_currentMouseHoverCell))
             {
-                Vector2 hoverCoords = TileManager.GetCellCords(_currentMouseHoverCell);
+                Vector2 hoverCoords = TileManager.OffSetFromCenterOfDiamond(_currentMouseHoverCell);
                 Rectangle hoverRect = new Rectangle((int)hoverCoords.X, (int)hoverCoords.Y, _tileWidth, _tileHeight);
 
-                spriteBatch.Draw(AssetManager.GetTexture(_playerSelectedSummon.IconTextureString), hoverRect, Color.White * 0.7f);
+                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, new CombatMonster(_playerSelectedSummon.IconTextureString));
             }
         }
 
@@ -724,7 +728,7 @@ namespace PlayingAround.Managers.CombatMan
                 foreach (var cell in _playerCurrentAttackRangeOptions)
                 {
                     Color col = Color.Red * 5f;
-                    if (cell.BlockedByMonster) { col = Color.Green * 5f; }
+                    if (AIControlledMonsterMap.ContainsValue(cell) ) { col = Color.Green * 5f; }
                     DrawCellHighlight(spriteBatch, cell, col, 5);
                 }
             }
@@ -786,7 +790,6 @@ namespace PlayingAround.Managers.CombatMan
                             break;
                         case AITurnState.AIAttacking:
                             SetAITurnState(AITurnState.ExecutingAttack);
-                            //SetMonsterAttackPathingInformation();
                             if (AICanAttack()) _attackComplete = false;
 
                             break;
@@ -944,8 +947,20 @@ namespace PlayingAround.Managers.CombatMan
                     AttackClosestEnemy();
                     SetAITurnState(AITurnState.AIAttacking);
                     break;
+                case MonsterActionOrder.AttackSelf:
+                    AttackSelf();
+                    SetAITurnState(AITurnState.AIAttacking);
+                    break;
+
 
             }
+
+        }
+        private void AttackSelf()
+        {
+            CombatMonster mon = _currentMonster;
+            SingleAttack attack = mon.Attacks.First();
+            SetMonsterAttackPathingInformation(attack, new List<CombatMonster>() { mon }, new List<TileCell>() { GetMonsterCurrentCell(mon) });
 
         }
         private void AttackClosestEnemy()
@@ -960,12 +975,12 @@ namespace PlayingAround.Managers.CombatMan
                 AIFinishedAction();
                 return;
             }
-
             // Choose targets for each attack using the targeting strategy
             var targetData = new Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>>();
 
             foreach (var pair in inRangeMap)
             {
+                pair.Value.Remove(origin);
                 var (target, affectedCells) = AttackManager.TargetClosestEnemy(pair.Value, origin);
                 if (target != null && affectedCells.Count > 0)
                 {
@@ -1088,7 +1103,6 @@ namespace PlayingAround.Managers.CombatMan
 
             foreach (var endPos in tileCellPath)
             {
-                Vector2 end = TileManager.GetCellCords(endPos);
                 List<Vector2> arc = NPCMovement.MoveMonsters(mon, startingCell, endPos);
                 fullVectorPath.AddRange(arc);
                 startingCell = endPos;
@@ -1420,7 +1434,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
             {
-                _playerMonster.currentPos = TileManager.GetCellCords(_currentMouseHoverCell);
+                _playerMonster.currentPos = _currentMouseHoverCell.CenterPoint;
                 SetCombatState(CombatState.TurnStart);
 
             }
@@ -1614,7 +1628,7 @@ namespace PlayingAround.Managers.CombatMan
 
         private void HandleSummonedTargetingAttackClick()
         {
-            if (InputManager.IsLeftClick() && _playerCurrentAttackRangeOptions.Contains(_currentMouseHoverCell) && _currentMouseHoverCell.BlockedByMonster)
+            if (InputManager.IsLeftClick() && _playerCurrentAttackRangeOptions.Contains(_currentMouseHoverCell) && _currentMouseHoverCell.BlockedByMonster && !_playerControlledMonsterMap.ContainsValue(_currentMouseHoverCell))
             {
                 SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
                 TileCell currentTarget = _currentMouseHoverCell;
@@ -1752,7 +1766,7 @@ namespace PlayingAround.Managers.CombatMan
 
             CombatMonster comSumMon = (CombatMonsterManager.SummonMonsterToCombat(sumMon));
             comSumMon.CurrentCell = cell;
-            comSumMon.currentPos = TileManager.GetCellCords(cell);
+            comSumMon.currentPos = cell.CenterPoint;
             AddComMonToTurnOrder(comSumMon);
             mon.CurrentSP -= comSumMon.BaseSummonCost;
             //maby pause the state -turn it to executing action before

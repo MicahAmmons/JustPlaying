@@ -15,15 +15,17 @@ namespace PlayingAround.Game.Map
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
-        public TileCell[,] TileGridArray { get; private set; }
-        public List<TileCell> AllValidCells { get; private set; } = new List<TileCell>();
+ 
+        public List<TileCell> AllValidCells { get; private set; } = new();
+
         public Dictionary<(int, int), bool> WalkableMap { get; private set; } = new();
         public Dictionary<TileCell, NextTileData> NextTileMap { get; private set; } = new();
 
-
+        public List<string> OptionsOfMonsters { get; private set; } = new();
 
         public List<TileCell> MonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
+        public List<TileCell> PlayMonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public float DifficultyMax { get; }
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
@@ -46,10 +48,9 @@ namespace PlayingAround.Game.Map
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
-
-            //TileGridArray = new TileCell[GridWidth, GridHeight];
             MonsterSpawnableCells = new List<TileCell>();
             PlayerSpawnableCells = new List<TileCell>();
+            OptionsOfMonsters = data.MonsterStrings;
             AllValidCells = new List<TileCell>();
 
             foreach (var cellData in data.Cells)
@@ -63,20 +64,18 @@ namespace PlayingAround.Game.Map
                     "default", // Optional: Use cellData.TexturePath if available
                     cellData.Walkable,
                     cellData.Z,
-                    cellData.HeroSpawnable,
+                    cellData.PlayerSpawnable,
                     cellData.MonsterSpawnable,
+                    cellData.PlayMonsterSpawnable,
                     cellData.BehindOverlay,
                     cellData.FrontOverlay,
                     cellData.Npc,
                     cellData.Trigger,
                     cellData.NextTile
+                    
                 );
               
-               // TileGridArray[cellData.X, cellData.Y] = tile;
-
                 if (!IsDiamondAligned(tile.X, tile.Y)) continue;
-
-
                 if (tile.NextTile != null)
                     {
                         NextTileMap[tile] = tile.NextTile;
@@ -85,13 +84,15 @@ namespace PlayingAround.Game.Map
                     if (tile.IsWalkable) WalkableMap[(tile.X, tile.Y)] = true;
                     if (cellData.MonsterSpawnable)
                         MonsterSpawnableCells.Add(tile);
-                    if (cellData.HeroSpawnable)
+                    if (cellData.PlayerSpawnable)
                         PlayerSpawnableCells.Add(tile);
-                   
+                    if (cellData.PlayMonsterSpawnable)
+                       PlayMonsterSpawnableCells.Add(tile);
+ 
 
             }
 
-            PlayMonstersList = PlayMonstersManager.GeneratePlayMonsters(data);
+            PlayMonstersList = PlayMonstersManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters );
         }
 
         public static bool IsDiamondAligned(int x, int y) => (x % 2) == (y % 2);

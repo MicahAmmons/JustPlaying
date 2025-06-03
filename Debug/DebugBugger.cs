@@ -8,10 +8,12 @@ using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Net;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +41,7 @@ namespace PlayingAround.Debug
         private static List<string> cachedLogLines = new();
         private static Texture2D _diamondHighlightTexture { get; set; }
         private static GraphicsDevice _graphics;
+        private static TileCell _currentCellHover;
 
 
 
@@ -47,11 +50,12 @@ namespace PlayingAround.Debug
         {
             _graphics = graphics;
             debugPixel = new Texture2D(graphics, 1, 1);
-            _diamondHighlightTexture = CreateDiamondTexture(128, 64, Color.Yellow * 0.5f);
+            _diamondHighlightTexture = DrawDiamondTexture.GetDiamond(128, 64, Color.Yellow * 0.5f);
             debugPixel.SetData(new[] { Color.White });
             _mainFont = AssetManager.GetFont("mainFont");
             int screenHeight = ViewportManager.ScreenHeight;
             debugBoxPosition = new Vector2(debugBoxMargin, screenHeight - debugBoxMargin);
+
 
 
         }
@@ -63,10 +67,16 @@ namespace PlayingAround.Debug
 
         public static void Update(GameTime gameTime)
         {
+
             ToggleDebugLines();
             ToggleCellGridLines();
             ToggleDebugText();
+            GetCurrentMouseHoverCell();
 
+        }
+        public static void GetCurrentMouseHoverCell()
+        {
+            _currentCellHover = TileManager.GetCell(new Vector2(InputManager.MouseX, InputManager.MouseY));
         }
         public static void ToggleDebugText()
         {
@@ -87,7 +97,9 @@ namespace PlayingAround.Debug
         {
             DrawTileCellOutlines(spriteBatch);
             DrawDebugOutLines(spriteBatch);
+            if (!showDebugOutline) return;
             DrawDebugLines(spriteBatch);
+            DrawCellCenterDots(spriteBatch);
 
         }
         private static void DrawDebugLines(SpriteBatch spriteBatch)
@@ -106,34 +118,19 @@ namespace PlayingAround.Debug
             }
         }
 
-
-        private static Texture2D CreateDiamondTexture(int width, int height, Color color)
+        private static void DrawCellCenterDots(SpriteBatch sprite)
         {
-            Texture2D texture = new Texture2D(_graphics, width, height);
-            Color[] data = new Color[width * height];
+            Color dotColor = Color.Magenta; // or any color you like
+            int dotSize = 4;
 
-            int centerX = width / 2;
-            int centerY = height / 2;
-
-            for (int y = 0; y < height; y++)
+            foreach (var cell in _currentMapTile.AllValidCells)
             {
-                // Normalized distance from vertical center
-                float normY = Math.Abs(y - centerY) / (float)centerY;
-                int halfRowWidth = (int)(centerX * (1 - normY));
-
-                int startX = centerX - halfRowWidth;
-                int endX = centerX + halfRowWidth;
-
-                for (int x = startX; x <= endX; x++)
-                {
-                    if (x >= 0 && x < width)
-                        data[y * width + x] = color;
-                }
+                Vector2 center = cell.CenterPoint;
+                Rectangle dotRect = new Rectangle((int)(center.X - dotSize / 2f), (int)(center.Y - dotSize / 2f), dotSize, dotSize);
+                sprite.Draw(debugPixel, dotRect, dotColor);
             }
-
-            texture.SetData(data);
-            return texture;
         }
+      
 
         public static void DrawTileCellOutlines(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
@@ -221,11 +218,14 @@ namespace PlayingAround.Debug
             Vector2 feetCenter = PlayerManager.CurrentPlayer.HitBoxCenter;
             Vector2? clickTarget = PlayerManager.CurrentPlayer.GetDebugClickTarget();
             string hitboxStr = string.Join(", ", feetHitbox.Select(v => $"({v.X:0},{v.Y:0})"));
+            string currentMouseTile = _currentCellHover != null
+    ? $"Current Mouse {_currentCellHover.X}, {_currentCellHover.Y}"
+    : "Current Mouse -1, -1";
 
             string debugText =
                 $"Feet Hitbox: {hitboxStr}\n" +
                 $"Feet Center: X={feetCenter.X:0}, Y={feetCenter.Y:0}\n" +
-                $"Feet Tile: X={(int)(feetCenter.X / MapTile.TileWidth)}, Y={(int)(feetCenter.Y / MapTile.TileHeight)}\n" +
+                $"{currentMouseTile}\n" +
                 $"Outline: {(showDebugOutline ? "ON" : "OFF")}\n";
 
             if (clickTarget.HasValue)

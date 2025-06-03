@@ -31,6 +31,7 @@ namespace PlayingAround.Managers.Entities
                 mon.IconTextureKey = $"MonsterIcons/{monsterKey}Icon";
                 mon.Attacks = AttackManager.GetAttacks(mon.AttackStrings);
                 mon.Resistances = ResistanceManager.GetResistances(mon.ElementType);
+                mon.DrawEnlargementFacetor = mon.DrawEnlargementFacetor;
                 
             }
 

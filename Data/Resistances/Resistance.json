@@ -46,5 +46,7 @@
     "mildlyEffective": "Ice",
     "superVulnerable": "Electricity",
     "mildlyVulnerable": "Metal"
+  },
+  "Normal": {
   }
 }

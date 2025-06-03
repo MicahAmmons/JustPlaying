@@ -45,6 +45,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("actionOrder")]public List<string> ActionOrderList { get; set; }
 
         [JsonPropertyName("decideWhichAttack")] public List<string> ChooseWhichAttacks { get; set; }
+        [JsonPropertyName("drawnEnglargementFactor")] public int DrawEnlargementFacetor { get; set; }
 
         public Queue<MonsterActionOrder> BaseOrderOfActions { get; set; }
         public Queue<ChooseWhichMonsterAttack> BaseChooseWhichAttack { get; set; }
@@ -127,6 +128,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool isDead { get; set; } = false;
 
 
+
         public CombatMonster()
         {
 
@@ -156,6 +158,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             BaseSummonCost = original.BaseSummonCost;
             ActionOrderList = original.ActionOrderList;
             ChooseWhichAttacks = original.ChooseWhichAttacks;
+            DrawEnlargementFacetor = original.DrawEnlargementFacetor;
             BaseOrderOfActions = ConvertStringOrderOfActionToEnum(original.ActionOrderList);
             BaseChooseWhichAttack = ConvertStringWhichAttackToEnum(original.ChooseWhichAttacks);
 
@@ -191,7 +194,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
             return queue;
         }
-
+        public CombatMonster (string str)
+        {
+            IconTexture = AssetManager.GetTexture( str);
+       
+        }
         public CombatMonster(Player.Player player)
         {
             PlayerStats stats = player.stats;
@@ -209,6 +216,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MP = player.stats.MP;
             SP = player.stats.SP;
             Resistances = player.PlayerResistances;
+            IconTexture = player.Texture;
         }
 
 
@@ -223,7 +231,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
     {
         AttackClosestEnemy,
         MoveTowardsClosestEnemy,
-        Attack,
+        AttackSelf,
+        Exist,
     }
     public enum ChooseWhichMonsterAttack
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
@@ -20,11 +21,6 @@ namespace PlayingAround.Managers.Tiles
         public static MapTile CurrentMapTile { get; private set; }
 
         public static TileCell PlayerCurrentCell;
-
-       
-
-
-
 
         public static void Initialize( string id)
         {
@@ -77,12 +73,10 @@ namespace PlayingAround.Managers.Tiles
             CurrentMapTile = tile;
             ProximityManager.UpdateMapTile(CurrentMapTile);
         }
-
         public static bool IsCellWalkable(int x, int y)
         {
             return CurrentMapTile.WalkableMap.TryGetValue((x, y), out bool isWalkable) && isWalkable;
         }
-
         public static bool IsCellWalkable(Rectangle rec)
         {
             Vector2 topLeft = new Vector2(rec.Left, rec.Top);
@@ -96,8 +90,6 @@ namespace PlayingAround.Managers.Tiles
                 GetCell(bottomLeft).IsWalkable &&
                 GetCell(bottomRight).IsWalkable;
         }
-
-
         public static TileCell GetCell(Vector2 pos)
         {
             TileCell closest = null;
@@ -122,8 +114,6 @@ namespace PlayingAround.Managers.Tiles
 
             return closest;
         }
-
-
         private static bool IsPointInDiamond(Vector2 point, Vector2 center, int halfWidth, int halfHeight)
         {
             float dx = Math.Abs(point.X - center.X);
@@ -131,21 +121,24 @@ namespace PlayingAround.Managers.Tiles
             return (dx / halfWidth + dy / halfHeight) <= 1f;
         }
 
-        //public static TileCell GetCell(Rectangle rect)
-        //{
-        //    Vector2 bottomCenter = new Vector2(
-        //        rect.X + rect.Width / 2f,
-        //        rect.Y + rect.Height
-        //    );
 
-        //    return GetCell(bottomCenter);
-        //}
-        public static Vector2 GetCellCords(TileCell cell)
+        public static Vector2 OffSetFromCenterOfDiamond(Vector2 center, int ef = 0)
         {
-            int x = cell.X * MapTile.TileWidth;
-            int y = cell.Y * MapTile.TileHeight;
-            return new Vector2( x, y );
+            int totalWidth = 64 + ef;
+            int totalHeight = 64 + ef;
+            if (ef == 0) totalHeight = 32;
+            int xOffset = totalWidth / 2;
+            int yOffset = totalHeight;
+
+            return new Vector2(center.X - xOffset, center.Y - yOffset);
         }
+
+        public static Vector2 OffSetFromCenterOfDiamond(TileCell cell)
+        {
+            Vector2 center = cell.CenterPoint;
+            return new Vector2(center.X - MapTile.TileWidth / 2, center.Y - MapTile.TileHeight);
+        }
+
         public static void OnEnterNewCell(TileCell cell)
         {
                 PlayerCurrentCell = cell;
@@ -170,7 +163,8 @@ namespace PlayingAround.Managers.Tiles
                 if (newX < 0 || newY < 0 || newX >= MapTile.GridWidth || newY >= MapTile.GridHeight)
                     continue;
 
-                TileCell neighbor = CurrentMapTile.TileGridArray[newX, newY];
+                TileCell neighbor = CurrentMapTile.AllValidCells.FirstOrDefault(c => c.X == newX && c.Y == newY);
+
                 if (neighbor == null)
                     continue;
 
@@ -185,9 +179,6 @@ namespace PlayingAround.Managers.Tiles
 
             return neighbors;
         }
-
-
-
         public static bool IsNeighbor(List<TileCell> targets, TileCell current)
         {
             foreach (var target in targets)
@@ -203,30 +194,6 @@ namespace PlayingAround.Managers.Tiles
             return false;
         }
 
-
-
-
-        public static void AddCombatMonsterToCell(CombatMonster mon, TileCell newCell)
-        {
-            if (mon == null || newCell == null)
-                return;
-
-            if (mon.CurrentCell == newCell)
-                return;
-
-            // Remove from old cell
-            if (mon.CurrentCell != null)
-            {
-                mon.CurrentCell.BlockedByMonster = false;
-                mon.CurrentCell.CombatMonster = null;
-            }
-
-            // Assign to new
-            newCell.CombatMonster = mon;
-            mon.CurrentCell = newCell;
-            mon.CurrentCell.BlockedByMonster = true;
-        }
-
         public static List<TileCell> GetCellsInRange(TileCell origin, int range)
         {
             List<TileCell> result = new();
@@ -236,7 +203,8 @@ namespace PlayingAround.Managers.Tiles
                 int dx = cell.X - origin.X;
                 int dy = cell.Y - origin.Y;
 
-                if ((dx % 2 == dy % 2) && Math.Max(Math.Abs(dx), Math.Abs(dy)) <= range)
+                if (Math.Abs(dx % 2) == Math.Abs(dy % 2) &&
+                    Math.Max(Math.Abs(dx), Math.Abs(dy)) <= range)
                 {
                     result.Add(cell);
                 }
@@ -244,7 +212,6 @@ namespace PlayingAround.Managers.Tiles
 
             return result;
         }
-
 
         public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps, bool includeMonsterTiles = false)
         {
@@ -278,11 +245,6 @@ namespace PlayingAround.Managers.Tiles
 
             return reachableCells;
         }
-
-
-
-
-
         public static MapTileSaveData SaveMapTile()
         {
             return new MapTileSaveData
@@ -290,14 +252,12 @@ namespace PlayingAround.Managers.Tiles
                 CurrentTileId = CurrentMapTile.Id
             };
         }
-
         public static void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
 
             CurrentMapTile.PlayMonstersManager.Draw(spriteBatch);
         }
-
         public static void Update(GameTime gameTime)
         {
             CurrentMapTile.PlayMonstersManager.Update(gameTime);
