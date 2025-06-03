@@ -2,12 +2,6 @@
   "gridX": 0,
   "gridY": 0,
   "gridZ": 0,
-  "pacingBoundary": {
-    "x": 0,
-    "y": 0,
-    "width": 64,
-    "height": 64
-  },
   "background": "Tiles/0_0_0",
   "monsters": [
     "Ooze"
@@ -20,7 +14,12 @@
       "x": 0,
       "y": 0,
       "walkable": true,
-      "z": 0
+      "z": 0,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
     },
     {
       "x": 1,
