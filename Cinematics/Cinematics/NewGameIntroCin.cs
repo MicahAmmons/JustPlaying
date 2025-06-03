@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.JukeBox;
@@ -14,6 +15,8 @@ public class NewGameIntroCin : ICinematic
 
     private readonly float _fadeDuration = 1.5f; // Seconds to fade in/out
     private readonly float _textDuration = 2.5f; // Seconds at full opacity
+
+    private bool _textFinished = false;
 
     private List<string> _messages = new()
     {
@@ -49,19 +52,40 @@ public class NewGameIntroCin : ICinematic
 
     public void Update(GameTime gameTime)
     {
-        _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (_currentMessageIndex >= _messages.Count - 1)
-            return; // Keep last message showing — do not increment anymore
-
-        float localTime = _timer - _messageStartTime;
-        float totalPhaseDuration = _fadeDuration * 2 + _textDuration;
-
-        if (localTime >= totalPhaseDuration)
+        if (_textFinished)
         {
-            _currentMessageIndex++;
-            _messageStartTime = _timer;
+            LookForEnterKey();
         }
+        if (!_textFinished)
+        {
+            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (_currentMessageIndex >= _messages.Count - 1)
+                return; // Keep last message showing — do not increment anymore
+
+            float localTime = _timer - _messageStartTime;
+            float totalPhaseDuration = _fadeDuration * 2 + _textDuration;
+
+            if (localTime >= totalPhaseDuration)
+            {
+                _currentMessageIndex++;
+                _messageStartTime = _timer;
+            }
+            if (_currentMessageIndex >= _messages.Count - 1)
+            {
+                _textFinished = true;
+            }
+        }
+    }
+    public void LookForEnterKey()
+    {
+        if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
+        {
+            SaveManager.LoadCurrentGameSave();
+            SceneManager.SetState(SceneManager.SceneState.Play);
+            _isFinished = true;
+        }
+
     }
 
     public void Draw(SpriteBatch spriteBatch)

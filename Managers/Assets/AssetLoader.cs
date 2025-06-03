@@ -24,6 +24,7 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("AcidSpitIcon", "Attacks/acidSpit");
             AssetManager.LoadTexture("acidIcon", "Aspects/acidIcon");
             AssetManager.LoadTexture("TitleScreenBackGround", "TitleScreen/TitleScreenBackGround");
+
             // Add fonts, sounds, etc. later
         }
         public static Dictionary<string, Song> LoadAllSongs()

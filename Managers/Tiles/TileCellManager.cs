@@ -29,7 +29,7 @@ public static class TileCellManager
         else
         ClearArrow();
         HandleClick();
-        if (PlayerCurrentCell.NextTile != null && PlayerCurrentCell == PlayerClickedCell)
+        if (PlayerCurrentCell != null && PlayerCurrentCell.NextTile != null && PlayerCurrentCell == PlayerClickedCell)
         {
             SceneManager.SetState(SceneManager.SceneState.SceneTransition);
         }

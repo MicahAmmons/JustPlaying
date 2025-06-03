@@ -15,7 +15,7 @@ public class TileCellData
     [JsonPropertyName("npc")] public string? Npc { get; set; }
     [JsonPropertyName("monster")] public List<string?> Monsters { get; set; }
     [JsonPropertyName("trigger")] public string? Trigger { get; set; }
-    [JsonPropertyName("nextTile")] public NextTileData? NextTile { get; set; }
+    [JsonPropertyName("nextTileCell")] public NextTileData? NextTile { get; set; }
     [JsonIgnore] public bool CanSpawn => Walkable && NextTile == null;
 }
 

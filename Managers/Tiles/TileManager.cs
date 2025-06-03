@@ -80,51 +80,66 @@ namespace PlayingAround.Managers.Tiles
 
         public static bool IsCellWalkable(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= MapTile.GridWidth || y >= MapTile.GridHeight)
-                return false;
-            return CurrentMapTile.TileGrid[x, y].IsWalkable;
+            return CurrentMapTile.WalkableMap.TryGetValue((x, y), out bool isWalkable) && isWalkable;
         }
+
         public static bool IsCellWalkable(Rectangle rec)
         {
-            int left = rec.Left / MapTile.TileWidth;
-            int right = (rec.Right - 1) / MapTile.TileWidth;
-            int top = rec.Top / MapTile.TileHeight;
-            int bottom = (rec.Bottom - 1) / MapTile.TileHeight;
+            Vector2 topLeft = new Vector2(rec.Left, rec.Top);
+            Vector2 topRight = new Vector2(rec.Right - 1, rec.Top);
+            Vector2 bottomLeft = new Vector2(rec.Left, rec.Bottom - 1);
+            Vector2 bottomRight = new Vector2(rec.Right - 1, rec.Bottom - 1);
 
             return
-                IsCellWalkable(left, top) &&
-                IsCellWalkable(right, top) &&
-                IsCellWalkable(left, bottom) &&
-                IsCellWalkable(right, bottom);
+                GetCell(topLeft).IsWalkable &&
+                GetCell(topRight).IsWalkable &&
+                GetCell(bottomLeft).IsWalkable &&
+                GetCell(bottomRight).IsWalkable;
         }
 
-        public static TileCell GetCell(Vector2 cord)
-        {
-            int x = (int)(cord.X / MapTile.TileWidth);
-            int y = (int)(cord.Y / MapTile.TileHeight);
 
-            if (x < 0 || x >= 30 || y < 0 || y >= 17)
+        public static TileCell GetCell(Vector2 pos)
+        {
+            TileCell closest = null;
+            float minDist = float.MaxValue;
+
+            foreach (var cell in CurrentMapTile.AllValidCells)
             {
-                return new TileCell(
-                69,               
-                69,               
-                "Default/Blank",    
-                false,             
-                0                   
-                );
+                Vector2 center = new(cell.X * MapTile.TileWidth, cell.Y * MapTile.TileHeight);
+
+                if (IsPointInDiamond(pos, center, MapTile.TileWidth / 2, MapTile.TileHeight / 2))
+                {
+                    return cell; // Perfect match
+                }
+
+                float dist = Vector2.DistanceSquared(pos, center);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closest = cell;
+                }
             }
 
-            return CurrentMapTile.TileGrid[x, y];
+            return closest;
         }
-        public static TileCell GetCell(Rectangle rect)
-        {
-            Vector2 bottomCenter = new Vector2(
-                rect.X + rect.Width / 2f,
-                rect.Y + rect.Height
-            );
 
-            return GetCell(bottomCenter);
+
+        private static bool IsPointInDiamond(Vector2 point, Vector2 center, int halfWidth, int halfHeight)
+        {
+            float dx = Math.Abs(point.X - center.X);
+            float dy = Math.Abs(point.Y - center.Y);
+            return (dx / halfWidth + dy / halfHeight) <= 1f;
         }
+
+        //public static TileCell GetCell(Rectangle rect)
+        //{
+        //    Vector2 bottomCenter = new Vector2(
+        //        rect.X + rect.Width / 2f,
+        //        rect.Y + rect.Height
+        //    );
+
+        //    return GetCell(bottomCenter);
+        //}
         public static Vector2 GetCellCords(TileCell cell)
         {
             int x = cell.X * MapTile.TileWidth;
@@ -140,22 +155,25 @@ namespace PlayingAround.Managers.Tiles
             List<TileCell> neighbors = new();
 
             Point[] directions = new Point[]
-            {
-        new(0, -1),
-        new(0, 1),
-        new(-1, 0),
-        new(1, 0)
-            };
+{
+    new(1, 1),   // down-right
+    new(1, -1),  // up-right
+    new(-1, 1),  // down-left
+    new(-1, -1)  // up-left
+};
 
             for (int i = 0; i < directions.Length; i++)
             {
                 int newX = cell.X + directions[i].X;
                 int newY = cell.Y + directions[i].Y;
 
-                if (newX < 0 || newY < 0 || newX >= CurrentMapTile.TileGrid.GetLength(0) || newY >= CurrentMapTile.TileGrid.GetLength(1))
+                if (newX < 0 || newY < 0 || newX >= MapTile.GridWidth || newY >= MapTile.GridHeight)
                     continue;
 
-                TileCell neighbor = CurrentMapTile.TileGrid[newX, newY];
+                TileCell neighbor = CurrentMapTile.TileGridArray[newX, newY];
+                if (neighbor == null)
+                    continue;
+
                 bool isGoal = goal != null && neighbor == goal;
 
                 if (neighbor != null && neighbor.IsWalkable &&
@@ -169,26 +187,22 @@ namespace PlayingAround.Managers.Tiles
         }
 
 
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell)
-        {
-            return GetWalkableNeighbors(cell, null);
-        }
-
 
         public static bool IsNeighbor(List<TileCell> targets, TileCell current)
         {
             foreach (var target in targets)
             {
-                int dx = Math.Abs(target.X - current.X);
-                int dy = Math.Abs(target.Y - current.Y);
+                int dx = target.X - current.X;
+                int dy = target.Y - current.Y;
 
-                // Manhattan distance of 1 means direct neighbor (no diagonals)
-                if (dx == 1 && dy == 0 || dx == 0 && dy == 1)
+                // Valid neighbors are diagonally adjacent: (±1, ±1)
+                if (Math.Abs(dx) == 1 && Math.Abs(dy) == 1)
                     return true;
             }
 
             return false;
         }
+
 
 
 
@@ -217,26 +231,21 @@ namespace PlayingAround.Managers.Tiles
         {
             List<TileCell> result = new();
 
-            for (int dx = -range; dx <= range; dx++)
+            foreach (var cell in CurrentMapTile.AllValidCells)
             {
-                for (int dy = -range; dy <= range; dy++)
-                {
-                    if ((dx != 0 || dy != 0) && Math.Abs(dx) + Math.Abs(dy) <= range) // Manhattan only
-                    {
-                        int x = origin.X + dx;
-                        int y = origin.Y + dy;
+                int dx = cell.X - origin.X;
+                int dy = cell.Y - origin.Y;
 
-                        if (x >= 0 && x < MapTile.GridWidth && y >= 0 && y < MapTile.GridHeight)
-                        {
-                            TileCell cell = CurrentMapTile.TileGrid[x, y];
-                            result.Add(cell);
-                        }
-                    }
+                if ((dx % 2 == dy % 2) && Math.Max(Math.Abs(dx), Math.Abs(dy)) <= range)
+                {
+                    result.Add(cell);
                 }
             }
 
             return result;
         }
+
+
         public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps, bool includeMonsterTiles = false)
         {
             List<TileCell> reachableCells = new();

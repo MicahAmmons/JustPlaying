@@ -68,8 +68,9 @@ namespace PlayingAround
             AssetLoader.LoadAllFonts();
             AssetLoader.LoadAllTextures();
             JukeBoxManager.InitializeJukeBox();
-            DebugBugger.LoadContent(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            DebugBugger.LoadContent(GraphicsDevice);
+
           
             ViewportManager.Initialize(GraphicsDevice);
             TitleScreenManager.LoadContent();
@@ -170,7 +171,9 @@ namespace PlayingAround
 
 
         }
-       
+
+
+
 
 
 
