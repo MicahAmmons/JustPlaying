@@ -19,8 +19,10 @@ namespace PlayingAround.Managers.Proximity
         private static Player _currentPlayer => PlayerManager.CurrentPlayer;
         private static List<NPC> _currentNPCs => TileManager.CurrentMapTile.NPCs;
         private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
+        private static Vector2 _playerCurrentCords;
 
-        private const int _distanceForMonsterInteract = 50;
+        private const int _distanceForInteract = 50;
+
 
         public static event Action<PlayMonsters> OnPlayerNearPlayMonster;
         public static event Action OnPlayerLeavePlayMonster;
@@ -28,7 +30,7 @@ namespace PlayingAround.Managers.Proximity
         public static event Action<NPC> OnPlayerNearNPC;
         public static event Action OnPlayerLeaveNPC;
 
-        private static Vector2 _playerCurrentCords;
+
 
 
 
@@ -39,28 +41,38 @@ namespace PlayingAround.Managers.Proximity
             if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
                 UpdatePlayerCords();
-                IsPlayerInMonsterRange();
-            }
-            if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
-            {
-
-            }
-            
+                IsPlayerInPlayMonsterRange();
+                IsPlayerInNPCRange();
+            }            
         }
-        private static void UpdatePlayerCords()
+        public static void IsPlayerInNPCRange()
         {
-            _playerCurrentCords = _currentPlayer.CurrentPos;
+            bool npcWasNear = false;
+            foreach (var npc in _currentNPCs)
+            {
+                if (Vector2.Distance(_playerCurrentCords, npc.currentPos) <= _distanceForInteract)
+                {
+                    OnPlayerNearNPC?.Invoke(npc);
+                    npcWasNear = true;
+                    break;
+                }
+            }
+            if (!npcWasNear)
+            {
+                OnPlayerLeaveNPC?.Invoke();
+            }
         }
-        public static void IsPlayerInMonsterRange()
+
+        public static void IsPlayerInPlayMonsterRange()
         {
             bool monsterWasNear = false;
             foreach (var mon in _currentPlayMonsters)
             {
-                if (Vector2.Distance(_playerCurrentCords, mon.CurrentPos) <= _distanceForMonsterInteract)
+                if (Vector2.Distance(_playerCurrentCords, mon.CurrentPos) <= _distanceForInteract)
                 {
                     OnPlayerNearPlayMonster?.Invoke(mon);
                     monsterWasNear = true;
-                    break; 
+                    break;
                 }
             }
             if (!monsterWasNear)
@@ -68,6 +80,11 @@ namespace PlayingAround.Managers.Proximity
                 OnPlayerLeavePlayMonster?.Invoke();
             }
         }
+        private static void UpdatePlayerCords()
+        {
+            _playerCurrentCords = _currentPlayer.CurrentPos;
+        }
+
 
 
 

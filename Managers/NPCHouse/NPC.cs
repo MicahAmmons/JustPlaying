@@ -14,7 +14,8 @@ namespace PlayingAround.Managers.NPCHouse
     public class NPC
     {
         [JsonPropertyName("name")] public string name { get; set; }
-        [JsonPropertyName("drawEnlargementFactor")] public int drawEnlargementFactor { get; set; }
+        [JsonPropertyName("width")] public int width { get; set; }
+        [JsonPropertyName("height")] public int height { get; set; }
         public Vector2 currentPos { get; set; }
         public Vector2 drawFromPosition { get; set; }
 
@@ -33,6 +34,8 @@ namespace PlayingAround.Managers.NPCHouse
         {
             name = data.name;
             texture = AssetManager.GetTexture("DefaultNPC");
+            width = data.width;
+            height = data.height;
         }
 
 

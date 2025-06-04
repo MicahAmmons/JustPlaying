@@ -12,6 +12,7 @@ using PlayingAround.Managers.DayManager;
 using System;
 using System.Collections.Generic;
 using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.NPCHouse;
 
 
 namespace PlayingAround.Managers.UI
@@ -19,10 +20,9 @@ namespace PlayingAround.Managers.UI
     public static class UIManager
     {
         private static SpriteFont _mainFont;
-        private static bool _fightBox = false;
-        private static PlayMonsters _playMonsters;
+
         private static Texture2D _fightBackground;
-        private static Player _player => PlayerManager.CurrentPlayer;
+        private static Player _currentPlayer => PlayerManager.CurrentPlayer;
         private static CombatMonster _playerMonster;
         private static CombatMonster _standInMonster;
 
@@ -54,8 +54,10 @@ namespace PlayingAround.Managers.UI
         {
             _mainFont = AssetManager.GetFont("mainFont");
             _fightBackground = AssetManager.GetTexture("fightBackground");
-            ProximityManager.OnPlayerNearPlayMonster += HandleFightPrompt;
-            ProximityManager.OnPlayerLeavePlayMonster += HandlePlayerExit;
+            ProximityManager.OnPlayerNearPlayMonster += HandlePlayMonsterInteract;
+            ProximityManager.OnPlayerLeavePlayMonster += HandlePlayerExitPlayMonster;
+            ProximityManager.OnPlayerNearNPC += HandleNPCInteract;
+            ProximityManager.OnPlayerLeaveNPC += HandlePlayerExitNPC;
             int screenWidth = ViewportManager.ScreenWidth;
             int screenHeight = ViewportManager.ScreenHeight;
 
@@ -78,19 +80,38 @@ namespace PlayingAround.Managers.UI
         public static void Update(GameTime gameTime)
         {
             UpdatePlayer();
+            UpdateInput();
+            if (_currentInteractState != InteractState.None && _interactMessage == null)
+            {
+                SetInteractMessage();
+            }
         }
 
+        public static void UpdateInput()
+        {
+            switch (SceneManager.CurrentState)
+            {
+                case SceneManager.SceneState.Play:
+                    if (_currentInteractState != InteractState.None && InputManager.IsKeyPressed(Keys.F))
+                    {
+                        switch (_currentInteractState)
+                        {
+                            case InteractState.PlayMonster:
+                                SceneManager.SetState(SceneManager.SceneState.Combat);
+                                CombatGuard.CreateNewCombat(_currentPlayMonster, _currentPlayer);
+                                break;
+                            case InteractState.NPC:
+
+                                break;
+                        }
+                    }
+                    break;
+            }
+
+
+        }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            if (_fightBox && SceneManager.CurrentState == SceneManager.SceneState.Play)
-            {
-                spriteBatch.Draw(_fightBackground, new Vector2(960, 15), Color.Black);
-                if (InputManager.IsKeyPressed(Keys.Enter))
-                {
-                    SceneManager.SetState(SceneManager.SceneState.Combat);
-                    CombatGuard.CreateNewCombat(_playMonsters, _player);
-                }
-            }
             if (_summonOverlayOpen)
             {
                 DrawSummonOverlay(spriteBatch);
@@ -100,6 +121,7 @@ namespace PlayingAround.Managers.UI
             DrawPlayerSummons(spriteBatch);
             DrawDayCount(spriteBatch);
             DrawEscapeState(spriteBatch);
+            DrawInteractText(spriteBatch);
         }
 
         public static void DrawDayCount(SpriteBatch spriteBatch)
@@ -130,7 +152,7 @@ namespace PlayingAround.Managers.UI
             int startY = _tabAreaRect.Bottom + 10;
             int summonRowHeight = 40; // Each summon row height
 
-            foreach (var summon in _player.stats.UnlockedSummons)
+            foreach (var summon in _currentPlayer.stats.UnlockedSummons)
             {
                 // 1. Draw Icon
                 Rectangle iconRect = new Rectangle(
@@ -167,7 +189,6 @@ namespace PlayingAround.Managers.UI
             }
 
         }
-
         private static void DrawPlayerStatsUI(SpriteBatch spriteBatch)
         {
             if (_playerStats != null)
@@ -182,7 +203,6 @@ namespace PlayingAround.Managers.UI
                 spriteBatch.DrawString(_mainFont, _playerStats, textPosition, Color.White);
             }
         }
-
         private static void DrawPlayerSummons(SpriteBatch spriteBatch)
         {
             if (_summonRect.Contains(InputManager.Mouse.Position) && InputManager.IsLeftClick())
@@ -212,16 +232,13 @@ namespace PlayingAround.Managers.UI
                     _summonMenuOpen = !_summonMenuOpen; // ✅ Toggle menu open/close
             }
         }
-
-
-
         private static void UpdatePlayer()
         {
             if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
 
-                _playerStats = $"Health: {_player.stats.CurrentHealth} / {_player.stats.CurrentHealth}\n" +
-                               $"Mana: {_player.stats.CurrentMana} / {_player.stats.CurrentMana}";
+                _playerStats = $"Health: {_currentPlayer.stats.CurrentHealth} / {_currentPlayer.stats.CurrentHealth}\n" +
+                               $"Mana: {_currentPlayer.stats.CurrentMana} / {_currentPlayer.stats.CurrentMana}";
             }
             if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
             {
@@ -234,16 +251,96 @@ namespace PlayingAround.Managers.UI
             }
         }
 
-        private static void HandlePlayerExit()
+
+
+        // Section devoted to Interaction popups
+        //
+        //
+        private static InteractState _currentInteractState = InteractState.None;
+        private static PlayMonsters _currentPlayMonster;
+        private static NPC _currentNPC;
+        private static Rectangle _interactRectangle;
+        private static string? _interactMessage;
+        private static void DrawInteractText(SpriteBatch spriteBatch)
         {
-            _fightBox = false;
-            _playMonsters = null;
+            if (SceneManager.CurrentState != SceneManager.SceneState.Play) return;
+            if (_interactMessage != null)
+            {
+                int padding = 6;
+                spriteBatch.Draw(_fightBackground, _interactRectangle, ColorPalette.DarkColor * .5f);
+
+                Vector2 textPosition = new Vector2(_interactRectangle.X + padding, _interactRectangle.Y + padding);
+                spriteBatch.DrawString(_mainFont, _interactMessage, textPosition, ColorPalette.LightColor);
+            }
+        }
+        private static void HandlePlayerExitPlayMonster()
+        {
+            _currentPlayMonster = null;
+            if (_currentInteractState == InteractState.PlayMonster)
+            {
+                _currentInteractState = InteractState.None;
+                _interactMessage = null;
+                
+            }
+        }
+        private static void HandlePlayMonsterInteract(PlayMonsters mon)
+        {
+            _currentInteractState = InteractState.PlayMonster;            
+            _currentPlayMonster = mon;
+        }
+        private static void HandleNPCInteract(NPC npc)
+        {
+            _currentInteractState = InteractState.NPC;
+            _currentNPC = npc;
+        }
+        private static void HandlePlayerExitNPC()
+        {
+            _currentNPC = null;
+            if (_currentInteractState == InteractState.NPC)
+            {
+                _currentInteractState = InteractState.None;
+                _interactMessage = null;
+            }
+        }
+        private static void SetInteractMessage()
+        {
+            string message = "ERROR IN UI, NO MESSAGE SET";
+            Vector2 drawPoint = new Vector2(50, 50);
+
+            switch (_currentInteractState)
+            {
+                case InteractState.PlayMonster:
+                    message = "Press F to Fight";
+                    drawPoint = _currentPlayMonster.CurrentPos;
+                    break;
+
+                case InteractState.NPC:
+                    message = "Press F to Talk";
+                    drawPoint = _currentNPC.currentPos;
+                    break;
+            }
+
+            InteractMessage(message, drawPoint);
+        }
+        private static void InteractMessage(string message, Vector2 drawPoint)
+        {
+            int padding = 6;
+
+            Vector2 textSize = _mainFont.MeasureString(message);
+            int totalWidth = (int)textSize.X + padding * 2;
+            int totalHeight = (int)textSize.Y + padding * 2;
+
+            _interactRectangle = new Rectangle((int)drawPoint.X, (int)drawPoint.Y, totalWidth, totalHeight);
+            _interactMessage = message;
         }
 
-        private static void HandleFightPrompt(PlayMonsters mon)
-        {
-            _fightBox = true;
-            _playMonsters = mon;
-        }
+
     }
+
+}
+public enum InteractState
+{
+    None,
+    PlayMonster,
+    NPC
 }

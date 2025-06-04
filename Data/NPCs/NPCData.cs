@@ -9,7 +9,8 @@ namespace PlayingAround.Data.NPCs
     public class NPCData
     {
         public string name { get; set; }
-        public int drawEnlargementFactor { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
         public string texturePath { get; set; }
     }
 

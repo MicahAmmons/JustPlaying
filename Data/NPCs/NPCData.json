@@ -1,10 +1,13 @@
 {
   "Cale": {
     "name": "Cale",
-    "drawEnlargementFactor": 35
+    "width": 64,
+    "height": 64
   },
   "Torren": {
     "name": "Torren",
-    "drawEnlargementFactor": 24
+    "width": 64,
+    "height": 64
+
   }
 }

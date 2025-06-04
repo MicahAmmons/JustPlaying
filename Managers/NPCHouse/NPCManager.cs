@@ -46,11 +46,13 @@ namespace PlayingAround.Managers.NPCHouse
             foreach (var npc in _currentNPCs)
             {
                 Vector2 currentPos = npc.currentPos;
-                Vector2 drawSpot = TileManager.OffSetFromCenterOfDiamond(currentPos, npc.drawEnlargementFactor);
-                Rectangle rect = new Rectangle((int)drawSpot.X, (int)drawSpot.Y, 64 + npc.drawEnlargementFactor, 64 + npc.drawEnlargementFactor);
+                Vector2 drawSpot = TileManager.OffSetFromCenterOfDiamond(currentPos, npc.width, npc.height);
+                Rectangle rect = new Rectangle((int)drawSpot.X, (int)drawSpot.Y - (npc.width / 2), npc.width, npc.height);
                 spriteBatch.Draw(npc.texture, rect, Color.White);
             }
         }
+
+
 
 
     }

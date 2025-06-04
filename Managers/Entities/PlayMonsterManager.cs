@@ -56,6 +56,7 @@ namespace PlayingAround.Managers.Entities
                     Monsters = CombatMonsterManager.BalanceCombatMonsters(monsterOptions, difficultyMax, difficultyMin),
                     SpawnPosition = startPos,
                     CurrentPos = startPos,
+                    
 
                 };
                 CombatMonster comMon = newPlayMon.Monsters[0];
@@ -64,6 +65,7 @@ namespace PlayingAround.Managers.Entities
                 newPlayMon.MovementPattern = comMon.MovementPattern;
                 newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
                 newPlayMon.PacingBoundary = _playMonsterData[name][0].PacingBoundaryRect;
+                newPlayMon.Name = comMon.Name;
                 monsters.Add(newPlayMon);
 
             }
