@@ -15,11 +15,15 @@
     "PlayerSummons": [
       {
         "Name": "Ooze",
-        "NumberOfKills": 0
+        "NumberOfKills": 1
       },
       {
         "Name": "AngryPlant",
         "NumberOfKills": 0
+      },
+      {
+        "Name": "Training Dummby",
+        "NumberOfKills":  1
       }
     ]
   }

@@ -3,6 +3,7 @@
     "mp": 4,
     "movementQuickness": 200,
     "movementPattern": "arc",
+    "drawnEnglargementFactor" :0,
     "attacks": [
       "slam",
       "acidSpit"
@@ -20,6 +21,26 @@
     ],
     "decideWhichAttack": [
       "ShortestRange"
+    ]
+  },
+  "TrainingDummy": {
+    "mp": 0,
+    "movementQuickness": 0,
+    "movementPattern": "none",
+    "drawnEnglargementFactor": 100,
+    "attacks": [
+      "exist"
+    ],
+    "monsterType": "TrainingDummy",
+    "baseDifficulty": 1,
+    "elementType": "Normal",
+    "baseHealth": 10,
+    "initiation": 2,
+    "actionOrder": [
+      "attackSelf"
+    ],
+    "decideWhichAttack": [
+      "exist"
     ]
   }
 }

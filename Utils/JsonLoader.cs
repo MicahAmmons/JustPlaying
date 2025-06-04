@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using PlayingAround.Data.NPCs;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.NPCHouse;
 
 namespace PlayingAround.Utils
 {
@@ -75,6 +77,14 @@ AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\Aspects\AspectData.json")
         {
             string json = File.ReadAllText(AspectDataPath);
             return JsonSerializer.Deserialize<Dictionary<string, Aspect>>(json);
+        }
+
+        private static readonly string NPCDataPath = Path.GetFullPath(Path.Combine(
+AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\NPCs\NPCData.json"));
+        public static Dictionary<string, NPCData> LoadNPCData()
+        {
+            string json = File.ReadAllText(NPCDataPath);
+            return JsonSerializer.Deserialize<Dictionary<string, NPCData>>(json);
         }
     }
 }

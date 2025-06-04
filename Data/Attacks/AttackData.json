@@ -26,6 +26,19 @@
     "visualTiming": "BeforeAttack",
     "visualVelocity": 400,
     "animated": true
+  },
+  "exist": {
+    "elementDamage": "Normal",
+    "name": "Exist",
+    "attacksHasIcon": false,
+    "baseDamageMin": 0,
+    "baseDamageMax": 0,
+    "range": 0,
+    "typeOfAttack": "attack",
+    "target": "self",
+    "visualTiming": "BeforeAttack",
+    "visualVelocity": 400,
+    "animated": false
   }
 
 }

@@ -3,6 +3,9 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.NPCHouse;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +16,30 @@ namespace PlayingAround.Managers.Proximity
 {
     public class ProximityManager
     {
-        private static Vector2 _currentPlayerCord;
-        private static TileCell _currentPlayerCell;
-
-        private static List<PlayMonsters> PlayMonsters;
-        private static MapTile _currentMapTile;
+        private static Player _currentPlayer => PlayerManager.CurrentPlayer;
+        private static List<NPC> _currentNPCs => TileManager.CurrentMapTile.NPCs;
+        private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
 
         private const int _distanceForMonsterInteract = 50;
-        public static event Action<PlayMonsters> OnPlayerNearMonster;
-        public static event Action OnPlayerLeaveMonster;
 
-        public static Dictionary<CombatMonster, TileCell> CombatMonsterCells;
+        public static event Action<PlayMonsters> OnPlayerNearPlayMonster;
+        public static event Action OnPlayerLeavePlayMonster;
+
+        public static event Action<NPC> OnPlayerNearNPC;
+        public static event Action OnPlayerLeaveNPC;
+
+        private static Vector2 _playerCurrentCords;
+
 
 
 
         public static void Update(GameTime gameTime)
         {
-            if (_currentMapTile == null) return;
 
             if (SceneManager.CurrentState == SceneManager.SceneState.Play)
             {
+                UpdatePlayerCords();
                 IsPlayerInMonsterRange();
-                IsNPCInRange();
-                IsTrapInRange();
             }
             if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
             {
@@ -43,39 +47,26 @@ namespace PlayingAround.Managers.Proximity
             }
             
         }
-        public static bool IsTrapInRange()
+        private static void UpdatePlayerCords()
         {
-            return true;
-        }
-        public static bool IsNPCInRange()
-        {
-            return false;
+            _playerCurrentCords = _currentPlayer.PlayerCord;
         }
         public static void IsPlayerInMonsterRange()
         {
             bool monsterWasNear = false;
-            foreach (var mon in _currentMapTile.PlayMonstersManager.CurrentPlayMonsters)
+            foreach (var mon in _currentPlayMonsters)
             {
-                if (Vector2.Distance(_currentPlayerCord, mon.CurrentPos) <= _distanceForMonsterInteract)
+                if (Vector2.Distance(_playerCurrentCords, mon.CurrentPos) <= _distanceForMonsterInteract)
                 {
-                    OnPlayerNearMonster?.Invoke(mon);
+                    OnPlayerNearPlayMonster?.Invoke(mon);
                     monsterWasNear = true;
                     break; 
                 }
             }
             if (!monsterWasNear)
             {
-                OnPlayerLeaveMonster?.Invoke();
+                OnPlayerLeavePlayMonster?.Invoke();
             }
-        }
-        public static void OnEnterNewCell(TileCell cell, Vector2 cord)
-        {
-            _currentPlayerCord = cord;
-            _currentPlayerCell = cell;
-        }
-        public static void UpdateMapTile(MapTile mapTile)
-        {
-            _currentMapTile = mapTile;
         }
 
 

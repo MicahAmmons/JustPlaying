@@ -13,10 +13,12 @@
   <ItemGroup>
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
+    <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
     <None Remove="Content\TileCell\3arrows.png" />
     <None Remove="Content\TileCell\arrow.png" />
+    <None Remove="Content\Tiles\0_0_0.png" />
     <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
@@ -25,6 +27,7 @@
     <None Remove="Icon.bmp" />
     <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0.json" />
     <None Remove="World\MapTiles\TileJson\MapTile_0_0_0.json" />
+    <None Remove="World\MapTiles\TileJson\MapTile_0_0_0old.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\MonsterIcons\AngryPlantIcon.png">
@@ -32,6 +35,9 @@
     </Content>
     <Content Include="Content\MonsterIcons\OozeIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterIcons\TrainingDummyIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlayerSprites\PlayerSprites.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -43,6 +49,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\TileCell\arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\0_0_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\SaveData\SaveJson\savegame1.json">
@@ -61,6 +70,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_0_0_0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="World\MapTiles\TileJson\MapTile_0_0_0old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

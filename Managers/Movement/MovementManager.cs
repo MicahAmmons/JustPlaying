@@ -6,6 +6,7 @@ using PlayingAround.Entities.Player;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.NPCHouse;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace PlayingAround.Managers.Movement
         public static Queue<CombatMonster> _combatMonsters => CombatGuard.CurrentCombat._turnOrder;
         public static Player _player => PlayerManager.CurrentPlayer;
         public static List<PlayMonsters> _playerMonsters => TileManager.CurrentMapTile.PlayMonstersManager.CurrentPlayMonsters;
-
+        //public static List<NPC> _currentNPCs => NPCManager.CurrentNPCs;
 
         private const int PlayMonsterIconWidth = 64;
         private const int PlayMonsterIconHeight = 64;
@@ -35,6 +36,7 @@ namespace PlayingAround.Managers.Movement
                 case SceneManager.SceneState.Play:
                     UpdatePlayMonstersPosition(gameTime);
                     UpdatePlayerPosition(gameTime);
+                //    UpdateNPCPosition(gameTime);
                     break;
 
                 case SceneManager.SceneState.Combat:
@@ -43,6 +45,29 @@ namespace PlayingAround.Managers.Movement
             }
            
         }
+        //public static void UpdateNPCPosition(GameTime gameTime)
+        //{
+            //foreach (var npc in _currentNPCs)
+        //    {
+        //        if (npc.MovePath == null || npc.MovePath.Count <= 0 || !npc.AllowedToMove) continue;
+        //        Vector2 nextPoint = npc.MovePath[0];
+        //        float speed = npc.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        //        Vector2 direction = nextPoint - npc.currentPos;
+        //        float distance = direction.Length();
+
+        //        if (distance <= speed)
+        //        {
+        //            npc.currentPos = nextPoint;
+        //            npc.MovePath.RemoveAt(0);
+        //        }
+        //        else
+        //        {
+        //            direction.Normalize();
+        //            npc.currentPos += direction * speed;
+        //        }
+        //    }
+        //}
 
         public static void UpdateCombatMonsterPosition(GameTime gameTime)
         {

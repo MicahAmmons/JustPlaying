@@ -54,8 +54,8 @@ namespace PlayingAround.Managers.UI
         {
             _mainFont = AssetManager.GetFont("mainFont");
             _fightBackground = AssetManager.GetTexture("fightBackground");
-            ProximityManager.OnPlayerNearMonster += HandleFightPrompt;
-            ProximityManager.OnPlayerLeaveMonster += HandlePlayerExit;
+            ProximityManager.OnPlayerNearPlayMonster += HandleFightPrompt;
+            ProximityManager.OnPlayerLeavePlayMonster += HandlePlayerExit;
             int screenWidth = ViewportManager.ScreenWidth;
             int screenHeight = ViewportManager.ScreenHeight;
 

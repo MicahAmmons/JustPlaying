@@ -33,22 +33,28 @@ namespace PlayingAround.Managers
 
                 var resistanceValues = new Dictionary<string, float>();
 
-                // ✅ Direct access, assuming they exist
-                var superEffective = relations["superEffective"];
-                resistanceValues[superEffective] = SuperResistant;
+                // Add helper method locally
+                void TryAdd(string key, float value)
+                {
+                    if (relations.TryGetValue(key, out var relatedElement) && !string.IsNullOrEmpty(relatedElement))
+                    {
+                        resistanceValues[relatedElement] = value;
+                    }
+                    else
+                    {
+                        resistanceValues[key] = 0f; // fallback key with 0 value if missing
+                    }
+                }
 
-                var mildlyEffective = relations["mildlyEffective"];
-                resistanceValues[mildlyEffective] = MildlyResistant;
-
-                var superVulnerable = relations["superVulnerable"];
-                resistanceValues[superVulnerable] = SuperVulnerable;
-
-                var mildlyVulnerable = relations["mildlyVulnerable"];
-                resistanceValues[mildlyVulnerable] = MildlyVulnerable;
+                TryAdd("superEffective", SuperResistant);
+                TryAdd("mildlyEffective", MildlyResistant);
+                TryAdd("superVulnerable", SuperVulnerable);
+                TryAdd("mildlyVulnerable", MildlyVulnerable);
 
                 _resistAndImmunityData[elementName] = resistanceValues;
             }
         }
+
 
         public static void GetPlayerResistances(Player player)
         {

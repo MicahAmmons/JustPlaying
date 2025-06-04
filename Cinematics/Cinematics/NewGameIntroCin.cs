@@ -21,8 +21,8 @@ public class NewGameIntroCin : ICinematic
     private List<string> _messages = new()
     {
         "Welcome",
-        "This your the story...",
-        "Your journey into the depths of the chasm",
+        "This is your story...",
+        "A story into the depths of the chasm",
         "Ancient ruins lie in wait...",
         "Echoes whisper of battles past.",
         "Monsters beyond comprhensions",

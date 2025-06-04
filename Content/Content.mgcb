@@ -44,14 +44,6 @@
 /processorParam:TextureFormat=Compressed
 /build:File.spritefont;mainFont.spritefont
 
-#begin TitleScreenButtonFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:TitleScreenButtonFont.spritefont
-
-
 #begin HeroArt/BlonderHero.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -87,6 +79,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterIcons/OozeIcon.png
+
+#begin NPC/DefaultNPC.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:NPC/DefaultNPC.png
+
+#begin MonsterIcons/TrainingDummyIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterIcons/TrainingDummyIcon.png
+
+#begin Songs/newGameIntroCinBackground.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Songs/newGameIntroCinBackground.mp3
+
+#begin Songs/titleScreenBG.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Songs/titleScreenBG.mp3
 
 #begin TileCell/3arrows.png
 /importer:TextureImporter
@@ -136,18 +164,6 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/0_0_0.png
 
-#begin UI/fightBackground.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UI/fightBackground.png
-
 #begin TitleScreen/TitleScreenBackGround.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -160,14 +176,22 @@
 /processorParam:TextureFormat=Color
 /build:TitleScreen/TitleScreenBackGround.png
 
-#begin Songs/newGameIntroCinBackground.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/build:Songs/newGameIntroCinBackground.mp3
+#begin TitleScreenButtonFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:TitleScreenButtonFont.spritefont
 
-#begin Songs/titleScreenBG.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/build:Songs/titleScreenBG.mp3
-
+#begin UI/fightBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/fightBackground.png
 

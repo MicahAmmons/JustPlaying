@@ -25,5 +25,11 @@
       },
       "movementPattern": "idle"
     }
+  ],
+  "TrainingDummy": [
+    {
+      "movementSpeed": 0,
+      "movementPattern": "idle"
+    }
   ]
 }

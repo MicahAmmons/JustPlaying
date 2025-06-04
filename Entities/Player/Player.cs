@@ -156,7 +156,6 @@ namespace PlayingAround.Entities.Player
                 PlayerCurrentTileCell = currentCell;
                 TileCellManager.OnEnterNewCell(currentCell);
                 TileManager.OnEnterNewCell(currentCell);
-                ProximityManager.OnEnterNewCell(currentCell, feet);
             }
         }
 

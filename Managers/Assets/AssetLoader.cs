@@ -24,6 +24,9 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("AcidSpitIcon", "Attacks/acidSpit");
             AssetManager.LoadTexture("acidIcon", "Aspects/acidIcon");
             AssetManager.LoadTexture("TitleScreenBackGround", "TitleScreen/TitleScreenBackGround");
+            AssetManager.LoadTexture("MonsterIcons/TrainingDummyIcon", "MonsterIcons/TrainingDummyIcon");
+            AssetManager.LoadTexture("DefaultNPC", "NPC/DefaultNPC");
+
 
             // Add fonts, sounds, etc. later
         }

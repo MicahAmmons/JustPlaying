@@ -1,0 +1,10 @@
+{
+  "Cale": {
+    "name": "Cale",
+    "drawEnlargementFactor": 35
+  },
+  "Torren": {
+    "name": "Torren",
+    "drawEnlargementFactor": 24
+  }
+}
