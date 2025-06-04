@@ -73,11 +73,6 @@ namespace PlayingAround.Managers.Entities
             _currentPlayer?.Draw(spriteBatch);
         }
 
-        public static void DrawDebug(SpriteBatch spriteBatch, Texture2D debugPixel)
-        {
-            _currentPlayer?.DrawDebugPath(spriteBatch, debugPixel);
-        }
-
 
         public static PlayerSaveData SavePlayer()
         {

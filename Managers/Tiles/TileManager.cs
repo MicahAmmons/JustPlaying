@@ -121,13 +121,11 @@ namespace PlayingAround.Managers.Tiles
         }
 
 
-        public static Vector2 OffSetFromCenterOfDiamond(Vector2 center, int ef = 0)
+        public static Vector2 OffSetFromCenterOfDiamond(Vector2 center, int width = 64, int height = 64)
         {
-            int totalWidth = 64 + ef;
-            int totalHeight = 64 + ef;
-            if (ef == 0) totalHeight = 32;
-            int xOffset = totalWidth / 2;
-            int yOffset = totalHeight;
+
+            int xOffset = width / 2;
+            int yOffset = height /2;
 
             return new Vector2(center.X - xOffset, center.Y - yOffset);
         }

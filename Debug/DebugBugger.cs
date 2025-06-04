@@ -182,7 +182,7 @@ namespace PlayingAround.Debug
         {
             if (!showDebugOutline) return;
 
-            var diamond = PlayerManager.CurrentPlayer.HitBox;
+            var diamond = PlayerManager.CurrentPlayer.DiamondHitBox;
 
             // Draw lines between diamond corners
             for (int i = 0; i < diamond.Length; i++)
@@ -214,15 +214,19 @@ namespace PlayingAround.Debug
         } // Debugging Border Rectangle 
         private static void DrawDebugOverlay(SpriteBatch spriteBatch)
         {
-            Vector2[] feetHitbox = PlayerManager.CurrentPlayer.HitBox;
+            Vector2[] feetHitbox = PlayerManager.CurrentPlayer.DiamondHitBox;
             Vector2 feetCenter = PlayerManager.CurrentPlayer.HitBoxCenter;
             Vector2? clickTarget = PlayerManager.CurrentPlayer.GetDebugClickTarget();
+            int mouseX = InputManager.Mouse.X;
+            int mouseY = InputManager.Mouse.Y;
+
             string hitboxStr = string.Join(", ", feetHitbox.Select(v => $"({v.X:0},{v.Y:0})"));
             string currentMouseTile = _currentCellHover != null
-    ? $"Current Mouse {_currentCellHover.X}, {_currentCellHover.Y}"
-    : "Current Mouse -1, -1";
+                ? $"Current Mouse Tile: {_currentCellHover.X}, {_currentCellHover.Y}"
+                : "Current Mouse Tile: -1, -1";
 
             string debugText =
+                $"Mouse Pos: X={mouseX}, Y={mouseY}\n" +
                 $"Feet Hitbox: {hitboxStr}\n" +
                 $"Feet Center: X={feetCenter.X:0}, Y={feetCenter.Y:0}\n" +
                 $"{currentMouseTile}\n" +
@@ -236,6 +240,7 @@ namespace PlayingAround.Debug
 
             spriteBatch.DrawString(_mainFont, debugText, new Vector2(10, 10), Color.Blue);
         }
+
 
         private static void RecalculateLogLayout()
         {

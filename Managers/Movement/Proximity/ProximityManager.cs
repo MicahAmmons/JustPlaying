@@ -49,7 +49,7 @@ namespace PlayingAround.Managers.Proximity
         }
         private static void UpdatePlayerCords()
         {
-            _playerCurrentCords = _currentPlayer.PlayerCord;
+            _playerCurrentCords = _currentPlayer.CurrentPos;
         }
         public static void IsPlayerInMonsterRange()
         {

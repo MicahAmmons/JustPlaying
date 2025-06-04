@@ -3,7 +3,8 @@
     "mp": 4,
     "movementQuickness": 200,
     "movementPattern": "arc",
-    "drawnEnglargementFactor" :0,
+    "width": 32,
+    "height":  32,
     "attacks": [
       "slam",
       "acidSpit"
@@ -27,7 +28,8 @@
     "mp": 0,
     "movementQuickness": 0,
     "movementPattern": "none",
-    "drawnEnglargementFactor": 100,
+    "width": 80,
+    "height": 80,
     "attacks": [
       "exist"
     ],

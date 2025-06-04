@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,6 @@ namespace PlayingAround.Managers.Entities
                 mon.IconTextureKey = $"MonsterIcons/{monsterKey}Icon";
                 mon.Attacks = AttackManager.GetAttacks(mon.AttackStrings);
                 mon.Resistances = ResistanceManager.GetResistances(mon.ElementType);
-                mon.DrawEnlargementFacetor = mon.DrawEnlargementFacetor;
                 
             }
 
@@ -57,6 +57,7 @@ namespace PlayingAround.Managers.Entities
 
             return comMon;
         }
+     
         public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
         {
             List<CombatMonster> finalMon = new List<CombatMonster>();
@@ -173,8 +174,15 @@ namespace PlayingAround.Managers.Entities
             return result;
         }
 
+        public static Vector2 GetMonsterWidthAndHeight(string name)
+        {
+            return new Vector2(_combatMonsterBaseData[name].Width, _combatMonsterBaseData[name].Height);
+        }
 
-
+        public static string GetMonsterTextureString(string name)
+        {
+            return _combatMonsterBaseData[name].IconTextureKey;
+        }
         public static float GetMonsterDifficulty(CombatMonster mon)
         {
             return mon.MP / 4f * 0.25f + mon.BaseHealth / 10f * 0.5f + mon.ElementalAffinity / 1f * 0.25f;

@@ -12,9 +12,10 @@ namespace PlayingAround.Data.SaveData
         public int Width { get; set; }
         public int Height { get; set; }
         public string TextureKey { get; set; }
-        public float FeetCenterX { get; set; }
-        public float FeetCenterY { get; set; }
+        public float CurrentPosX { get; set; }
+        public float CurrentPosY { get; set; }
         public List<SummonsSaveData> PlayerSummons { get; set; }
+        public int DrawEnlargementFactor { get; set; }
     }
 
 }

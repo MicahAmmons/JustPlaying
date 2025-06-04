@@ -101,18 +101,18 @@ namespace PlayingAround.Managers.Movement
             Vector2 nextPoint = _player.MovementPath[0];
             float speed = _player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            Vector2 direction = nextPoint - _player.PlayerCord;
+            Vector2 direction = nextPoint - _player.CurrentPos;
             float distance = direction.Length();
 
             if (distance <= speed)
             {
-                _player.PlayerCord = nextPoint;
+                _player.CurrentPos = nextPoint;
                 _player.MovementPath.RemoveAt(0);
             }
             else
             {
                 direction.Normalize();
-                _player.PlayerCord += direction * speed;
+                _player.CurrentPos += direction * speed;
             }
         }
      

@@ -6,6 +6,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Stats;
 using System;
@@ -45,7 +46,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("actionOrder")]public List<string> ActionOrderList { get; set; }
 
         [JsonPropertyName("decideWhichAttack")] public List<string> ChooseWhichAttacks { get; set; }
-        [JsonPropertyName("drawnEnglargementFactor")] public int DrawEnlargementFacetor { get; set; }
+        [JsonPropertyName("width")] public int Width { get; set; }
+        [JsonPropertyName("height")] public int Height { get; set; }
 
         public Queue<MonsterActionOrder> BaseOrderOfActions { get; set; }
         public Queue<ChooseWhichMonsterAttack> BaseChooseWhichAttack { get; set; }
@@ -106,6 +108,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             isMonster = false;
             isPlayer = false;
             isDead = false;
+            Width = comMon.Width;
+            Height = comMon.Height;
 
 
         }
@@ -158,7 +162,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             BaseSummonCost = original.BaseSummonCost;
             ActionOrderList = original.ActionOrderList;
             ChooseWhichAttacks = original.ChooseWhichAttacks;
-            DrawEnlargementFacetor = original.DrawEnlargementFacetor;
+            Width = original.Width;
+            Height = original.Height;
             BaseOrderOfActions = ConvertStringOrderOfActionToEnum(original.ActionOrderList);
             BaseChooseWhichAttack = ConvertStringWhichAttackToEnum(original.ChooseWhichAttacks);
 
@@ -196,7 +201,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public CombatMonster (string str)
         {
-            IconTexture = AssetManager.GetTexture( str);
+            string iconTexturePath = CombatMonsterManager.GetMonsterTextureString(str);
+            IconTexture = AssetManager.GetTexture( iconTexturePath);
+            Vector2 widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(str);
+            Width = (int)widthHeight.X;
+            Height = (int)widthHeight.Y;
        
         }
         public CombatMonster(Player.Player player)
@@ -217,6 +226,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             SP = player.stats.SP;
             Resistances = player.PlayerResistances;
             IconTexture = player.Texture;
+            Width = player.PlayerWidth;
+            Height = player.PlayerHeight;
         }
 
 

@@ -11,92 +11,50 @@ namespace PlayingAround.Game.Pathfinding
 {
     public static class CustomPathfinder
     {
-        private static float bufferDistance = 5f;
-        public static List<Vector2> BuildPixelPath(Rectangle start, Vector2? endd)
+        private static float moveStep = 5f;
+        private static float closeEnough = 3f;
+        private const int MaxSteps = 500;
+
+        public static List<Vector2> BuildPixelPath(Vector2 start, Vector2? endd)
         {
             List<Vector2> path = new();
+            if (endd == null) return path;
+
             Vector2 end = (Vector2)endd;
-            float moveStep = start.Height;
-            float closeEnough = (start.Height / 2f) + 1;
+            Vector2 current = start;
 
-            Vector2 feetBoxCenter = new Vector2(start.Left + start.Width / 2f, start.Bottom);
-            Vector2 offset = new Vector2(-start.Width / 2f, -start.Height * 3);
-
-            Rectangle currentRect = start;
-            Rectangle previousRect = start;
-            Vector2 previousCenter = feetBoxCenter;
-
-            int maxSteps = 500;
-            int stepCount = 0;
-
-            while (Vector2.Distance(feetBoxCenter, end) > closeEnough && stepCount++ < maxSteps)
+            int steps = 0;
+            while (Vector2.Distance(current, end) > closeEnough && steps++ < MaxSteps)
             {
-                Vector2 direction = end - feetBoxCenter;
+                Vector2 direction = end - current;
                 if (direction.Length() > 0)
                     direction.Normalize();
 
-                Vector2 moveVector = direction * moveStep;
+                Vector2 next = current + direction * moveStep;
 
-                previousRect = currentRect;
-                previousCenter = feetBoxCenter;
-
-                currentRect = new Rectangle(
-                    (int)(currentRect.X + moveVector.X),
-                    (int)(currentRect.Y + moveVector.Y),
-                    currentRect.Width,
-                    currentRect.Height
-                );
-
-                feetBoxCenter += moveVector;
-
-                if (TileManager.IsCellWalkable(currentRect))
+                var cell = TileManager.GetCell(next);
+                if (cell != null && TileManager.IsCellWalkable(cell.X, cell.Y))
                 {
-                    path.Add(feetBoxCenter);
+                    path.Add(next);
+                    current = next;
                 }
                 else
                 {
-                    // Try smaller steps backward until one fits
-                    for (int i = 1; i <= moveStep; i++)
-                    {
-                        Vector2 trialVector = direction * (moveStep - i);
-                        Rectangle trialRect = new Rectangle(
-                            (int)(previousRect.X + trialVector.X),
-                            (int)(previousRect.Y + trialVector.Y),
-                            previousRect.Width,
-                            previousRect.Height
-                        );
-
-                        Vector2 trialCenter = previousCenter + trialVector;
-
-                        if (TileManager.IsCellWalkable(trialRect))
-                        {
-                            path.Add(trialCenter);
-                            break;
-                        }
-                    }
-
-                    break; // stop stepping forward
+                    break; // first unwalkable cell, stop building path
                 }
             }
 
-            // If final point is close enough, snap to it
-            if (Vector2.Distance(feetBoxCenter, end) <= closeEnough)
+            // If close enough and destination cell is walkable, add the end
+            var endCell = TileManager.GetCell(end);
+            if (Vector2.Distance(current, end) <= closeEnough &&
+                endCell != null && TileManager.IsCellWalkable(endCell.X, endCell.Y))
             {
                 path.Add(end);
             }
 
-            // Offset all path points to match where cursor is
-            for (int i = 0; i < path.Count; i++)
-            {
-                path[i] += offset;
-            }
-
             return path;
         }
-
- 
-
-
-
     }
+
+
 }

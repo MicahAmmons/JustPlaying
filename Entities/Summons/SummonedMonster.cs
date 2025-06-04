@@ -29,9 +29,6 @@ public class SummonedMonster
         _progressionData = progressionData;
         IconTextureString = $"MonsterIcons/{saveData.Name}Icon";
         NumberOfKills = saveData.NumberOfKills;
-     //   CalculateLevel();
-      //  CalculateStats();
-       // CheckMilestones();
     }
 
     //public void CalculateLevel()

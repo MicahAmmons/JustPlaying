@@ -10,8 +10,8 @@
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "FeetCenterX": 960,
-    "FeetCenterY": 540,
+    "CurrentPosX": 960,
+    "CurrentPosY": 540,
     "PlayerSummons": [
       {
         "Name": "Ooze",

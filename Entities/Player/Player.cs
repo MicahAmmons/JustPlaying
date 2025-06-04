@@ -23,17 +23,18 @@ namespace PlayingAround.Entities.Player
         public Texture2D Texture { get; private set; }
         public string Name { get; set; }
         public PlayerStats stats { get; set; }
-        public int PlayerWidth { get; set; } = 64;
-        public int PlayerHeight { get; set; } = 64;
+        public int PlayerWidth { get; set; }
+        public int PlayerHeight { get; set; }
         public Vector2? MoveTarget = null;
         public List<Vector2> MovementPath = new();
-        public Vector2 PlayerCord;
+
         private Vector2? debugClickTarget = null;
+        public Vector2 CurrentPos;
 
         private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
         public Dictionary<string, float> PlayerResistances;
-        public Vector2[] HitBox ;
+        public Vector2[] DiamondHitBox ;
         public Vector2 HitBoxCenter;
         public Rectangle RectHitBox;
         
@@ -41,20 +42,20 @@ namespace PlayingAround.Entities.Player
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var texture = AssetManager.GetTexture(data.TextureKey);
-            float offsetX = data.FeetCenterX - (data.Width / 2);
-            float offsetY = data.FeetCenterY - data.Height;
-            var player = new Player(texture, new Vector2(offsetX, offsetY), data.PlayerSummons, data.Speed)
+
+            var player = new Player(texture,data.PlayerSummons, data.Speed)
             {
+                CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
+                PlayerHeight = data.Height,
                 PlayerWidth = data.Width,
-                PlayerHeight = data.Height
             };
             return player;
+
         }
 
-        public Player(Texture2D idleTexture, Vector2 startPosition, List<SummonsSaveData> summs, float speed = 200f)
+        public Player(Texture2D idleTexture, List<SummonsSaveData> summs, float speed = 200f)
         {
             Texture = idleTexture;
-            PlayerCord = startPosition;
             Speed = speed;
 
             var summonLoader = JsonLoader.LoadSummonProgressions();
@@ -78,7 +79,6 @@ namespace PlayingAround.Entities.Player
         public void Update(GameTime gameTime)
         {
             GetHitbox();
-            GetFeetCenter();
             CheckCurrentPlayerCell();
             PopulateMovementPath();
         }
@@ -89,7 +89,7 @@ namespace PlayingAround.Entities.Player
             {
                 Vector2? endDes = MoveTarget;
                 MoveTarget = null;
-                List<Vector2> list = CustomPathfinder.BuildPixelPath(RectHitBox, endDes);
+                List<Vector2> list = CustomPathfinder.BuildPixelPath(CurrentPos, endDes);
                 if (list.Count > 0 && list != null)
                 {
                     MovementPath = list;
@@ -114,29 +114,11 @@ namespace PlayingAround.Entities.Player
         }
         public void DrawPlayer(SpriteBatch spriteBatch)
         {
-            if (Texture == null) return;
             {
-                Rectangle destination = new Rectangle(
-                    (int)PlayerCord.X,
-                    (int)PlayerCord.Y,
-                    PlayerWidth,
-                    PlayerHeight
-                );
+                Vector2 current = CurrentPos;
+                Vector2 drawOffSet = TileManager.OffSetFromCenterOfDiamond(current,PlayerWidth, PlayerHeight);   
+                Rectangle destination = new Rectangle((int)drawOffSet.X, (int)drawOffSet.Y - (PlayerWidth/2), PlayerWidth, PlayerHeight);
                 spriteBatch.Draw(Texture, destination, Color.White);
-            }
-        }
-
-        public void DrawDebugPath(SpriteBatch spriteBatch, Texture2D debugPixel)
-        {
-            foreach (var point in MovementPath)
-            {
-                Rectangle cellRect = new Rectangle(
-                    (int)point.X,
-                    (int)point.Y,
-                    MapTile.TileWidth,
-                    MapTile.TileHeight
-                );
-                spriteBatch.Draw(debugPixel, cellRect, Color.Yellow * 0.4f);
             }
         }
 
@@ -149,7 +131,7 @@ namespace PlayingAround.Entities.Player
 
         private void CheckCurrentPlayerCell()
         {
-            Vector2 feet = HitBoxCenter;
+            Vector2 feet = CurrentPos;
             var currentCell = TileManager.GetCell(feet);
             if (currentCell != PlayerCurrentTileCell)
             {
@@ -167,17 +149,17 @@ namespace PlayingAround.Entities.Player
             Vector2 left = new Vector2(rect.Left, rect.Center.Y);
             Vector2 right = new Vector2(rect.Right, rect.Center.Y);
 
-            HitBox = new Vector2[] { top, right, bottom, left };
+            DiamondHitBox = new Vector2[] { top, right, bottom, left };
         }
 
         public Rectangle GetRectangleHitBox()
         {
             int hitboxWidth = PlayerWidth;
-            int hitboxHeight = PlayerHeight / 3;
+            int hitboxHeight = PlayerHeight/3;
 
             Rectangle hit = new Rectangle(
-                (int)(PlayerCord.X + (PlayerWidth / 2f) - (hitboxWidth / 2f)),
-                (int)(PlayerCord.Y + PlayerHeight - hitboxHeight),
+                (int)(CurrentPos.X - (PlayerWidth / 2f) ),
+                (int)(CurrentPos.Y - PlayerHeight /4),
                 hitboxWidth,
                 hitboxHeight
             );
@@ -185,21 +167,15 @@ namespace PlayingAround.Entities.Player
             return hit;
         }
 
-        public void GetFeetCenter()
-        {
-            HitBoxCenter = new Vector2(PlayerCord.X + PlayerWidth / 2f, PlayerCord.Y + PlayerHeight);
-        }
         public PlayerSaveData Save()
         {
             var feetCenter = HitBoxCenter;
             return new PlayerSaveData
             {
                 Speed = this.Speed,
-                Width = this.PlayerWidth,
-                Height = this.PlayerHeight,
                 TextureKey = "Hero_Blonde",
-                FeetCenterX = feetCenter.X,
-                FeetCenterY = feetCenter.Y,
+                CurrentPosX = CurrentPos.X,
+                CurrentPosY = CurrentPos.Y,
             };
         }
 

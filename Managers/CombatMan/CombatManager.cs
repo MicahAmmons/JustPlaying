@@ -156,7 +156,6 @@ namespace PlayingAround.Managers.CombatMan
             _playMonsters = playMonsters;
             _player = player;
             _playerMonster = new CombatMonster(player);
-            _playerMonster.DrawEnlargementFacetor = 20;
            // _playerMonster.Initiation = 5;
             SetSpawnableCells();
             SetCombatMonsterStartingPos();
@@ -481,8 +480,10 @@ namespace PlayingAround.Managers.CombatMan
             Texture2D texture = mon.IconTexture;
 
             if (_currentMonster != null && _currentMonster.isSummoned) texture = _currentMonster.IconTexture;
-            Vector2 coords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
-            Rectangle rect = new Rectangle((int)coords.X, (int)coords.Y, 64, 64);
+            Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, mon.Width, mon.Height);
+
+            Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - mon.Height/2, mon.Width, mon.Height);
+
             spriteBatch.Draw(texture, rect, col == default ? Color.White : col);
         }
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
@@ -510,10 +511,10 @@ namespace PlayingAround.Managers.CombatMan
             {
                 if (combatMon.currentPos.X == 0 && combatMon.currentPos.Y == 0) { continue; }
 
-                Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(combatMon.currentPos, combatMon.DrawEnlargementFacetor);
+                Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(combatMon.currentPos, combatMon.Width, combatMon.Height);
 
                 
-                Rectangle destination = new Rectangle((int)drawPoint.X , (int)drawPoint.Y , 64 + combatMon.DrawEnlargementFacetor, 64 + combatMon.DrawEnlargementFacetor  );
+                Rectangle destination = new Rectangle((int)drawPoint.X , (int)drawPoint.Y - combatMon.Height/2   , combatMon.Width , combatMon.Height );
 
                 string textureKey;
                 if (combatMon.isSummoned)
@@ -640,13 +641,10 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (!_summonSpawnableCells.Contains(_currentMouseHoverCell)) return;
 
-            // Step 2: Only if we're hovering over a summonable cell, draw the summon icon
             if (_currentMouseHoverCell != null && _summonSpawnableCells.Contains(_currentMouseHoverCell))
             {
-                Vector2 hoverCoords = TileManager.OffSetFromCenterOfDiamond(_currentMouseHoverCell);
-                Rectangle hoverRect = new Rectangle((int)hoverCoords.X, (int)hoverCoords.Y, _tileWidth, _tileHeight);
 
-                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, new CombatMonster(_playerSelectedSummon.IconTextureString));
+                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, new CombatMonster(_playerSelectedSummon.Name));
             }
         }
 
