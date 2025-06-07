@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
+using PlayingAround.Managers.Dialogue;
 
 
 namespace PlayingAround.Managers.UI
@@ -98,10 +99,11 @@ namespace PlayingAround.Managers.UI
                         {
                             case InteractState.PlayMonster:
                                 SceneManager.SetState(SceneManager.SceneState.Combat);
-                                CombatGuard.CreateNewCombat(_currentPlayMonster, _currentPlayer);
+                                CombatGuard.CreateNewCombat(_currentPlayMonster);
                                 break;
                             case InteractState.NPC:
-
+                                SceneManager.SetState(SceneManager.SceneState.Dialogue);
+                                DialogueManager.StartNewDialogue(_currentNPC.AllDialogue);
                                 break;
                         }
                     }

@@ -13,6 +13,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.EscapeOverseer;
 using PlayingAround.Managers.JukeBox;
@@ -72,7 +73,7 @@ namespace PlayingAround
             JukeBoxManager.InitializeJukeBox();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             DebugBugger.LoadContent(GraphicsDevice);
-
+            DialogueLibrary.LoadContent();
           
             ViewportManager.Initialize(GraphicsDevice);
             TitleScreenManager.LoadContent();
@@ -167,6 +168,9 @@ namespace PlayingAround
                     break;
                 case SceneManager.SceneState.Cinematic:
                     CinematicRuler.Draw(_spriteBatch);
+                    break;
+                    case SceneManager.SceneState.Dialogue:
+                    DialogueManager.Draw(_spriteBatch);
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);

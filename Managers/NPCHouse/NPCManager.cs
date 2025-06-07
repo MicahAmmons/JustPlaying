@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.NPCs;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Utils;
@@ -27,11 +28,11 @@ namespace PlayingAround.Managers.NPCHouse
         public static NPC GenerateNPC(string name, TileCell cell)
         {
             Vector2 currentPos = new Vector2(cell.CenterPoint.X, cell.CenterPoint.Y);
-            
+
             NPC npc = new NPC(_dataNPC[name])
             {
                 currentPos = currentPos,
-               
+                AllDialogue = DialogueLibrary.GetDialogueData(name)
             };
             return npc;
         }
@@ -51,6 +52,7 @@ namespace PlayingAround.Managers.NPCHouse
                 spriteBatch.Draw(npc.texture, rect, Color.White);
             }
         }
+
 
 
 

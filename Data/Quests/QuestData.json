@@ -1,0 +1,23 @@
+{
+  "tutorial": {
+    "id": "tutorial",
+    "name": "Training Begins",
+    "description": "Prove your worth by defeating the training dummy near the camp.",
+    "objectives": [
+      {
+        "id": "training_dummy",
+        "description": "Defeat the training dummy.",
+        "type": "kill",
+        "targetId": "training_dummy",
+        "count": 1
+      }
+    ],
+    "rewards": {
+      "experience": 50,
+      "items": [],
+      "customTriggers": []
+    },
+    "autoStart": false,
+    "autoComplete": false
+  }
+}

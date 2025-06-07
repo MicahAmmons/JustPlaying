@@ -1,0 +1,79 @@
+{
+  "Cale": {
+    "npcId": "Cale",
+    "defaultNode": {
+      "text": "This is my default text.",
+      "responses": [
+        {
+          "text": "Heard",
+          "nextStage": null
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "1",
+        "conditions": [
+          {
+            "type": "QuestNotCompleted",
+            "questId": "tutorial"
+          }
+        ],
+        "text": "This is stage 1 dialogue. Defeat the training dummy.",
+        "responses": [
+          {
+            "text": "Sure, I’ll help.",
+            "nextStage": "accepted"
+          },
+          {
+            "text": "No thanks.",
+            "nextStage": "declined"
+          }
+        ]
+      },
+      {
+        "id": "accepted",
+        "text": "Good! The training dummy is just ahead. Show me what you’ve got.",
+        "effects": [
+          {
+            "type": "startQuest",
+            "questId": "tutorial"
+          }
+        ],
+        "responses": []
+      },
+      {
+        "id": "declined",
+        "text": "Very well. Let me know if you change your mind.",
+        "responses": []
+      },
+      {
+        "id": "2",
+        "conditions": [
+          {
+            "type": "questObjectiveCompleted",
+            "objectiveId": "training_dummy"
+          }
+        ],
+        "text": "You defeated the dummy.",
+        "responses": [
+          {
+            "text": "Next",
+            "nextStage": "2b"
+          }
+        ]
+      },
+      {
+        "id": "2b",
+        "text": "You completed the quest. Good job.",
+        "effects": [
+          {
+            "type": "completeQuest",
+            "questId": "tutorial"
+          }
+        ],
+        "responses": []
+      }
+    ]
+  }
+}

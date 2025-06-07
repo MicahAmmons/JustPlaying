@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.NPCs;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Dialogue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace PlayingAround.Managers.NPCHouse
         [JsonPropertyName("name")] public string name { get; set; }
         [JsonPropertyName("width")] public int width { get; set; }
         [JsonPropertyName("height")] public int height { get; set; }
+        public DialogueData AllDialogue { get; set; }
         public Vector2 currentPos { get; set; }
         public Vector2 drawFromPosition { get; set; }
 

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
+using PlayingAround.Managers.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,11 @@ namespace PlayingAround.Managers.CombatMan
      public static class CombatGuard
     {
         public static CombatManager CurrentCombat {  get; set; }
+        private static Player _currentPlayer => PlayerManager.CurrentPlayer;
 
-        public static void CreateNewCombat(PlayMonsters playMonsters, Player player)
+        public static void CreateNewCombat(PlayMonsters playMonsters)
         {
-            CurrentCombat = new CombatManager(playMonsters, player);
+            CurrentCombat = new CombatManager(playMonsters, _currentPlayer);
             SceneManager.SetState(SceneManager.SceneState.Combat);
         }
 

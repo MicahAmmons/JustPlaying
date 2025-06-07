@@ -13,6 +13,7 @@ using PlayingAround.Managers.UI;
 using PlayingAround.Managers.DayManager;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.Quests;
 
 public class SaveManager
 {
@@ -67,6 +68,7 @@ public class SaveManager
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
         SceneManager.SetState(SceneManager.SceneState.Play);
         DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
+        QuestLibrary.LoadContent();
      //   CombatManager.Initialize();
 
     }

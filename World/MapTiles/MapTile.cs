@@ -78,12 +78,9 @@ namespace PlayingAround.Game.Map
                        PlayMonsterSpawnableCells.Add(tile);
                 if (cellData.NPCName != null)
                 {
-                    NPCCells[tile] = NPCManager.GenerateNPC(tile.NPCName, tile);
-                    foreach (var kvp in NPCCells)
-                    {
-                        NPC npc = kvp.Value;
-                        NPCs.Add(npc);
-                    }
+                    NPC npc = NPCManager.GenerateNPC(tile.NPCName, tile);
+                    NPCCells[tile] = npc;
+                    NPCs.Add(npc);
                 }
 
             }
