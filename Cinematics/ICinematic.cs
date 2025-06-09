@@ -9,6 +9,6 @@ public interface ICinematic
     void Update(GameTime gameTime);
     void Draw(SpriteBatch spriteBatch);
     bool IsFinished { get; }
-    SceneManager.SceneState OnFinishState { get; }
+    SceneState OnFinishState { get; }
     SpriteFont font { get; }
 }

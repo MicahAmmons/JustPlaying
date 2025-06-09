@@ -20,7 +20,7 @@ namespace PlayingAround.Managers.CombatMan
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
             CurrentCombat = new CombatManager(playMonsters, _currentPlayer);
-            SceneManager.SetState(SceneManager.SceneState.Combat);
+            SceneManager.SetState(SceneState.Combat);
         }
 
         public static void Update(GameTime gameTime)

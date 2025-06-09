@@ -2,73 +2,88 @@
   "Cale": {
     "npcId": "Cale",
     "defaultNode": {
-      "text": "This is my default text.",
+      "text": "Hello there. This is my default text.",
       "responses": [
         {
           "text": "Heard",
-          "nextStage": null
+          "nextDialogue": null
         }
       ]
     },
     "stages": [
       {
-        "id": "1",
+        "id": "Cale_QuestOffer",
         "conditions": [
           {
-            "type": "QuestNotCompleted",
-            "questId": "tutorial"
+            "type": "NotStarted",
+            "questId": "training_dummy"
           }
         ],
-        "text": "This is stage 1 dialogue. Defeat the training dummy.",
+        "text": "This is stage 1 dialogue. Will you accept my quest to defeat the training dummy?",
         "responses": [
           {
             "text": "Sure, I’ll help.",
-            "nextStage": "accepted"
+            "nextDialogue": null
           },
           {
             "text": "No thanks.",
-            "nextStage": "declined"
+            "nextDialogue": null
           }
         ]
       },
       {
-        "id": "accepted",
-        "text": "Good! The training dummy is just ahead. Show me what you’ve got.",
-        "effects": [
-          {
-            "type": "startQuest",
-            "questId": "tutorial"
-          }
-        ],
-        "responses": []
-      },
-      {
-        "id": "declined",
-        "text": "Very well. Let me know if you change your mind.",
-        "responses": []
-      },
-      {
-        "id": "2",
+        "id": "Cale_Declined",
         "conditions": [
           {
-            "type": "questObjectiveCompleted",
+            "type": "Declined",
+            "questId": "training_dummy"
+          }
+        ],
+        "text": "Quit playing around, will you defeat the training dummy or not?",
+        "responses": [
+          {
+            "text": "Sure, I’ll help.",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "StartQuest",
+                "questId": "training_dummy"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "Cale_Accepted",
+        "text": "Glad you accepted! The training dummy is just ahead. Show me what you’ve got.",
+        "responses": []
+      },
+      {
+        "id": "Cale_PostKill",
+        "conditions": [
+          {
+            "type": "QuestObjectiveCompleted",
             "objectiveId": "training_dummy"
           }
         ],
-        "text": "You defeated the dummy.",
+        "text": "You defeated the dummy - good stuff.",
         "responses": [
           {
             "text": "Next",
-            "nextStage": "2b"
+            "nextDialogue": "Cale_Complete"
           }
         ]
       },
       {
-        "id": "2b",
+        "id": "Cale_Complete",
         "text": "You completed the quest. Good job.",
         "effects": [
           {
-            "type": "completeQuest",
+            "type": "CompleteQuest",
             "questId": "tutorial"
           }
         ],

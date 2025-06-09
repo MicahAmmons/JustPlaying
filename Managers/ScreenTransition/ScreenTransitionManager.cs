@@ -28,9 +28,9 @@ namespace PlayingAround.Managers
             SceneManager.OnStateChanged += OnSceneStateChanged;
         }
 
-        private static void OnSceneStateChanged(SceneManager.SceneState newState)
+        private static void OnSceneStateChanged(SceneState newState)
         {
-            if (newState == SceneManager.SceneState.SceneTransition)
+            if (newState == SceneState.SceneTransition)
             {
                 _isTransitioning = true;
                 _phase = TransitionPhase.FadeOut;
@@ -75,7 +75,7 @@ namespace PlayingAround.Managers
                         _phase = TransitionPhase.None;
                         _isTransitioning = false;
                         _fadeAlpha = 0f;
-                        SceneManager.SetState(SceneManager.SceneState.Play); // Resume game
+                        SceneManager.SetState(SceneState.Play); // Resume game
                     }
                     break;
             }

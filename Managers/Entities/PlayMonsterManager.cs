@@ -145,7 +145,7 @@ namespace PlayingAround.Managers.Entities
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
+            if (SceneManager.IsState(SceneState.Play))
             {
                 DrawPlayMonsters(spriteBatch);
               

@@ -34,7 +34,7 @@ public class NewGameIntroCin : ICinematic
     private float _messageStartTime = 0f;
 
     public bool IsFinished => _isFinished;
-    public SceneManager.SceneState OnFinishState => SceneManager.SceneState.Play;
+    public SceneState OnFinishState => SceneState.Play;
 
     public SpriteFont font => throw new System.NotImplementedException();
 
@@ -82,7 +82,7 @@ public class NewGameIntroCin : ICinematic
         if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
         {
             SaveManager.LoadCurrentGameSave();
-            SceneManager.SetState(SceneManager.SceneState.Play);
+            SceneManager.SetState(SceneState.Play);
             _isFinished = true;
         }
 

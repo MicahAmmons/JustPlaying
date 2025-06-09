@@ -22,5 +22,16 @@
         "NumberOfKills": 0
       }
     ]
+  },
+  "Quests": {
+    "tutorial": {
+      "stage": "NotStarted",
+      "objectives": {
+        "training_dummy": {
+          "progress": 0,
+          "completed": false
+        }
+      }
+    }
   }
 }

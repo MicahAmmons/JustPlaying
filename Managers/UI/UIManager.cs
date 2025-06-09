@@ -92,18 +92,18 @@ namespace PlayingAround.Managers.UI
         {
             switch (SceneManager.CurrentState)
             {
-                case SceneManager.SceneState.Play:
+                case SceneState.Play:
                     if (_currentInteractState != InteractState.None && InputManager.IsKeyPressed(Keys.F))
                     {
                         switch (_currentInteractState)
                         {
                             case InteractState.PlayMonster:
-                                SceneManager.SetState(SceneManager.SceneState.Combat);
+                                SceneManager.SetState(SceneState.Combat);
                                 CombatGuard.CreateNewCombat(_currentPlayMonster);
                                 break;
                             case InteractState.NPC:
-                                SceneManager.SetState(SceneManager.SceneState.Dialogue);
-                                DialogueManager.StartNewDialogue(_currentNPC.AllDialogue);
+                                SceneManager.SetState(SceneState.Dialogue);
+                                DialogueManager.StartNewDialogue(_currentNPC);
                                 break;
                         }
                     }
@@ -124,8 +124,16 @@ namespace PlayingAround.Managers.UI
             DrawDayCount(spriteBatch);
             DrawEscapeState(spriteBatch);
             DrawInteractText(spriteBatch);
+            if (SceneManager.IsState(SceneState.Dialogue))
+            {
+                DrawCurrentState(spriteBatch);
+            }
         }
-
+        public static void DrawCurrentState(SpriteBatch spriteBatch)
+        {
+            string state = $"{SceneManager.CurrentState}";
+            spriteBatch.DrawString(_mainFont, state, new Vector2(900, 50), ColorPalette.DarkColor);
+        }
         public static void DrawDayCount(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(_mainFont, $"Day {DayManager.DayCycleManager.FetchDays()}", new Vector2(1700, 50 ), ColorPalette.DarkColor);
@@ -236,13 +244,13 @@ namespace PlayingAround.Managers.UI
         }
         private static void UpdatePlayer()
         {
-            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
+            if (SceneManager.IsState(SceneState.Play))
             {
 
                 _playerStats = $"Health: {_currentPlayer.stats.CurrentHealth} / {_currentPlayer.stats.CurrentHealth}\n" +
                                $"Mana: {_currentPlayer.stats.CurrentMana} / {_currentPlayer.stats.CurrentMana}";
             }
-            if (SceneManager.CurrentState == SceneManager.SceneState.Combat)
+            if (SceneManager.IsState(SceneState.Combat))
             {
                 CombatMonster mon = CombatGuard.CurrentCombat.CurrentMonster;
                 _playerMonster = CombatGuard.CurrentCombat.GetPlayerMonster();
@@ -265,7 +273,7 @@ namespace PlayingAround.Managers.UI
         private static string? _interactMessage;
         private static void DrawInteractText(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState != SceneManager.SceneState.Play) return;
+            if (!SceneManager.IsState( SceneState.Play)) return;
             if (_interactMessage != null)
             {
                 int padding = 6;

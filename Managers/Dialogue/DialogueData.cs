@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlayingAround.Managers.Dialogue
 {
@@ -22,33 +19,29 @@ namespace PlayingAround.Managers.Dialogue
     public class DialogueStage : DialogueNode
     {
         public string id { get; set; }
-        public List<DialogueCondition> conditions { get; set; }
-        public List<DialogueEffect> effects { get; set; }
+        public List<DialogueCondition> conditions { get; set; } = new();
+        public List<DialogueEffect> effects { get; set; } = new(); // optional
     }
 
     public class DialogueResponse
     {
         public string text { get; set; }
-        public string nextStage { get; set; }
+        public string nextDialogue { get; set; }
+        public List<DialogueEffect> effects { get; set; } = new(); // allow per-response effects
     }
 
     public class DialogueCondition
     {
         public DialogueConditionType type { get; set; }
         public string questId { get; set; }
-        public string objectiveId { get; set; }
+        public string objectiveId { get; set; } // optional, only needed for objective-related conditions
     }
-
 
     public class DialogueEffect
     {
-        public string type { get; set; } // e.g., "startQuest", "completeQuest", "custom"
-        public string questId { get; set; }
-        public string itemId { get; set; } // optional
-        public string customTrigger { get; set; } // optional
+        public string type { get; set; }         // "StartQuest", "CompleteQuest", etc.
+        public string questId { get; set; }      // used by most effects
+        public string itemId { get; set; }       // optional, for item-based effects
+        public string customTrigger { get; set; } // optional, for game-defined triggers
     }
-
 }
-
-
-

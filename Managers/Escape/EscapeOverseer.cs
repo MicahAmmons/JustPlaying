@@ -10,7 +10,6 @@ namespace PlayingAround.Managers.EscapeOverseer
     {
         public class EscapeOverseer
         {
-            private static SceneManager.SceneState _currentSceneState => SceneManager.CurrentState;
             private static EscapeState _currentEscapeState = EscapeState.None;
             public static EscapeState CurrentEscapeState => _currentEscapeState;
 
@@ -205,15 +204,15 @@ namespace PlayingAround.Managers.EscapeOverseer
             {
                 if (InputManager.IsKeyReleased(Keys.Escape))
                 {
-                    switch (_currentSceneState)
+                    switch (SceneManager.CurrentState)
                     {
-                        case SceneManager.SceneState.Play:
+                        case SceneState.Play:
                             _currentEscapeState = _currentEscapeState == EscapeState.EscapeOutOfCombat
                                 ? EscapeState.None
                                 : EscapeState.EscapeOutOfCombat;
                             break;
 
-                        case SceneManager.SceneState.Combat:
+                        case SceneState.Combat:
                             _currentEscapeState = _currentEscapeState == EscapeState.EscapeInCombat
                                 ? EscapeState.None
                                 : EscapeState.EscapeInCombat;
@@ -242,7 +241,7 @@ namespace PlayingAround.Managers.EscapeOverseer
         }
         public static void ExitToMainMenu()
         {
-            SceneManager.SetState(SceneManager.SceneState.TitleScreen);
+            SceneManager.SetState(SceneState.TitleScreen);
            
         }
     }

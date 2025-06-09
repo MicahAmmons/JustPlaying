@@ -38,7 +38,7 @@ namespace PlayingAround.Managers.Proximity
         public static void Update(GameTime gameTime)
         {
 
-            if (SceneManager.CurrentState == SceneManager.SceneState.Play)
+            if (SceneManager.IsState(SceneState.Play))
             {
                 UpdatePlayerCords();
                 IsPlayerInPlayMonsterRange();

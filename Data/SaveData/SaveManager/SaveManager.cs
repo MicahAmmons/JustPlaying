@@ -14,6 +14,7 @@ using PlayingAround.Managers.DayManager;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.Quests;
+using System.Text.Json.Serialization;
 
 public class SaveManager
 {
@@ -22,30 +23,24 @@ public class SaveManager
     private static readonly string saveFolder = Path.Combine(AppContext.BaseDirectory, "Data", "SaveData", "SaveJson");
     public static GameSaveData CurrentGameSaveData;
     public static string CurrentSaveKey { get; private set; }
-
     public static void LoadAllSaves()
     {
         SaveFiles.Clear();
 
         var saveFiles = Directory.GetFiles(saveFolder, "saveGame*.json");
 
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+        };
 
         foreach (var path in saveFiles)
         {
-            try
-            {
-                var json = File.ReadAllText(path);
-                var data = JsonSerializer.Deserialize<GameSaveData>(json);
+            var json = File.ReadAllText(path);
+            var data = JsonSerializer.Deserialize<GameSaveData>(json, options);
 
-                if (data != null)
-                {
-                    SaveFiles[Path.GetFileNameWithoutExtension(path)] = data;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to load {path}: {ex.Message}");
-            }
+            SaveFiles[Path.GetFileNameWithoutExtension(path)] = data;
         }
     }
 
@@ -58,6 +53,7 @@ public class SaveManager
     public static void LoadCurrentGameSave() 
     { 
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
+        QuestManager.LoadContent(CurrentGameSaveData.Quests);
         TileCellManager.Initialize();
         UIManager.LoadContent();
         ResistanceManager.LoadContent(); // Loads Resistance Data
@@ -66,7 +62,7 @@ public class SaveManager
         AttackManager.LoadContent(); //Loads attack data
         CombatMonsterManager.LoadContent(); // Loads Combat Monster Data
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
-        SceneManager.SetState(SceneManager.SceneState.Play);
+        SceneManager.SetState(SceneState.Play);
         DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
         QuestLibrary.LoadContent();
      //   CombatManager.Initialize();

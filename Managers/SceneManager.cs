@@ -8,16 +8,7 @@ namespace PlayingAround.Managers
 {
     public static class SceneManager
     {
-        public enum SceneState
-        {
-            TitleScreen,
-            Cinematic,
-            LoadingScreen,
-            Play,
-            Dialogue,
-            SceneTransition,
-            Combat
-        }
+
 
         private static SceneState _currentState = SceneState.TitleScreen;
         public static SceneState CurrentState => _currentState;
@@ -28,11 +19,21 @@ namespace PlayingAround.Managers
         {
             if (_currentState == newState)
                 return;
-
+            System.Diagnostics.Debug.WriteLine($"Scene changed to: {newState}");
             _currentState = newState;
             OnStateChanged?.Invoke(_currentState);
         }
 
         public static bool IsState(SceneState state) => _currentState == state;
     }
+}
+public enum SceneState
+{
+    TitleScreen,
+    Cinematic,
+    LoadingScreen,
+    Play,
+    Dialogue,
+    SceneTransition,
+    Combat
 }

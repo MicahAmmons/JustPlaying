@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Player;
+using PlayingAround.Manager;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
+using PlayingAround.Managers.Quests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +22,10 @@ namespace PlayingAround.Managers.Dialogue
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneManager.SceneState.Dialogue)
+            if (SceneManager.IsState(SceneState.Dialogue))
             {
-                DrawCurrentStage(spriteBatch);
+                DialogueBox.Draw(spriteBatch);
             }
-        }
-        private static void DrawCurrentStage(SpriteBatch spriteBatch)
-        {
-
         }
         public static void Update()
         {
@@ -34,12 +33,54 @@ namespace PlayingAround.Managers.Dialogue
         }
         public static void UpdatePlayerInput()
         {
+            if (InputManager.IsLeftClick())
+            {
+                var mousePos = new Vector2(InputManager.Mouse.X, InputManager.Mouse.Y);
+                var selectedIndex = DialogueBox.GetClickedResponseIndex(mousePos);
+
+                if (selectedIndex is int i && i < _currentDialogueStage.responses.Count)
+                {
+                    var response = _currentDialogueStage.responses[i];
+                    HandleResponse(response);
+                }
+            }
 
         }
-        public static void StartNewDialogue(DialogueData dialogue)
+        private static void HandleResponse(DialogueResponse response)
         {
-           _currentDialogue = dialogue;
-            _currentDialogueStage = FetchCurrentStage(dialogue);
+            if (response.effects != null || response.effects.Count <= 0)
+                foreach (var effect in response.effects)
+                    HandleEffect(effect);
+
+            if (!string.IsNullOrEmpty(response.nextDialogue))
+            {
+                _currentDialogueStage = _currentDialogue.stages.FirstOrDefault(s => s.id == response.nextDialogue);
+                DialogueBox.SetDialogue(
+                    _currentPlayer.Name,
+                    _currentDialogueStage.text,
+                    _currentDialogueStage.responses.Select(r => r.text).ToList()
+                );
+            }
+            else
+            {
+                EndDialogue();
+            }
+        }
+
+        public static void HandleEffect(DialogueEffect effect)
+        {
+
+        }
+        public static void StartNewDialogue(NPC npc)
+        {
+            PlayerManager.AllowPlayerMovement(false);
+            _currentDialogue = npc.AllDialogue;
+            _currentDialogueStage = FetchCurrentStage(npc.AllDialogue);
+            DialogueBox.SetDialogue(
+                               npc.name,
+                               _currentDialogueStage.text,
+                               _currentDialogueStage.responses.Select(r => r.text).ToList()
+        );
         }
         private static DialogueStage FetchCurrentStage(DialogueData data)
         {
@@ -55,21 +96,33 @@ namespace PlayingAround.Managers.Dialogue
         {
             foreach (var condition in conditions)
             {
-               switch (condition.type)
+                switch (condition.type)
                 {
-                    case DialogueConditionType.QuestCompleted:
-                        QuestManager.IsQuestComplet();
+                    case DialogueConditionType.NotStarted:
+                        if (QuestManager.GetStage(condition.questId) != QuestStage.NotStarted)
+                            return false;
                         break;
+
                     case DialogueConditionType.QuestNotCompleted:
-
+                        if (QuestManager.IsQuestComplete(condition.questId))
+                            return false;
                         break;
-                    case DialogueConditionType.QuestObjectiveCompleted:
 
-                        break ;
+                    case DialogueConditionType.QuestObjectiveCompleted:
+                        if (!QuestManager.IsObjectiveCompleted(condition.questId, condition.objectiveId))
+                            return false;
+                        break;
+
+                    // Add more conditions as needed...
+
+                    default:
+                        return false; // Unknown condition type = fail safe
                 }
             }
-            return true;
+
+            return true; // All conditions passed
         }
+
         private static void EndDialogue()   
         {
             if (_currentDialogue != null)
@@ -80,6 +133,9 @@ namespace PlayingAround.Managers.Dialogue
             {
                 _currentDialogueStage = null;
             }
+            DialogueBox.ClearDialogue();
+            PlayerManager.AllowPlayerMovement(true);
+            SceneManager.SetState(SceneState.Play);
         }
 
     }
@@ -88,6 +144,8 @@ namespace PlayingAround.Managers.Dialogue
 public enum DialogueConditionType
 {
     None,
+    NotStarted,
+    Declined,
     QuestNotCompleted,
     QuestCompleted,
     QuestObjectiveCompleted

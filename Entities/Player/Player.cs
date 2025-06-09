@@ -105,21 +105,25 @@ namespace PlayingAround.Entities.Player
         {
             switch (SceneManager.CurrentState)
             {
-                case SceneManager.SceneState.Play:
+                case SceneState.Play:
+                    DrawPlayer(spriteBatch);
+                    break;
+                case SceneState.Dialogue:
                     DrawPlayer(spriteBatch);
                     break;
 
             }
 
         }
+
         public void DrawPlayer(SpriteBatch spriteBatch)
         {
-            {
+            
                 Vector2 current = CurrentPos;
                 Vector2 drawOffSet = TileManager.OffSetFromCenterOfDiamond(current,PlayerWidth, PlayerHeight);   
                 Rectangle destination = new Rectangle((int)drawOffSet.X, (int)drawOffSet.Y - (PlayerWidth/2), PlayerWidth, PlayerHeight);
                 spriteBatch.Draw(Texture, destination, Color.White);
-            }
+            
         }
 
 

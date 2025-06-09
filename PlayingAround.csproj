@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\UI\" />
+    <Folder Include="Data\SaveData\SaveStates\" />
     <Folder Include="World\MapTiles\CombatTileCell\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">

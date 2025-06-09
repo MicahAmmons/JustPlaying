@@ -33,14 +33,28 @@ namespace PlayingAround.Managers.Entities
             _currentPlayer.Update(gameTime);
             UpdatePlayerInput(gameTime);
 
-        }
 
+        }
+        public static void AllowPlayerMovement(bool permission)
+        {
+            if (!permission) 
+            { 
+                _currentPlayer.AllowedToMove = false;
+                if (_currentPlayer.MovementPath.Count > 0)
+                {
+                    _currentPlayer.CurrentPos = _currentPlayer.MovementPath[0];
+                }
+                _currentPlayer.MovementPath.Clear();
+                return;
+            }
+            else if (permission) { _currentPlayer.AllowedToMove = true; }
+        }
         public static void UpdatePlayerInput(GameTime gameTime)
         {
 
              switch (SceneManager.CurrentState)
             {
-                case SceneManager.SceneState.Play:
+                case SceneState.Play:
                     MovePlayerInput(gameTime);
                     break;
             }

@@ -31,7 +31,7 @@ public static class CinematicRuler
 
         if (_current.IsFinished)
         {
-            SceneManager.SceneState state = _current.OnFinishState;
+            SceneState state = _current.OnFinishState;
             _current = null;
             _type = CurrentCinematic.None;
             SceneManager.SetState(state);

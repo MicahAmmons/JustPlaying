@@ -9,7 +9,7 @@ namespace PlayingAround.Data.SaveData
 {
     public class DayCycleSaveData
     {
-        [JsonPropertyName("Day")] public float Day {  get; set; }
+        [JsonPropertyName("Day")] public float Day { get; set; }
 
 
     }

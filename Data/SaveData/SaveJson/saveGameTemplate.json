@@ -27,15 +27,15 @@
       }
     ]
   },
-  "Quests": {
-    "tutorial": {
-      "state": "NotStarted",
-      "objectives": {
-        "training_dummy": {
-          "progress": 0,
-          "completed": false
+    "Quests": {
+      "training_dummy": {
+        "stage": "NotStarted",
+        "objectives": {
+          "training_dummy": {
+            "progress": 1,
+            "completed": true
+          }
         }
       }
     }
   }
-}

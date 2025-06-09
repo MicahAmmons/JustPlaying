@@ -33,41 +33,21 @@ namespace PlayingAround.Managers.Movement
         {
             switch (SceneManager.CurrentState)
             {
-                case SceneManager.SceneState.Play:
+                case SceneState.Play:
                     UpdatePlayMonstersPosition(gameTime);
                     UpdatePlayerPosition(gameTime);
                 //    UpdateNPCPosition(gameTime);
                     break;
 
-                case SceneManager.SceneState.Combat:
+                case SceneState.Combat:
                     UpdateCombatMonsterPosition(gameTime);
+                    break;
+                case SceneState.Dialogue:
+                    UpdatePlayMonstersPosition(gameTime);
                     break;
             }
            
         }
-        //public static void UpdateNPCPosition(GameTime gameTime)
-        //{
-            //foreach (var npc in _currentNPCs)
-        //    {
-        //        if (npc.MovePath == null || npc.MovePath.Count <= 0 || !npc.AllowedToMove) continue;
-        //        Vector2 nextPoint = npc.MovePath[0];
-        //        float speed = npc.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        //        Vector2 direction = nextPoint - npc.currentPos;
-        //        float distance = direction.Length();
-
-        //        if (distance <= speed)
-        //        {
-        //            npc.currentPos = nextPoint;
-        //            npc.MovePath.RemoveAt(0);
-        //        }
-        //        else
-        //        {
-        //            direction.Normalize();
-        //            npc.currentPos += direction * speed;
-        //        }
-        //    }
-        //}
 
         public static void UpdateCombatMonsterPosition(GameTime gameTime)
         {

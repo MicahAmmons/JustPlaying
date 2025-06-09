@@ -80,6 +80,7 @@ namespace PlayingAround
             ScreenTransitionManager.Initialize(GraphicsDevice);
             EscapeOverseer.LoadContent();
             NPCManager.LoadContent();
+            DialogueBox.LoadContent();
 
         }
 
@@ -87,7 +88,7 @@ namespace PlayingAround
         {
             if (_timer >= 5.0f)
             {
-                SceneManager.SetState(SceneManager.SceneState.Play);
+                SceneManager.SetState(SceneState.Play);
                 _timer = 0;
                 return;
             }
@@ -99,34 +100,35 @@ namespace PlayingAround
             JukeBoxManager.Update(gameTime);
             InputManager.Update(gameTime);
             EscapeOverseer.Update(gameTime);
+            MovementManager.Update(gameTime);
             switch (SceneManager.CurrentState)
             {
-                case (SceneManager.SceneState.Cinematic):
+                case (SceneState.Cinematic):
                     CinematicRuler.Update(gameTime);
                     break;
-                case (SceneManager.SceneState.TitleScreen):
+                case (SceneState.TitleScreen):
 
                     TitleScreenManager.Update(gameTime);
                     break;
-                case (SceneManager.SceneState.LoadingScreen):
+                case (SceneState.LoadingScreen):
                     WaitUntilLoadingIsDone(delta);
                     break;
-                case (SceneManager.SceneState.Play):
+                case (SceneState.Play):
                     UIManager.Update(gameTime);
                     PlayerManager.Update(gameTime);
                     TileCellManager.Update(gameTime);
                     TileManager.Update(gameTime);
                     ScreenTransitionManager.Update(gameTime);
                     ProximityManager.Update(gameTime);
-
-                    MovementManager.Update(gameTime);
                     DebugBugger.Update(gameTime);
                   
                     break; 
-                case (SceneManager.SceneState.Combat):
+                case (SceneState.Combat):
                     CombatGuard.Update(gameTime);
-                    MovementManager.Update(gameTime);
                     DebugBugger.Update(gameTime);
+                    break;
+                case (SceneState.Dialogue):
+                    DialogueManager.Update();
                     break;
                 
             }
@@ -140,40 +142,47 @@ namespace PlayingAround
         }
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-           
+
             switch (SceneManager.CurrentState)
             {
-                case (SceneManager.SceneState.TitleScreen):
+                case (SceneState.TitleScreen):
                     TitleScreenManager.Draw(_spriteBatch);
                     break;
-                case (SceneManager.SceneState.Play):
+                case (SceneState.Play):
                     TileManager.Draw(_spriteBatch);
                     TileCellManager.Draw(_spriteBatch);
-                    PlayerManager.Draw(_spriteBatch);
                     ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
                     DebugBugger.Draw(_spriteBatch);
+                    PlayerManager.Draw(_spriteBatch);
 
                     break;
-                case (SceneManager.SceneState.LoadingScreen):
+                case (SceneState.LoadingScreen):
                     LoadingScreenManager.Draw(_spriteBatch);
                     break;
 
-                    case (SceneManager.SceneState.Combat):
+                    case (SceneState.Combat):
                     CombatGuard.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
                     DebugBugger.Draw(_spriteBatch);
 
                     break;
-                case SceneManager.SceneState.Cinematic:
+                case SceneState.Cinematic:
                     CinematicRuler.Draw(_spriteBatch);
                     break;
-                    case SceneManager.SceneState.Dialogue:
+                    case SceneState.Dialogue:
+                    TileManager.Draw(_spriteBatch);
+                    TileCellManager.Draw(_spriteBatch);
+                    DebugBugger.Draw(_spriteBatch);
+                    PlayerManager.Draw(_spriteBatch);
                     DialogueManager.Draw(_spriteBatch);
+                    UIManager.Draw(_spriteBatch, GraphicsDevice);
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);
+            
             _spriteBatch.End();
             base.Draw(gameTime);
 
