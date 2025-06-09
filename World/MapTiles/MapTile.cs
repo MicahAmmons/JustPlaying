@@ -33,7 +33,6 @@ namespace PlayingAround.Game.Map
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
         public List<PlayMonsters> PlayMonstersList { get; } = new List<PlayMonsters> ();
-        public PlayMonsterManager PlayMonstersManager { get; } = new PlayMonsterManager();
 
 
 
@@ -85,7 +84,7 @@ namespace PlayingAround.Game.Map
 
             }
 
-            PlayMonstersList = PlayMonstersManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters );
+            PlayMonstersList = PlayMonsterManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters );
         }
 
         public static bool IsDiamondAligned(int x, int y) => (x % 2) == (y % 2);

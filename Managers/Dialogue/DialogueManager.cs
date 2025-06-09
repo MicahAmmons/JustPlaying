@@ -48,7 +48,7 @@ namespace PlayingAround.Managers.Dialogue
         }
         private static void HandleResponse(DialogueResponse response)
         {
-            if (response.effects != null || response.effects.Count <= 0)
+            if (response.effects != null || response.effects.Count >= 0)
                 foreach (var effect in response.effects)
                     HandleEffect(effect);
 
@@ -69,7 +69,12 @@ namespace PlayingAround.Managers.Dialogue
 
         public static void HandleEffect(DialogueEffect effect)
         {
-
+            switch (effect.type)
+            {
+                case DialogueEffectType.SetQuestStage:
+                    QuestManager.UpdateQuestStageTo(effect.questId, effect.stage);
+                    break;
+            }
         }
         public static void StartNewDialogue(NPC npc)
         {
@@ -150,4 +155,8 @@ public enum DialogueConditionType
     QuestCompleted,
     QuestObjectiveCompleted
 
+}
+public enum DialogueEffectType
+{
+    SetQuestStage,
 }

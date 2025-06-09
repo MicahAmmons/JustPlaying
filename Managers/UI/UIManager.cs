@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Dialogue;
+using System.Linq;
 
 
 namespace PlayingAround.Managers.UI
@@ -124,9 +125,45 @@ namespace PlayingAround.Managers.UI
             DrawDayCount(spriteBatch);
             DrawEscapeState(spriteBatch);
             DrawInteractText(spriteBatch);
+            DrawPlayMonsterDetails(spriteBatch);
             if (SceneManager.IsState(SceneState.Dialogue))
             {
                 DrawCurrentState(spriteBatch);
+            }
+        }
+        public static void DrawPlayMonsterDetails(SpriteBatch spriteBatch)
+        {
+            if (PlayMonsterManager.SelectedMonster != null)
+            {
+                PlayMonsters mon = PlayMonsterManager.SelectedMonster;
+                var grouped = mon.Monsters
+                 .GroupBy(mon => mon.NamePlusLevel)
+                 .Select(g => new { NamePlusLevel = g.Key, Count = g.Count() });
+
+                // Compute size of background
+                var font = AssetManager.GetFont("mainFont");
+                int lineHeight = 20;
+                int boxWidth = 160;
+                int boxHeight = grouped.Count() * lineHeight + 10;
+
+                Vector2 anchor = PlayMonsterManager.SelectedMonsterInfoAnchor.Value;
+                Rectangle backgroundBox = new Rectangle((int)anchor.X, (int)anchor.Y, boxWidth, boxHeight);
+
+                // Draw text over it
+                Vector2 textPos = anchor + new Vector2(5, 5);
+
+                foreach (var group in grouped)
+                {
+                    string displayName = group.Count > 1
+                        ? $"({group.Count}) {Pluralize(group.NamePlusLevel)}"
+                        : group.NamePlusLevel;
+
+                    spriteBatch.DrawString(font, displayName, textPos, Color.Green);
+                    textPos.Y += lineHeight;
+                }
+
+
+
             }
         }
         public static void DrawCurrentState(SpriteBatch spriteBatch)
@@ -344,6 +381,15 @@ namespace PlayingAround.Managers.UI
             _interactMessage = message;
         }
 
+        private static string Pluralize(string name)
+        {
+            if (name.EndsWith("y", StringComparison.OrdinalIgnoreCase) && !name.EndsWith("ey"))
+                return name.Substring(0, name.Length - 1) + "ies";
+            else if (name.EndsWith("s"))
+                return name;
+            else
+                return name + "s";
+        }
 
     }
 

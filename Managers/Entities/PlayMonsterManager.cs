@@ -16,18 +16,18 @@ using System.Threading.Tasks;
 using System.IO;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Tiles;
+using System.Net;
 
 namespace PlayingAround.Managers.Entities
 {
-    public class PlayMonsterManager
+    public static class PlayMonsterManager
     {
-        public  List<PlayMonsters> CurrentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
-        public PlayMonsters _selectedMonster = null;
-
-        private const int IconWidth = 64;
-        private const int IconHeight = 64;
-        private Vector2? _selectedMonsterInfoAnchor = null;
         private static Dictionary<string, List<PlayMonsterData>> _playMonsterData;
+
+        private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
+        public static PlayMonsters SelectedMonster = null;
+        public static Vector2? SelectedMonsterInfoAnchor = null;
+
 
 
 
@@ -35,12 +35,12 @@ namespace PlayingAround.Managers.Entities
         {
             _playMonsterData = JsonLoader.LoadPlayMonsterData();
         }
-        public List<PlayMonsters> GeneratePlayMonsters(float diffMax, float diffMin, int maxSpawn, List<TileCell> cells, List<string> monsterString)
+        public static List<PlayMonsters> GeneratePlayMonsters(float diffMax, float diffMin, int maxSpawn, List<TileCell> cells, List<string> monsterString)
         {
             List<PlayMonsters> monsters = new List<PlayMonsters>();
             // Difficulty of the MapTile
             float difficultyMax = diffMax;
-            float difficultyMin = diffMin;   
+            float difficultyMin = diffMin;
             int totalSpawns = maxSpawn;
 
             // Step 1: Create a list of all available CombatMonsters based on the JSON data
@@ -56,7 +56,7 @@ namespace PlayingAround.Managers.Entities
                     Monsters = CombatMonsterManager.BalanceCombatMonsters(monsterOptions, difficultyMax, difficultyMin),
                     SpawnPosition = startPos,
                     CurrentPos = startPos,
-                    
+
 
                 };
                 CombatMonster comMon = newPlayMon.Monsters[0];
@@ -71,7 +71,7 @@ namespace PlayingAround.Managers.Entities
             }
             return monsters;
         }
-        public Vector2 DeterminePlayMonsterSpawn(List<TileCell> cells)
+        public static Vector2 DeterminePlayMonsterSpawn(List<TileCell> cells)
         {
             List<TileCell> tileCells = new List<TileCell>(cells);
 
@@ -82,146 +82,89 @@ namespace PlayingAround.Managers.Entities
 
             return selectedCell.CenterPoint;
         }
-        public void AddPlayMonster(PlayMonsters mon)
-        {
-            CurrentPlayMonsters.Add(mon);
-        }
 
-        private void HandleMonsterSelection()
+        private static void HandleMonsterSelection()
         {
             if (InputManager.IsLeftClick())
             {
                 Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
 
-                foreach (var mon in CurrentPlayMonsters)
+                foreach (var mon in _currentPlayMonsters)
                 {
+                    var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
+                    int width = (int)widthHeight.X;
+                    int height = (int)widthHeight.Y;
+                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.CurrentPos, width, height);
                     Rectangle dest = new Rectangle(
-                        (int)(mon.CurrentPos.X - IconWidth / 2f),
-                        (int)(mon.CurrentPos.Y - IconHeight),
-                        IconWidth,
-                        IconHeight
+                        (int)pos.X,
+                        (int)pos.Y,
+                        width,
+                        height
                     );
 
                     if (dest.Contains(mousePos))
                     {
-                        _selectedMonster = mon;
-                        _selectedMonsterInfoAnchor = mousePos; // Capture click position
+                        SelectedMonster = mon;
+                        SelectedMonsterInfoAnchor = mousePos; // Capture click position
                         return;
                     }
                 }
 
-                _selectedMonster = null;
-                _selectedMonsterInfoAnchor = null;
+                SelectedMonster = null;
+                SelectedMonsterInfoAnchor = null;
             }
         }
 
 
-        public void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime)
+        {
+            HandleUserInput();
+
+            MovePlayMonsters(gameTime);
+        }
+        private static void HandleUserInput()
         {
             HandleMonsterSelection();
-            MovePlayMonsters(gameTime);
-
-            UpdateTileCells();
         }
-
-        public void MovePlayMonsters(GameTime gameTime)
+        public static void MovePlayMonsters(GameTime gameTime)
         {
-            if (CurrentPlayMonsters.Count > 0)
+            if (_currentPlayMonsters.Count > 0)
             {
-                NPCMovement.GetPlayMonsterMovementPath(CurrentPlayMonsters, gameTime);
-            }
-        }
-        public void UpdateTileCells()
-        {
-            foreach (var mon in CurrentPlayMonsters)
-            {
-                mon.CurrentCell = TileManager.GetCell(mon.CurrentPos);
+                NPCMovement.GetPlayMonsterMovementPath(_currentPlayMonsters, gameTime);
             }
         }
 
-        public void ClearMonsters()
+        public static void Draw(SpriteBatch spriteBatch)
         {
-            CurrentPlayMonsters.Clear();
+            DrawPlayMonsters(spriteBatch);
+
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public static void DrawPlayMonsters(SpriteBatch spriteBatch)
         {
-            if (SceneManager.IsState(SceneState.Play))
+            if (_currentPlayMonsters == null || _currentPlayMonsters.Count == 0) return;
+            foreach (var mon in _currentPlayMonsters)
             {
-                DrawPlayMonsters(spriteBatch);
-              
-                if (_selectedMonster != null)
                 {
-                    DrawCombatMonsterInfo(spriteBatch);
-                }
-            }
-        }
-        public void DrawPlayMonsters(SpriteBatch spriteBatch)
-        {
-            if (CurrentPlayMonsters == null || CurrentPlayMonsters.Count == 0) return;
-            foreach (var monster in CurrentPlayMonsters)
-            {
-                if (monster.Icon != null)
-                {
+                    var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
+                    int width = (int)widthHeight.X;
+                    int height = (int)widthHeight.Y;
+                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.CurrentPos, width, height);
                     Rectangle dest = new Rectangle(
-                        (int)(monster.CurrentPos.X - IconWidth / 2f),
-                        (int)(monster.CurrentPos.Y - IconHeight),
-                        IconWidth,
-                        IconHeight
+                        (int)pos.X,
+                        (int)pos.Y,
+                        width,
+                        height
                     );
 
                     // Draw icon
-                    spriteBatch.Draw(monster.Icon, dest, Color.White);
+                    spriteBatch.Draw(mon.Icon, dest, Color.White);
                 }
-            }
-        }
-        private void DrawCombatMonsterInfo(SpriteBatch spriteBatch)
-        {
-            if (_selectedMonster == null || _selectedMonsterInfoAnchor == null)
-                return;
 
-            var grouped = _selectedMonster.Monsters
-    .GroupBy(mon => mon.NamePlusLevel)
-    .Select(g => new { NamePlusLevel = g.Key, Count = g.Count() });
-
-
-
-            // Compute size of background
-            var font = AssetManager.GetFont("mainFont");
-            int lineHeight = 20;
-            int boxWidth = 160;
-            int boxHeight = grouped.Count() * lineHeight + 10;
-
-            Vector2 anchor = _selectedMonsterInfoAnchor.Value;
-            Rectangle backgroundBox = new Rectangle((int)anchor.X, (int)anchor.Y, boxWidth, boxHeight);
-
-            // Draw text over it
-            Vector2 textPos = anchor + new Vector2(5, 5);
-
-            foreach (var group in grouped)
-            {
-                string displayName = group.Count > 1
-                    ? $"({group.Count}) {Pluralize(group.NamePlusLevel)}"
-                    : group.NamePlusLevel;
-
-                spriteBatch.DrawString(font, displayName, textPos, Color.Green);
-                textPos.Y += lineHeight;
             }
 
 
 
+
         }
-
-        private string Pluralize(string name)
-        {
-            // Very basic pluralization. You can enhance this later.
-            if (name.EndsWith("y", StringComparison.OrdinalIgnoreCase) && !name.EndsWith("ey"))
-                return name.Substring(0, name.Length - 1) + "ies";
-            else if (name.EndsWith("s"))
-                return name;
-            else
-                return name + "s";
-        }
-
-
     }
 }

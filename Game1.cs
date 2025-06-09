@@ -154,10 +154,10 @@ namespace PlayingAround
                     TileManager.Draw(_spriteBatch);
                     TileCellManager.Draw(_spriteBatch);
                     ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
-                    UIManager.Draw(_spriteBatch, GraphicsDevice);
                     DebugBugger.Draw(_spriteBatch);
+                    PlayMonsterManager.Draw(_spriteBatch);
                     PlayerManager.Draw(_spriteBatch);
-
+                    UIManager.Draw(_spriteBatch, GraphicsDevice);
                     break;
                 case (SceneState.LoadingScreen):
                     LoadingScreenManager.Draw(_spriteBatch);
@@ -176,9 +176,11 @@ namespace PlayingAround
                     TileManager.Draw(_spriteBatch);
                     TileCellManager.Draw(_spriteBatch);
                     DebugBugger.Draw(_spriteBatch);
+                    PlayMonsterManager.Draw(_spriteBatch);
                     PlayerManager.Draw(_spriteBatch);
-                    DialogueManager.Draw(_spriteBatch);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
+                    DialogueManager.Draw(_spriteBatch);
+                    
                     break;
             }
             EscapeOverseer.Draw(_spriteBatch);

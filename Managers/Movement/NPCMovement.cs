@@ -26,7 +26,7 @@ namespace PlayingAround.Managers.Movement
                     if (HandlePause(mon, gameTime))
                         continue;
 
-                    //Movement.NPCMovement.MoveTowardsNextPathPoint(mon, gameTime);
+                  
                 }
             }
         }
@@ -135,50 +135,8 @@ namespace PlayingAround.Managers.Movement
             }
             else return spawnPoint;
         }
-        //public static void MoveTowardsNextPathPoint(PlayMonsters mon, GameTime gameTime)
-        //{
-        //    if (mon.MovePath == null || mon.MovePath.Count == 0)
-        //        return;
 
-        //    Vector2 nextPoint = mon.MovePath[0];
-        //    float speed = mon.MovementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        //    Vector2 direction = nextPoint - mon.CurrentPos;
-        //    float distance = direction.Length();
-
-        //    if (distance <= speed)
-        //    {
-        //        mon.CurrentPos = nextPoint;
-        //        mon.MovePath.RemoveAt(0);
-        //    }
-        //    else
-        //    {
-        //        direction.Normalize();
-        //        mon.CurrentPos += direction * speed;
-        //    }
-        //}
-        public static void MoveTowardsNextPathPoint(CombatMonster mon, List<Vector2> MovePath, GameTime gameTime)
-        {
-            if (MovePath == null || MovePath.Count == 0)
-                return;
-
-            Vector2 nextPoint = MovePath[0];
-            float speed = mon.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            Vector2 direction = nextPoint - mon.currentPos;
-            float distance = direction.Length();
-
-            if (distance <= speed)
-            {
-                mon.currentPos = nextPoint;
-                MovePath.RemoveAt(0);
-            }
-            else
-            {
-                direction.Normalize();
-                mon.currentPos += direction * speed;
-            }
-        }
+     
         public static bool HandlePause(PlayMonsters mon, GameTime gameTime)
         {
             if (mon.IsPaused)

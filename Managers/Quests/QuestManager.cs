@@ -31,6 +31,10 @@ namespace PlayingAround.Managers.Quests
         {
             return _questSaveData[questId].objectives[objectiveId].completed;
         }
+        internal static void UpdateQuestStageTo(string questID,  string stage)
+        {
+            _questSaveData[questID].stage = stage;
+        }
     }
 }
 

@@ -115,7 +115,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
 
 
-        public TileCell CurrentCell { get; set; }
+//public TileCell CurrentCell { get; set; }
         public int TurnNumber { get; set; } = 0;
         public float MaxMana { get; set; }
         public float CurrentMana { get; set; }

@@ -21,7 +21,7 @@ namespace PlayingAround.Managers.Movement
 
         public static Queue<CombatMonster> _combatMonsters => CombatGuard.CurrentCombat._turnOrder;
         public static Player _player => PlayerManager.CurrentPlayer;
-        public static List<PlayMonsters> _playerMonsters => TileManager.CurrentMapTile.PlayMonstersManager.CurrentPlayMonsters;
+        public static List<PlayMonsters> _playerMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         //public static List<NPC> _currentNPCs => NPCManager.CurrentNPCs;
 
         private const int PlayMonsterIconWidth = 64;

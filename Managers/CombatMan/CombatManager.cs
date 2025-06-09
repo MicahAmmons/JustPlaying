@@ -474,12 +474,10 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentMouseHoverCell != null && _currentMouseHoverCell.PlayerSpawnable)
                 DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, _playerMonster);
         }
-        private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, CombatMonster mon, Color col = default )
+        private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, CombatMonster mon = null, Color col = default )
         {
-            if (mon == null) return;
+            if (mon == null) mon = _currentMonster;
             Texture2D texture = mon.IconTexture;
-
-            if (_currentMonster != null && _currentMonster.isSummoned) texture = _currentMonster.IconTexture;
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, mon.Width, mon.Height);
 
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - mon.Height/2, mon.Width, mon.Height);
@@ -595,7 +593,7 @@ namespace PlayingAround.Managers.CombatMan
 
                 if (_currentMouseHoverCell != null && _playerMoveableCells.Contains(_currentMouseHoverCell))
                 {
-                    DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, _playerMonster);
+                    DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
                 }
             }
         }
@@ -1763,11 +1761,9 @@ namespace PlayingAround.Managers.CombatMan
             }
 
             CombatMonster comSumMon = (CombatMonsterManager.SummonMonsterToCombat(sumMon));
-            comSumMon.CurrentCell = cell;
             comSumMon.currentPos = cell.CenterPoint;
             AddComMonToTurnOrder(comSumMon);
             mon.CurrentSP -= comSumMon.BaseSummonCost;
-            //maby pause the state -turn it to executing action before
         }
         private void AddComMonToTurnOrder(CombatMonster mon)
         {

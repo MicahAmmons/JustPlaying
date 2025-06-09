@@ -39,8 +39,9 @@ namespace PlayingAround.Managers.Dialogue
 
     public class DialogueEffect
     {
-        public string type { get; set; }         // "StartQuest", "CompleteQuest", etc.
+        public DialogueEffectType type { get; set; }         // "StartQuest", "CompleteQuest", etc.
         public string questId { get; set; }      // used by most effects
+        public string stage { get; set; }
         public string itemId { get; set; }       // optional, for item-based effects
         public string customTrigger { get; set; } // optional, for game-defined triggers
     }

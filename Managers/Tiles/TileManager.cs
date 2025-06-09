@@ -253,12 +253,10 @@ namespace PlayingAround.Managers.Tiles
         {
             spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
 
-            CurrentMapTile.PlayMonstersManager.Draw(spriteBatch);
             NPCManager.Draw(spriteBatch);
         }
         public static void Update(GameTime gameTime)
         {
-            CurrentMapTile.PlayMonstersManager.Update(gameTime);
         }
 
 
