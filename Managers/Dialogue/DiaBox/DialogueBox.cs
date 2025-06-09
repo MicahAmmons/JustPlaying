@@ -49,7 +49,7 @@ namespace PlayingAround.Managers.Dialogue
 
         public static void SetDialogue(string speaker, string text, List<string> responses)
         {
-            _speakerName = speaker;
+            if (speaker != null) { _speakerName = speaker; }
             _text = text;
             _responses = responses;
         }
@@ -90,7 +90,7 @@ namespace PlayingAround.Managers.Dialogue
 
             // Draw main text
             Vector2 textPos = new Vector2(_boxRect.X + 20, _boxRect.Y + 50);
-            spriteBatch.DrawString(_font, _text, textPos, Color.LightGray);
+            spriteBatch.DrawString(_font, SanitizeText(_text), textPos, Color.LightGray);
 
             spriteBatch.DrawString(_font, SanitizeText(_speakerName), namePos, Color.White);
             spriteBatch.DrawString(_font, SanitizeText(_text), textPos, Color.LightGray);

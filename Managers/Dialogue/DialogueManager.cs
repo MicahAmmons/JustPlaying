@@ -56,7 +56,7 @@ namespace PlayingAround.Managers.Dialogue
             {
                 _currentDialogueStage = _currentDialogue.stages.FirstOrDefault(s => s.id == response.nextDialogue);
                 DialogueBox.SetDialogue(
-                    _currentPlayer.Name,
+                    null,
                     _currentDialogueStage.text,
                     _currentDialogueStage.responses.Select(r => r.text).ToList()
                 );
@@ -117,6 +117,10 @@ namespace PlayingAround.Managers.Dialogue
                         if (!QuestManager.IsObjectiveCompleted(condition.questId, condition.objectiveId))
                             return false;
                         break;
+                        case DialogueConditionType.Declined:
+                        if (QuestManager.GetStage(condition.questId) == QuestStage.Declined)
+                            return true;
+                        break;
 
                     // Add more conditions as needed...
 
@@ -151,6 +155,7 @@ public enum DialogueConditionType
     None,
     NotStarted,
     Declined,
+    Accepted,
     QuestNotCompleted,
     QuestCompleted,
     QuestObjectiveCompleted
@@ -159,4 +164,6 @@ public enum DialogueConditionType
 public enum DialogueEffectType
 {
     SetQuestStage,
+    CompleteQuest,
+    StartQuest
 }
