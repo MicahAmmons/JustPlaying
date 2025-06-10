@@ -58,16 +58,34 @@ namespace PlayingAround.Managers.Quests
         internal static void UpdateKillCounts(string monsterName, int count)
         {
             if (!_killObjectiveIndex.ContainsKey(monsterName)) return;
+            
             foreach (var (questId, objectiveId) in _killObjectiveIndex[monsterName])
             {
-                var objective = _questSaveData[questId].objectives[objectiveId];
+                var quest = _questSaveData[questId];
+                var objective = quest.objectives[objectiveId];
+                if (quest.stage is QuestStage.NotStarted or QuestStage.Completed or QuestStage.Declined)
+                    continue;
+                if (!ObjectiveIsActiveForStage(quest.stage, objective.activationStage))
+                    continue;
                 if (objective.completed) continue;
 
                 objective.progress += count;
                 if (objective.progress >= objective.requiredAmount)
                     objective.completed = true;
+                if (objective.completed)
+                    UpdateQuestStageTo(questId, QuestStage.ObjectiveCompleted);
             }
         }
+        private static bool ObjectiveIsActiveForStage(QuestStage current, ObjectiveActivationStage required)
+        {
+            return required switch
+            {
+                ObjectiveActivationStage.Always => true,
+                ObjectiveActivationStage.OnAccepted => current == QuestStage.Accepted,
+                _ => false
+            };
+        }
+
     }
 }
 
@@ -75,6 +93,7 @@ public enum QuestStage
 {
     NotStarted,
     Accepted,
+
     ObjectiveCompleted,
     Completed,
     Failed,           // optional, in case you support quest failure

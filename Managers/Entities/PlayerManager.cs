@@ -64,7 +64,7 @@ namespace PlayingAround.Managers.Entities
         }
         public static void UpdatePlayerStatsFromCombat(CombatMonster playerMonster)
         {
-            _currentPlayer.stats.CurrentHealth = playerMonster.CurrentHP;
+            _currentPlayer.stats.CurrentHealth = playerMonster.CurrentHealth;
         }
         public static void MovePlayerInput(GameTime gameTime)
         {

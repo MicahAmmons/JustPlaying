@@ -105,8 +105,8 @@
         "conditions": [
           {
             "type": "QuestObjectiveCompleted",
-            "questId":  "training_dummy",
-            "objectiveId": "training_dummy"
+            "questId": "training_dummy",
+            "objectiveId": "training_dummy_defeated"
           }
         ],
         "text": "You defeated the dummy - good stuff.",
@@ -126,7 +126,12 @@
             "questId": "tutorial"
           }
         ],
-        "responses": []
+        "responses": [
+          {
+            "text" "Thanks brah",
+            "nextDialogue": null
+          }
+        ]
       }
     ]
   }

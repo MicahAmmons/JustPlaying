@@ -27,11 +27,13 @@
     "training_dummy": {
       "stage": "NotStarted",
       "objectives": {
-        "killCount": {
+        "training_dummy_defeated": {
           "killId": "training_dummy",
           "progress": 0,
           "completed": false,
-          "requiredAmount":  2
+          "activeStage": "KillCount",
+          "activationStage": "OnAccepted",
+          "requiredAmount":  1
         }
       }
     }

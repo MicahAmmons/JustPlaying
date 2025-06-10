@@ -18,14 +18,20 @@ namespace PlayingAround.Data.SaveData
         public string killId { get; set; }
         public int progress { get; set; } = 0;
         public bool completed { get; set; } = false;
-
+        public ObjectiveActivationStage activationStage { get; set; }
 
         // Optional if you want runtime checks:
         public int requiredAmount { get; set; }
+        
     }
 
 
 
+}
+public enum ObjectiveActivationStage
+{
+    Always,
+    OnAccepted,
 }
 public enum QuestObjectiveType
 {

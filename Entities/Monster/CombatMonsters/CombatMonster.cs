@@ -55,7 +55,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public Queue<MonsterActionOrder> CurrentOrderOfActions {  get; set; } = new Queue<MonsterActionOrder>();
         public Queue<ChooseWhichMonsterAttack> CurrentChooseWhichAttack {  get; set; } = new Queue<ChooseWhichMonsterAttack> ();
         public float CurrentMP;
-        public float CurrentHP;
         public bool CurrentIsPlayerControlled;
 
 
