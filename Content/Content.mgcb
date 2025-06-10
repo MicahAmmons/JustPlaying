@@ -80,18 +80,6 @@
 /processorParam:TextureFormat=Color
 /build:MonsterIcons/OozeIcon.png
 
-#begin NPC/DefaultNPC.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:NPC/DefaultNPC.png
-
 #begin MonsterIcons/TrainingDummyIcon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -103,6 +91,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterIcons/TrainingDummyIcon.png
+
+#begin NPC/DefaultNPC.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:NPC/DefaultNPC.png
 
 #begin Songs/newGameIntroCinBackground.mp3
 /importer:Mp3Importer
@@ -140,7 +140,7 @@
 /processorParam:TextureFormat=Color
 /build:TileCell/arrow.png
 
-#begin Tiles/0_-1_0.png
+#begin Tiles/-1_0_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -150,7 +150,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/0_-1_0.png
+/build:Tiles/-1_0_0.png
+
+#begin Tiles/-1_0_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/-1_0_0.png
 
 #begin Tiles/0_0_0.png
 /importer:TextureImporter

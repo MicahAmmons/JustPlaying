@@ -166,5 +166,10 @@ namespace PlayingAround.Managers.Entities
 
 
         }
+
+        internal static void RemovePlayerMonster(PlayMonsters playMonsters)
+        {
+            _currentPlayMonsters.Remove(playMonsters);
+        }
     }
 }

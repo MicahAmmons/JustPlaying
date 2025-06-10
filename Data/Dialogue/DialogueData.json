@@ -16,7 +16,7 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "training_dummy",
+            "questId": "getting_started",
             "questStage": "NotStarted"
           }
         ],
@@ -28,7 +28,7 @@
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questID": "training_dummy",
+                "questID": "getting_started",
                 "stage": "Accepted"
               }
             ]
@@ -39,7 +39,7 @@
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questId": "training_dummy",
+                "questId": "getting_started",
                 "stage": "Declined"
               }
             ]
@@ -51,7 +51,7 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "training_dummy",
+            "questId": "getting_started",
             "questStage": "Declined"
           }
         ],
@@ -63,7 +63,7 @@
             "effects": [
               {
                 "type": "StartQuest",
-                "questId": "training_dummy"
+                "questId": "getting_started"
               }
             ]
           },
@@ -88,7 +88,7 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "training_dummy",
+            "questId": "getting_started",
             "questStage": "Accepted"
           }
         ],
@@ -104,10 +104,11 @@
         "id": "4",
         "conditions": [
           {
-            "type": "QuestObjectiveCompleted",
-            "questId": "training_dummy",
-            "objectiveId": "training_dummy_defeated"
+            "type": "QuestStage",
+            "questId": "getting_started",
+            "questStage": "ObjectiveCompleted"
           }
+
         ],
         "text": "You defeated the dummy - good stuff.",
         "responses": [
@@ -120,16 +121,17 @@
       {
         "id": "4b",
         "text": "You completed the quest. Good job.",
-        "effects": [
-          {
-            "type": "CompleteQuest",
-            "questId": "tutorial"
-          }
-        ],
+
         "responses": [
           {
-            "text" "Thanks brah",
-            "nextDialogue": null
+            "text": "Thanks brah",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "CompleteQuest",
+                "questId": "getting_started"
+              }
+            ]
           }
         ]
       }

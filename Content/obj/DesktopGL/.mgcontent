@@ -11,11 +11,12 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/TrainingDummyIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/DefaultNPC.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Songs/newGameIntroCinBackground.mp3</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Songs/titleScreenBG.mp3</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/3arrows.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/arrow.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_-1_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreen/TitleScreenBackGround.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreenButtonFont.spritefont</File>
@@ -25,6 +26,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

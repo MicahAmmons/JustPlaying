@@ -37,7 +37,6 @@ namespace PlayingAround.Managers.Dialogue
             {
                 var mousePos = new Vector2(InputManager.Mouse.X, InputManager.Mouse.Y);
                 var selectedIndex = DialogueBox.GetClickedResponseIndex(mousePos);
-
                 if (selectedIndex is int i && i < _currentDialogueStage.responses.Count)
                 {
                     var response = _currentDialogueStage.responses[i];
@@ -92,11 +91,12 @@ namespace PlayingAround.Managers.Dialogue
             PlayerManager.AllowPlayerMovement(false);
             _currentDialogue = npc.AllDialogue;
             _currentDialogueStage = FetchCurrentStage(npc.AllDialogue);
-            DialogueBox.SetDialogue(
-                               npc.name,
-                               _currentDialogueStage.text,
-                               _currentDialogueStage.responses.Select(r => r.text).ToList()
-        );
+                DialogueBox.SetDialogue(
+                                   npc.name,
+                                   _currentDialogueStage.text,
+                                   _currentDialogueStage.responses.Select(r => r.text).ToList()
+                                   );
+            
         }
         private static DialogueStage FetchCurrentStage(DialogueData data)
         {
@@ -106,7 +106,7 @@ namespace PlayingAround.Managers.Dialogue
                 if (ConditionsAreMet(stage.conditions))
                     return stage;
             }
-            return null;
+            return _currentDialogue.defaultNode;
         }
         private static bool ConditionsAreMet(List<DialogueCondition> conditions)
         {
@@ -116,10 +116,6 @@ namespace PlayingAround.Managers.Dialogue
                 {
                     case DialogueConditionType.QuestStage:
                         if (QuestManager.GetStage(condition.questId) == condition.questStage)
-                            return true;
-                        break;
-                        case DialogueConditionType.QuestObjectiveCompleted:
-                        if (QuestManager.IsObjectiveCompleted(condition.questId, condition.objectiveId))
                             return true;
                         break;
 
@@ -155,7 +151,6 @@ public enum DialogueConditionType
 {
     None,
     QuestStage,
-    QuestObjectiveCompleted
 
 }
 public enum DialogueEffectType

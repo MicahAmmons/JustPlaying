@@ -107,7 +107,7 @@ namespace PlayingAround.Managers.CombatMan
         private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
         private Rectangle _exitCombatButtonRect = new Rectangle(885, 580, 150, 50);
 
-        private PlayMonsters _playMonsters; // kept as reference as needed
+        public PlayMonsters PlayMonsters; // kept as reference as needed
         private Player _player; // reference of player to update stats at end
         private List<TileCell> _playerSpawnableCells = new List<TileCell>();
         private List<TileCell> _monsterSpawnableCells = new List<TileCell>();
@@ -154,7 +154,7 @@ namespace PlayingAround.Managers.CombatMan
             _tileHeight = MapTile.TileHeight;
             _tileWidth = MapTile.TileWidth;
 
-            _playMonsters = playMonsters;
+            PlayMonsters = playMonsters;
             _player = player;
             PlayerMonster = new CombatMonster(player);
            // _playerMonster.Initiation = 5;
@@ -200,7 +200,7 @@ namespace PlayingAround.Managers.CombatMan
         private void SetTurnOrder()
         {
             List<CombatMonster> allCombatants = new List<CombatMonster>();
-            allCombatants.AddRange(_playMonsters.Monsters);
+            allCombatants.AddRange(PlayMonsters.Monsters);
             allCombatants.Add(PlayerMonster);
             allCombatants.AddRange(_summonedMonsters);
             allCombatants.Sort((a, b) => b.Initiation.CompareTo((int)a.Initiation));
@@ -216,10 +216,10 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void SetCombatMonsterStartingPos()
         {
-            if (_monsterSpawnableCells.Count < _playMonsters.Monsters.Count) return;
+            if (_monsterSpawnableCells.Count < PlayMonsters.Monsters.Count) return;
             Random ran = new Random();
             List<TileCell> spawnableCells = new List<TileCell>(_monsterSpawnableCells);
-            List<CombatMonster> comMon = new List<CombatMonster>(_playMonsters.Monsters);
+            List<CombatMonster> comMon = new List<CombatMonster>(PlayMonsters.Monsters);
             do
             {
                 foreach (var mon in comMon)
@@ -231,7 +231,7 @@ namespace PlayingAround.Managers.CombatMan
                     spawnableCells.RemoveAt(index);
                 }
 
-            } while (spawnableCells.Count < spawnableCells.Count - _playMonsters.Monsters.Count);
+            } while (spawnableCells.Count < spawnableCells.Count - PlayMonsters.Monsters.Count);
         }
         private void InitilizeUIElements()
         {

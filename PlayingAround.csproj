@@ -18,6 +18,7 @@
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
     <None Remove="Content\TileCell\3arrows.png" />
     <None Remove="Content\TileCell\arrow.png" />
+    <None Remove="Content\Tiles\-1_0_0.png" />
     <None Remove="Content\Tiles\0_0_0.png" />
     <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
@@ -25,7 +26,8 @@
     <None Remove="Data\SaveData\SaveJson\saveGameTemplate.json" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
-    <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0.json" />
+    <None Remove="World\MapTiles\TileJson\MapTile_-1_0_0.json" />
+    <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0OLDOLD.json" />
     <None Remove="World\MapTiles\TileJson\MapTile_0_0_0.json" />
     <None Remove="World\MapTiles\TileJson\MapTile_0_0_0old.json" />
   </ItemGroup>
@@ -51,6 +53,9 @@
     <Content Include="Content\TileCell\arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\-1_0_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Tiles\0_0_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -66,7 +71,10 @@
     <Content Include="Data\SaveData\SaveJson\saveGameTemplate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="World\MapTiles\TileJson\MapTile_0_-1_0.json">
+    <Content Include="World\MapTiles\TileJson\MapTile_-1_0_0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="World\MapTiles\TileJson\MapTile_0_-1_0OLDOLD.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_0_0_0.json">

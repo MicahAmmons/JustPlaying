@@ -34,6 +34,6 @@ public enum SceneState
     LoadingScreen,
     Play,
     Dialogue,
-    SceneTransition,
+    MapTileTransition,
     Combat
 }

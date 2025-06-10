@@ -10,6 +10,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Utils;
@@ -27,12 +28,12 @@ namespace PlayingAround.Managers.Tiles
         {
 
             LoadMapTileById(id);
-            ScreenTransitionManager.OnFadeToBlackComplete += () =>
+            MapTileTransitionManager.OnFadeToBlackComplete += (NextTileData data) =>
             {
-                var next = TileCellManager.PlayerCurrentCell.NextTile;
-                string id = $"{next.NextX}_{next.NextY}_{next.NextZ}";
-
-                LoadMapTileById(id);
+                string nextId = $"{data.NextX}_{data.NextY}_{data.NextZ}";
+                
+                PlayerManager.CurrentPlayer.NewMapTilePosition(DirectionTraveledForNewMapTile(data));
+                LoadMapTileById(nextId);
             };
 
         }
@@ -208,6 +209,21 @@ namespace PlayingAround.Managers.Tiles
             }
 
             return result;
+        }
+        public static Vector2 DirectionTraveledForNewMapTile(NextTileData data)
+        {
+            int currentTileX = CurrentMapTile.x;
+            int currentTileY = CurrentMapTile.y;
+            int nextTileX = data.NextX;
+            int nextTileY = data.NextY;
+
+            int dx = nextTileX - currentTileX;
+            int dy = nextTileY - currentTileY;
+
+            dx = Math.Clamp(dx, -1, 1);
+            dy = Math.Clamp(dy, -1, 0);
+
+            return new Vector2(dx, dy);
         }
 
         public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps, bool includeMonsterTiles = false)

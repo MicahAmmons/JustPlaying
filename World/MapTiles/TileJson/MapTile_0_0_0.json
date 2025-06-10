@@ -3904,7 +3904,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4058,7 +4058,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4222,7 +4222,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4376,7 +4376,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4540,7 +4540,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4694,7 +4694,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -4858,7 +4858,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },
@@ -5012,7 +5012,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": {
-        "x": 0,
+        "x": -1,
         "y": 0,
         "z": 0
       },

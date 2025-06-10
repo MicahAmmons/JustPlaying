@@ -74,10 +74,9 @@ namespace PlayingAround.Managers.Entities
                 {
                     Vector2 target = new Vector2(InputManager.MouseX , InputManager.MouseY);
                     TileCell cell = TileManager.GetCell(target);
-                    if (TileManager.IsCellWalkable(cell.X,cell.Y))
-                    {
+
                         _currentPlayer.UpdatePlayerEndPoint(target);
-                    }
+
       
                 }
                 if (InputManager.IsKeyPressed(Keys.Space))
@@ -92,7 +91,7 @@ namespace PlayingAround.Managers.Entities
             _currentPlayer?.Draw(spriteBatch);
         }
 
-
+        
         public static PlayerSaveData SavePlayer()
         {
             PlayerSaveData saveData = new PlayerSaveData();

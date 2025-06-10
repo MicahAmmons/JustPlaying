@@ -24,17 +24,13 @@
     ]
   },
   "Quests": {
-    "training_dummy": {
+    "getting_started": {
       "stage": "NotStarted",
-      "objectives": {
+            "objectives": {
         "training_dummy_defeated": {
-          "killId": "training_dummy",
           "progress": 0,
-          "completed": false,
-          "activeStage": "KillCount",
-          "activationStage": "OnAccepted",
-          "requiredAmount":  1
-        }
+          "completed": false
+                                   }
       }
     }
   }

@@ -77,7 +77,7 @@ namespace PlayingAround
           
             ViewportManager.Initialize(GraphicsDevice);
             TitleScreenManager.LoadContent();
-            ScreenTransitionManager.Initialize(GraphicsDevice);
+            MapTileTransitionManager.Initialize(GraphicsDevice);
             EscapeOverseer.LoadContent();
             NPCManager.LoadContent();
             DialogueBox.LoadContent();
@@ -88,7 +88,8 @@ namespace PlayingAround
         {
             if (_timer >= 5.0f)
             {
-                SceneManager.SetState(SceneState.Play);
+               
+               SceneManager.SetState(SceneState.Play);
                 _timer = 0;
                 return;
             }
@@ -116,9 +117,9 @@ namespace PlayingAround
                 case (SceneState.Play):
                     UIManager.Update(gameTime);
                     PlayerManager.Update(gameTime);
-                    TileCellManager.Update(gameTime);
+                   // TileCellManager.Update(gameTime);
                     TileManager.Update(gameTime);
-                    ScreenTransitionManager.Update(gameTime);
+                    MapTileTransitionManager.Update(gameTime);
                     ProximityManager.Update(gameTime);
                     DebugBugger.Update(gameTime);
                   
@@ -129,6 +130,10 @@ namespace PlayingAround
                     break;
                 case (SceneState.Dialogue):
                     DialogueManager.Update();
+                    break;
+                    case (SceneState.MapTileTransition):
+                    MovementManager.Update(gameTime);
+                    MapTileTransitionManager.Update(gameTime);
                     break;
                 
             }
@@ -152,8 +157,8 @@ namespace PlayingAround
                     break;
                 case (SceneState.Play):
                     TileManager.Draw(_spriteBatch);
-                    TileCellManager.Draw(_spriteBatch);
-                    ScreenTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+                   // TileCellManager.Draw(_spriteBatch);
+                    MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
                     DebugBugger.Draw(_spriteBatch);
                     PlayMonsterManager.Draw(_spriteBatch);
                     PlayerManager.Draw(_spriteBatch);
@@ -174,7 +179,7 @@ namespace PlayingAround
                     break;
                     case SceneState.Dialogue:
                     TileManager.Draw(_spriteBatch);
-                    TileCellManager.Draw(_spriteBatch);
+                  //  TileCellManager.Draw(_spriteBatch);
                     DebugBugger.Draw(_spriteBatch);
                     PlayMonsterManager.Draw(_spriteBatch);
                     PlayerManager.Draw(_spriteBatch);

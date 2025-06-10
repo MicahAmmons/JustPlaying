@@ -4,7 +4,7 @@ using System;
 
 namespace PlayingAround.Managers
 {
-    public static class ScreenTransitionManager
+    public static class MapTileTransitionManager
     {
         private static float _fadeAlpha = 0f;
         private static Texture2D _blackTexture;
@@ -14,10 +14,11 @@ namespace PlayingAround.Managers
         private const float FadeInDuration = 1f;
 
         private static bool _isTransitioning = false;
-        public static event Action OnFadeToBlackComplete;
+        public static event Action<NextTileData> OnFadeToBlackComplete;
+
+        private static NextTileData _nextTileData;
 
 
-        private enum TransitionPhase { None, FadeOut, FadeIn }
         private static TransitionPhase _phase = TransitionPhase.None;
 
         public static void Initialize(GraphicsDevice graphicsDevice)
@@ -30,7 +31,7 @@ namespace PlayingAround.Managers
 
         private static void OnSceneStateChanged(SceneState newState)
         {
-            if (newState == SceneState.SceneTransition)
+            if (newState == SceneState.MapTileTransition)
             {
                 _isTransitioning = true;
                 _phase = TransitionPhase.FadeOut;
@@ -38,7 +39,10 @@ namespace PlayingAround.Managers
                 _fadeAlpha = 0f;
             }
         }
-
+        public static void SetNextMapTile(NextTileData data)
+        {
+            _nextTileData = data;
+        }
         public static void Update(GameTime gameTime)
         {
             if (!_isTransitioning) return;
@@ -58,7 +62,8 @@ namespace PlayingAround.Managers
                         _timer = 0f;
                         _phase = TransitionPhase.FadeIn;
                             // ✅ This is the trigger moment
-                        OnFadeToBlackComplete?.Invoke();
+                        OnFadeToBlackComplete?.Invoke(_nextTileData);
+                        _nextTileData = null;
                         
 
                         // This is where you'd handle the teleport or scene change logic
@@ -92,4 +97,10 @@ namespace PlayingAround.Managers
             );
         }
     }
+}
+public enum TransitionPhase 
+{ 
+    None, 
+    FadeOut, 
+    FadeIn 
 }

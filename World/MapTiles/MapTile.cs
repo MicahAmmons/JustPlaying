@@ -13,6 +13,9 @@ namespace PlayingAround.Game.Map
 {
     public class MapTile
     {
+        public int x;
+        public int y;
+        public int z; 
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
@@ -20,7 +23,7 @@ namespace PlayingAround.Game.Map
         public List<TileCell> AllValidCells { get; private set; } = new();
 
         public Dictionary<(int, int), bool> WalkableMap { get; private set; } = new();
-        public Dictionary<TileCell, NextTileData> NextTileMap { get; private set; } = new();
+        public Dictionary<Vector2, NextTileData> NextTileMap { get; private set; } = new();
 
         public List<string> OptionsOfMonsters { get; private set; } = new();
 
@@ -45,7 +48,7 @@ namespace PlayingAround.Game.Map
         public MapTile(MapTileData data, Texture2D backgroundTexture)
         {
             Id = $"{data.GridX}_{data.GridY}_{data.GridZ}";
-
+            x = data.GridX ; y = data.GridY ; z= data.GridZ ;
             BackgroundTexture = backgroundTexture;
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
@@ -65,7 +68,7 @@ namespace PlayingAround.Game.Map
                 if (!IsDiamondAligned(tile.X, tile.Y)) continue;
                 if (tile.NextTile != null)
                     {
-                        NextTileMap[tile] = tile.NextTile;
+                        NextTileMap[tile.CenterPoint] = tile.NextTile;
                     }
                     AllValidCells.Add(tile);
                     if (tile.IsWalkable) WalkableMap[(tile.X, tile.Y)] = true;

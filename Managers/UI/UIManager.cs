@@ -60,6 +60,8 @@ namespace PlayingAround.Managers.UI
             ProximityManager.OnPlayerLeavePlayMonster += HandlePlayerExitPlayMonster;
             ProximityManager.OnPlayerNearNPC += HandleNPCInteract;
             ProximityManager.OnPlayerLeaveNPC += HandlePlayerExitNPC;
+            ProximityManager.OnPlayerNearNextTile += HandlePlayerNextTileInteract;
+            ProximityManager.OnPlayerLeaveNextTile += HandlePlayerExitNextTile;
             int screenWidth = ViewportManager.ScreenWidth;
             int screenHeight = ViewportManager.ScreenHeight;
 
@@ -105,6 +107,10 @@ namespace PlayingAround.Managers.UI
                             case InteractState.NPC:
                                 SceneManager.SetState(SceneState.Dialogue);
                                 DialogueManager.StartNewDialogue(_currentNPC);
+                                break;
+                            case InteractState.NextTile:
+                                MapTileTransitionManager.SetNextMapTile(_currentNextTile.Value.Item2);
+                                SceneManager.SetState(SceneState.MapTileTransition);
                                 break;
                         }
                     }
@@ -306,6 +312,7 @@ namespace PlayingAround.Managers.UI
         private static InteractState _currentInteractState = InteractState.None;
         private static PlayMonsters _currentPlayMonster;
         private static NPC _currentNPC;
+        private static (Vector2, NextTileData)? _currentNextTile;
         private static Rectangle _interactRectangle;
         private static string? _interactMessage;
         private static void DrawInteractText(SpriteBatch spriteBatch)
@@ -349,6 +356,20 @@ namespace PlayingAround.Managers.UI
                 _interactMessage = null;
             }
         }
+        private static void HandlePlayerNextTileInteract(Vector2 center, NextTileData nextTileData)
+        {
+            _currentInteractState = InteractState.NextTile;
+            _currentNextTile = (center, nextTileData);
+        }
+        private static void HandlePlayerExitNextTile()
+        {
+            _currentNextTile = null;
+            if (_currentInteractState == InteractState.NextTile)
+            {
+                _currentInteractState = InteractState.None;
+                _interactMessage = null;
+            }
+        }
         private static void SetInteractMessage()
         {
             string message = "ERROR IN UI, NO MESSAGE SET";
@@ -365,6 +386,10 @@ namespace PlayingAround.Managers.UI
                     message = "Press F to Talk";
                     drawPoint = _currentNPC.currentPos;
                     break;
+                case InteractState.NextTile:
+                    message = "Press F to travel";
+                    drawPoint = _currentNextTile.Value.Item1;
+                        break;
             }
 
             InteractMessage(message, drawPoint);
@@ -398,5 +423,6 @@ public enum InteractState
 {
     None,
     PlayMonster,
-    NPC
+    NPC,
+    NextTile
 }

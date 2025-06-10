@@ -19,9 +19,12 @@ namespace PlayingAround.Managers.Proximity
         private static Player _currentPlayer => PlayerManager.CurrentPlayer;
         private static List<NPC> _currentNPCs => TileManager.CurrentMapTile.NPCs;
         private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
+        private static Dictionary<Vector2, NextTileData> _currentNextTiles => TileManager.CurrentMapTile.NextTileMap;
+
         private static Vector2 _playerCurrentCords;
 
         private const int _distanceForInteract = 50;
+        private const int _distanceForNextTileInteract = 48;
 
 
         public static event Action<PlayMonsters> OnPlayerNearPlayMonster;
@@ -29,6 +32,9 @@ namespace PlayingAround.Managers.Proximity
 
         public static event Action<NPC> OnPlayerNearNPC;
         public static event Action OnPlayerLeaveNPC;
+
+        public static event Action<Vector2,  NextTileData> OnPlayerNearNextTile;
+        public static event Action OnPlayerLeaveNextTile;
 
 
 
@@ -43,6 +49,7 @@ namespace PlayingAround.Managers.Proximity
                 UpdatePlayerCords();
                 IsPlayerInPlayMonsterRange();
                 IsPlayerInNPCRange();
+                IsPlayerInNextTileRange();
             }            
         }
         public static void IsPlayerInNPCRange()
@@ -78,6 +85,23 @@ namespace PlayingAround.Managers.Proximity
             if (!monsterWasNear)
             {
                 OnPlayerLeavePlayMonster?.Invoke();
+            }
+        }
+        public static void IsPlayerInNextTileRange()
+        {
+            bool nextTileWasNear = false;
+            foreach (var (center, nextTileData) in _currentNextTiles)
+            {
+                if (Vector2.Distance(_playerCurrentCords, center) <= _distanceForNextTileInteract)
+                {
+                    OnPlayerNearNextTile?.Invoke(center, nextTileData);
+                    nextTileWasNear = true;
+                    break;
+                }
+            }
+            if (!nextTileWasNear)
+            {
+                OnPlayerLeaveNextTile?.Invoke();
             }
         }
         private static void UpdatePlayerCords()

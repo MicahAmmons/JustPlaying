@@ -54,7 +54,6 @@ public class SaveManager
     { 
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
         QuestManager.LoadContent(CurrentGameSaveData.Quests);
-        TileCellManager.Initialize();
         UIManager.LoadContent();
         ResistanceManager.LoadContent(); // Loads Resistance Data
         PlayMonsterManager.LoadContent(); // Loads Play Monster Data

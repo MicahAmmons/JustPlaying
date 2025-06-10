@@ -6,7 +6,7 @@ namespace PlayingAround.Managers.Dialogue
     public class DialogueData
     {
         public string npcId { get; set; }
-        public DialogueNode defaultNode { get; set; }
+        public DialogueStage defaultNode { get; set; }
         public List<DialogueStage> stages { get; set; }
     }
 

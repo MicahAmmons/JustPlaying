@@ -11,6 +11,7 @@ using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Stats;
 using PlayingAround.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -140,7 +141,6 @@ namespace PlayingAround.Entities.Player
             if (currentCell != PlayerCurrentTileCell)
             {
                 PlayerCurrentTileCell = currentCell;
-                TileCellManager.OnEnterNewCell(currentCell);
                 TileManager.OnEnterNewCell(currentCell);
             }
         }
@@ -203,5 +203,27 @@ namespace PlayingAround.Entities.Player
             return summs;
         }
         public Vector2? GetDebugClickTarget() => debugClickTarget;
+
+        public void NewMapTilePosition(Vector2 dir)
+        {
+            ClearMovementPath();
+
+            float newX = CurrentPos.X;
+            float newY = CurrentPos.Y;
+
+            if (dir.X < 0) // Moving left
+                newX = ViewportManager.ScreenWidth - CurrentPos.X;
+            else if (dir.X > 0) // Moving right
+                newX = ViewportManager.ScreenWidth - CurrentPos.X;
+
+            if (dir.Y < 0) // Moving up
+                newY = ViewportManager.ScreenHeight - CurrentPos.Y;
+            else if (dir.Y > 0) // Moving down
+                newY = ViewportManager.ScreenHeight - CurrentPos.Y;
+
+            CurrentPos = new Vector2(newX, newY);
+        }
+
+
     }
 }

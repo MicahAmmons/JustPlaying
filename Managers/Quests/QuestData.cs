@@ -8,24 +8,28 @@ namespace PlayingAround.Managers.Quests
 {
     public class QuestData
     {
-        public string id { get; set; }
-        public string name { get; set; }
         public string description { get; set; }
         public List<QuestObjective> objectives { get; set; }
         public QuestRewards rewards { get; set; }
-        public bool autoStart { get; set; }
-        public bool autoComplete { get; set; }
+        public List<StageDescriptions> stageDescriptions { get; set; }
     }
 
     public class QuestObjective
     {
         public string id { get; set; }
         public string description { get; set; }
-        public string type { get; set; } // e.g., "kill", "collect", "talk"
         public string targetId { get; set; }
-        public int count { get; set; }
+        public int requiredCount { get; set; }
+        public QuestObjectiveType objectiveType { get; set; }
+        public ObjectiveActivationStage activationStage { get; set; }
+
     }
 
+    public class StageDescriptions
+    {
+        public QuestStage activatedStage { get; set; }
+        public string description { get; set; }
+    }
     public class QuestRewards
     {
         public int experience { get; set; }
@@ -33,4 +37,13 @@ namespace PlayingAround.Managers.Quests
         public List<string> customTriggers { get; set; } = new();
     }
 
+}
+public enum ObjectiveActivationStage
+{
+    Always,
+    OnAccepted,
+}
+public enum QuestObjectiveType
+{
+    KillCount
 }

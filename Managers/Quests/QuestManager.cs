@@ -11,25 +11,12 @@ namespace PlayingAround.Managers.Quests
     public static class QuestManager
     {
         private static Dictionary<string,QuestSaveData> _questSaveData;
-        private static Dictionary<string, List<(string questId, string objectiveId)>> _killObjectiveIndex = new();
 
 
         public static void LoadContent(Dictionary<string, QuestSaveData> data)
         {
             _questSaveData = data;
-            foreach (var (questId, questData) in data)
-            {
-                foreach (var (objectiveId, objective) in questData.objectives)
-                {
-                    if (objective.objectiveType == QuestObjectiveType.KillCount)
-                    {
-                        if (!_killObjectiveIndex.ContainsKey(objective.killId))
-                            _killObjectiveIndex[objective.killId] = new();
-
-                        _killObjectiveIndex[objective.killId].Add((questId, objectiveId));
-                    }
-                }
-            }
+          
         }
         public static bool IsQuestComplete(string questID)
         {
@@ -57,22 +44,23 @@ namespace PlayingAround.Managers.Quests
         }
         internal static void UpdateKillCounts(string monsterName, int count)
         {
-            if (!_killObjectiveIndex.ContainsKey(monsterName)) return;
+            var matchesForMonster = QuestLibrary.GetKillObjectivesFor(monsterName);
             
-            foreach (var (questId, objectiveId) in _killObjectiveIndex[monsterName])
+            foreach (var (questId, objective) in matchesForMonster)
             {
-                var quest = _questSaveData[questId];
-                var objective = quest.objectives[objectiveId];
-                if (quest.stage is QuestStage.NotStarted or QuestStage.Completed or QuestStage.Declined)
-                    continue;
-                if (!ObjectiveIsActiveForStage(quest.stage, objective.activationStage))
-                    continue;
-                if (objective.completed) continue;
+                var saveData = _questSaveData[questId];
+                var progress = saveData.objectives[objective.id];
 
-                objective.progress += count;
-                if (objective.progress >= objective.requiredAmount)
-                    objective.completed = true;
-                if (objective.completed)
+                if (saveData.stage is QuestStage.NotStarted or QuestStage.Completed or QuestStage.Declined)
+                    continue;
+                if (!ObjectiveIsActiveForStage(saveData.stage, objective.activationStage))
+                    continue;
+                if (saveData.objectives[objective.id].completed) continue;
+
+                progress.progress += count;
+                if (progress.progress >= objective.requiredCount)
+                    progress.completed = true;
+                if (progress.completed)
                     UpdateQuestStageTo(questId, QuestStage.ObjectiveCompleted);
             }
         }
