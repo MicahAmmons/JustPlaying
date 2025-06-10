@@ -2,12 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Data.SaveData;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Tiles;
+using System;
 using System.Collections.Generic;
 
 namespace PlayingAround.Managers.Entities
@@ -60,7 +62,10 @@ namespace PlayingAround.Managers.Entities
             }
 
         }
-
+        public static void UpdatePlayerStatsFromCombat(CombatMonster playerMonster)
+        {
+            _currentPlayer.stats.CurrentHealth = playerMonster.CurrentHP;
+        }
         public static void MovePlayerInput(GameTime gameTime)
         {
             if (!_currentPlayer.AllowedToMove)  return;

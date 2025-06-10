@@ -48,6 +48,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("decideWhichAttack")] public List<string> ChooseWhichAttacks { get; set; }
         [JsonPropertyName("width")] public int Width { get; set; }
         [JsonPropertyName("height")] public int Height { get; set; }
+        [JsonPropertyName("uniqueId")] public string UniqueId { get; set; }
 
         public Queue<MonsterActionOrder> BaseOrderOfActions { get; set; }
         public Queue<ChooseWhichMonsterAttack> BaseChooseWhichAttack { get; set; }
@@ -80,6 +81,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool AllowedToMove = true;
 
 
+
         
         public CombatMonster(SummonedMonster mon, CombatMonster comMon)
         {
@@ -110,6 +112,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             isDead = false;
             Width = comMon.Width;
             Height = comMon.Height;
+            UniqueId = comMon.UniqueId;
 
 
         }
@@ -164,6 +167,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             ChooseWhichAttacks = original.ChooseWhichAttacks;
             Width = original.Width;
             Height = original.Height;
+            UniqueId = original.UniqueId;
             BaseOrderOfActions = ConvertStringOrderOfActionToEnum(original.ActionOrderList);
             BaseChooseWhichAttack = ConvertStringWhichAttackToEnum(original.ChooseWhichAttacks);
 

@@ -42,7 +42,7 @@ namespace PlayingAround.Managers.CombatMan
     public class CombatManager
     {
 
-        private static CombatMonster _playerMonster; // Need to update _player at the end of combat accordingly
+        public CombatMonster PlayerMonster; // Need to update _player at the end of combat accordingly
 
 
 
@@ -134,6 +134,7 @@ namespace PlayingAround.Managers.CombatMan
         private CombatMonster _currentMonster;
 
         private SingleAttack _playerCurrentAttack;
+        public Dictionary<string, int> defeatedMonsters = new Dictionary<string, int>();
         public WhoWon TheWinner = WhoWon.None;
 
 
@@ -155,7 +156,7 @@ namespace PlayingAround.Managers.CombatMan
 
             _playMonsters = playMonsters;
             _player = player;
-            _playerMonster = new CombatMonster(player);
+            PlayerMonster = new CombatMonster(player);
            // _playerMonster.Initiation = 5;
             SetSpawnableCells();
             SetCombatMonsterStartingPos();
@@ -200,7 +201,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             List<CombatMonster> allCombatants = new List<CombatMonster>();
             allCombatants.AddRange(_playMonsters.Monsters);
-            allCombatants.Add(_playerMonster);
+            allCombatants.Add(PlayerMonster);
             allCombatants.AddRange(_summonedMonsters);
             allCombatants.Sort((a, b) => b.Initiation.CompareTo((int)a.Initiation));
             int idCounter = 0;
@@ -311,10 +312,9 @@ namespace PlayingAround.Managers.CombatMan
             // If player won, list defeated monsters
             if (TheWinner == WhoWon.Player)
             {
-                Dictionary<string, int> defeated = CountDefeatedMonsters();
                 int yOffset = 70;
 
-                foreach (var entry in defeated)
+                foreach (var entry in defeatedMonsters)
                 {
                     string line = $"{entry.Value}x {entry.Key}";
                     Vector2 textSize = _font.MeasureString(line);
@@ -472,7 +472,7 @@ namespace PlayingAround.Managers.CombatMan
             DrawSpawnableTiles(spriteBatch);
 
             if (_currentMouseHoverCell != null && _currentMouseHoverCell.PlayerSpawnable)
-                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, _playerMonster);
+                DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell, PlayerMonster);
         }
         private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, CombatMonster mon = null, Color col = default )
         {
@@ -754,7 +754,12 @@ namespace PlayingAround.Managers.CombatMan
             ToggleIsDead(); // toggles ISDead as well as clears aspects
             UpdateCurrentMonster();
             UpdateMonsterCellMap();
-            if (WinnerChosen()) { SetCombatState(CombatState.WinnerChosen); return; }
+            if (WinnerChosen()) 
+            { 
+                SetCombatState(CombatState.WinnerChosen);
+                CountDefeatedMonsters();
+                return; 
+            }
                 switch (StateCombat)
             {
                 case CombatState.TurnStart:
@@ -859,7 +864,7 @@ namespace PlayingAround.Managers.CombatMan
         private bool WinnerChosen()
         {
             if (AIControlledMonsterMap.Count == 0) { SetWhoWon(WhoWon.Player); return true; }
-            if (_playerMonster.isDead){ SetWhoWon(WhoWon.Monster);  return true; }
+            if (PlayerMonster.isDead){ SetWhoWon(WhoWon.Monster);  return true; }
             return false;
         }
         private void FinishedMoving()
@@ -1277,7 +1282,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (InputManager.IsLeftClick() && _exitCombatButtonRect.Contains(_currentMousePos))
             {
-                SetCombatState(CombatState.ExitingCombat);
+                CombatGuard.EndCombat();
             }
         }
         private void HandleSummonedTurnInput(float delta)
@@ -1430,7 +1435,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
             {
-                _playerMonster.currentPos = _currentMouseHoverCell.CenterPoint;
+                PlayerMonster.currentPos = _currentMouseHoverCell.CenterPoint;
                 SetCombatState(CombatState.TurnStart);
 
             }
@@ -1831,22 +1836,22 @@ namespace PlayingAround.Managers.CombatMan
         }
         public Dictionary<string, int> CountDefeatedMonsters()
         {
-            Dictionary<string, int> dict = new Dictionary<string, int>();
+           
             foreach (var mon in _referenceTurnOrder)
             {
                 if (mon.isDead && mon.isMonster)
                 {
-                    if (dict.ContainsKey(mon.Name))
+                    if (defeatedMonsters.ContainsKey(mon.UniqueId))
                     {
-                        dict[mon.Name]++;
+                        defeatedMonsters[mon.UniqueId]++;
                     }
                     else
                     {
-                         dict.Add(mon.Name, 1);
+                         defeatedMonsters.Add(mon.UniqueId, 1);
                     }
                 }
             }
-            return dict;
+            return defeatedMonsters;
         }
 
 
@@ -1890,7 +1895,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public CombatMonster GetPlayerMonster()
         {
-            return _playerMonster;
+            return PlayerMonster;
         }
 
 
@@ -1903,30 +1908,3 @@ public enum WhoWon
     Monster
 }
 
-//    if (attackToTargets.Count <= 0)
-//    {
-//        return;
-//    }
-//    CombatMonster attacker = _turnOrder.Peek();
-
-//    do
-//    {
-//        foreach (var pair in attackToTargets)
-//        {
-//            SingleAttack att = pair.Key;
-//            List<CombatMonster> targets = pair.Value;
-
-//            if (targets.Count > 0 && _attackPowerLeft > 0)
-//            {
-//                CombatMonster target = AttackManager.ChooseTarget(targets, att); // Pick first target for now
-//                Add("Target chosen");
-//                AttackManager.PerformAttack(att, attacker, target); // You’d implement this
-//                Add("AttackPerformed");
-//                attacker.AttackPower -= att.Cost;
-//                Add($"Current AttackPower {_attackPowerLeft}");
-//                break; // Prevent double-use per loop
-//            }
-//        }
-
-//    } while (attacker.AttackPower > 0);
-//}

@@ -74,7 +74,18 @@ namespace PlayingAround.Managers.Dialogue
                 case DialogueEffectType.SetQuestStage:
                     QuestManager.UpdateQuestStageTo(effect.questId, effect.stage);
                     break;
+                case DialogueEffectType.CompleteQuest:
+                    QuestManager.CompleteQuest(effect.questId);
+                    GiveReward(effect);
+                    break;
+                case DialogueEffectType.StartQuest:
+                    QuestManager.StartQuest(effect.questId);
+                    break;
             }
+        }
+        public static void GiveReward(DialogueEffect effect)
+        {
+            
         }
         public static void StartNewDialogue(NPC npc)
         {
@@ -103,22 +114,12 @@ namespace PlayingAround.Managers.Dialogue
             {
                 switch (condition.type)
                 {
-                    case DialogueConditionType.NotStarted:
-                        if (QuestManager.GetStage(condition.questId) != QuestStage.NotStarted)
-                            return false;
+                    case DialogueConditionType.QuestStage:
+                        if (QuestManager.GetStage(condition.questId) == condition.questStage)
+                            return true;
                         break;
-
-                    case DialogueConditionType.QuestNotCompleted:
-                        if (QuestManager.IsQuestComplete(condition.questId))
-                            return false;
-                        break;
-
-                    case DialogueConditionType.QuestObjectiveCompleted:
-                        if (!QuestManager.IsObjectiveCompleted(condition.questId, condition.objectiveId))
-                            return false;
-                        break;
-                        case DialogueConditionType.Declined:
-                        if (QuestManager.GetStage(condition.questId) == QuestStage.Declined)
+                        case DialogueConditionType.QuestObjectiveCompleted:
+                        if (QuestManager.IsObjectiveCompleted(condition.questId, condition.objectiveId))
                             return true;
                         break;
 
@@ -129,7 +130,7 @@ namespace PlayingAround.Managers.Dialogue
                 }
             }
 
-            return true; // All conditions passed
+            return false; // All conditions passed
         }
 
         private static void EndDialogue()   
@@ -153,11 +154,7 @@ namespace PlayingAround.Managers.Dialogue
 public enum DialogueConditionType
 {
     None,
-    NotStarted,
-    Declined,
-    Accepted,
-    QuestNotCompleted,
-    QuestCompleted,
+    QuestStage,
     QuestObjectiveCompleted
 
 }

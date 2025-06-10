@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.Quests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,43 +15,53 @@ namespace PlayingAround.Managers.CombatMan
 {
      public static class CombatGuard
     {
-        public static CombatManager CurrentCombat {  get; set; }
+        private static CombatManager _currentCombat { get; set; }
+        public static CombatManager CurrentCombat => _currentCombat;
+        private static CombatManager _previousCombat {  get; set; }
         private static Player _currentPlayer => PlayerManager.CurrentPlayer;
 
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
-            CurrentCombat = new CombatManager(playMonsters, _currentPlayer);
+            _currentCombat = new CombatManager(playMonsters, _currentPlayer);
             SceneManager.SetState(SceneState.Combat);
         }
 
         public static void Update(GameTime gameTime)
         {
-            if (CurrentCombat != null) 
+            if (_currentCombat != null) 
             {
-                if (CurrentCombat.StateCombat == CombatStateMachine.CombatState.ExitingCombat)
-                {
-
-                    return;
-                }
-                CurrentCombat.Update(gameTime);
-
-
+                _currentCombat.Update(gameTime);
             }
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
 
-            if (CurrentCombat != null)
+            if (_currentCombat != null)
             {
-                if (CurrentCombat.StateCombat == CombatStateMachine.CombatState.ExitingCombat)
-                {
-
-                    return;
-                }
-                CurrentCombat.Draw(spriteBatch, graphicsDevice);
-
-
+                _currentCombat.Draw(spriteBatch, graphicsDevice);
             }
+        }
+        public static void EndCombat()
+        {
+            PlayerManager.UpdatePlayerStatsFromCombat(_currentCombat.PlayerMonster);
+            switch (_currentCombat.TheWinner)
+            {
+                case WhoWon.Player:
+                    foreach (var kvp in _currentCombat.defeatedMonsters) 
+                    {
+                        string monName = kvp.Key;
+                        int count = kvp.Value;
+                        QuestManager.UpdateKillCounts(monName, count);
+                    }
+                    break;
+                case WhoWon.Monster:
+
+                    break;
+            }
+            _previousCombat = _currentCombat;
+            _currentCombat= null;
+            SceneManager.SetState(SceneState.Play);
+
         }
     }
 }

@@ -1,6 +1,7 @@
 {
   "Ooze": {
     "mp": 4,
+    "uniqueId": "Ooze",
     "movementQuickness": 200,
     "movementPattern": "arc",
     "width": 32,
@@ -25,6 +26,7 @@
     ]
   },
   "TrainingDummy": {
+    "uniqueId": "training_dummy",
     "mp": 0,
     "movementQuickness": 0,
     "movementPattern": "none",

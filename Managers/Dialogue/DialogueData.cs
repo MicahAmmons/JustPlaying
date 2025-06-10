@@ -35,6 +35,7 @@ namespace PlayingAround.Managers.Dialogue
         public DialogueConditionType type { get; set; }
         public string questId { get; set; }
         public string objectiveId { get; set; } // optional, only needed for objective-related conditions
+        public QuestStage questStage { get; set; }
     }
 
     public class DialogueEffect

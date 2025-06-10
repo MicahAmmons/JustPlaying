@@ -15,8 +15,9 @@
         "id": "1",
         "conditions": [
           {
-            "type": "NotStarted",
-            "questId": "training_dummy"
+            "type": "QuestStage",
+            "questId": "training_dummy",
+            "questStage": "NotStarted"
           }
         ],
         "text": "This is stage 1 dialogue. Will you accept my quest to defeat the training dummy?",
@@ -49,8 +50,9 @@
         "id": "2",
         "conditions": [
           {
-            "type": "Declined",
-            "questId": "training_dummy"
+            "type": "QuestStage",
+            "questId": "training_dummy",
+            "questStage": "Declined"
           }
         ],
         "text": "Quit playing around, will you defeat the training dummy or not?",
@@ -85,8 +87,9 @@
         "id": "3",
         "conditions": [
           {
-            "type": "Accepted",
-            "objectiveId": "training_dummy"
+            "type": "QuestStage",
+            "questId": "training_dummy",
+            "questStage": "Accepted"
           }
         ],
         "text": "It's right over there - go ahead.",
@@ -110,12 +113,12 @@
         "responses": [
           {
             "text": "Next",
-            "nextDialogue": "Cale_Complete"
+            "nextDialogue": "4b"
           }
         ]
       },
       {
-        "id": "Cale_Complete",
+        "id": "4b",
         "text": "You completed the quest. Good job.",
         "effects": [
           {

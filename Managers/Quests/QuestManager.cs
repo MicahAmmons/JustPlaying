@@ -11,22 +11,34 @@ namespace PlayingAround.Managers.Quests
     public static class QuestManager
     {
         private static Dictionary<string,QuestSaveData> _questSaveData;
+        private static Dictionary<string, List<(string questId, string objectiveId)>> _killObjectiveIndex = new();
 
 
         public static void LoadContent(Dictionary<string, QuestSaveData> data)
         {
             _questSaveData = data;
+            foreach (var (questId, questData) in data)
+            {
+                foreach (var (objectiveId, objective) in questData.objectives)
+                {
+                    if (objective.objectiveType == QuestObjectiveType.KillCount)
+                    {
+                        if (!_killObjectiveIndex.ContainsKey(objective.killId))
+                            _killObjectiveIndex[objective.killId] = new();
+
+                        _killObjectiveIndex[objective.killId].Add((questId, objectiveId));
+                    }
+                }
+            }
         }
         public static bool IsQuestComplete(string questID)
         {
             return _questSaveData[questID].stage == QuestStage.Completed;
         }
-
         internal static QuestStage GetStage(string questId)
         {
             return _questSaveData[questId].stage;
         }
-
         internal static bool IsObjectiveCompleted(string questId, string objectiveId)
         {
             return _questSaveData[questId].objectives[objectiveId].completed;
@@ -34,6 +46,27 @@ namespace PlayingAround.Managers.Quests
         internal static void UpdateQuestStageTo(string questID,  QuestStage stage)
         {
             _questSaveData[questID].stage = stage;
+        }
+        internal static void CompleteQuest(string questID)
+        {
+            _questSaveData[questID].stage = QuestStage.Completed;
+        }
+        internal static void StartQuest(string questID)
+        {
+            _questSaveData[questID].stage = QuestStage.Accepted;
+        }
+        internal static void UpdateKillCounts(string monsterName, int count)
+        {
+            if (!_killObjectiveIndex.ContainsKey(monsterName)) return;
+            foreach (var (questId, objectiveId) in _killObjectiveIndex[monsterName])
+            {
+                var objective = _questSaveData[questId].objectives[objectiveId];
+                if (objective.completed) continue;
+
+                objective.progress += count;
+                if (objective.progress >= objective.requiredAmount)
+                    objective.completed = true;
+            }
         }
     }
 }
