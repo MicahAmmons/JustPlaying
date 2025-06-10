@@ -94,11 +94,11 @@ namespace PlayingAround.Managers.Entities
         
         public static PlayerSaveData SavePlayer()
         {
-            PlayerSaveData saveData = new PlayerSaveData();
+            var data = _playerData;
 
-            saveData = _currentPlayer.Save();
-            saveData.PlayerSummons = _currentPlayer.SavePlayerSummons();
-            return saveData;
+            _currentPlayer.Save(data);
+            data.PlayerSummons = _currentPlayer.SavePlayerSummons();
+            return data;
         }
 
 

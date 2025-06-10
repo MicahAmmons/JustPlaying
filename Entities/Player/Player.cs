@@ -171,16 +171,12 @@ namespace PlayingAround.Entities.Player
             return hit;
         }
 
-        public PlayerSaveData Save()
+        public PlayerSaveData Save(PlayerSaveData data)
         {
-            var feetCenter = HitBoxCenter;
-            return new PlayerSaveData
-            {
-                Speed = this.Speed,
-                TextureKey = "Hero_Blonde",
-                CurrentPosX = CurrentPos.X,
-                CurrentPosY = CurrentPos.Y,
-            };
+            data.Speed = this.Speed;
+            data.CurrentPosX = CurrentPos.X;
+            data.CurrentPosY = CurrentPos.Y;
+            return data;
         }
 
         public List<SummonsSaveData> SavePlayerSummons()

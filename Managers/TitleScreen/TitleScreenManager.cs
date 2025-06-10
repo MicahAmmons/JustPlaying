@@ -103,7 +103,7 @@ namespace PlayingAround.Managers.TitleScreen
 
             foreach (var save in SaveManager.SaveFiles.Keys)
             {
-                if (save != "saveGameTemplate")
+                if (save != "savegameTemplate")
                 {
                     _loadGameRects[save] = new Rectangle(loadX, loadY, _buttonSize.X, _buttonSize.Y);
                     loadY += _buttonSize.Y + verticalSpacing;
@@ -147,6 +147,7 @@ namespace PlayingAround.Managers.TitleScreen
                 PickSaveDataSource();
                 _currentGameStateDataKey = null;
                 SaveManager.LoadCurrentGameSave();
+                _titleScreenState = TitleScreenState.MainPage;
 
             }
             if (InputManager.IsLeftClick() && _newGameRects["No"].Contains(mousePoint))
@@ -187,6 +188,7 @@ namespace PlayingAround.Managers.TitleScreen
                 _currentGameStateDataKey = SaveManager.CreateNewGame();
                 PickSaveDataSource();
                 _currentGameStateDataKey = null;
+                _titleScreenState = TitleScreenState.MainPage;
                 SceneManager.SetState(SceneState.Cinematic);
                 CinematicRuler.Play(CurrentCinematic.NewGameIntro);
 

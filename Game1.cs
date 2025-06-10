@@ -97,6 +97,7 @@ namespace PlayingAround
         }
         protected override void Update(GameTime gameTime)
         {
+            if (EscapeOverseer.ShouldExit) EndGame();
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             JukeBoxManager.Update(gameTime);
             InputManager.Update(gameTime);

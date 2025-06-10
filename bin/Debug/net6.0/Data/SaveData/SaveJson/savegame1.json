@@ -2,35 +2,36 @@
   "MapTile": {
     "CurrentTileId": "0_0_0"
   },
-  "DayCycle": {
-    "Day": 0
-  },
   "Player": {
     "Speed": 400,
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "CurrentPosX": 960,
-    "CurrentPosY": 540,
+    "CurrentPosX": 1060,
+    "CurrentPosY": 224,
     "PlayerSummons": [
       {
         "Name": "Ooze",
-        "NumberOfKills": 11
-      },
-      {
-        "Name": "AngryPlant",
-        "NumberOfKills": 0
+        "NumberOfKills": 11,
+        "AbilityPoints": {
+          "Health": 0,
+          "Attack": 0,
+          "Defense": 0
+        }
       }
     ]
   },
+  "DayCycle": {
+    "Day": 1
+  },
   "Quests": {
     "getting_started": {
-      "stage": "NotStarted",
-            "objectives": {
+      "stage": 0,
+      "objectives": {
         "training_dummy_defeated": {
           "progress": 0,
           "completed": false
-                                   }
+        }
       }
     }
   }

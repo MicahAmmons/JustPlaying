@@ -74,6 +74,10 @@ namespace PlayingAround.Managers.Quests
             };
         }
 
+        internal static Dictionary<string, QuestSaveData> SaveQuestData()
+        {
+            return _questSaveData;
+        }
     }
 }
 

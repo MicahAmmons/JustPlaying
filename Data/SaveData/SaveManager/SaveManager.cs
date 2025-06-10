@@ -20,14 +20,25 @@ public class SaveManager
 {
     public static Dictionary<string, GameSaveData> SaveFiles { get; private set; } = new();
 
-    private static readonly string saveFolder = Path.Combine(AppContext.BaseDirectory, "Data", "SaveData", "SaveJson");
+    //private static readonly string saveFolder = Path.Combine(SavePathHelper.GetSaveFolder("PlayingAround"), "SaveJson");
+    private static readonly string saveFolder = Path.GetFullPath(Path.Combine(
+    AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\SaveData\SaveJson"));
+
+
+
+
+
     public static GameSaveData CurrentGameSaveData;
     public static string CurrentSaveKey { get; private set; }
     public static void LoadAllSaves()
-    {
+    { 
         SaveFiles.Clear();
 
-        var saveFiles = Directory.GetFiles(saveFolder, "saveGame*.json");
+        // Ensure the folder exists
+        if (!Directory.Exists(saveFolder))
+            Directory.CreateDirectory(saveFolder);
+
+        var allJsonFiles = Directory.GetFiles(saveFolder, "*.json");
 
         var options = new JsonSerializerOptions
         {
@@ -35,14 +46,41 @@ public class SaveManager
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
         };
 
-        foreach (var path in saveFiles)
+        foreach (var path in allJsonFiles)
         {
-            var json = File.ReadAllText(path);
-            var data = JsonSerializer.Deserialize<GameSaveData>(json, options);
+            string fileName = Path.GetFileNameWithoutExtension(path);
 
-            SaveFiles[Path.GetFileNameWithoutExtension(path)] = data;
+            if (!fileName.StartsWith("saveGame", StringComparison.OrdinalIgnoreCase))
+            {
+                File.Delete(path);
+                Console.WriteLine($"Deleted irrelevant file: {fileName}");
+                continue;
+            }
+
+            try
+            {
+                var json = File.ReadAllText(path);
+                var data = JsonSerializer.Deserialize<GameSaveData>(json, options);
+
+                if (data != null)
+                {
+                    SaveFiles[fileName] = data;
+                    Console.WriteLine($"Loaded valid save: {fileName}");
+                }
+                else
+                {
+                    File.Delete(path);
+                    Console.WriteLine($"Deleted corrupt save: {fileName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                File.Delete(path);
+                Console.WriteLine($"Deleted unreadable save '{fileName}': {ex.Message}");
+            }
         }
     }
+
 
     public static void SetCurrentGameSave(string key)
     {
@@ -119,11 +157,24 @@ public class SaveManager
         {
             Player = PlayerManager.SavePlayer(),
             MapTile = TileManager.SaveMapTile(),
-            DayCycle = DayCycleManager.SaveDayCycle()
+            DayCycle = DayCycleManager.SaveDayCycle(),
+            Quests = QuestManager.SaveQuestData()
         };
 
         var path = Path.Combine(saveFolder, CurrentSaveKey + ".json");
         var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(path, json);
+    }
+
+    private static string GetProjectRootPath()
+    {
+#if DEBUG
+        var dir = AppContext.BaseDirectory;
+        for (int i = 0; i < 3; i++) // climbs out of /bin/Debug/netX
+            dir = Directory.GetParent(dir)?.FullName ?? dir;
+        return dir;
+#else
+    return AppContext.BaseDirectory;
+#endif
     }
 }

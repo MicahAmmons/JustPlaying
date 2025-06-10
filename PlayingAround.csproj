@@ -68,7 +68,7 @@
     <Content Include="Data\SaveData\SaveJson\savegame3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\SaveData\SaveJson\saveGameTemplate.json">
+    <Content Include="Data\SaveData\SaveJson\savegameTemplate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_-1_0_0.json">
