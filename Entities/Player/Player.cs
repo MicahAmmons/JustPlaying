@@ -88,16 +88,15 @@ namespace PlayingAround.Entities.Player
         {
             if (MoveTarget != null) 
             {
-                Vector2? endDes = MoveTarget;
+                Vector2 move = (Vector2)MoveTarget;
+
                 MoveTarget = null;
-                List<Vector2> list = CustomPathfinder.BuildPixelPath(CurrentPos, endDes);
-                if (list.Count > 0 && list != null)
-                {
-                    MovementPath = list;
-                }
+                MovementPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
+
             }
 
         }
+
         public void ClearMovementPath()
         {
             MovementPath.Clear();
@@ -131,7 +130,7 @@ namespace PlayingAround.Entities.Player
         public void UpdatePlayerEndPoint(Vector2 vec)
         {
             MoveTarget = vec;
-
+         
         }
 
         private void CheckCurrentPlayerCell()

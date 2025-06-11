@@ -2,8 +2,8 @@
   "Volume": {
     "Name": "Volume",
     "Type": "Numerical",
-    "DefaultValue": 50,
-    "MaxValue": 100,
+    "DefaultValue": 2,
+    "MaxValue": 10,
     "MinValue": 0
   }
 }

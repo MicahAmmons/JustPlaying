@@ -37,7 +37,8 @@
   },
   "Settings": {
     "Volume": {
-      "CurrentValue": 1
+      "Name": "Volume",
+      "CurrentValue": 3
     }
   }
 }

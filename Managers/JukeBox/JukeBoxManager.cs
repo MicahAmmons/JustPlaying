@@ -28,12 +28,11 @@ namespace PlayingAround.Managers.JukeBox
             SetSongTo("titleScreenBG");
             Configure();
         }
-        public static void Configure(bool loop = true, float volume = 0.5f)
+        public static void Configure(bool loop = true, float volume = 0.2f)
         {
             MediaPlayer.IsRepeating = loop;
             MediaPlayer.Volume = volume;
         }
-
         public static void SetSongTo(string key)
         {
             if (_songDictionary.TryGetValue(key, out var newSong))
@@ -46,7 +45,6 @@ namespace PlayingAround.Managers.JukeBox
                 }
             }
         }
-
         public static void Update(GameTime gameTime)
         {
             if (changedMusic) { UpdateSong(); changedMusic = false; }
@@ -56,6 +54,10 @@ namespace PlayingAround.Managers.JukeBox
             MediaPlayer.Play(_currentSong);
         }
 
-
+        internal static void UpdateVolume(int currentValue)
+        {
+            float vol = (float)currentValue / 10f;
+            MediaPlayer.Volume = MathHelper.Clamp(vol, 0f, 1f);
+        }
     }
 }

@@ -172,12 +172,8 @@ namespace PlayingAround.Managers.EscapeOverseer
         public static void Update(GameTime gameTime)
         {
                 Point mousePoint = new Point(InputManager.MouseX, InputManager.MouseY);
-            
                 UpdatePlayerInput(mousePoint);
-            if (_currentEscapeMenuState == EscapeMenuState.Settings)
-            {
                 SettingsSuper.Update();
-            }
         }
 
 
@@ -248,6 +244,7 @@ namespace PlayingAround.Managers.EscapeOverseer
 
                 case EscapeMenuState.Settings:
                     SetEscapeMenuState(EscapeMenuState.Settings);
+                    SettingsSuper.SetSettingSuperState(SettingSuperState.MainPage);
                     break;
                 case EscapeMenuState.ExitToMainMenu:
                     _escapeTo = $"{key}";
@@ -284,6 +281,7 @@ namespace PlayingAround.Managers.EscapeOverseer
                                 ? EscapeState.None
                                 : EscapeState.EscapeOutOfCombat;
                         _confirmEscape = false;
+                        _currentEscapeMenuState = EscapeMenuState.None;
                         SettingsSuper.SetSettingSuperState(SettingSuperState.None);
                             break;
 
@@ -292,8 +290,10 @@ namespace PlayingAround.Managers.EscapeOverseer
                                 ? EscapeState.None
                                 : EscapeState.EscapeInCombat;
                         _confirmEscape = false;
+                        _currentEscapeMenuState = EscapeMenuState.None;
                         SettingsSuper.SetSettingSuperState(SettingSuperState.None);
                         break;
+
                     }
                 }
             }

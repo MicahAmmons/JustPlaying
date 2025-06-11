@@ -52,11 +52,10 @@ public class NewGameIntroCin : ICinematic
 
     public void Update(GameTime gameTime)
     {
-        if (_textFinished)
-        {
+
             
             LookForEnterKey();
-        }
+        
         if (!_textFinished)
         {
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -82,7 +81,7 @@ public class NewGameIntroCin : ICinematic
     {
         if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
         {
-            SaveManager.LoadCurrentGameSave();
+            
             SceneManager.SetState(SceneState.Play);
             _isFinished = true;
         }

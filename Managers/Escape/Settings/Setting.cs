@@ -13,11 +13,13 @@ public class Setting
 
     public SettingType Type { get; set; }
 
-    public int? CurrentValue { get; set; }
-    public int? DefaultValue { get; set; }
-    public int? MaxValue { get; set; }
-    public int? MinValue { get; set; }
-    [JsonIgnore] public Rectangle RenderRect; // Used only for drawing
+    public int CurrentValue { get; set; } = -1;
+    public int DefaultValue { get; set; } = -1;
+    public int MaxValue { get; set; } = 2;
+    public int MinValue { get; set; } = -2;
+    [JsonIgnore] public Rectangle RenderRect; 
+    [JsonIgnore] public Rectangle UpArrowRect;
+    [JsonIgnore] public Rectangle DownArrowRect;
 }
 
 public enum SettingType

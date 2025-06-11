@@ -187,6 +187,7 @@ namespace PlayingAround.Managers.TitleScreen
                 {
                 _currentGameStateDataKey = SaveManager.CreateNewGame();
                 PickSaveDataSource();
+                SaveManager.LoadCurrentGameSave();
                 _currentGameStateDataKey = null;
                 _titleScreenState = TitleScreenState.MainPage;
                 SceneManager.SetState(SceneState.Cinematic);

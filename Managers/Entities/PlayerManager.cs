@@ -70,7 +70,7 @@ namespace PlayingAround.Managers.Entities
         {
             if (!_currentPlayer.AllowedToMove)  return;
             {
-                if (InputManager.IsRightClick())
+                if (InputManager.IsRightMouseDown())
                 {
                     Vector2 target = new Vector2(InputManager.MouseX , InputManager.MouseY);
                     TileCell cell = TileManager.GetCell(target);

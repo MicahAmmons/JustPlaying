@@ -23,7 +23,12 @@ public class SaveManager
     public static Dictionary<string, GameSaveData> SaveFiles { get; private set; } = new();
 
     //private static readonly string saveFolder = Path.Combine(SavePathHelper.GetSaveFolder("PlayingAround"), "SaveJson");
-    private static readonly string saveFolder = JsonLoader.GetDataPath("SaveData", "SaveJson");
+    private static readonly string saveFolder =
+#if DEBUG
+    Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\Data\SaveData\SaveJson"));
+#else
+    JsonLoader.GetDataPath("SaveData", "SaveJson");
+#endif
 
 
 

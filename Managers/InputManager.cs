@@ -70,6 +70,10 @@ namespace PlayingAround.Manager
         public static bool IsRightClick() =>
             _currentMouse.RightButton == ButtonState.Pressed &&
             _previousMouse.RightButton == ButtonState.Released;
+        public static bool IsRightMouseDown() =>
+            _currentMouse.RightButton == ButtonState.Pressed;
+        public static bool IsLeftMouseDown() =>
+            _currentMouse.LeftButton == ButtonState.Pressed;
 
         public static int MouseX => _currentMouse.X;
         public static int MouseY => _currentMouse.Y;

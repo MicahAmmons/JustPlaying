@@ -10,7 +10,7 @@ namespace PlayingAround.Data.SaveData
     public class SettingSaveData
     {
         public string Name { get; set; }
-        public int? CurrentValue { get; set; }
+        public int CurrentValue { get; set; } = -1;
 
 
     }
