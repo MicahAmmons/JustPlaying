@@ -15,14 +15,16 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.Quests;
 using System.Text.Json.Serialization;
+using PlayingAround.Utils;
+using PlayingAround.Managers.Escape.Settings;
 
 public class SaveManager
 {
     public static Dictionary<string, GameSaveData> SaveFiles { get; private set; } = new();
 
     //private static readonly string saveFolder = Path.Combine(SavePathHelper.GetSaveFolder("PlayingAround"), "SaveJson");
-    private static readonly string saveFolder = Path.GetFullPath(Path.Combine(
-    AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data\SaveData\SaveJson"));
+    private static readonly string saveFolder = JsonLoader.GetDataPath("SaveData", "SaveJson");
+
 
 
 
@@ -102,6 +104,7 @@ public class SaveManager
         SceneManager.SetState(SceneState.Play);
         DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
         QuestLibrary.LoadContent();
+        SettingsSuper.LoadSaveContent(CurrentGameSaveData.Settings);
      //   CombatManager.Initialize();
 
     }
@@ -158,7 +161,8 @@ public class SaveManager
             Player = PlayerManager.SavePlayer(),
             MapTile = TileManager.SaveMapTile(),
             DayCycle = DayCycleManager.SaveDayCycle(),
-            Quests = QuestManager.SaveQuestData()
+            Quests = QuestManager.SaveQuestData(),
+            Settings = SettingsSuper.SaveSettingData()
         };
 
         var path = Path.Combine(saveFolder, CurrentSaveKey + ".json");

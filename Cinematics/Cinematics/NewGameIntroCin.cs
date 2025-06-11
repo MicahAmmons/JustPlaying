@@ -54,6 +54,7 @@ public class NewGameIntroCin : ICinematic
     {
         if (_textFinished)
         {
+            
             LookForEnterKey();
         }
         if (!_textFinished)
@@ -87,7 +88,17 @@ public class NewGameIntroCin : ICinematic
         }
 
     }
+    private static void DrawEnterPrompt(SpriteBatch spriteBatch, SpriteFont font)
+    {
+        string prompt = "Press Enter to Continue";
+        Vector2 promptSize = font.MeasureString(prompt);
+        Vector2 promptPos = new Vector2(
+            ViewportManager.ScreenWidth / 2f - promptSize.X / 2f,
+            ViewportManager.ScreenHeight - promptSize.Y - 40 // 40px from bottom
+        );
 
+        spriteBatch.DrawString(font, prompt, promptPos, Color.White);
+    }
     public void Draw(SpriteBatch spriteBatch)
     {
         // Fill background black
@@ -129,5 +140,9 @@ public class NewGameIntroCin : ICinematic
         Vector2 textPos = screenCenter - textSize / 2f;
 
         spriteBatch.DrawString(_font, text, textPos, textColor);
+        if (_textFinished)
+        {
+            DrawEnterPrompt(spriteBatch, _font);
+        }
     }
 }

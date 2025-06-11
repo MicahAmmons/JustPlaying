@@ -15,6 +15,7 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.EscapeOverseer;
 using PlayingAround.Managers.JukeBox;
 using PlayingAround.Managers.LoadingScreen;
@@ -65,6 +66,9 @@ namespace PlayingAround
 
             //Data that is not dependent on Save State
 
+            ViewportManager.Initialize(GraphicsDevice);
+
+
             DrawDiamondTexture.LoadContent(GraphicsDevice);
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
@@ -74,8 +78,7 @@ namespace PlayingAround
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             DebugBugger.LoadContent(GraphicsDevice);
             DialogueLibrary.LoadContent();
-          
-            ViewportManager.Initialize(GraphicsDevice);
+            SettingsSuper.LoadContent();
             TitleScreenManager.LoadContent();
             MapTileTransitionManager.Initialize(GraphicsDevice);
             EscapeOverseer.LoadContent();

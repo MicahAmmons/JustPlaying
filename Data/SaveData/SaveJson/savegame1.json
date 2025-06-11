@@ -34,5 +34,10 @@
         }
       }
     }
+  },
+  "Settings": {
+    "Volume": {
+      "CurrentValue" : 50
+    }
   }
 }

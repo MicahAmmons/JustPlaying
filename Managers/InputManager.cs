@@ -13,6 +13,10 @@ namespace PlayingAround.Manager
         private static MouseState _currentMouse;
         private static MouseState _previousMouse;
 
+        private static int _previousScrollValue;
+        private static int _currentScrollValue;
+
+
         public static event Action OnMoveLeft;
         public static event Action OnMoveRight;
         public static event Action OnMoveUp;
@@ -28,6 +32,10 @@ namespace PlayingAround.Manager
 
             _previousMouse = _currentMouse;
             _currentMouse = Microsoft.Xna.Framework.Input.Mouse.GetState();
+
+            _previousScrollValue = _currentScrollValue;
+            _currentScrollValue = _currentMouse.ScrollWheelValue;
+
 
             if (IsKeyHeld(Keys.Left) || IsKeyHeld(Keys.A))
                 OnMoveLeft?.Invoke();
@@ -67,6 +75,9 @@ namespace PlayingAround.Manager
         public static int MouseY => _currentMouse.Y;
 
         public static MouseState Mouse => _currentMouse;
+
+        public static int ScrollWheelChange => _currentScrollValue - _previousScrollValue;
+
 
 
     }

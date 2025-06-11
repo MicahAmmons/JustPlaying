@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.TitleScreen;
+using System;
 using System.Collections.Generic;
 
 namespace PlayingAround.Managers.EscapeOverseer
@@ -20,15 +22,15 @@ namespace PlayingAround.Managers.EscapeOverseer
         private static Texture2D Background => AssetManager.GetTexture("fightBackground");
 
         private static readonly EscapeMenuState[] _options = new[]
-{
-    EscapeMenuState.Save,
-    EscapeMenuState.Settings,
-    EscapeMenuState.ExitToMainMenu,
-    EscapeMenuState.ExitToDeskTop,
-    EscapeMenuState.Return,
-    EscapeMenuState.Yes,
-    EscapeMenuState.No
-};
+            {
+              EscapeMenuState.Save,
+              EscapeMenuState.Settings,
+              EscapeMenuState.ExitToMainMenu,
+              EscapeMenuState.ExitToDeskTop,
+             EscapeMenuState.Return,
+             EscapeMenuState.Yes,
+             EscapeMenuState.No
+            };
 
         private static Dictionary<EscapeMenuState, Rectangle> _menuOptions = new();
 
@@ -88,7 +90,7 @@ namespace PlayingAround.Managers.EscapeOverseer
 
 
         public static void Draw(SpriteBatch spriteBatch)
-            {
+        {
 
                 switch (_currentEscapeState)
                 {
@@ -103,6 +105,10 @@ namespace PlayingAround.Managers.EscapeOverseer
                         DrawEscapeInCombat(spriteBatch);
                         break;
                 }
+            if (_currentEscapeMenuState == EscapeMenuState.Settings)
+            {
+                SettingsSuper.Draw(spriteBatch);
+            }
                 DrawEscapeConfirmation(spriteBatch);
 
         }
@@ -164,14 +170,23 @@ namespace PlayingAround.Managers.EscapeOverseer
 
 
         public static void Update(GameTime gameTime)
-            {
+        {
                 Point mousePoint = new Point(InputManager.MouseX, InputManager.MouseY);
+            
                 UpdatePlayerInput(mousePoint);
+            if (_currentEscapeMenuState == EscapeMenuState.Settings)
+            {
+                SettingsSuper.Update();
             }
+        }
+
+
 
         public static void UpdatePlayerInput(Point mousePoint)
+        {
+            UpdatePlayerOpenEscapeMenuPress(mousePoint);
+            if (_currentEscapeMenuState != EscapeMenuState.Settings)
             {
-                UpdatePlayerOpenEscapeMenuPress(mousePoint);
                 HandlePlayerConfirmationExitClick(mousePoint);
                 switch (_currentEscapeState)
                 {
@@ -184,6 +199,7 @@ namespace PlayingAround.Managers.EscapeOverseer
                         break;
                 }
             }
+        }
 
         public static void HandlePlayerConfirmationExitClick(Point mousePoint)
         {
@@ -209,7 +225,7 @@ namespace PlayingAround.Managers.EscapeOverseer
             foreach (var kvp in _menuOptions)
             {
                 if (kvp.Key == EscapeMenuState.Yes || kvp.Key == EscapeMenuState.No)
-                    continue;
+                    continue; // skip yes and no
 
                 if (kvp.Value.Contains(mousePoint))
                 {
@@ -231,7 +247,7 @@ namespace PlayingAround.Managers.EscapeOverseer
                     break;
 
                 case EscapeMenuState.Settings:
-
+                    SetEscapeMenuState(EscapeMenuState.Settings);
                     break;
                 case EscapeMenuState.ExitToMainMenu:
                     _escapeTo = $"{key}";
@@ -268,6 +284,7 @@ namespace PlayingAround.Managers.EscapeOverseer
                                 ? EscapeState.None
                                 : EscapeState.EscapeOutOfCombat;
                         _confirmEscape = false;
+                        SettingsSuper.SetSettingSuperState(SettingSuperState.None);
                             break;
 
                         case SceneState.Combat:
@@ -275,7 +292,8 @@ namespace PlayingAround.Managers.EscapeOverseer
                                 ? EscapeState.None
                                 : EscapeState.EscapeInCombat;
                         _confirmEscape = false;
-                            break;
+                        SettingsSuper.SetSettingSuperState(SettingSuperState.None);
+                        break;
                     }
                 }
             }

@@ -1,0 +1,48 @@
+{
+  "slam": {
+    "elementDamage": "physical",
+    "name": "slam",
+    "baseDamageMin": 1,
+    "baseDamageMax": 3,
+    "range": 1,
+    "effect": null,
+    "typeOfAttack": "attack",
+    "target": "closestEnemy"
+
+  },
+  "acidSpit": {
+    "elementDamage": "acid",
+    "name": "Acid Spit",
+    "attacksHasIcon": true,
+    "baseDamageMin": 1,
+    "baseDamageMax": 1,
+    "range": 6,
+    "duration": 3,
+    "stackable": true,
+    "effect": "weakAcidBurn",
+    "whenApplyAspect": "OnDamage",
+    "typeOfAttack": "attack",
+    "target": "lowestHPInRange",
+    "visualTiming": "BeforeAttack",
+    "visualVelocity": 400,
+    "animated": true
+  },
+  "exist": {
+    "elementDamage": "Normal",
+    "name": "Exist",
+    "attacksHasIcon": false,
+    "baseDamageMin": 0,
+    "baseDamageMax": 0,
+    "range": 0,
+    "typeOfAttack": "attack",
+    "target": "self",
+    "visualTiming": "BeforeAttack",
+    "visualVelocity": 400,
+    "animated": false
+  }
+
+}
+
+
+  
+

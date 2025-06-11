@@ -1,0 +1,140 @@
+{
+  "Cale": {
+    "npcId": "Cale",
+    "defaultNode": {
+      "text": "Hello there. This is my default text.",
+      "responses": [
+        {
+          "text": "Heard",
+          "nextDialogue": null
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "1",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "getting_started",
+            "questStage": "NotStarted"
+          }
+        ],
+        "text": "This is stage 1 dialogue. Will you accept my quest to defeat the training dummy?",
+        "responses": [
+          {
+            "text": "Sure, I’ll help.",
+            "nextDialogue": "1b",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questID": "getting_started",
+                "stage": "Accepted"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questId": "getting_started",
+                "stage": "Declined"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "getting_started",
+            "questStage": "Declined"
+          }
+        ],
+        "text": "Quit playing around, will you defeat the training dummy or not?",
+        "responses": [
+          {
+            "text": "Sure, I’ll help.",
+            "nextDialogue": "1b",
+            "effects": [
+              {
+                "type": "StartQuest",
+                "questId": "getting_started"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "text": "Glad you accepted! The training dummy is just ahead. Show me what you’ve got.",
+        "responses": [
+          {
+            "text": "Continue",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "getting_started",
+            "questStage": "Accepted"
+          }
+        ],
+        "text": "It's right over there - go ahead.",
+        "responses": [
+          {
+            "text": "Continue",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "getting_started",
+            "questStage": "ObjectiveCompleted"
+          }
+
+        ],
+        "text": "You defeated the dummy - good stuff.",
+        "responses": [
+          {
+            "text": "Next",
+            "nextDialogue": "4b"
+          }
+        ]
+      },
+      {
+        "id": "4b",
+        "text": "You completed the quest. Good job.",
+
+        "responses": [
+          {
+            "text": "Thanks brah",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "CompleteQuest",
+                "questId": "getting_started"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

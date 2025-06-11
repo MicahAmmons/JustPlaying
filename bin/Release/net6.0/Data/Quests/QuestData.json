@@ -1,0 +1,35 @@
+{
+  "getting_started": {
+    "description": "Prove your worth by defeating the training dummy.",
+    "objectives": [
+      {
+        "id": "training_dummy_defeated",
+        "description": "Defeat the training dummy.",
+        "objectiveType": "KillCount",
+        "targetId": "training_dummy",
+        "activationStage": "OnAccepted",
+        "requiredCount": 1
+      }
+    ],
+    "Stagedescriptions": [
+      {
+        "activatedStage": "NotStarted",
+        "description": "You haven’t begun this quest yet.",
+        "objectives": []
+      },
+      {
+        "activatedStage": "Declined",
+        "description": "You can change your mind and complete this quest."
+      },
+      {
+        "activatedStage": "Accepted",
+        "description": "You agreed to defeat the training dummy."
+      },
+      {
+        "activatedStage": "Completed",
+        "description": "You finished this quest"
+      }
+    ]
+  }
+}
+
