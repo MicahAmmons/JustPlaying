@@ -204,11 +204,9 @@ namespace PlayingAround.Managers.CombatMan
             allCombatants.Add(PlayerMonster);
             allCombatants.AddRange(_summonedMonsters);
             allCombatants.Sort((a, b) => b.Initiation.CompareTo((int)a.Initiation));
-            int idCounter = 0;
             foreach (var entity in allCombatants)
             {
                 entity.CurrentMP = entity.MP;
-                entity.ID = idCounter++;
                 _referenceTurnOrder.Add(entity);
                 _turnOrder.Enqueue(entity);
             }
@@ -216,17 +214,17 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void SetCombatMonsterStartingPos()
         {
-            if (_monsterSpawnableCells.Count < PlayMonsters.Monsters.Count) return;
-            Random ran = new Random();
+            if (_monsterSpawnableCells.Count < PlayMonsters.Monsters.Count)
+                throw new InvalidOperationException("Not enough spawnable cells for monsters.");
             List<TileCell> spawnableCells = new List<TileCell>(_monsterSpawnableCells);
             List<CombatMonster> comMon = new List<CombatMonster>(PlayMonsters.Monsters);
             do
             {
                 foreach (var mon in comMon)
                 {
-                    int index = ran.Next(spawnableCells.Count);
+                    int index = RandomHut.rng.Next(spawnableCells.Count);
                     Vector2 pos = spawnableCells[index].CenterPoint;
-                    mon.startingPos = pos;
+
                     mon.currentPos = pos;
                     spawnableCells.RemoveAt(index);
                 }
@@ -267,6 +265,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+            bool endingScreen = false;
             DrawMapBackground(spriteBatch);
             switch (StateCombat)
             {
@@ -283,7 +282,7 @@ namespace PlayingAround.Managers.CombatMan
                     DrawSummonedTurn(spriteBatch);
                     break;
                 case CombatState.WinnerChosen:
-                    DrawCombatEndScreen(spriteBatch);
+                    endingScreen = true;
                     break;
             }
             DrawDebugInfo(spriteBatch);
@@ -291,6 +290,8 @@ namespace PlayingAround.Managers.CombatMan
             DrawStatHoverHighlight(spriteBatch);
             _visualEffectManager.Draw(spriteBatch, _font);
             DrawAllCombatMonsters(spriteBatch);
+            if (endingScreen) DrawCombatEndScreen(spriteBatch);
+
         }
         public void DrawCombatEndScreen(SpriteBatch spriteBatch)
         {
@@ -767,7 +768,6 @@ namespace PlayingAround.Managers.CombatMan
   
                    
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
-                    _currentMonster.TurnNumber++;
                     UpdateMonsterTopOfRoundStats();
                     PickWhichEntitiesTurn();
                     break;
@@ -1486,7 +1486,6 @@ namespace PlayingAround.Managers.CombatMan
         {
             CombatMonster mon = _currentMonster;
             mon.CurrentMP = mon.MP;
-            mon.CurrentSP = mon.SP;
             if (mon.isMonster)
             {
                 foreach (var str in mon.BaseChooseWhichAttack) {
@@ -1758,17 +1757,10 @@ namespace PlayingAround.Managers.CombatMan
             SetPlayerTurnState(PlayerTurnState.PlayerExecutingSummoning);
             CombatMonster mon = _currentMonster;
             SummonedMonster sumMon = _playerSelectedSummon;
-            int currentSP = mon.CurrentSP;
-            if (sumMon.SummonCost > currentSP) 
-            { 
-                Add($"Need {sumMon.SummonCost} / have {currentSP}"); 
-                return; 
-            }
 
             CombatMonster comSumMon = (CombatMonsterManager.SummonMonsterToCombat(sumMon));
             comSumMon.currentPos = cell.CenterPoint;
             AddComMonToTurnOrder(comSumMon);
-            mon.CurrentSP -= comSumMon.BaseSummonCost;
         }
         private void AddComMonToTurnOrder(CombatMonster mon)
         {

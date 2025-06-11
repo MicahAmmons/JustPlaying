@@ -22,10 +22,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public string IconTextureKey { get; set; }
 
         public Vector2 currentPos;
-
-        public Vector2 startingPos;
-        public int SP { get; set; }
-        public int CurrentSP;
         [JsonPropertyName("mp")] public int MP { get; set; }
         [JsonPropertyName("movementQuickness")] public float MovementQuickness { get; set; }
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
@@ -70,23 +66,27 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool IsSummon {  get; set; }
         public List<Vector2> attackPath1 { get; set; } = null;
         public List<Vector2> attackPath2 { get; set; } = null;
-        public Texture2D projectileTexture { get; set; } = null;
-        public List<Vector2> projectileMovePath {  get; set; } = null;
         public SingleAttack CurrentAttack { get; set; } = null;
         public List<CombatMonster> CurrentAttackEffectedMonsters { get; set; } = null;
         public List<TileCell> CurrentAttackEffectedCells { get; set; } = null;
         public bool IsFlashingRed;
         public float DamageFlashTimer = 0f;
         public bool AllowedToMove = true;
+        public float CurrentHealth { get; set; }
+        public TileCell PlayerMovementEndPoint { get; set; }
+        public List<Vector2> MovePath { get; set; } = new();
+        public string Name { get; set; }
+        public string NamePlusLevel { get; set; }
+        public List<Aspect> Aspects { get; set; } = new List<Aspect>();
+        public bool isDead { get; set; } = false;
 
 
 
-        
+
         public CombatMonster(SummonedMonster mon, CombatMonster comMon)
         {
             //Passes in a copy 
             //Summoned monster
-            BaseSummonCost = mon.SummonCost;
             Name = mon.Name;
             IconTextureKey = comMon.IconTextureKey;
             IconTexture = AssetManager.GetTexture(mon.IconTextureString);
@@ -116,25 +116,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         }
 
-
-//public TileCell CurrentCell { get; set; }
-        public int TurnNumber { get; set; } = 0;
-        public float MaxMana { get; set; }
-        public float CurrentMana { get; set; }
-        public float CurrentHealth { get; set; }
-        public int ID { get; set; }
-        public bool PathGenerated { get; set; } = false;
-        public TileCell PlayerMovementEndPoint { get; set; }
-        public List<Vector2> MovePath { get; set; } = new();
-        public int BaseSummonCost { get; set; }
-        public float AttackPower { get; set; } = 1;
-        public string Name { get; set; }
-        public string NamePlusLevel { get; set; }
-        public List<Aspect> Aspects { get; set; } = new List<Aspect>();
-        public bool isDead { get; set; } = false;
-
-
-
         public CombatMonster()
         {
 
@@ -161,7 +142,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MonsterType = original.MonsterType;
             Resistances = original.Resistances;
             ElementalAffinity = original.ElementalAffinity;
-            BaseSummonCost = original.BaseSummonCost;
             ActionOrderList = original.ActionOrderList;
             ChooseWhichAttacks = original.ChooseWhichAttacks;
             Width = original.Width;
@@ -218,28 +198,16 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             BaseHealth = stats.MaxHealth;
             CurrentHealth = stats.CurrentHealth;
             Name = "Player";
-            MaxMana = stats.MaxMana;
-            CurrentMana = stats.CurrentMana;
             isPlayer = true;
-            AttackPower = 1;
             Initiation = stats.Initiation;
             MovementQuickness = 200f;
             MovementPattern = "straight";
             MP = player.stats.MP;
-            SP = player.stats.SP;
             Resistances = player.PlayerResistances;
             IconTexture = player.Texture;
             Width = player.PlayerWidth;
             Height = player.PlayerHeight;
         }
-
-
-
-        //public CombatMonster (Summoner summon)
-        //{
-
-        //    isPlayerControled = true;
-        //}
     }
     public enum MonsterActionOrder
     {

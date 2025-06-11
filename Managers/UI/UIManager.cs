@@ -299,7 +299,6 @@ namespace PlayingAround.Managers.UI
                 _playerMonster = CombatGuard.CurrentCombat.GetPlayerMonster();
                 _standInMonster = mon;
                 _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.BaseHealth}\n" +
-                               $"SP: {_playerMonster.SP} / {_playerMonster.SP}\n" +
                                $"Speed: {_playerMonster.CurrentMP} / {_playerMonster.MP}";
             }
         }

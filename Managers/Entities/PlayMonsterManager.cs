@@ -46,7 +46,6 @@ namespace PlayingAround.Managers.Entities
             // Step 1: Create a list of all available CombatMonsters based on the JSON data
             List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
 
-            Random random = new Random();
             for (int i = 0; i < maxSpawn; i++)
             {
 
@@ -64,7 +63,8 @@ namespace PlayingAround.Managers.Entities
                 newPlayMon.Icon = AssetManager.GetTexture(comMon.IconTextureKey);
                 newPlayMon.MovementPattern = comMon.MovementPattern;
                 newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
-                newPlayMon.PacingBoundary = _playMonsterData[name][0].PacingBoundaryRect;
+                newPlayMon.PauseDurationMax = _playMonsterData[name][0].PauseDurationMax;
+                newPlayMon.PauseDurationMin = _playMonsterData[name][0].PauseDurationMin;
                 newPlayMon.Name = comMon.Name;
                 monsters.Add(newPlayMon);
 
@@ -75,8 +75,7 @@ namespace PlayingAround.Managers.Entities
         {
             List<TileCell> tileCells = new List<TileCell>(cells);
 
-            Random random = new Random();
-            TileCell selectedCell = tileCells[random.Next(tileCells.Count)];
+            TileCell selectedCell = tileCells[RandomHut.rng.Next(tileCells.Count)];
 
 
 

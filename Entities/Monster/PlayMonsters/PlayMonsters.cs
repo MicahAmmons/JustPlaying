@@ -15,18 +15,19 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
         // Properties populated from PlayMonsterData
         public float MovementSpeed { get; set; }
-        public Rectangle PacingBoundary { get; set; }
         public string MovementPattern { get; set; }
+        public float PauseDurationMax { get; set; } // how long to pause after a path ends
+        public float PauseDurationMin { get; set; }
+        public float CurrentPauseDuration { get; set; }
         public string IconPath { get; set; }
         public Texture2D Icon { get; set; }
         public string Name { get; set; }
         public Vector2 CurrentPos { get; set; }
-        public TileCell CurrentCell { get; set; }
 
         public List<Vector2> MovePath { get; set; }
         public bool IsPaused { get; set; } = false;
         public float PauseTimer { get; set; } = 0f; // in seconds
-        public float PauseDuration { get; set; } = 1.5f; // how long to pause after a path ends
+
 
 
 

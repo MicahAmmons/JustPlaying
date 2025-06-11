@@ -88,51 +88,11 @@ namespace PlayingAround.Managers.Movement
 
 
 
-        public static Vector2 FindEndPoint(Rectangle bound, Vector2 spawnPoint)
+        public static Vector2 FindEndPoint(Vector2 spawnPoint)
         {
-            Vector2 end = new Vector2(0, 0);
-            Random rand = new Random();
-            bool walkable = false;
-
-            int halfWidth = bound.Width / 2;
-            int halfHeight = bound.Height / 2;
-
-            int minX = (int)spawnPoint.X - halfWidth;
-            int maxX = (int)spawnPoint.X + halfWidth;
-
-            int minY = (int)spawnPoint.Y - halfHeight;
-            int maxY = (int)spawnPoint.Y + halfHeight;
-
-            float minDistance = bound.Width / 5f;
-
-            int attempts = 0;
-            const int maxAttempts = 100;
-
-            do
-            {
-                float x = rand.Next(minX, maxX);
-                float y = rand.Next(minY, maxY);
-
-                end = new Vector2(x, y);
-                float distance = Vector2.Distance(spawnPoint, end);
-                TileCell cell = TileManager.GetCell(end) ;
-                if (distance >= minDistance &&
-                    TileManager.IsCellWalkable(cell.X, cell.Y) &&
-                    ViewportManager.IsPointWithinScreen(end, 50))
-                {
-                    walkable = true;
-                }
-
-                attempts++;
-            } while (!walkable && attempts < maxAttempts);
-            if (attempts == maxAttempts) 
-            { 
-                return spawnPoint; 
-            }
-            if (walkable == true)
-            {
-                return end;
-            }
+            
+            var tiles = TileManager.GetWalkableNeighbors(TileManager.GetCell(spawnPoint));
+            if (tiles.Count > 0) return tiles[RandomHut.rng.Next(0, tiles.Count - 1)].CenterPoint;
             else return spawnPoint;
         }
 
@@ -145,7 +105,8 @@ namespace PlayingAround.Managers.Movement
                 if (mon.PauseTimer <= 0)
                 {
                     mon.IsPaused = false;
-                    Vector2 end = FindEndPoint(mon.PacingBoundary, mon.CurrentPos);
+                    SetCurrentPauseDuration(mon);
+                    Vector2 end = FindEndPoint(mon.CurrentPos);
                     mon.MovePath = Movement.NPCMovement.ArcMovement(end, mon.CurrentPos);
                 }
 
@@ -156,17 +117,17 @@ namespace PlayingAround.Managers.Movement
             if (mon.MovePath == null || mon.MovePath.Count == 0)
             {
                 mon.IsPaused = true;
-                mon.PauseTimer = mon.PauseDuration;
+                mon.PauseTimer = mon.CurrentPauseDuration;
                 return true; // Pausing now
             }
 
             return false; // Not paused, movement can continue
         }
 
-
-
-
-
-
+        private static void SetCurrentPauseDuration(PlayMonsters mon)
+        {
+            mon.CurrentPauseDuration = MathF.Round((float)(mon.PauseDurationMin + RandomHut.rng.NextDouble() * (mon.PauseDurationMax - mon.PauseDurationMin)),2);
+        
+    }
     }
 }

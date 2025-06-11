@@ -61,8 +61,7 @@ namespace PlayingAround.Managers.Entities
         public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
         {
             List<CombatMonster> finalMon = new List<CombatMonster>();
-            Random rng = new Random();
-            float targetDifficulty = GetRandomDifficulty(rng, min, max);
+            float targetDifficulty = GetRandomDifficulty(min, max);
             Dictionary<CombatMonster, List<float>> floats = GetRandomDifficulties(targetDifficulty, monsters);
                 foreach (var kvp in floats)
                 {
@@ -83,7 +82,7 @@ namespace PlayingAround.Managers.Entities
         }
         private static CombatMonster MatchStatsToDifficulty(CombatMonster mon, float diff)
         {
-            Random random = new Random();
+
             float numberOfLevels = (diff - mon.BaseDifficulty) / 0.2f + 1;
             mon.Level = (float)Math.Floor(numberOfLevels);
 
@@ -91,7 +90,7 @@ namespace PlayingAround.Managers.Entities
             {
                 do
                 {
-                    bool addHealth = random.Next(2) == 0;
+                    bool addHealth = RandomHut.rng.Next(2) == 0;
                     if (addHealth)
                     {
                         mon.BaseHealth += _hPIncreasePerLevel;
@@ -108,21 +107,20 @@ namespace PlayingAround.Managers.Entities
             }
             return mon;
         }
-        public static float GetRandomDifficulty(Random rng, float min, float max)
+        public static float GetRandomDifficulty(float min, float max)
         {
             // Convert range to number of 0.2 steps
             int stepsMin = (int)Math.Ceiling(min / 0.2f);
             int stepsMax = (int)Math.Floor(max / 0.2f);
 
             // Pick a random integer step
-            int step = rng.Next(stepsMin, stepsMax + 1);
+            int step = RandomHut.rng.Next(stepsMin, stepsMax + 1);
 
             // Convert back to float
             return step * 0.2f;
         }
         public static Dictionary<CombatMonster, List<float>> GetRandomDifficulties(float targetDiff, List<CombatMonster> mons)
         {
-            Random rng = new Random();
             const float step = 0.2f;
             const float tolerance = 0.4f;
             float maxDiff = targetDiff;
@@ -135,14 +133,14 @@ namespace PlayingAround.Managers.Entities
 
             while (maxDiff > 0)
             {
-                int index = rng.Next(0, mons.Count - 1);
+                int index = RandomHut.rng.Next(0, mons.Count - 1);
                 float diff = 0;
                 CombatMonster mon = mons[index];
  
                 float baseDiff = mon.BaseDifficulty;
                 if (baseDiff < maxDiff)
                 {
-                    diff = GetRandomDifficulty(rng, baseDiff, maxDiff);
+                    diff = GetRandomDifficulty(baseDiff, maxDiff);
                     result[mon].Add(diff);
                 }
                 else

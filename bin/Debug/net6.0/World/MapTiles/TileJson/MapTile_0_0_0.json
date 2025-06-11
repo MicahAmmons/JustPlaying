@@ -4,7 +4,7 @@
   "gridZ": 0,
   "background": "Tiles/0_0_0",
   "monsters": [
-    "TrainingDummy"
+    "Ooze"
   ],
   "pacingBoundary": {
     "x": 0,
@@ -14,7 +14,7 @@
   },
   "difficultyMax": 1,
   "difficultyMin": 1,
-  "totalSpawns": 1,
+  "totalSpawns": 2,
   "obstacles": [],
   "cells": [
     {
@@ -913,9 +913,9 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 25,

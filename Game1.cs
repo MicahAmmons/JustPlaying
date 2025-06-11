@@ -121,6 +121,7 @@ namespace PlayingAround
                 case (SceneState.Play):
                     UIManager.Update(gameTime);
                     PlayerManager.Update(gameTime);
+                    PlayMonsterManager.Update(gameTime);
                    // TileCellManager.Update(gameTime);
                     TileManager.Update(gameTime);
                     MapTileTransitionManager.Update(gameTime);

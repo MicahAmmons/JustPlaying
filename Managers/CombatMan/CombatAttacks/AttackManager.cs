@@ -87,8 +87,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             string damageType = attack.ElementDamage.ToLower();
             Dictionary<string, float> resistances = attacker.Resistances;
 
-            Random random = new Random();
-            float baseDamage = random.Next((int)minDam, (int)maxDam + 1); 
+            float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1); 
 
             float resistanceMultiplier = resistances.TryGetValue(damageType, out float resistance) ? resistance : 1.0f;
 
