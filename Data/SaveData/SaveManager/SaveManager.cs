@@ -17,6 +17,7 @@ using PlayingAround.Managers.Quests;
 using System.Text.Json.Serialization;
 using PlayingAround.Utils;
 using PlayingAround.Managers.Escape.Settings;
+using PlayingAround.Managers.Resistances;
 
 public class SaveManager
 {
@@ -107,7 +108,7 @@ public class SaveManager
         CombatMonsterManager.LoadContent(); // Loads Combat Monster Data
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
         SceneManager.SetState(SceneState.Play);
-        DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle.Day);
+        DayCycleManager.LoadContent(CurrentGameSaveData.DayCycle);
         QuestLibrary.LoadContent();
         SettingsSuper.LoadSaveContent(CurrentGameSaveData.Settings);
      //   CombatManager.Initialize();

@@ -9,24 +9,23 @@ namespace PlayingAround.Managers.DayManager
 {
     public static class DayCycleManager
     {
-        private static float _dayCount {  get; set; }
-        public static void LoadContent(float day)
+        private static DayCycleSaveData _dayData;
+        private static float _currentDay => _dayData.Day;
+
+        public static void LoadContent(DayCycleSaveData data)
         {
-            _dayCount = day;
+            _dayData = data;
         }
 
 
         public static float FetchDays()
         {
-            return _dayCount;
+            return _currentDay;
         }
 
         public static DayCycleSaveData SaveDayCycle()
         {
-            return new DayCycleSaveData()
-            {
-                Day = _dayCount
-            };
+            return _dayData;
         }
     }
 }

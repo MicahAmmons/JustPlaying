@@ -33,7 +33,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         [JsonPropertyName("baseDifficulty")] public float BaseDifficulty { get; set; }
 
-        [JsonPropertyName("elementType")] public string ElementType { get; set; }
+        [JsonPropertyName("elementType")] public ElementType ElementType { get; set; }
 
         [JsonPropertyName("baseHealth")] public float BaseHealth { get; set; }
 
@@ -58,7 +58,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool isSummoned { get; set; } = false;
         public bool isMonster { get; set; } = false;
         public List<SingleAttack> Attacks { get; set; }
-        public Dictionary<string, float> Resistances { get; set; }
+        public Dictionary<ElementType, float> Resistances { get; set; }
         public float Level { get; set; } = 1;
         public Texture2D IconTexture { get; set; }
         public bool isPlayerMovementControled { get; set; }
@@ -203,7 +203,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MovementQuickness = 200f;
             MovementPattern = "straight";
             MP = player.stats.MP;
-            Resistances = player.PlayerResistances;
+          //  Resistances = player.PlayerResistances;
             IconTexture = player.Texture;
             Width = player.PlayerWidth;
             Height = player.PlayerHeight;

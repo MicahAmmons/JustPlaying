@@ -52,22 +52,9 @@ namespace PlayingAround.Managers.CombatMan
         private static List<TileCell> _playerMoveableCells = new List<TileCell>();
         private static List<CombatMonster> _summonedMonsters = new List<CombatMonster>();
 
-
-
-
-
-        //  private static CombatMonster _standInMonster = new CombatMonster();
-        private static List<CombatMonster> _defeatedMonsters = new List<CombatMonster>();
-        private static bool _firstRound = true;
-        private static bool _actionComplete = false;
-        private static float _playerBaseSpeed;
-        private static int _playerBaseSP;
-        private static bool _playerIsSummoning = false;
         private static int _summonOptionHeight = 64;
         private static int _summonOptionWidth = 64;
         private static int _summonOptionSpacing = 10;
-        private static SingleAttack _drawnAttack = null;
-        private static bool _attackAnimationBeforeHit;
 
 
 
@@ -102,7 +89,7 @@ namespace PlayingAround.Managers.CombatMan
         private Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
  
         private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
-        private Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect, _attackOptionsRect;
+        private Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect;
         private Dictionary<CombatMonster, Rectangle> _displayStatRectangles = new Dictionary<CombatMonster, Rectangle>();
         private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
         private Rectangle _exitCombatButtonRect = new Rectangle(885, 580, 150, 50);

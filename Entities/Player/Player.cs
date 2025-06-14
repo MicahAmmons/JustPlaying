@@ -34,7 +34,7 @@ namespace PlayingAround.Entities.Player
 
         private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
-        public Dictionary<string, float> PlayerResistances;
+        public Dictionary<ElementType, float> PlayerResistances;
         public Vector2[] DiamondHitBox ;
         public Vector2 HitBoxCenter;
         public Rectangle RectHitBox;

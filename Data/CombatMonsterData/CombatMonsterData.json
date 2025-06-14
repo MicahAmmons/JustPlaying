@@ -32,19 +32,10 @@
     "movementPattern": "none",
     "width": 80,
     "height": 80,
-    "attacks": [
-      "exist"
-    ],
     "monsterType": "TrainingDummy",
     "baseDifficulty": 1,
     "elementType": "Normal",
-    "baseHealth": 10,
-    "initiation": 2,
-    "actionOrder": [
-      "attackSelf"
-    ],
-    "decideWhichAttack": [
-      "exist"
-    ]
+    "baseHealth": 5,
+    "initiation": 2
   }
 }

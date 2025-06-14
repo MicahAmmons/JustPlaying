@@ -23,7 +23,7 @@ namespace PlayingAround.Managers.Proximity
 
         private static Vector2 _playerCurrentCords;
 
-        private const int _distanceForInteract = 50;
+        private const int _distanceForInteract = 64;
         private const int _distanceForNextTileInteract = 48;
 
 

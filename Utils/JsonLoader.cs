@@ -63,10 +63,15 @@ namespace PlayingAround.Utils
         }
 
         private static readonly string ResistancePath = GetDataPath("Resistances", "Resistance.json");
-        public static Dictionary<string, Dictionary<string, string>> LoadResistanceData()
+        public static Dictionary<ElementType, Dictionary<string, ElementType>> LoadResistanceData()
         {
             string json = File.ReadAllText(ResistancePath);
-            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<ElementType, Dictionary<string, ElementType>>>(json, options);
         }
 
         private static readonly string PlayMonsterPath = GetDataPath("PlayMonsterJson", "PlayMonsters.json");

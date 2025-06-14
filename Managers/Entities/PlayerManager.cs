@@ -8,6 +8,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;

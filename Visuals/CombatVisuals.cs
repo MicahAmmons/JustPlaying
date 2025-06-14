@@ -4,7 +4,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
-using PlayingAround.Managers.CombatMan.CombatBehaviors;
+using PlayingAround.Managers.CombatMan.CombatBehavior;
 using PlayingAround.Managers.Tiles;
 using System;
 

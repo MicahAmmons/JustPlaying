@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Resistances;
 using PlayingAround.Utils;
 
 namespace PlayingAround.Managers.Entities
@@ -47,8 +48,7 @@ namespace PlayingAround.Managers.Entities
             }
             return mons;
         }
-        
-        //PAssing in the start of game compiled template monster
+      
         public static CombatMonster SummonMonsterToCombat(SummonedMonster mon)
         {
             CombatMonster comMon = new CombatMonster(mon, _combatMonsterBaseData[mon.Name]);
@@ -57,7 +57,6 @@ namespace PlayingAround.Managers.Entities
 
             return comMon;
         }
-     
         public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
         {
             List<CombatMonster> finalMon = new List<CombatMonster>();
@@ -121,7 +120,6 @@ namespace PlayingAround.Managers.Entities
         }
         public static Dictionary<CombatMonster, List<float>> GetRandomDifficulties(float targetDiff, List<CombatMonster> mons)
         {
-            const float step = 0.2f;
             const float tolerance = 0.4f;
             float maxDiff = targetDiff;
 
@@ -171,12 +169,10 @@ namespace PlayingAround.Managers.Entities
             }
             return result;
         }
-
         public static Vector2 GetMonsterWidthAndHeight(string name)
         {
             return new Vector2(_combatMonsterBaseData[name].Width, _combatMonsterBaseData[name].Height);
         }
-
         public static string GetMonsterTextureString(string name)
         {
             return _combatMonsterBaseData[name].IconTextureKey;

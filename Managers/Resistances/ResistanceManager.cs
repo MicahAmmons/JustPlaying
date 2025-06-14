@@ -3,15 +3,16 @@ using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
-namespace PlayingAround.Managers
+namespace PlayingAround.Managers.Resistances
 {
     public static class ResistanceManager
     {
-        private static Dictionary<string, Dictionary<string, float>> _resistAndImmunityData;
+        private static Dictionary<ElementType, Dictionary<ElementType, float>> _resistAndImmunityData = new Dictionary<ElementType, Dictionary<ElementType, float>>();
 
         // Set these before calling LoadContent
         public static float SuperResistant = -0.4f;
@@ -24,62 +25,62 @@ namespace PlayingAround.Managers
             var rawData = JsonLoader.LoadResistanceData();
             // rawData: Dictionary<string, Dictionary<string, string>>
 
-            _resistAndImmunityData = new Dictionary<string, Dictionary<string, float>>();
-
             foreach (var element in rawData)
             {
                 var elementName = element.Key;
-                var relations = element.Value; // Dictionary<string, string>
+               
+                var relations = element.Value; // Dictionary<string, Elementtype>
+              
 
-                var resistanceValues = new Dictionary<string, float>();
+                var resistanceValues = new Dictionary<ElementType, float>();
 
-                // Add helper method locally
-                void TryAdd(string key, float value)
+               // Add helper method locally
+                void Add(string key, float value)
                 {
-                    if (relations.TryGetValue(key, out var relatedElement) && !string.IsNullOrEmpty(relatedElement))
+                    if (relations.TryGetValue(key, out var relatedElement) && !string.IsNullOrEmpty(key))
                     {
                         resistanceValues[relatedElement] = value;
                     }
                     else
                     {
-                        resistanceValues[key] = 0f; // fallback key with 0 value if missing
+                        resistanceValues[relatedElement] = 0f; // fallback key with 0 value if missing
                     }
                 }
 
-                TryAdd("superEffective", SuperResistant);
-                TryAdd("mildlyEffective", MildlyResistant);
-                TryAdd("superVulnerable", SuperVulnerable);
-                TryAdd("mildlyVulnerable", MildlyVulnerable);
+                Add("superEffective", SuperResistant);
+                Add("mildlyEffective", MildlyResistant);
+                Add("superVulnerable", SuperVulnerable);
+                Add("mildlyVulnerable", MildlyVulnerable);
 
                 _resistAndImmunityData[elementName] = resistanceValues;
             }
         }
-
+        
 
         public static void GetPlayerResistances(Player player)
         {
-            Dictionary<string, float> resistances = new Dictionary<string, float>
+            Dictionary<ElementType, float> resistances = new Dictionary<ElementType, float>
     {
-        { "fire", 1.0f },
-        { "ice", 1.0f },
-        { "earth", 1.0f },
-        { "wind", 1.0f },
-        { "acid", 1.0f },
-        { "metal", 1.0f },
-        { "electric", 1.0f },
-        { "water", 1.0f }
+        { ElementType.Fire, 1.0f },
+        { ElementType.Water, 1.0f },
+        { ElementType.Acid, 1.0f },
+        { ElementType.Wind, 1.0f },
+        { ElementType.Earth, 1.0f },
+        { ElementType.Metal, 1.0f },
+        { ElementType.Electricity, 1.0f },
+        { ElementType.Ice, 1.0f },
+        {ElementType.Dark, 1.0f },
+        {ElementType.Light, 1.0f }
     };
 
             player.PlayerResistances = resistances;
         }
 
-        public static Dictionary<string, float> GetResistances(string element)
+        public static Dictionary<ElementType, float> GetResistances(ElementType element)
         {
-            if (!_resistAndImmunityData.ContainsKey(element))
-                throw new Exception($"Element '{element}' not found in resistance data!");
 
             // Make a full dictionary of all elements, assigning 0.0f if not explicitly listed
-            var fullResistances = new Dictionary<string, float>();
+            var fullResistances = new Dictionary<ElementType, float>();
 
             foreach (var otherElement in _resistAndImmunityData.Keys)
             {
@@ -92,4 +93,19 @@ namespace PlayingAround.Managers
             return fullResistances;
         }
     }
+}
+
+public enum ElementType
+{
+    Fire,
+    Water,
+    Earth,
+    Metal,
+    Acid,
+    Wind,
+    Electricity,
+    Ice,
+    Dark,
+    Light,
+    Normal
 }

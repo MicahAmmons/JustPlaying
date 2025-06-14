@@ -84,8 +84,8 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         {
             float minDam = attack.MinDamage;
             float maxDam = attack.MaxDamage;
-            string damageType = attack.ElementDamage.ToLower();
-            Dictionary<string, float> resistances = attacker.Resistances;
+            ElementType damageType = attack.ElementDamage;
+            Dictionary<ElementType, float> resistances = attacker.Resistances;
 
             float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1); 
 

@@ -179,7 +179,7 @@ namespace PlayingAround.Managers.UI
         }
         public static void DrawDayCount(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_mainFont, $"Day {DayManager.DayCycleManager.FetchDays()}", new Vector2(1700, 50 ), ColorPalette.DarkColor);
+            spriteBatch.DrawString(_mainFont, $"Day {DayCycleManager.FetchDays()}", new Vector2(1700, 50 ), ColorPalette.DarkColor);
         }
         public static void DrawEscapeState(SpriteBatch spriteBatch)
         {
