@@ -8,6 +8,7 @@ using PlayingAround.Game.Pathfinding;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Stats;
 using PlayingAround.Utils;
@@ -34,7 +35,7 @@ namespace PlayingAround.Entities.Player
 
         private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
-        public Dictionary<ElementType, float> PlayerResistances;
+        public Dictionary<ElementType, float> Resistances;
         public Vector2[] DiamondHitBox ;
         public Vector2 HitBoxCenter;
         public Rectangle RectHitBox;

@@ -28,7 +28,6 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         {
             _attackData = JsonLoader.LoadAttackData();
         }
-
         public static void PerformAttack(
            SingleAttack attack,
            CombatMonster attacker,
@@ -80,18 +79,19 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             ApplyDamageVisualEffect(tar, damage );
           
         }
-        public static float CalculateDamage(SingleAttack attack, CombatMonster attacker)
+        public static float CalculateDamage(SingleAttack attack, CombatMonster target)
         {
             float minDam = attack.MinDamage;
             float maxDam = attack.MaxDamage;
             ElementType damageType = attack.ElementDamage;
-            Dictionary<ElementType, float> resistances = attacker.Resistances;
+            Dictionary<ElementType, float> resistances = target.Resistances;
 
-            float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1); 
+            float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1);
 
-            float resistanceMultiplier = resistances.TryGetValue(damageType, out float resistance) ? resistance : 1.0f;
+            float resMult = resistances[damageType];
+            if (resMult == 0) resMult = 1;
 
-            float finalDamage = baseDamage * resistanceMultiplier;
+            float finalDamage = baseDamage * resMult;
 
             return finalDamage;
         }
@@ -100,11 +100,15 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
         public static List<SingleAttack> GetAttacks(List<string> atts)
         {
+            if (atts == null) return null;
             List<SingleAttack> attacks = new List<SingleAttack>();
-            foreach (var att in atts)
+            if (atts.Count > 0)
             {
-                attacks.Add(_attackData[att]);
-            }  
+                foreach (var att in atts)
+                {
+                    attacks.Add(_attackData[att]);
+                }
+            }
             return attacks;
         }
 

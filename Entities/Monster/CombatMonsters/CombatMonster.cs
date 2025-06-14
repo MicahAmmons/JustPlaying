@@ -27,7 +27,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
 
         [JsonPropertyName("movementPattern")] public string MovementPattern { get; set; }
-        [JsonPropertyName("attacks")] public List<string> AttackStrings { get; set; }
+        [JsonPropertyName("attackKeys")] public List<string> AttackStrings { get; set; }
 
         [JsonPropertyName("monsterType")] public string MonsterType { get; set; }
 
@@ -62,7 +62,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float Level { get; set; } = 1;
         public Texture2D IconTexture { get; set; }
         public bool isPlayerMovementControled { get; set; }
-
         public bool IsSummon {  get; set; }
         public List<Vector2> attackPath1 { get; set; } = null;
         public List<Vector2> attackPath2 { get; set; } = null;
@@ -194,7 +193,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public CombatMonster(Player.Player player)
         {
             PlayerStats stats = player.stats;
-            //Speed = stats.MovementSpeed;
             BaseHealth = stats.MaxHealth;
             CurrentHealth = stats.CurrentHealth;
             Name = "Player";
@@ -203,10 +201,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MovementQuickness = 200f;
             MovementPattern = "straight";
             MP = player.stats.MP;
-          //  Resistances = player.PlayerResistances;
             IconTexture = player.Texture;
             Width = player.PlayerWidth;
             Height = player.PlayerHeight;
+            Resistances = player.Resistances;
         }
     }
     public enum MonsterActionOrder

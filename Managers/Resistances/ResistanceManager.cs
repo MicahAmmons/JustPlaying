@@ -73,7 +73,7 @@ namespace PlayingAround.Managers.Resistances
         {ElementType.Light, 1.0f }
     };
 
-            player.PlayerResistances = resistances;
+            player.Resistances = resistances;
         }
 
         public static Dictionary<ElementType, float> GetResistances(ElementType element)
@@ -91,6 +91,11 @@ namespace PlayingAround.Managers.Resistances
             }
 
             return fullResistances;
+        }
+
+        internal static Dictionary<ElementType, float> GetPlayerBaseResistance()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,13 +5,9 @@ using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
-using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
-using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
-using System;
-using System.Collections.Generic;
 
 namespace PlayingAround.Managers.Entities
 {
@@ -21,15 +17,12 @@ namespace PlayingAround.Managers.Entities
         public static Player CurrentPlayer => _currentPlayer;
         public static PlayerSaveData _playerData;
         public static float deltaTime;
-
-
         public static void LoadContent(PlayerSaveData data)
         {
             _playerData = data;
             _currentPlayer = Player.LoadFromSave(data);
             ResistanceManager.GetPlayerResistances(_currentPlayer);
         }
-
         public static void Update(GameTime gameTime)
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

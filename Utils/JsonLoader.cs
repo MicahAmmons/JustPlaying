@@ -52,14 +52,24 @@ namespace PlayingAround.Utils
         public static Dictionary<string, SingleAttack> LoadAttackData()
         {
             string json = File.ReadAllText(AttackDataPath);
-            return JsonSerializer.Deserialize<Dictionary<string, SingleAttack>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, SingleAttack>>(json, options);
         }
 
         private static readonly string CombatMonsterPath = GetDataPath("CombatMonsterData", "CombatMonsterData.json");
         public static Dictionary<string, CombatMonster> LoadCombatMonsterData()
         {
             string json = File.ReadAllText(CombatMonsterPath);
-            return JsonSerializer.Deserialize<Dictionary<string, CombatMonster>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, CombatMonster>>(json, options);
         }
 
         private static readonly string ResistancePath = GetDataPath("Resistances", "Resistance.json");

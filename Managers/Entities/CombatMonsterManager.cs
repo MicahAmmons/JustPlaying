@@ -15,7 +15,6 @@ namespace PlayingAround.Managers.Entities
 {
     public static class CombatMonsterManager
     {
-
         private static Dictionary<string, CombatMonster> _combatMonsterBaseData;
         private static float _difficultyIncreasePerLevel = 0.2f;
         private static float _hPIncreasePerLevel = 1f;
@@ -23,21 +22,15 @@ namespace PlayingAround.Managers.Entities
         public static void LoadContent()
         {
             _combatMonsterBaseData = JsonLoader.LoadCombatMonsterData();
-
             foreach (var kvp in _combatMonsterBaseData)
             {
                 string monsterKey = kvp.Key;
                 CombatMonster mon = kvp.Value;
-
                 mon.Name = $"{monsterKey}";
                 mon.IconTextureKey = $"MonsterIcons/{monsterKey}Icon";
                 mon.Attacks = AttackManager.GetAttacks(mon.AttackStrings);
                 mon.Resistances = ResistanceManager.GetResistances(mon.ElementType);
-                
             }
-
-
-
         }
         public static List<CombatMonster> GetCombatMonsters(List<string> monStrings)
         {
@@ -48,7 +41,6 @@ namespace PlayingAround.Managers.Entities
             }
             return mons;
         }
-      
         public static CombatMonster SummonMonsterToCombat(SummonedMonster mon)
         {
             CombatMonster comMon = new CombatMonster(mon, _combatMonsterBaseData[mon.Name]);
@@ -181,8 +173,5 @@ namespace PlayingAround.Managers.Entities
         {
             return mon.MP / 4f * 0.25f + mon.BaseHealth / 10f * 0.5f + mon.ElementalAffinity / 1f * 0.25f;
         }
-
-
-
     }
 }
