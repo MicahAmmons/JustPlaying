@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Utils;
@@ -11,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using static PlayingAround.Entities.Monster.CombatMonsters.CombatMonster;
@@ -22,11 +24,35 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
     {
 
 
-        private static Dictionary<string, SingleAttack> _attackData;
+        private static Dictionary<AttackName, SingleAttack> _attackData;
 
         public static void LoadContent()
         {
             _attackData = JsonLoader.LoadAttackData();
+            foreach (var kvp in _attackData)
+            {
+                var attack = kvp.Value;
+                var name = kvp.Key;
+                attack.Name = name;
+                if (attack.AttackHasIcon) {
+                    attack.AttackIcon = $"{attack.Name}Icon";
+                    attack.AttackIconTexture = AssetManager.GetTexture($"{attack.AttackIcon}");
+                }
+            }
+        }
+        public static List<SingleAttack> GetAttack(Dictionary<AttackName, ElementType> attacks)
+        {
+    
+            List<SingleAttack> att = new List<SingleAttack>();
+            if (attacks == null) return att;
+            foreach (var atts in attacks)
+            {
+                AttackName name = atts.Key;
+                var newAttack = _attackData[name];
+                att.Add(newAttack);
+            }
+
+            return att;
         }
         public static void PerformAttack(
            SingleAttack attack,
@@ -84,33 +110,25 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             float minDam = attack.MinDamage;
             float maxDam = attack.MaxDamage;
             ElementType damageType = attack.ElementDamage;
-            Dictionary<ElementType, float> resistances = target.Resistances;
+            float finalDamage = 0;
+            if (damageType != ElementType.Normal)
+            {
+                Dictionary<ElementType, float> resistances = target.Resistances;
 
-            float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1);
+                float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1);
 
-            float resMult = resistances[damageType];
-            if (resMult == 0) resMult = 1;
+                float resMult = resistances[damageType];
+                if (resMult == 0) resMult = 1;
 
-            float finalDamage = baseDamage * resMult;
-
+                finalDamage = baseDamage * resMult;
+            }
+            else
+            {
+                 finalDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1);
+            }
             return finalDamage;
         }
 
-
-
-        public static List<SingleAttack> GetAttacks(List<string> atts)
-        {
-            if (atts == null) return null;
-            List<SingleAttack> attacks = new List<SingleAttack>();
-            if (atts.Count > 0)
-            {
-                foreach (var att in atts)
-                {
-                    attacks.Add(_attackData[att]);
-                }
-            }
-            return attacks;
-        }
 
         public static (CombatMonster, List<TileCell>) TargetClosestEnemy(List<TileCell> inRangeCells, TileCell origin)
         {

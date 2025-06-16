@@ -46,7 +46,7 @@ namespace PlayingAround.Visuals
             Vector2 vecEnd = TileManager.OffSetFromCenterOfDiamond(centerCell.CenterPoint);
             EndingPosition = new Vector2(vecEnd.X + MapTile.TileWidth / 4, vecEnd.Y + MapTile.TileHeight/4);
                 MovementSpeed = att.VisualVelocity;
-                Texture = AssetManager.GetTexture($"{att.Name.Replace(" ", "")}Icon");
+                Texture = AssetManager.GetTexture($"{att.Name.ToString().Replace(" ", "")}Icon");
 
                 Color = color == default ? Color.White : color;
                 Vector2 direction = EndingPosition - Position;

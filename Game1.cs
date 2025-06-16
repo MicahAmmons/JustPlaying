@@ -72,8 +72,6 @@ namespace PlayingAround
             DrawDiamondTexture.LoadContent(GraphicsDevice);
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
-            AssetLoader.LoadAllFonts();
-            AssetLoader.LoadAllTextures();
             JukeBoxManager.InitializeJukeBox();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             DebugBugger.LoadContent(GraphicsDevice);

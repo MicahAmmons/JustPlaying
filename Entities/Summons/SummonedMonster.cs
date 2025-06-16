@@ -27,30 +27,7 @@ public class SummonedMonster
     {
         _saveData = saveData;
         _progressionData = progressionData;
-        IconTextureString = $"MonsterIcons/{saveData.Name}Icon";
+        IconTextureString = $"{saveData.Name}Icon";
         NumberOfKills = saveData.NumberOfKills;
     }
-
-    //public void CalculateLevel()
-    //{
-    //    float xp = _saveData.XP;
-    //    float xpToLevel = _progressionData.XPForLevel1;
-    //    int level = 0;
-    //    while (xp > xpToLevel)
-    //    {
-    //        xp -= xpToLevel;
-    //        xpToLevel *= _progressionData.XPMultiplier;
-    //        level++;
-    //    }
-    //    Level = level;
-    //    CurrentXP = (int)xp;
-    //    XPNeededForNextLevel = (int)xpToLevel;
-    //}
-    //public void CalculateStats()
-    //{
-    //    MaxHealth = _saveData.AbilityPoints["Health"] * _progressionData.StatGainPerPoint["Health"] + _progressionData.BaseStats.Health;
-    //   // Attack = _saveData.AbilityPoints["Attack"] * _progressionData.StatGainPerPoint["Attack"] + _progressionData.BaseStats.Attack;
-    //    Defense = _saveData.AbilityPoints["Defense"] * _progressionData.StatGainPerPoint["Defense"] + _progressionData.BaseStats.Defense;
-    //    SummonCost = 3;
-    //}
 }

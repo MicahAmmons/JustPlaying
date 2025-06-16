@@ -5,11 +5,13 @@
     "movementQuickness": 200,
     "movementPattern": "arc",
     "width": 32,
-    "height":  32,
-    "attackKeys": [
-      "slam",
-      "acidSpit"
-    ],
+    "height": 32,
+    "AttackData": 
+      {
+        "Slam": "Acid",
+        "Spit": "Acid"
+      }
+    ,
     "monsterType": "Ooze",
     "baseDifficulty": 1,
     "elementType": "Acid",

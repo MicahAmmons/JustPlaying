@@ -7,6 +7,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Utils;
@@ -26,10 +27,11 @@ namespace PlayingAround.Managers.Entities
             {
                 string monsterKey = kvp.Key;
                 CombatMonster mon = kvp.Value;
+                mon.Attacks = AttackManager.GetAttack(mon.AttackData);
                 mon.Name = $"{monsterKey}";
-                mon.IconTextureKey = $"MonsterIcons/{monsterKey}Icon";
-                mon.Attacks = AttackManager.GetAttacks(mon.AttackStrings);
                 mon.Resistances = ResistanceManager.GetResistances(mon.ElementType);
+                mon.IconTextureKey = $"{mon.Name}Icon";
+                mon.IconTexture = AssetManager.GetTexture(mon.IconTextureKey);
             }
         }
         public static List<CombatMonster> GetCombatMonsters(List<string> monStrings)
@@ -87,10 +89,6 @@ namespace PlayingAround.Managers.Entities
                         mon.BaseHealth += _hPIncreasePerLevel;
                         mon.BaseHealth = mon.BaseHealth;
                         mon.CurrentHealth = mon.BaseHealth;
-                    }
-                    else
-                    {
-                        mon.ElementalAffinity += _elementalAffinityIncreasePerLevel;
                     }
 
                     numberOfLevels--;
@@ -168,10 +166,6 @@ namespace PlayingAround.Managers.Entities
         public static string GetMonsterTextureString(string name)
         {
             return _combatMonsterBaseData[name].IconTextureKey;
-        }
-        public static float GetMonsterDifficulty(CombatMonster mon)
-        {
-            return mon.MP / 4f * 0.25f + mon.BaseHealth / 10f * 0.5f + mon.ElementalAffinity / 1f * 0.25f;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
             List<Vector2>? result3 = null;
             Texture2D? texture = null;
 
-            string name = att.Name.Replace(" ", "");
+            string name = att.Name.ToString().Replace(" ", "");
 
             if (att.AttackHasIcon)
                 texture = AssetManager.GetTexture($"{name}Icon");

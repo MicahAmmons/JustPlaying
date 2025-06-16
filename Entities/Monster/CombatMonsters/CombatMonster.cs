@@ -25,22 +25,15 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("mp")] public int MP { get; set; }
         [JsonPropertyName("movementQuickness")] public float MovementQuickness { get; set; }
         [JsonPropertyName("chooseAttackBehavior")] public string ChooseAttackBehavior { get; set; } // add number of cells moved
-
+        [JsonPropertyName("AttackData")] public Dictionary<AttackName, ElementType> AttackData { get; set; }
+        public List<SingleAttack> Attacks { get; set; } 
         [JsonPropertyName("movementPattern")] public string MovementPattern { get; set; }
-        [JsonPropertyName("attackKeys")] public List<string> AttackStrings { get; set; }
-
         [JsonPropertyName("monsterType")] public string MonsterType { get; set; }
-
         [JsonPropertyName("baseDifficulty")] public float BaseDifficulty { get; set; }
-
         [JsonPropertyName("elementType")] public ElementType ElementType { get; set; }
-
         [JsonPropertyName("baseHealth")] public float BaseHealth { get; set; }
-
         [JsonPropertyName("initiation")] public float Initiation { get; set; }
-        [JsonPropertyName("elementalAffinity")] public float ElementalAffinity { get; set; }
         [JsonPropertyName("actionOrder")]public List<string> ActionOrderList { get; set; }
-
         [JsonPropertyName("decideWhichAttack")] public List<string> ChooseWhichAttacks { get; set; }
         [JsonPropertyName("width")] public int Width { get; set; }
         [JsonPropertyName("height")] public int Height { get; set; }
@@ -57,7 +50,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool isPlayer { get; set; } = false;
         public bool isSummoned { get; set; } = false;
         public bool isMonster { get; set; } = false;
-        public List<SingleAttack> Attacks { get; set; }
+
         public Dictionary<ElementType, float> Resistances { get; set; }
         public float Level { get; set; } = 1;
         public Texture2D IconTexture { get; set; }
@@ -95,6 +88,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             isSummoned = true;
             isPlayerMovementControled = true;
             Attacks = comMon.Attacks;
+            foreach (var att in Attacks)
+            {
+                if (att.ElementDamage == ElementType.None)
+                {
+                    att.ElementDamage = ElementType;
+                }
+            }
             BaseDifficulty = comMon.BaseDifficulty;
             ElementType = comMon.ElementType;
             Initiation = comMon.Initiation;
@@ -134,13 +134,19 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Initiation = original.Initiation;
             ElementType = original.ElementType;
             Attacks = original.Attacks;
+            foreach (var att in Attacks)
+            {
+                if (att.ElementDamage == ElementType.None)
+                {
+                    att.ElementDamage = ElementType;
+                }
+            }
             Name = original.Name;
             BaseHealth = original.BaseHealth;
             CurrentHealth = original.BaseHealth;
             MP = original.MP;
             MonsterType = original.MonsterType;
             Resistances = original.Resistances;
-            ElementalAffinity = original.ElementalAffinity;
             ActionOrderList = original.ActionOrderList;
             ChooseWhichAttacks = original.ChooseWhichAttacks;
             Width = original.Width;
@@ -148,6 +154,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             UniqueId = original.UniqueId;
             BaseOrderOfActions = ConvertStringOrderOfActionToEnum(original.ActionOrderList);
             BaseChooseWhichAttack = ConvertStringWhichAttackToEnum(original.ChooseWhichAttacks);
+
 
         }
         private Queue<MonsterActionOrder> ConvertStringOrderOfActionToEnum(List<string> orderStri)

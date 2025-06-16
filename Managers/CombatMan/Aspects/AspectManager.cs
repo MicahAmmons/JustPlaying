@@ -41,7 +41,7 @@ namespace PlayingAround.Managers.CombatMan.Aspects
 
         public static void ApplyAspect(CombatMonster target, SingleAttack attack, CombatMonster attacker = null)
         {
-            string effect = attack.Effect;
+            string effect = attack.Aspect;
             Aspect aspectTempl = _aspectData[effect];
             Aspect asp = new Aspect(aspectTempl)
             {

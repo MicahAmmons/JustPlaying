@@ -17,18 +17,31 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
             AssetManager.LoadTexture("Arrow", "TileCell/arrow");
             AssetManager.LoadTexture("3Arrows", "Tilecell/3arrows");
-            AssetManager.LoadTexture("MonsterIcons/OozeIcon", "MonsterIcons/OozeIcon");
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
 
             AssetManager.LoadTexture("fightBackground", "UI/fightBackground");
-            AssetManager.LoadTexture("AcidSpitIcon", "Attacks/acidSpit");
-            AssetManager.LoadTexture("acidIcon", "Aspects/acidIcon");
+
             AssetManager.LoadTexture("TitleScreenBackGround", "TitleScreen/TitleScreenBackGround");
-            AssetManager.LoadTexture("MonsterIcons/TrainingDummyIcon", "MonsterIcons/TrainingDummyIcon");
+           
             AssetManager.LoadTexture("DefaultNPC", "NPC/DefaultNPC");
+
+            AssetManager.LoadTexture("DefaultMovementSS", "PlayerSprites/leftRightMovementTemplateSS");
 
 
             // Add fonts, sounds, etc. later
+        }
+        public static void LoadAttackIconTextures()
+        {
+            AssetManager.LoadTexture("SpitIcon", "Attacks/Spit");
+        }
+        public static void LoadMonsterIconTextures()
+        {
+            AssetManager.LoadTexture("OozeIcon", "MonsterIcons/OozeIcon");
+            AssetManager.LoadTexture("TrainingDummyIcon", "MonsterIcons/TrainingDummyIcon");
+        }
+        public static void LoadElementIconTextures()
+        {
+            AssetManager.LoadTexture("AcidIcon", "Aspects/AcidIcon");
         }
         public static Dictionary<string, Song> LoadAllSongs()
         {

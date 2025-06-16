@@ -675,7 +675,12 @@ namespace PlayingAround.Managers.CombatMan
 
                 spriteBatch.Draw(_playerCellOptions, buttonRect, Color.DarkSlateGray);
 
-                string attackName = attack.Name.ToUpper();
+                string attackName = attack.Name.ToString();
+                if (attack.ElementDamage != ElementType.None) 
+                {
+                    string element = attack.ElementDamage.ToString();
+                    attackName = $"{element} {attackName}";
+                }
                 Vector2 textSize = _font.MeasureString(attackName);
                 Vector2 textPos = new Vector2(
                     buttonRect.X + (buttonRect.Width - textSize.X) / 2,
