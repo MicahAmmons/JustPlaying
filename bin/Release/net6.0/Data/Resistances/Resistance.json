@@ -47,6 +47,16 @@
     "superVulnerable": "Electricity",
     "mildlyVulnerable": "Metal"
   },
+  "Light": {
+    "superEffective": "Dark",
+    "superVulnerable": "Dark"
+  },
+  "Dark": {
+    "superEffective": "Light",
+    "superVulnerable": "Light"
+  },
+
+
   "Normal": {
   }
 }

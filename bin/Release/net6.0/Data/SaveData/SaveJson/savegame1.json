@@ -2,6 +2,12 @@
   "MapTile": {
     "CurrentTileId": "0_0_0"
   },
+  "Animations": {
+    "IdleRight": [ 1, 1, 300 ],
+    "WalkRight": [ 2, 4 , 100],
+    "IdleLeft": [ 1, 1 , 300],
+    "WalkLeft": [ 3, 4 , 100]
+  },
   "Player": {
     "Speed": 400,
     "Width": 64,
@@ -37,7 +43,7 @@
   },
   "Settings": {
     "Volume": {
-      "CurrentValue" : 1
+      "CurrentValue": 1
     }
   }
 }

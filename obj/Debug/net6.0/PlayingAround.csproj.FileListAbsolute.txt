@@ -134,7 +134,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\C
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterIcons\OozeIcon.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterIcons\TrainingDummyIcon.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\NPC\DefaultNPC.xnb
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\leftRightMovementTemplateSS.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\PlayerSprites.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Songs\newGameIntroCinBackground.ogg
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Songs\newGameIntroCinBackground.xnb
@@ -170,3 +169,5 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\r
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingA.77B4FBCF.Up2Date
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\ref\PlayingAround.dll
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\playerSS.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\PlayerSS.xnb

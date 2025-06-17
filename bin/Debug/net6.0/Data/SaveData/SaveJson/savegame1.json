@@ -2,13 +2,20 @@
   "MapTile": {
     "CurrentTileId": "0_0_0"
   },
+
   "Player": {
-    "Speed": 400,
+    "Speed": 200,
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
     "CurrentPosX": 1060,
     "CurrentPosY": 224,
+    "Animations": {
+      "IdleRight": [ 1, 1, 5000 ],
+      "WalkRight": [ 3, 4, 200 ],
+      "IdleLeft": [ 1, 1, 1000 ],
+      "WalkLeft": [ 2, 4, 200 ]
+    },
     "PlayerSummons": [
       {
         "Name": "Ooze",
@@ -37,7 +44,7 @@
   },
   "Settings": {
     "Volume": {
-      "CurrentValue" : 1
+      "CurrentValue": 1
     }
   }
 }

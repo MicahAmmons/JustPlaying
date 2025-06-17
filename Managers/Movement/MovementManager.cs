@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PlayingAround.AnimationFolder;
 
 namespace PlayingAround.Managers.Movement
 {
@@ -23,9 +24,6 @@ namespace PlayingAround.Managers.Movement
         public static Player _player => PlayerManager.CurrentPlayer;
         public static List<PlayMonsters> _playerMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         //public static List<NPC> _currentNPCs => NPCManager.CurrentNPCs;
-
-        private const int PlayMonsterIconWidth = 64;
-        private const int PlayMonsterIconHeight = 64;
 
 
 
@@ -75,8 +73,8 @@ namespace PlayingAround.Managers.Movement
 
         public static void UpdatePlayerPosition(GameTime gameTime)
         {
-            if (!_player.AllowedToMove || _player == null || _player.MovementPath.Count <= 0 || _player.MovementPath == null) return;
-
+            if (!_player.AllowedToMove || _player == null || _player.MovementPath.Count <= 0 || _player.MovementPath == null)
+                return;
 
             Vector2 nextPoint = _player.MovementPath[0];
             float speed = _player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -88,14 +86,29 @@ namespace PlayingAround.Managers.Movement
             {
                 _player.CurrentPos = nextPoint;
                 _player.MovementPath.RemoveAt(0);
+                // Set idle animation once path is complete
+                if (_player.MovementPath.Count <= 0)
+                {
+                    _player.CurrentAnimationState = _player.FacingDirection == Direction.Right
+                        ? AnimationState.IdleRight
+                        : AnimationState.IdleLeft;
+                }
             }
             else
             {
                 direction.Normalize();
                 _player.CurrentPos += direction * speed;
+
+                // Update facing direction and walking animation
+                _player.FacingDirection = SetEntityDirection(direction);
+
+                _player.CurrentAnimationState = _player.FacingDirection == Direction.Right
+                    ? AnimationState.WalkRight
+                    : AnimationState.WalkLeft;
             }
         }
-     
+
+
         public static void UpdatePlayMonstersPosition(GameTime gameTime)
         {
             if (_playerMonsters == null || _playerMonsters.Count == 0) return;
@@ -123,10 +136,24 @@ namespace PlayingAround.Managers.Movement
                 }
             }
         }
-  
 
+        private static Direction SetEntityDirection(Vector2 direction)
+        {
+            return direction.X <= 0 ? Direction.Right : Direction.Left;
         }
+
+
+    }
 
 
 }
 
+public enum AnimationState
+{
+    //WalkUp,
+    //WalkDown,
+    WalkLeft,
+    WalkRight,
+    IdleLeft,
+    IdleRight,
+}

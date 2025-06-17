@@ -14,7 +14,7 @@ namespace PlayingAround.Game.Assets
         public static void LoadAllTextures()
         {
             AssetManager.LoadTexture("Hero_Idle", "HeroArt/BlonderHero");
-            AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
+
             AssetManager.LoadTexture("Arrow", "TileCell/arrow");
             AssetManager.LoadTexture("3Arrows", "Tilecell/3arrows");
             AssetManager.LoadTexture("MonsterIcons/AngryPlantIcon", "MonsterIcons/AngryPlantIcon");
@@ -25,10 +25,13 @@ namespace PlayingAround.Game.Assets
            
             AssetManager.LoadTexture("DefaultNPC", "NPC/DefaultNPC");
 
-            AssetManager.LoadTexture("DefaultMovementSS", "PlayerSprites/leftRightMovementTemplateSS");
 
 
             // Add fonts, sounds, etc. later
+        }
+        public static void LoadAllSpriteSheets()
+        {
+            AssetManager.LoadTexture("PlayerSS", "PlayerSprites/PlayerSS");
         }
         public static void LoadAttackIconTextures()
         {
@@ -38,6 +41,10 @@ namespace PlayingAround.Game.Assets
         {
             AssetManager.LoadTexture("OozeIcon", "MonsterIcons/OozeIcon");
             AssetManager.LoadTexture("TrainingDummyIcon", "MonsterIcons/TrainingDummyIcon");
+        }
+        public static void LoadPlayerIconTextures()
+        {
+            AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
         }
         public static void LoadElementIconTextures()
         {

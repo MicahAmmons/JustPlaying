@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\combatman\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\movement\\movementmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\movement\\movementmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\movement\\combatgrid\\gridmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\movement\\combatgrid\\gridmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\animationfolder\\animationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:animationfolder\\animationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\data\\savedata\\savejson\\savegame1.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\savedata\\savejson\\savegame1.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:entities\\player\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\entities\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\entities\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,41 +50,67 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AnimationController.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\AnimationController.cs",
+              "RelativeDocumentMoniker": "AnimationFolder\\AnimationController.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\AnimationController.cs",
+              "RelativeToolTip": "AnimationFolder\\AnimationController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAwEQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T17:27:39.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "savegame1.json",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\SaveData\\SaveJson\\savegame1.json",
+              "RelativeDocumentMoniker": "Data\\SaveData\\SaveJson\\savegame1.json",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\SaveData\\SaveJson\\savegame1.json",
+              "RelativeToolTip": "Data\\SaveData\\SaveJson\\savegame1.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-17T17:28:10.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MovementManager.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Movement\\MovementManager.cs",
+              "RelativeDocumentMoniker": "Managers\\Movement\\MovementManager.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Movement\\MovementManager.cs",
+              "RelativeToolTip": "Managers\\Movement\\MovementManager.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAqwFoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T17:22:52.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Entities\\Player\\Player.cs",
               "RelativeDocumentMoniker": "Entities\\Player\\Player.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Entities\\Player\\Player.cs",
               "RelativeToolTip": "Entities\\Player\\Player.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAAC8AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAvwGQAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-17T02:10:32.704Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GridMovement.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Movement\\CombatGrid\\GridMovement.cs",
-              "RelativeDocumentMoniker": "Managers\\Movement\\CombatGrid\\GridMovement.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Movement\\CombatGrid\\GridMovement.cs",
-              "RelativeToolTip": "Managers\\Movement\\CombatGrid\\GridMovement.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAiwBgAAABIAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "PlayerManager.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Entities\\PlayerManager.cs",
+              "RelativeDocumentMoniker": "Managers\\Entities\\PlayerManager.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Entities\\PlayerManager.cs",
+              "RelativeToolTip": "Managers\\Entities\\PlayerManager.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA4wB8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T01:32:46.287Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CombatManager.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\CombatMan\\CombatManager.cs",
-              "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatManager.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\CombatMan\\CombatManager.cs",
-              "RelativeToolTip": "Managers\\CombatMan\\CombatManager.cs",
-              "ViewState": "AgIAAB0FAAAAAAAAAAAMwCYFAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T01:19:55.121Z",
+              "WhenOpened": "2025-06-17T16:47:51.976Z",
               "EditorCaption": ""
             }
           ]

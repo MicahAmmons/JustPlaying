@@ -15,6 +15,7 @@
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
+    <None Remove="Content\PlayerSprites\PlayerSS.png" />
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
     <None Remove="Content\TileCell\3arrows.png" />
     <None Remove="Content\TileCell\arrow.png" />
@@ -41,6 +42,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlayerSprites\PlayerSprites.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PlayerSprites\PlayerSS.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Songs\newGameIntroCinBackground.mp3">

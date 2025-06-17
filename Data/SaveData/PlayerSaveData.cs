@@ -15,6 +15,7 @@ namespace PlayingAround.Data.SaveData
         public float CurrentPosX { get; set; }
         public float CurrentPosY { get; set; }
         public List<SummonsSaveData> PlayerSummons { get; set; }
+        public Dictionary<AnimationState, int[]> Animations { get; set; }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.AnimationFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Player;
@@ -28,6 +29,7 @@ namespace PlayingAround.Managers.Entities
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _currentPlayer.Update(gameTime);
             UpdatePlayerInput(gameTime);
+            _currentPlayer.AnimationController.Update(gameTime);
 
 
         }
@@ -82,9 +84,38 @@ namespace PlayingAround.Managers.Entities
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            _currentPlayer?.Draw(spriteBatch);
-        }
+            switch (SceneManager.CurrentState)
+            {
+                case SceneState.Play:
+                    DrawPlayer(spriteBatch);
+                    break;
+                case SceneState.Dialogue:
+                    DrawPlayer(spriteBatch);
+                    break;
 
+            }
+          
+        }
+        private static void DrawPlayer(SpriteBatch spriteBatch)
+        {
+            Player player = CurrentPlayer;
+            Texture2D texture = player.PlayerSpriteSheet;
+            Vector2 currentPos = player.CurrentPos;
+            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(currentPos, player.PlayerWidth, player.PlayerHeight);
+
+           
+            Vector2 position = player.CurrentPos;
+            Rectangle destination = new Rectangle
+             (
+                                  (int)drawOffset.X,
+                                  (int)drawOffset.Y - (player.PlayerWidth / 2),
+                                       player.PlayerWidth,
+                                       player.PlayerHeight
+            );
+            Rectangle source = player.AnimationController.GetCurrentFrame();
+            spriteBatch.Draw(texture, destination, source, Color.White);
+        }
+        
         
         public static PlayerSaveData SavePlayer()
         {

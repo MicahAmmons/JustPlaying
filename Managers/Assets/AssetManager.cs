@@ -24,6 +24,8 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadAllFonts();
             AssetLoader.LoadAttackIconTextures();
             AssetLoader.LoadMonsterIconTextures();
+            AssetLoader.LoadAllSpriteSheets();
+            AssetLoader.LoadPlayerIconTextures();
         }
 
         // Step 1: Initialize with the Content pipeline

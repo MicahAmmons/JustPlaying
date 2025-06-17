@@ -212,7 +212,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             MovementQuickness = 200f;
             MovementPattern = "straight";
             MP = player.stats.MP;
-            IconTexture = player.Texture;
+            IconTexture = player.IconTexture;
             Width = player.PlayerWidth;
             Height = player.PlayerHeight;
             Resistances = player.Resistances;
