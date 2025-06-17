@@ -89,10 +89,10 @@ namespace PlayingAround.Managers.Escape.Settings
         public static void Update()
         {
             if (_currentSettingState == SettingSuperState.None) { return; }
-            switch (_currentSettingState)
-            {
+            //switch (_currentSettingState)
+            //{
 
-            }
+            //}
             UpdateUserInput();
         }
         public static void UpdateUserInput()

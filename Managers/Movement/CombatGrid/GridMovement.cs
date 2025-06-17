@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
@@ -13,7 +14,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 {
     public static class GridMovement
     {
-        public static List<TileCell> FindClosestTargetPath(TileCell current, List<TileCell> targets, int maxSteps)
+        public static List<TileCell> FindClosestPlayerControlledCell(TileCell current, List<TileCell> targets, int maxSteps)
         {
             List<TileCell> bestPath = null;
             int shortestPathLength = int.MaxValue;
@@ -32,6 +33,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             return bestPath ?? new List<TileCell>(); // return empty if none found
         }
+
 
         public static (List<Vector2>?, List<Vector2>?, List<Vector2>?, Texture2D?) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
         {

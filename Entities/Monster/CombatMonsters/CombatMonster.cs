@@ -38,12 +38,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         [JsonPropertyName("width")] public int Width { get; set; }
         [JsonPropertyName("height")] public int Height { get; set; }
         [JsonPropertyName("uniqueId")] public string UniqueId { get; set; }
+        [JsonPropertyName("BaseAttackPoints")] public int BaseActionPoints { get; set; } = 3;
 
         public Queue<MonsterActionOrder> BaseOrderOfActions { get; set; }
         public Queue<ChooseWhichMonsterAttack> BaseChooseWhichAttack { get; set; }
         public Queue<MonsterActionOrder> CurrentOrderOfActions {  get; set; } = new Queue<MonsterActionOrder>();
         public Queue<ChooseWhichMonsterAttack> CurrentChooseWhichAttack {  get; set; } = new Queue<ChooseWhichMonsterAttack> ();
         public float CurrentMP;
+        public int CurrentActionPoints;
         public bool CurrentIsPlayerControlled;
 
 
@@ -95,6 +97,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     att.ElementDamage = ElementType;
                 }
             }
+            BaseActionPoints = comMon.BaseActionPoints;
             BaseDifficulty = comMon.BaseDifficulty;
             ElementType = comMon.ElementType;
             Initiation = comMon.Initiation;
@@ -141,6 +144,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     att.ElementDamage = ElementType;
                 }
             }
+            BaseActionPoints = original.BaseActionPoints;
             Name = original.Name;
             BaseHealth = original.BaseHealth;
             CurrentHealth = original.BaseHealth;
@@ -212,6 +216,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Width = player.PlayerWidth;
             Height = player.PlayerHeight;
             Resistances = player.Resistances;
+            BaseActionPoints = player.stats.ActionPoint;
+            
         }
     }
     public enum MonsterActionOrder

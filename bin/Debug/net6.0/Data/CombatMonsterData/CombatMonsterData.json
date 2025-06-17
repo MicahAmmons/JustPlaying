@@ -6,12 +6,11 @@
     "movementPattern": "arc",
     "width": 32,
     "height": 32,
-    "AttackData": 
-      {
-        "Slam": "Acid",
-        "Spit": "Acid"
-      }
-    ,
+    "AttackData": {
+      "Slam": "Acid",
+      "Spit": "Acid"
+    },
+    "BaseAttackPoints": 3,
     "monsterType": "Ooze",
     "baseDifficulty": 1,
     "elementType": "Acid",

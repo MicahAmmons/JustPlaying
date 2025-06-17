@@ -17,6 +17,7 @@ using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using static CombatStateMachine;
 
 namespace PlayingAround.Managers.CombatMan
@@ -106,6 +107,10 @@ namespace PlayingAround.Managers.CombatMan
         public Dictionary<string, int> defeatedMonsters = new Dictionary<string, int>();
         public WhoWon TheWinner = WhoWon.None;
 
+        private readonly Dictionary<MonsterActionOrder, Func<bool>> _actionExecutors;
+        private readonly Dictionary<MonsterActionOrder, AITurnState> _actionStates;
+
+
 
         private float _timer = 0;
         public CombatMonster CurrentMonster => _currentMonster;
@@ -132,9 +137,29 @@ namespace PlayingAround.Managers.CombatMan
             SetTurnOrder();
             UpdateCurrentMonster();
             InitilizeUIElements();
+            _actionExecutors = CreateActionExecutorMap();
+            _actionStates = CreateActionStateMap();
+            
 
         }
-
+        private Dictionary<MonsterActionOrder, Func<bool>> CreateActionExecutorMap()
+        {
+            // Every action a monster has, add it to the MonsterActionOrderENum.
+            // Then, add it here along with the method it checks to see IF its possible to perform said action
+            return new Dictionary<MonsterActionOrder, Func<bool>>
+            {
+        { MonsterActionOrder.MoveTowardsClosestEnemy, () => GetMovementCellPathToClosestEnemy() },
+        { MonsterActionOrder.AttackClosestEnemy, () => AttackClosestEnemy() }
+            };
+        }
+        private Dictionary<MonsterActionOrder, AITurnState> CreateActionStateMap()
+        {
+            return new Dictionary<MonsterActionOrder, AITurnState>
+            {
+        { MonsterActionOrder.MoveTowardsClosestEnemy, AITurnState.MovingAIControlled },
+        { MonsterActionOrder.AttackClosestEnemy, AITurnState.AIAttacking }
+            };
+        }
         public void SetSpawnableCells()
         {
             foreach (var cell in _currentMapTile.MonsterSpawnableCells)
@@ -399,6 +424,14 @@ namespace PlayingAround.Managers.CombatMan
                     textPos.Y + textSize.Y + 2
                 );
                 spriteBatch.DrawString(font, mpText, mpTextPos, Color.Blue);
+                // Draw AP below MP
+                string apText = $"AP: {mon.CurrentActionPoints} / {mon.BaseActionPoints}";
+                Vector2 apTextSize = font.MeasureString(apText);
+                Vector2 apTextPos = new Vector2(
+                    iconRect.X + (iconSize - apTextSize.X) / 2,
+                    mpTextPos.Y + mpTextSize.Y + 2
+                );
+                spriteBatch.DrawString(font, apText, apTextPos, Color.Orange);
 
                 index++;
             }
@@ -735,33 +768,30 @@ namespace PlayingAround.Managers.CombatMan
                 CountDefeatedMonsters();
                 return; 
             }
+
                 switch (StateCombat)
             {
                 case CombatState.TurnStart:
-
-  
-                   
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
                     UpdateMonsterTopOfRoundStats();
                     PickWhichEntitiesTurn();
                     break;
                 case CombatState.AITurn:
-
+                    
                     switch (StateAI)
                     {
-                        case (AITurnState.None):
-                            
-                            break;
                         case AITurnState.ActionNavigation:
+                            SetTopOfActionChoiceStats();
                             if (CheckIfAIShouldEndTurn()) return;
-                            DecideAINextAction();
+                            if (!DecideAINextAction()) EndTurn();
                             break;
                         case AITurnState.MovingAIControlled:
                             
                             SetAITurnState(AITurnState.ExecutingMove);
                             break;
                         case AITurnState.ExecutingMove:
-                            if (MonsterFinishedMoving()) { FinishedMoving(); AIFinishedAction(); }
+                            if (MonsterFinishedMoving()) { 
+                                FinishedMoving(); AIActionNavigation(); }
                             break;
                         case AITurnState.AIAttacking:
                             SetAITurnState(AITurnState.ExecutingAttack);
@@ -769,8 +799,8 @@ namespace PlayingAround.Managers.CombatMan
 
                             break;
                         case AITurnState.ExecutingAttack:
-                            if (_attackComplete) { 
-                                AIFinishedAction(); return; }
+                            if (_attackComplete) {
+                                AIActionNavigation(); return; }
                             WaitForAttackToFinish(delta);
                             break;
                     }
@@ -844,7 +874,7 @@ namespace PlayingAround.Managers.CombatMan
         private void FinishedMoving()
         {
             CombatMonster mon = _currentMonster;
-            mon.CurrentMP -= (int)_numberOfCellsMoved;
+            //mon.CurrentMP -= (int)_numberOfCellsMoved;
             _numberOfCellsMoved = 0;
 
         }
@@ -886,12 +916,35 @@ namespace PlayingAround.Managers.CombatMan
         public bool CheckIfAIShouldEndTurn()
         {
             CombatMonster mon = _currentMonster; 
-            if (mon.CurrentOrderOfActions.Count <= 0)
+            if (mon.CurrentActionPoints <= 0)
             {
                 EndTurn();
                 return true;
             }
             return false;
+        }
+        private void SpendActionPoint()
+        {
+            CombatMonster mon = _currentMonster;
+            mon.CurrentActionPoints -= 1;
+        }
+        private void SetTopOfActionChoiceStats()
+        {
+            CombatMonster mon = _currentMonster;
+            mon.CurrentMP = mon.MP;
+            mon.CurrentChooseWhichAttack.Clear();
+            mon.CurrentOrderOfActions.Clear();
+            if (mon.isMonster)
+            {
+                foreach (var str in mon.BaseChooseWhichAttack)
+                {
+                    mon.CurrentChooseWhichAttack.Enqueue(str);
+                }
+                foreach (var str in mon.BaseOrderOfActions)
+                {
+                    mon.CurrentOrderOfActions.Enqueue(str);
+                }
+            }
         }
         private void EndTurn()
         {
@@ -906,39 +959,36 @@ namespace PlayingAround.Managers.CombatMan
             SetSummonedTurnState(SummonedTurnState.None);
             SetCombatState(CombatState.None);
         }
-        public void DecideAINextAction()
+        public bool DecideAINextAction()
         {
             CombatMonster mon = _currentMonster;
-            MonsterActionOrder action = mon.CurrentOrderOfActions.Peek();
 
-            switch (action)
+            while (mon.CurrentOrderOfActions.Count > 0)
             {
-                case MonsterActionOrder.MoveTowardsClosestEnemy:
-                    GetMovementCellPathToClosestEnemy();
-                    SetAITurnState(AITurnState.MovingAIControlled);
-                    break;
+                var action = mon.CurrentOrderOfActions.Peek();
 
-                case MonsterActionOrder.AttackClosestEnemy:
-                    AttackClosestEnemy();
-                    SetAITurnState(AITurnState.AIAttacking);
-                    break;
-                case MonsterActionOrder.AttackSelf:
-                    AttackSelf();
-                    SetAITurnState(AITurnState.AIAttacking);
-                    break;
-
-
-            }
-
+                bool success = _actionExecutors.TryGetValue(action, out var executor) && executor();
+                if (success)
+                {
+                    SpendActionPoint();
+                    SetAITurnState(_actionStates[action]);
+                    return true;
+                }
+                else
+                {
+                    TryNextAction();
+                }
+            } 
+            return false;
         }
-        private void AttackSelf()
+
+
+        private void TryNextAction()
         {
             CombatMonster mon = _currentMonster;
-            SingleAttack attack = mon.Attacks.First();
-            SetMonsterAttackPathingInformation(attack, new List<CombatMonster>() { mon }, new List<TileCell>() { GetMonsterCurrentCell(mon) });
-
+            mon.CurrentOrderOfActions.Dequeue();
         }
-        private void AttackClosestEnemy()
+        private bool AttackClosestEnemy()
         {
             CombatMonster mon = _currentMonster;
             TileCell origin = _aIControlledMonsterMap[mon];
@@ -947,8 +997,7 @@ namespace PlayingAround.Managers.CombatMan
             var inRangeMap = GetInRangeCellsByAttack(mon.Attacks, origin);
             if (inRangeMap.Count == 0)
             {
-                AIFinishedAction();
-                return;
+                return false;
             }
             // Choose targets for each attack using the targeting strategy
             var targetData = new Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>>();
@@ -966,26 +1015,15 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
 
-            if (targetData.Count == 0)
-            {
-                AIFinishedAction();
-                return;
-            }
-
             // Use the selected targeting behavior to pick the final attack
             var (chosenAttack, chosenMap) = AttackManager.ChooseWhichAttack(targetData, origin, mon.CurrentChooseWhichAttack);
-
-            if (chosenAttack == null || chosenMap == null)
-            {
-                AIFinishedAction();
-                return;
-            }
 
             SetMonsterAttackPathingInformation(
                 chosenAttack,
                 chosenMap.Keys.ToList(),
                 chosenMap.Values.SelectMany(x => x).ToList()
             );
+            return true;
         }
 
         private void SetMonsterAttackPathingInformation(SingleAttack att, List<CombatMonster> mons, List<TileCell> cells)
@@ -995,7 +1033,7 @@ namespace PlayingAround.Managers.CombatMan
             var attackDetails = (att, mons, cells);
             if (attackDetails.Item1 == null)
             {
-                AIFinishedAction();
+                AIActionNavigation();
                 return;
             }
             TileCell currentCell = GetMonsterCurrentCell(mon);
@@ -1036,7 +1074,7 @@ namespace PlayingAround.Managers.CombatMan
 
 
 
-        private void GetMovementCellPathToClosestEnemy()
+        private bool GetMovementCellPathToClosestEnemy()
         {
             if (AIHasMP())
             {
@@ -1048,22 +1086,21 @@ namespace PlayingAround.Managers.CombatMan
                      .Where(cell => cell != null)
                      .ToList();
 
-                // If no targets or already adjacent, return current position
+                // If already adjacent, return current position
                 if (TileManager.IsNeighbor(playerControlledCells, currentCell))
-                    return;
+                    return false;
 
-                List<TileCell> listOfCellsPathToTarget = GridMovement.FindClosestTargetPath(currentCell, playerControlledCells, (int)mon.CurrentMP);
+                List<TileCell> listOfCellsPathToTarget = GridMovement.FindClosestPlayerControlledCell(currentCell, playerControlledCells, (int)mon.MP);
+                if (listOfCellsPathToTarget.Count <= 0) return false;
                 GenerateMovementPath(listOfCellsPathToTarget);
+
             }
+            else return false;
+            return true;
         }
         private void GenerateMovementPath(List<TileCell> tileCellPath)
         {
             CombatMonster mon = _currentMonster;
-            if (tileCellPath.Count == 0)
-            {
-                mon.MovePath.Clear();
-                return;
-            }
             _numberOfCellsMoved = tileCellPath.Count;
             List<Vector2> fullVectorPath = new();
             TileCell startingCell = null;
@@ -1092,17 +1129,18 @@ namespace PlayingAround.Managers.CombatMan
         public bool AICanAttack() => _currentMonster.CurrentAttack != null;
         public bool PlayerHasEndPoint() => _currentMonster.PlayerMovementEndPoint != null;
         public bool PlayerHasMovePath() => _currentMonster.MovePath.Count > 0;
-        private void AIFinishedAction()
+        private void AIActionNavigation()
         {
-            CombatMonster mon = _currentMonster;
-            if (mon.CurrentOrderOfActions.Count > 0) mon.CurrentOrderOfActions.Dequeue();
             SetAITurnState(AITurnState.ActionNavigation);
         }
         private void AIFinishedAttack()
         {
-            _attackComplete = true;
-            _attackPerformed = false;
-            
+            CombatMonster mon = _currentMonster;
+            if (mon.MovePath == null || mon.MovePath.Count <= 0)
+            {
+                _attackComplete = true;
+                _attackPerformed = false;
+            }
         }
         private void WaitForAttackToFinish(float delta)
         {
@@ -1272,12 +1310,14 @@ namespace PlayingAround.Managers.CombatMan
             {
                 case SummonedTurnState.SummonedWaitingInput:
                     HandlePlayerEndTurn();
-                    HandleMovementRectClick();
+                    if (mon.CurrentActionPoints > 0)
+                        HandleMovementRectClick();
                     HandleAttackRectClick();
                     ResetClickValues();
                     break;
                 case SummonedTurnState.SummonedClickedAttackButton:
-                    HandlePlayerSelectingSpecificAttackAndItsRange();
+                    if (mon.CurrentActionPoints > 0)
+                        HandlePlayerSelectingSpecificAttackAndItsRange();
                     break;
 
                 case SummonedTurnState.SummonedChoosingTarget:
@@ -1319,11 +1359,13 @@ namespace PlayingAround.Managers.CombatMan
                 case PlayerTurnState.PlayerWaitingInput:
                     HandleSummonRectClick();
                     HandlePlayerEndTurn();
-                    HandleMovementRectClick();
+                    if (mon.CurrentActionPoints > 0)
+                        HandleMovementRectClick();
                     ResetClickValues();
                     break;
 
                 case PlayerTurnState.PlayerClickedSummonButton:
+                    if (mon.CurrentActionPoints > 0)
                     HandleSummonOptionsClick();
                     break;
                 case PlayerTurnState.PlayerClickedSpecificSummoned:
@@ -1358,6 +1400,7 @@ namespace PlayingAround.Managers.CombatMan
                     SummonSummonMonster(cell);
                     _playerSelectedSummon = null;
                     SetPlayerTurnState(PlayerTurnState.PlayerExecutingSummoning);
+                SpendActionPoint();
                 
             }
         }
@@ -1382,6 +1425,7 @@ namespace PlayingAround.Managers.CombatMan
                     _playerCurrentAttack = attack;
                     CombatMonster mon = _currentMonster;
                     _playerCurrentAttackRangeOptions = TileManager.GetFloodFillTileWithinRange(GetMonsterCurrentCell(mon), _playerCurrentAttack.Range, includeMonsterTiles: true);
+                    SpendActionPoint();
                     SetSummonedTurnState(SummonedTurnState.SummonedChoosingTarget);
                 }
             }
@@ -1393,6 +1437,7 @@ namespace PlayingAround.Managers.CombatMan
             {
                 CombatMonster mon = _currentMonster;
                 mon.PlayerMovementEndPoint = _currentClickedCell;
+                SpendActionPoint();
             }
 
         }
@@ -1459,17 +1504,8 @@ namespace PlayingAround.Managers.CombatMan
         private void UpdateMonsterTopOfRoundStats()
         {
             CombatMonster mon = _currentMonster;
-            mon.CurrentMP = mon.MP;
-            if (mon.isMonster)
-            {
-                foreach (var str in mon.BaseChooseWhichAttack) {
-                    mon.CurrentChooseWhichAttack.Enqueue(str);
-                        }
-                foreach (var str in mon.BaseOrderOfActions)
-                {
-                    mon.CurrentOrderOfActions.Enqueue(str);
-                }
-            }
+            mon.CurrentActionPoints = mon.BaseActionPoints;
+           
         }
         private void PickWhichEntitiesTurn()
         {
@@ -1496,17 +1532,7 @@ namespace PlayingAround.Managers.CombatMan
             }
             SetCombatState(CombatState.Debug);
 }
-        //private void DecideOrderOfOperations()
-        //{
-        //    CombatMonster mon = _currentMonster;
-        //    if (mon.isPlayer || mon.isSummoned) { return; }
 
-        //    if (mon.TurnBehavior == "getCloseAsPossible")
-        //    {
-        //        mon.OrderOfActions = new Queue<string>(new[] { "moveClose", "attack" });
-        //    }
-
-        //}
      
       
      
