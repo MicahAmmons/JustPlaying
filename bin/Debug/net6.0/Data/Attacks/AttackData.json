@@ -6,7 +6,7 @@
 
   },
   "Spit": {
-    "AttacksHasIcon": true,
+    "AttackHasIcon": true,
     "BaseDamageMin": 1,
     "BaseDamageMax": 1,
     "Range": 6,

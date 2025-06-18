@@ -28,129 +28,25 @@ namespace PlayingAround.Managers.Entities
     
         public static List<CombatMonster> GetCombatMonsters(List<string> monStrings)
         {
+
             List<CombatMonster> mons = new List<CombatMonster>();
             foreach (var mon in monStrings)
             {
-                mons.Add(new CombatMonster(_combatMonsterBaseData[mon]));
+                var dataCopy = DeepCopyHelper.DeepCopy(_combatMonsterBaseData[mon]);
+                mons.Add(new CombatMonster(dataCopy));
             }
             return mons;
         }
-        public static CombatMonster SummonMonsterToCombat(SummonedMonster sumMon)
+        public static CombatMonster SummonMonsterToCombat(string name)
         {
-            CombatMonster newSummonedMon = new CombatMonster(_combatMonsterBaseData[sumMon.Name])
+            var dataCopy = DeepCopyHelper.DeepCopy(_combatMonsterBaseData[name]);
+            CombatMonster newSummonedMon = new CombatMonster(dataCopy)
             {
                 MonsterIs = CombatMonsterType.Summoned
             };
             return newSummonedMon;
         }
-        //public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
-        //{
-        //    List<CombatMonster> finalMon = new List<CombatMonster>();
-        //    float targetDifficulty = GetRandomDifficulty(min, max);
-        //    Dictionary<CombatMonster, List<float>> floats = GetRandomDifficulties(targetDifficulty, monsters);
-        //        foreach (var kvp in floats)
-        //        {
-        //            CombatMonster mon = kvp.Key;
-        //            foreach (var flo in kvp.Value)
-        //            {
-        //            CombatMonster monster = new CombatMonster(_combatMonsterBaseData[mon]);
-        //            finalMon.Add(MatchStatsToDifficulty(monster, flo));
-        //            }
-        //        }
-        //        foreach ( var mon in finalMon)
-        //    {
-        //        mon.NamePlusLevel = $"{mon.Name} Lvl {mon.Level}";
-        //    }
-          
-
-        //    return finalMon;
-        //}
-        //private static CombatMonster MatchStatsToDifficulty(CombatMonster mon, float diff)
-        //{
-
-        //    float numberOfLevels = (diff - mon.BaseDifficulty) / 0.2f + 1;
-        //    mon.Level = (float)Math.Floor(numberOfLevels);
-
-        //    if (mon.Level > 1)
-        //    {
-        //        do
-        //        {
-        //            bool addHealth = RandomHut.rng.Next(2) == 0;
-        //            if (addHealth)
-        //            {
-        //                mon.BaseHealth += _hPIncreasePerLevel;
-        //                mon.BaseHealth = mon.BaseHealth;
-        //                mon.CurrentHealth = mon.BaseHealth;
-        //            }
-
-        //            numberOfLevels--;
-        //        } while (numberOfLevels > 0);
-        //    }
-        //    return mon;
-        //}
-        //public static float GetRandomDifficulty(float min, float max)
-        //{
-        //    // Convert range to number of 0.2 steps
-        //    int stepsMin = (int)Math.Ceiling(min / 0.2f);
-        //    int stepsMax = (int)Math.Floor(max / 0.2f);
-
-        //    // Pick a random integer step
-        //    int step = RandomHut.rng.Next(stepsMin, stepsMax + 1);
-
-        //    // Convert back to float
-        //    return step * 0.2f;
-        //}
-        //public static Dictionary<CombatMonster, List<float>> GetRandomDifficulties(float targetDiff, List<CombatMonster> mons)
-        //{
-        //    const float tolerance = 0.4f;
-        //    float maxDiff = targetDiff;
-
-        //    Dictionary<CombatMonster, List<float>> result = new();
-        //    foreach (var mon in mons)
-        //    {
-        //        result[mon] = new List<float> { };
-        //    }
-
-        //    while (maxDiff > 0)
-        //    {
-        //        int index = RandomHut.rng.Next(0, mons.Count - 1);
-        //        float diff = 0;
-        //        CombatMonster mon = mons[index];
- 
-        //        float baseDiff = mon.BaseDifficulty;
-        //        if (baseDiff < maxDiff)
-        //        {
-        //            diff = GetRandomDifficulty(baseDiff, maxDiff);
-        //            result[mon].Add(diff);
-        //        }
-        //        else
-        //        {
-        //            if (baseDiff - maxDiff <= tolerance)
-        //            {
-        //                diff = mon.BaseDifficulty;
-        //                result[mon].Add(diff);
-        //                maxDiff = 0;
-        //            }
-        //            else
-        //            {
-        //                foreach (var monster in mons)
-        //                {
-        //                    if (monster == mon) { continue; }
-        //                    if (monster.BaseDifficulty - maxDiff <= tolerance)
-        //                    {
-        //                        diff = monster.BaseDifficulty;
-        //                        result[monster].Add(diff);
-        //                        maxDiff = 0;
-        //                    }
-        //                }
-        //                maxDiff = 0;
-        //            }
-        //        }
-        //            maxDiff -= diff;
-                
-        //    }
-        //    return result;
-        //}
+       
         public static Vector2 GetMonsterWidthAndHeight(string name)
         {
             return new Vector2(_combatMonsterBaseData[name].DrawSpecifics.Width, _combatMonsterBaseData[name].DrawSpecifics.Height);

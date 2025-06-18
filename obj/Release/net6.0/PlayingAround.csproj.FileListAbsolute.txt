@@ -79,7 +79,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Data\PlayMonsterJson\PlayMonsters.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Data\Quests\QuestData.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Data\Resistances\Resistance.json
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Data\Summons\SummonDefJson\SummonProgressionDefinitions.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Data\Settings\SettingData.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Content\Attacks\Spit.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Release\net6.0\Content\PlayerSprites\PlayerSprites.xnb

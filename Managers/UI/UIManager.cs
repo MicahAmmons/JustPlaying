@@ -15,6 +15,8 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Dialogue;
 using System.Linq;
+using PlayingAround.Entities.Monster.SummonedMonsters;
+using PlayingAround.Data.SaveData;
 
 
 namespace PlayingAround.Managers.UI
@@ -205,8 +207,10 @@ namespace PlayingAround.Managers.UI
             int startY = _tabAreaRect.Bottom + 10;
             int summonRowHeight = 40; // Each summon row height
 
-            foreach (var summon in _currentPlayer.stats.UnlockedSummons)
+            foreach (var summon in SummonedMonsterManager.UnlockedSummons)
             {
+                string sumName = summon.Key;
+                SummonedSavedStats data = summon.Value;
                 // 1. Draw Icon
                 Rectangle iconRect = new Rectangle(
                     _summonOverlayRect.X + 10,
@@ -214,28 +218,11 @@ namespace PlayingAround.Managers.UI
                     32,
                     32
                 );
-                spriteBatch.Draw(AssetManager.GetTexture(summon.IconTextureString), iconRect, Color.White);
+                spriteBatch.Draw(data.Icon, iconRect, Color.White);
 
-                // 2. Draw Name + Level
-                string nameAndLevel = $"{summon.Name} (Lv {summon.Level})";
+                // 2. Draw Name 
                 Vector2 namePos = new Vector2(iconRect.Right + 10, startY);
-                spriteBatch.DrawString(_mainFont, nameAndLevel, namePos, Color.White);
-
-                // 3. Draw XP Progress Bar
-                int barWidth = 100;
-                int barHeight = 20;
-                Rectangle xpBarBackground = new Rectangle(iconRect.Right + 200, startY + 10, barWidth, barHeight);
-                Rectangle xpBarFill = new Rectangle(xpBarBackground.X, xpBarBackground.Y, (int)(barWidth * summon.XPProgressPercent), barHeight);
-
-                spriteBatch.Draw(_fightBackground, xpBarFill, Color.PaleVioletRed);      // fill based on % XP
-                spriteBatch.Draw(_fightBackground, xpBarBackground, Color.Transparent); // background
-
-
-                // 4. Draw XP text (ex: 50/100)
-                string xpText = $"{summon.CurrentXP} / {summon.XPNeededForNextLevel}";
-                Vector2 xpTextSize = _mainFont.MeasureString(xpText);
-                Vector2 xpTextPos = new Vector2(xpBarBackground.Right + 10, xpBarBackground.Y - (xpTextSize.Y / 2) + (barHeight / 2));
-                spriteBatch.DrawString(_mainFont, xpText, xpTextPos, Color.White);
+                spriteBatch.DrawString(_mainFont, $"{sumName}", namePos, Color.White);
 
                 // Move down for next summon
                 startY += summonRowHeight;
@@ -290,16 +277,13 @@ namespace PlayingAround.Managers.UI
             if (SceneManager.IsState(SceneState.Play))
             {
 
-                _playerStats = $"Health: {_currentPlayer.stats.CurrentHealth} / {_currentPlayer.stats.CurrentHealth}\n" +
-                               $"Mana: {_currentPlayer.stats.CurrentMana} / {_currentPlayer.stats.CurrentMana}";
+                _playerStats = $"Health: {_currentPlayer.CurrentCombatStats.Health} / {_currentPlayer.BaseCombatStats.Health}\n";
             }
             if (SceneManager.IsState(SceneState.Combat))
             {
-                CombatMonster mon = CombatGuard.CurrentCombat.CurrentMonster;
                 _playerMonster = CombatGuard.CurrentCombat.GetPlayerMonster();
-                _standInMonster = mon;
-                _playerStats = $"Health: {_playerMonster.CurrentHealth} / {_playerMonster.BaseHealth}\n" +
-                               $"Speed: {_playerMonster.CurrentMP} / {_playerMonster.MP}";
+                _playerStats = $"Health: {_playerMonster.CurrentStats.Health} / {_playerMonster.BaseStats.Health}\n" +
+                               $"Speed: {_playerMonster.CurrentStats.MP} / {_playerMonster.BaseStats.MP}";
             }
         }
 

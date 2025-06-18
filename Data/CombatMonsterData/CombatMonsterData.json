@@ -2,11 +2,11 @@
   "Ooze": {
     "UniqueId": "Ooze",
     "DefaultElementType": "Acid",
-    "BaseCombatStats": {
+    "BaseStats": {
       "MP": 4,
       "AP": 3,
       "Health": 6,
-      "Initiative": 2,
+      "Initiative": 2
     },
     "DrawSpecifics": {
       "Width": 32,
@@ -14,14 +14,14 @@
       "MovementQuickness": 200,
       "MovementPattern": "Arc"
     },
-    "Animations": {
-      "Idle": [ 1, 1 ],
-      "BouncingUp": [ 1, 1 ],
-      "BouncingDown": [ 1, 1 ]
+    "AnimationData": {
+      "Idle": [ 1, 1 , 500],
+      "BouncingUp": [ 1, 1, 500 ],
+      "BouncingDown": [ 1, 1, 500 ]
     },
     "AttackData":   {
-      "Slam": [ "Physical" ],
-      "Spit": [ "Acid" ]
+      "Slam": "Normal",
+      "Spit": "Acid" 
     },
     "ActionOrder": [
       "MoveTowardsClosestEnemy",

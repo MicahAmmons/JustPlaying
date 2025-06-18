@@ -21,13 +21,13 @@ namespace PlayingAround.Managers.Movement
         {
             foreach (var mon in playMons)
             {
-                if (mon.MovementPattern == "arc" || mon.MovementPattern == "idle")
+                if (mon.MovementPattern == MovementPatternType.Arc)
                 {
                     if (HandlePause(mon, gameTime))
                         continue;
-
-                  
                 }
+                else if (HandlePause(mon, gameTime))
+                    continue;
             }
         }
 
@@ -36,10 +36,10 @@ namespace PlayingAround.Managers.Movement
             Vector2 start = startingTile.CenterPoint;
             Vector2 destination = endTile.CenterPoint;
 
-            return mon.MovementPattern switch
+            return mon.DrawSpecifics.MovementPattern switch
             {
-                "arc" or "idle" => ArcMovement(destination, start),
-                "straight" => StraightMovement(destination, start),
+                MovementPatternType.Arc  => ArcMovement(destination, start),
+                MovementPatternType.Straight => StraightMovement(destination, start),
                 _ => StraightMovement(destination, start) // Fallback to straight if unknown pattern
             };
         }
@@ -134,5 +134,7 @@ namespace PlayingAround.Managers.Movement
 public enum MovementPatternType
 {
     Arc,
+    Straight,
+    None
 
 }

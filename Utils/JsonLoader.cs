@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 using PlayingAround.Data.NPCs;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
-using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
@@ -38,15 +37,6 @@ namespace PlayingAround.Utils
             return JsonSerializer.Deserialize<Dictionary<string, List<PlayMonsterData>>>(json);
         }
 
-        private static readonly string SummonProgressionPath = GetDataPath("Summons", "SummonDefJson", "SummonProgressionDefinitions.json");
-        public static Dictionary<string, SummonProgressionData> LoadSummonProgressions()
-        {
-            if (!File.Exists(SummonProgressionPath))
-                return new Dictionary<string, SummonProgressionData>();
-
-            string json = File.ReadAllText(SummonProgressionPath);
-            return JsonSerializer.Deserialize<Dictionary<string, SummonProgressionData>>(json);
-        }
 
         private static readonly string AttackDataPath = GetDataPath("Attacks", "AttackData.json");
         public static Dictionary<AttackName, SingleAttackData> LoadAttackData()
@@ -85,10 +75,15 @@ namespace PlayingAround.Utils
         }
 
         private static readonly string PlayMonsterPath = GetDataPath("PlayMonsterJson", "PlayMonsters.json");
-        public static Dictionary<string, List<PlayMonsterData>> LoadPlayMonsterData()
+        public static Dictionary<string, PlayMonsterData> LoadPlayMonsterData()
         {
             string json = File.ReadAllText(PlayMonsterPath);
-            return JsonSerializer.Deserialize<Dictionary<string, List<PlayMonsterData>>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, PlayMonsterData>>(json, options);
         }
 
         private static readonly string AspectDataPath = GetDataPath("Aspects", "AspectData.json");

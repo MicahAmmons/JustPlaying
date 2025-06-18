@@ -72,25 +72,12 @@ namespace PlayingAround.Managers.Resistances
         {ElementType.Dark, 1.0f },
         {ElementType.Light, 1.0f }
     };
-
-            player.Resistances = resistances;
         }
 
         public static Dictionary<ElementType, float> GetResistances(ElementType element)
         {
-
-            // Make a full dictionary of all elements, assigning 0.0f if not explicitly listed
-            var fullResistances = new Dictionary<ElementType, float>();
-
-            foreach (var otherElement in _resistAndImmunityData.Keys)
-            {
-                if (_resistAndImmunityData[element].ContainsKey(otherElement))
-                    fullResistances[otherElement] = _resistAndImmunityData[element][otherElement];
-                else
-                    fullResistances[otherElement] = 0.0f; // Neutral if no special relationship
-            }
-
-            return fullResistances;
+            // Return a shallow copy of the specific element's resistance dictionary
+            return new Dictionary<ElementType, float>(_resistAndImmunityData[element]);
         }
 
         internal static Dictionary<ElementType, float> GetPlayerBaseResistance()

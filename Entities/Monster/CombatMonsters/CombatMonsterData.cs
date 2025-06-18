@@ -13,7 +13,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public ElementType DefaultElementType { get; set; }
         public BaseCombatStats BaseStats {  get; set; }
         public DrawSpecificStats DrawSpecifics { get; set; } 
-        public Dictionary<AnimationState, Animation> Animations { get; set; }
+        public Dictionary<AnimationState, int[]> AnimationData { get; set; }
         public Dictionary<AttackName, ElementType> AttackData { get; set; }
         public List<MonsterActionOrder> ActionOrder { get; set; }
         public List<ChooseWhichMonsterAttack> DecideWhichAttack { get; set; }
@@ -24,6 +24,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int AP { get; set; }
         public int Health { get; set; }
         public int Initiative { get; set; }
+
     }
     public class DrawSpecificStats
     {

@@ -22,7 +22,7 @@ namespace PlayingAround.Managers.Entities
 {
     public static class PlayMonsterManager
     {
-        private static Dictionary<string, List<PlayMonsterData>> _playMonsterData;
+        private static Dictionary<string, PlayMonsterData> _playMonsterData;
 
         private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         public static PlayMonsters SelectedMonster = null;
@@ -42,35 +42,32 @@ namespace PlayingAround.Managers.Entities
             float difficultyMax = diffMax;
             float difficultyMin = diffMin;
             int totalSpawns = maxSpawn;
-
-            // Step 1: Create a list of all available CombatMonsters based on the JSON data
-            List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
-
             for (int i = 0; i < maxSpawn; i++)
-            {
-
+            { 
+                // Step 1: Create a list of all available CombatMonsters based on the JSON data
+                List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
+                string firstMonName = monsterOptions[0].Name;
+                var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[firstMonName]);
                 Vector2 startPos = DeterminePlayMonsterSpawn(cells);
                 PlayMonsters newPlayMon = new PlayMonsters()
                 {
                     Monsters = monsterOptions,
                     SpawnPosition = startPos,
                     CurrentPos = startPos,
-
+                    Name = firstMonName,
+                    Icon = AssetManager.GetTexture($"{firstMonName}Icon"),
+                    MovementPattern = dataCopy.MovementPattern,
+                    MovementQuickness = dataCopy.MovementQuickness,
+                    PauseDurationMax = dataCopy.PauseDurationMax,
+                    PauseDurationMin = dataCopy.PauseDurationMin,
 
                 };
-                CombatMonster comMon = newPlayMon.Monsters[0];
-                string name = comMon.Name;
-                newPlayMon.Icon = comMon.Icon;
-                newPlayMon.MovementPattern = comMon.DrawSpecifics.MovementPattern;
-                newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
-                newPlayMon.PauseDurationMax = _playMonsterData[name][0].PauseDurationMax;
-                newPlayMon.PauseDurationMin = _playMonsterData[name][0].PauseDurationMin;
-                newPlayMon.Name = comMon.Name;
                 monsters.Add(newPlayMon);
 
             }
             return monsters;
         }
+
         public static Vector2 DeterminePlayMonsterSpawn(List<TileCell> cells)
         {
             List<TileCell> tileCells = new List<TileCell>(cells);

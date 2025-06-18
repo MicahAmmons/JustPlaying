@@ -125,7 +125,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\D
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\Resistances\Resistance.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\SaveData\SaveJson\savegameTemplate.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\Settings\SettingData.json
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\Summons\SummonDefJson\SummonProgressionDefinitions.json
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Aspects\acidIcon.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Attacks\Spit.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\HeroArt\BlonderHero.xnb

@@ -18,6 +18,7 @@ using System.Text.Json.Serialization;
 using PlayingAround.Utils;
 using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.Resistances;
+using PlayingAround.Entities.Monster.SummonedMonsters;
 
 public class SaveManager
 {
@@ -97,7 +98,8 @@ public class SaveManager
     }
 
     public static void LoadCurrentGameSave() 
-    { 
+    {
+        SummonedMonsterManager.LoadContent(CurrentGameSaveData.SummonedData);
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
         QuestManager.LoadContent(CurrentGameSaveData.Quests);
         UIManager.LoadContent();
@@ -168,7 +170,8 @@ public class SaveManager
             MapTile = TileManager.SaveMapTile(),
             DayCycle = DayCycleManager.SaveDayCycle(),
             Quests = QuestManager.SaveQuestData(),
-            Settings = SettingsSuper.SaveSettingData()
+            Settings = SettingsSuper.SaveSettingData(),
+            SummonedData = SummonedMonsterManager.Save()
         };
 
         var path = Path.Combine(saveFolder, CurrentSaveKey + ".json");

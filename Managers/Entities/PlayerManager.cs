@@ -9,11 +9,13 @@ using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Utils;
 
 namespace PlayingAround.Managers.Entities
 {
     public static class PlayerManager
     {
+
         private static Player _currentPlayer;
         public static Player CurrentPlayer => _currentPlayer;
         public static PlayerSaveData _playerData;
@@ -22,7 +24,6 @@ namespace PlayingAround.Managers.Entities
         {
             _playerData = data;
             _currentPlayer = Player.LoadFromSave(data);
-            ResistanceManager.GetPlayerResistances(_currentPlayer);
         }
         public static void Update(GameTime gameTime)
         {
@@ -60,7 +61,7 @@ namespace PlayingAround.Managers.Entities
         }
         public static void UpdatePlayerStatsFromCombat(CombatMonster playerMonster)
         {
-            _currentPlayer.stats.CurrentHealth = playerMonster.CurrentHealth;
+            _currentPlayer.CurrentCombatStats.Health = playerMonster.CurrentStats.Health;
         }
         public static void MovePlayerInput(GameTime gameTime)
         {
@@ -101,16 +102,16 @@ namespace PlayingAround.Managers.Entities
             Player player = CurrentPlayer;
             Texture2D texture = player.PlayerSpriteSheet;
             Vector2 currentPos = player.CurrentPos;
-            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(currentPos, player.PlayerWidth, player.PlayerHeight);
+            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(currentPos, player.DrawSpecifics.Width, player.DrawSpecifics.Height);
 
            
             Vector2 position = player.CurrentPos;
             Rectangle destination = new Rectangle
              (
                                   (int)drawOffset.X,
-                                  (int)drawOffset.Y - (player.PlayerWidth / 2),
-                                       player.PlayerWidth,
-                                       player.PlayerHeight
+                                  (int)drawOffset.Y - (player.DrawSpecifics.Width / 2),
+                                       player.DrawSpecifics.Width,
+                                       player.DrawSpecifics.Height
             );
             Rectangle source = player.AnimationController.GetCurrentFrame();
             spriteBatch.Draw(texture, destination, source, Color.White);
@@ -122,7 +123,7 @@ namespace PlayingAround.Managers.Entities
             var data = _playerData;
 
             _currentPlayer.Save(data);
-            data.PlayerSummons = _currentPlayer.SavePlayerSummons();
+           
             return data;
         }
 

@@ -44,8 +44,8 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             string name = att.Name.ToString().Replace(" ", "");
 
-            if (att.AttackHasIcon)
-                texture = AssetManager.GetTexture($"{name}Icon");
+            if (att.Icon != null)
+                texture = att.Icon;
 
             switch (name.ToLowerInvariant())
             {

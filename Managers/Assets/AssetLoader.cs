@@ -35,7 +35,7 @@ namespace PlayingAround.Game.Assets
         }
         public static void LoadAttackIconTextures()
         {
-            AssetManager.LoadTexture("SpitIcon", "Attacks/Spit");
+            AssetManager.LoadTexture("Spit", "Attacks/Spit");
         }
         public static void LoadMonsterIconTextures()
         {

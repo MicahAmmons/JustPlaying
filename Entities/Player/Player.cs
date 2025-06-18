@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Data.SaveData;
-using PlayingAround.Entities.Summons;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Managers;
@@ -11,7 +11,6 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
-using PlayingAround.Stats;
 using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
@@ -22,47 +21,51 @@ namespace PlayingAround.Entities.Player
 {
     public class Player
     {
-
+        public BaseCombatStats BaseCombatStats { get; set; }
+        public CurrentCombatStats CurrentCombatStats { get; set; } 
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Dictionary<AnimationState, Animation> Animation {  get; set; } = new Dictionary<AnimationState, Animation>();
         public Direction FacingDirection { get; set; } = Direction.Right;
         public Texture2D PlayerSpriteSheet { get; set; }
         public AnimationState CurrentAnimationState { get; set; } = AnimationState.IdleRight;
+        public DrawSpecificStats DrawSpecifics {  get; set; }
+        public Vector2 CurrentPos;
+        public Texture2D Icon;
 
-        public Texture2D IconTexture;
-        public float Speed { get; set; }
-        public string Name { get; set; }
-        public PlayerStats stats { get; set; }
-        public int PlayerWidth { get; set; }
-        public int PlayerHeight { get; set; }
         public Vector2? MoveTarget = null;
         public List<Vector2> MovementPath = new();
-
-        private Vector2? debugClickTarget = null;
-        public Vector2 CurrentPos;
-
-        private TileCell PlayerCurrentTileCell;
         public bool AllowedToMove = true;
-        public Dictionary<ElementType, float> Resistances;
+        private TileCell PlayerCurrentTileCell;
         public Vector2[] DiamondHitBox ;
         public Vector2 HitBoxCenter;
         public Rectangle RectHitBox;
-        
+        private Vector2? debugClickTarget;
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
-            var texture = AssetManager.GetTexture(data.TextureKey);
-
-            var player = new Player(data.PlayerSummons, data.Speed)
+            var player = new Player()
             {
                 CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
-                PlayerHeight = data.Height,
-                PlayerWidth = data.Width,
-                
-                
+                DrawSpecifics = new DrawSpecificStats()
+                {
+                    MovementQuickness = (int)data.MovementQuickness,
+                    Width = data.Width,
+                    Height = data.Height,
+                },
+                BaseCombatStats = new BaseCombatStats()
+                {
+                    MP = 4,
+                    AP = 3,
+                    Health = 10,
+                    Initiative = 3
+                },
+                CurrentCombatStats = new CurrentCombatStats()
+                {
+                    Health = data.CurrentCombatStats.Health,
+                },
+                PlayerSpriteSheet = AssetManager.GetTexture("PlayerSS"),
+                Icon = AssetManager.GetTexture("Hero_Blonde"),
             };
-          
-            player.PlayerSpriteSheet = AssetManager.GetTexture("PlayerSS");
             foreach (var kvp in data.Animations)
             {
                 AnimationState state = kvp.Key;
@@ -71,30 +74,12 @@ namespace PlayingAround.Entities.Player
                 int duration = kvp.Value[2];
                 player.Animation[state] = new Animation(player.PlayerSpriteSheet, row, frames, duration);
             }
-            player.IconTexture = AssetManager.GetTexture("Hero_Blonde");
             return player;
 
         }
 
-        public Player(List<SummonsSaveData> summs, float speed = 200f)
+        public Player()
         {
-            Speed = speed;
-
-            var summonLoader = JsonLoader.LoadSummonProgressions();
-            stats = new PlayerStats()
-            {
-                LockedSummons = new List<SummonedMonster>(),
-                UnlockedSummons = new List<SummonedMonster>(),
-            };
-
-            foreach (var summon in summs)
-            {
-                var mon = new SummonedMonster(summon, summonLoader[summon.Name]);
-                if (mon.NumberOfKills > 0)
-                    stats.UnlockedSummons.Add(mon);
-                else
-                    stats.LockedSummons.Add(mon);
-            }
         }
 
 
@@ -160,12 +145,12 @@ namespace PlayingAround.Entities.Player
 
         public Rectangle GetRectangleHitBox()
         {
-            int hitboxWidth = PlayerWidth;
-            int hitboxHeight = PlayerHeight/3;
+            int hitboxWidth = DrawSpecifics.Width;
+            int hitboxHeight = DrawSpecifics.Height/3;
 
             Rectangle hit = new Rectangle(
-                (int)(CurrentPos.X - (PlayerWidth / 2f) ),
-                (int)(CurrentPos.Y - PlayerHeight /4),
+                (int)(CurrentPos.X - (DrawSpecifics.Width / 2f) ),
+                (int)(CurrentPos.Y - DrawSpecifics.Height /4),
                 hitboxWidth,
                 hitboxHeight
             );
@@ -175,31 +160,12 @@ namespace PlayingAround.Entities.Player
 
         public PlayerSaveData Save(PlayerSaveData data)
         {
-            data.Speed = this.Speed;
+            data.MovementQuickness = this.DrawSpecifics.MovementQuickness;
             data.CurrentPosX = CurrentPos.X;
             data.CurrentPosY = CurrentPos.Y;
             return data;
         }
 
-        public List<SummonsSaveData> SavePlayerSummons()
-        {
-            List<SummonsSaveData> summs = new List<SummonsSaveData>();
-            foreach (var sum in this.stats.UnlockedSummons)
-            {
-                //Dictionary <string, int> abilityPoints = new Dictionary<string, int>();
-                //abilityPoints.Add("Defense", sum.Defense);
-                //abilityPoints.Add("MaxHealth", sum.MaxHealth);
-                //abilityPoints.Add("")
-
-                SummonsSaveData data = new SummonsSaveData()
-                {
-                    Name = sum.Name,
-                    NumberOfKills = sum.NumberOfKills
-                };
-                summs.Add(data);
-            }
-            return summs;
-        }
         public Vector2? GetDebugClickTarget() => debugClickTarget;
 
         public void NewMapTilePosition(Vector2 dir)

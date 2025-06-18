@@ -13,7 +13,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
         public int BaseDamageMin {  get; set; }
         public int BaseDamageMax { get; set; }
-        public bool AttackHasIcon {  get; set; } 
+        public bool AttackHasIcon { get; set; } = false;
         public int Range {  get; set; }
         public string Aspect { get; set; }
         public string Strength { get; set; }

@@ -1,20 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
-using PlayingAround.Entities.Monster.PlayMonsters;
-using PlayingAround.Entities.Summons;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
-using PlayingAround.Managers.Entities;
-using PlayingAround.Managers.Movement.CombatGrid;
 using PlayingAround.Managers.Resistances;
-using PlayingAround.Stats;
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using System.Xml;
+using PlayingAround.Entities.Player;
+using System.Numerics;
+using System.Net;
 
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
@@ -28,9 +24,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
 
         public TileCell PlayerMovementEndPoint { get; set; } = null;
-        public List<Vector2> MovePath { get; set; } = new();
+        public List<Microsoft.Xna.Framework.Vector2> MovePath { get; set; } = new();
         public List<Aspect> Aspects { get; set; } = new List<Aspect>();
-        public Vector2 currentPos;
+        public Microsoft.Xna.Framework.Vector2 currentPos;
 
 
 
@@ -38,7 +34,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public ElementType ElementType { get; set; }
         public BaseCombatStats BaseStats { get; set; }
         public DrawSpecificStats DrawSpecifics { get; set; }
-        public Dictionary<AnimationState, Animation> Animations { get; set; }
+        public Dictionary<AnimationState, Animation> Animations { get; set; } = new Dictionary<AnimationState, Animation>();
         public List<SingleAttack> Attacks { get; set; } = new List<SingleAttack> { };
         public List<MonsterActionOrder> ActionOrder { get; set; }
         public List<ChooseWhichMonsterAttack> DecideWhichAttack { get; set; }
@@ -49,6 +45,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public PlayerCombatStats PlayerCombatStats { get; set; } = null;
         public bool isDead { get; set; } = false;
         public Texture2D Icon { get; set; }
+        public Texture2D SpriteSheet {  get; set; }
         public Dictionary<ElementType, float> Resistances { get; set; }
 
 
@@ -58,7 +55,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             ElementType = element == ElementType.None ? data.DefaultElementType : element;
             BaseStats = data.BaseStats;
             DrawSpecifics = data.DrawSpecifics;
-            Animations = data.Animations;
+            DrawSpecifics.AllowedToMove = true;
             ActionOrder = data.ActionOrder;
             DecideWhichAttack = data.DecideWhichAttack;
             Name = UniqueId;
@@ -74,8 +71,16 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             MonsterIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
+            SpriteSheet = Icon;
             Resistances = ResistanceManager.GetResistances(ElementType);
-            
+            foreach (var kvp in data.AnimationData)
+            {
+                AnimationState state = kvp.Key;
+                int row = kvp.Value[0];
+                int frames = kvp.Value[1];
+                int duration = kvp.Value[2];
+                Animations[state] = new Animation(SpriteSheet, row, frames, duration);
+            }
         }
 
         //combatMonster template to CombatMonster
@@ -84,61 +89,31 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         }
         // Player to Player Combat Monster
-        public CombatMonster(Player.Player player)
+        public CombatMonster(Player.Player player, ElementType element = ElementType.None)
         {
-            PlayerStats stats = player.stats;
-            BaseHealth = stats.MaxHealth;
-            CurrentHealth = stats.CurrentHealth;
-            Name = "Player";
-            isPlayer = true;
-            Initiation = stats.Initiation;
-            MovementQuickness = 200f;
-            MovementPattern = "straight";
-            MP = player.stats.MP;
-            IconTexture = player.IconTexture;
-            Width = player.PlayerWidth;
-            Height = player.PlayerHeight;
-            Resistances = player.Resistances;
-            BaseActionPoints = player.stats.ActionPoint;
-            foreach (var kvp in player.Animation)
+            UniqueId = "Player";
+            ElementType = element == ElementType.None ? ElementType.Normal : element;
+            BaseStats = player.BaseCombatStats;
+            DrawSpecifics = player.DrawSpecifics;
+            DrawSpecifics.AllowedToMove = true;
+            Animations = player.Animation;
+            ActionOrder = null;
+            DecideWhichAttack = null;
+            Name = UniqueId;
+            CurrentStats = new CurrentCombatStats()
             {
-                Animation[kvp.Key] = new Animation(player.Animation[kvp.Key]);
-            }
+                Health = player.CurrentCombatStats.Health,
+                AP = BaseStats.AP,
+                MP = BaseStats.MP,
+            };
+            Attacks = null;
+            MonsterIs = CombatMonsterType.Player;
+            Icon = AssetManager.GetTexture($"Hero_Blonde");
+            Resistances = ResistanceManager.GetResistances(ElementType);
 
-            
+
+
         }
-        private Queue<MonsterActionOrder> ConvertStringOrderOfActionToEnum(List<string> orderStri)
-        {
-            var queue = new Queue<MonsterActionOrder>();
-            foreach (var str in orderStri)
-            {
-                if (Enum.TryParse(typeof(MonsterActionOrder), str, true, out var result))
-                {
-                    queue.Enqueue((MonsterActionOrder)result);
-                }
-
-
-            }
-
-            return queue;
-        }
-
-        private Queue<ChooseWhichMonsterAttack> ConvertStringWhichAttackToEnum(List<string> orderStri)
-        {
-            var queue = new Queue<ChooseWhichMonsterAttack>();
-
-            foreach (var str in orderStri)
-            {
-                if (Enum.TryParse(typeof(ChooseWhichMonsterAttack), str, true, out var result))
-                {
-                    queue.Enqueue((ChooseWhichMonsterAttack)result);
-                }
-
-            }
-
-            return queue;
-        }
-
     }
 
     public enum MonsterActionOrder

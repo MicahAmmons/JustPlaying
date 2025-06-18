@@ -34,8 +34,9 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         }
         public static SingleAttack GetAttack(AttackName name, ElementType element = ElementType.None)
         {
-            return new SingleAttack(name, _attackData[name], element);
-  
+            var dataCopy = DeepCopyHelper.DeepCopy(_attackData[name]);
+            return new SingleAttack(name, dataCopy, element);
+
         }
         public static void PerformAttack(
            SingleAttack attack,

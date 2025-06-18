@@ -51,9 +51,9 @@ namespace PlayingAround.Managers.Movement
         {
             foreach (var mon in  _combatMonsters)
             {
-                if (mon.MovePath == null || mon.MovePath.Count <= 0 || !mon.AllowedToMove) continue;
+                if (mon.MovePath == null || mon.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
                 Vector2 nextPoint = mon.MovePath[0];
-                float speed = mon.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float speed = mon.DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 Vector2 direction = nextPoint - mon.currentPos;
                 float distance = direction.Length();
@@ -77,7 +77,7 @@ namespace PlayingAround.Managers.Movement
                 return;
 
             Vector2 nextPoint = _player.MovementPath[0];
-            float speed = _player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float speed = _player.DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - _player.CurrentPos;
             float distance = direction.Length();
@@ -119,7 +119,7 @@ namespace PlayingAround.Managers.Movement
                     return;
 
                 Vector2 nextPoint = mon.MovePath[0];
-                float speed = mon.MovementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float speed = mon.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 Vector2 direction = nextPoint - mon.CurrentPos;
                 float distance = direction.Length();
