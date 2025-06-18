@@ -9,51 +9,32 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
     public class SingleAttack
     {
         public AttackName Name { get; set; }
-        public string AttackIcon { get; set; }
-        public Texture2D AttackIconTexture { get; set; }
+        public Texture2D Icon { get; set; }
         public ElementType ElementDamage { get; set; } = ElementType.None;
-        [JsonPropertyName("Range")] public int Range { get; set; }
-        [JsonPropertyName("Aspect")] public string Aspect { get; set; }
-        [JsonPropertyName("BaseDamageMin")] public int MinDamage { get; set; }
-        [JsonPropertyName("BaseDamageMax")] public int MaxDamage { get; set; }
-        [JsonPropertyName("AttacksHasIcon")] public bool AttackHasIcon { get; set; }
-        [JsonPropertyName("VisualVelocity")] public float VisualVelocity { get; set; } = 200f;
-        [JsonPropertyName("Animated")] public bool Animated { get; set; } = false;
-        [JsonPropertyName("VisualTiming")] public VisualTiming VisualTiming { get; set; } 
-        [JsonPropertyName("WhenApplyAspect")] public string WhenApplyAspect { get; set; }
+        public int Range { get; set; }
+        public string Aspect { get; set; }
+        public int MinDamage { get; set; }
+        public int MaxDamage { get; set; }
+        public float VisualVelocity { get; set; }
+        public bool Animated { get; set; } = false;
+         public VisualTiming VisualTiming { get; set; } 
+        public string WhenApplyAspect { get; set; }
 
-        public SingleAttack CloneWithElement(ElementType element)
+       
+        public SingleAttack (AttackName name, SingleAttackData data, ElementType element = ElementType.None)
         {
-            var iconKey = $"{element} {Name}";
-            Texture2D iconTexture;
-
-            try
-            {
-                iconTexture = AssetManager.GetTexture(iconKey);
-            }
-            catch
-            {
-                // fallback to base icon and color it by element
-                var fallbackTexture = AssetManager.GetTexture(AttackIcon);
-                iconTexture = AssetManager.GetIconWithElementColored(fallbackTexture, element);
-            }
-
-            return new SingleAttack
-            {
-                Name = this.Name,
-                ElementDamage = element,
-                Range = this.Range,
-                Aspect = this.Aspect,
-                MinDamage = this.MinDamage,
-                MaxDamage = this.MaxDamage,
-                AttackHasIcon = this.AttackHasIcon,
-                VisualVelocity = this.VisualVelocity,
-                Animated = this.Animated,
-                VisualTiming = this.VisualTiming,
-                WhenApplyAspect = this.WhenApplyAspect,
-                AttackIcon = iconKey,
-                AttackIconTexture = iconTexture
-            };
+            Name = name;
+            ElementDamage = element == ElementType.None ? ElementType.Normal : element;
+            Range = data.Range;
+            Aspect = data.Aspect;
+            MinDamage = data.BaseDamageMin;
+            MaxDamage = data.BaseDamageMax;
+            VisualVelocity = data.VisualVelocity > 0? data.VisualVelocity: 200f;
+            Animated = data.Animated;
+            VisualTiming = data.VisualTiming;
+            WhenApplyAspect = data.WhenApplyEffect;
+            if (data.AttackHasIcon)
+                Icon = AssetManager.GetTexture($"{Name}");
         }
 
 

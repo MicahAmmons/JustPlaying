@@ -16,24 +16,16 @@ namespace PlayingAround.Managers.Entities
 {
     public static class CombatMonsterManager
     {
-        private static Dictionary<string, CombatMonster> _combatMonsterBaseData;
+        private static Dictionary<string, CombatMonsterData> _combatMonsterBaseData;
         private static float _difficultyIncreasePerLevel = 0.2f;
         private static float _hPIncreasePerLevel = 1f;
         private static float _elementalAffinityIncreasePerLevel = 1f;
+
         public static void LoadContent()
         {
             _combatMonsterBaseData = JsonLoader.LoadCombatMonsterData();
-            foreach (var kvp in _combatMonsterBaseData)
-            {
-                string monsterKey = kvp.Key;
-                CombatMonster mon = kvp.Value;
-                mon.Attacks = AttackManager.GetAttack(mon.AttackData);
-                mon.Name = $"{monsterKey}";
-                mon.Resistances = ResistanceManager.GetResistances(mon.ElementType);
-                mon.IconTextureKey = $"{mon.Name}Icon";
-                mon.IconTexture = AssetManager.GetTexture(mon.IconTextureKey);
-            }
         }
+    
         public static List<CombatMonster> GetCombatMonsters(List<string> monStrings)
         {
             List<CombatMonster> mons = new List<CombatMonster>();
@@ -43,129 +35,125 @@ namespace PlayingAround.Managers.Entities
             }
             return mons;
         }
-        public static CombatMonster SummonMonsterToCombat(SummonedMonster mon)
+        public static CombatMonster SummonMonsterToCombat(SummonedMonster sumMon)
         {
-            CombatMonster comMon = new CombatMonster(mon, _combatMonsterBaseData[mon.Name]);
-
-
-
-            return comMon;
-        }
-        public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
-        {
-            List<CombatMonster> finalMon = new List<CombatMonster>();
-            float targetDifficulty = GetRandomDifficulty(min, max);
-            Dictionary<CombatMonster, List<float>> floats = GetRandomDifficulties(targetDifficulty, monsters);
-                foreach (var kvp in floats)
-                {
-                    CombatMonster mon = kvp.Key;
-                    foreach (var flo in kvp.Value)
-                    {
-                    CombatMonster monster = new CombatMonster(mon);
-                    finalMon.Add(MatchStatsToDifficulty(monster, flo));
-                    }
-                }
-                foreach ( var mon in finalMon)
+            CombatMonster newSummonedMon = new CombatMonster(_combatMonsterBaseData[sumMon.Name])
             {
-                mon.NamePlusLevel = $"{mon.Name} Lvl {mon.Level}";
-            }
+                MonsterIs = CombatMonsterType.Summoned
+            };
+            return newSummonedMon;
+        }
+        //public static List<CombatMonster> BalanceCombatMonsters(List<CombatMonster> monsters, float max, float min)
+        //{
+        //    List<CombatMonster> finalMon = new List<CombatMonster>();
+        //    float targetDifficulty = GetRandomDifficulty(min, max);
+        //    Dictionary<CombatMonster, List<float>> floats = GetRandomDifficulties(targetDifficulty, monsters);
+        //        foreach (var kvp in floats)
+        //        {
+        //            CombatMonster mon = kvp.Key;
+        //            foreach (var flo in kvp.Value)
+        //            {
+        //            CombatMonster monster = new CombatMonster(_combatMonsterBaseData[mon]);
+        //            finalMon.Add(MatchStatsToDifficulty(monster, flo));
+        //            }
+        //        }
+        //        foreach ( var mon in finalMon)
+        //    {
+        //        mon.NamePlusLevel = $"{mon.Name} Lvl {mon.Level}";
+        //    }
           
 
-            return finalMon;
-        }
-        private static CombatMonster MatchStatsToDifficulty(CombatMonster mon, float diff)
-        {
+        //    return finalMon;
+        //}
+        //private static CombatMonster MatchStatsToDifficulty(CombatMonster mon, float diff)
+        //{
 
-            float numberOfLevels = (diff - mon.BaseDifficulty) / 0.2f + 1;
-            mon.Level = (float)Math.Floor(numberOfLevels);
+        //    float numberOfLevels = (diff - mon.BaseDifficulty) / 0.2f + 1;
+        //    mon.Level = (float)Math.Floor(numberOfLevels);
 
-            if (mon.Level > 1)
-            {
-                do
-                {
-                    bool addHealth = RandomHut.rng.Next(2) == 0;
-                    if (addHealth)
-                    {
-                        mon.BaseHealth += _hPIncreasePerLevel;
-                        mon.BaseHealth = mon.BaseHealth;
-                        mon.CurrentHealth = mon.BaseHealth;
-                    }
+        //    if (mon.Level > 1)
+        //    {
+        //        do
+        //        {
+        //            bool addHealth = RandomHut.rng.Next(2) == 0;
+        //            if (addHealth)
+        //            {
+        //                mon.BaseHealth += _hPIncreasePerLevel;
+        //                mon.BaseHealth = mon.BaseHealth;
+        //                mon.CurrentHealth = mon.BaseHealth;
+        //            }
 
-                    numberOfLevels--;
-                } while (numberOfLevels > 0);
-            }
-            return mon;
-        }
-        public static float GetRandomDifficulty(float min, float max)
-        {
-            // Convert range to number of 0.2 steps
-            int stepsMin = (int)Math.Ceiling(min / 0.2f);
-            int stepsMax = (int)Math.Floor(max / 0.2f);
+        //            numberOfLevels--;
+        //        } while (numberOfLevels > 0);
+        //    }
+        //    return mon;
+        //}
+        //public static float GetRandomDifficulty(float min, float max)
+        //{
+        //    // Convert range to number of 0.2 steps
+        //    int stepsMin = (int)Math.Ceiling(min / 0.2f);
+        //    int stepsMax = (int)Math.Floor(max / 0.2f);
 
-            // Pick a random integer step
-            int step = RandomHut.rng.Next(stepsMin, stepsMax + 1);
+        //    // Pick a random integer step
+        //    int step = RandomHut.rng.Next(stepsMin, stepsMax + 1);
 
-            // Convert back to float
-            return step * 0.2f;
-        }
-        public static Dictionary<CombatMonster, List<float>> GetRandomDifficulties(float targetDiff, List<CombatMonster> mons)
-        {
-            const float tolerance = 0.4f;
-            float maxDiff = targetDiff;
+        //    // Convert back to float
+        //    return step * 0.2f;
+        //}
+        //public static Dictionary<CombatMonster, List<float>> GetRandomDifficulties(float targetDiff, List<CombatMonster> mons)
+        //{
+        //    const float tolerance = 0.4f;
+        //    float maxDiff = targetDiff;
 
-            Dictionary<CombatMonster, List<float>> result = new();
-            foreach (var mon in mons)
-            {
-                result[mon] = new List<float> { };
-            }
+        //    Dictionary<CombatMonster, List<float>> result = new();
+        //    foreach (var mon in mons)
+        //    {
+        //        result[mon] = new List<float> { };
+        //    }
 
-            while (maxDiff > 0)
-            {
-                int index = RandomHut.rng.Next(0, mons.Count - 1);
-                float diff = 0;
-                CombatMonster mon = mons[index];
+        //    while (maxDiff > 0)
+        //    {
+        //        int index = RandomHut.rng.Next(0, mons.Count - 1);
+        //        float diff = 0;
+        //        CombatMonster mon = mons[index];
  
-                float baseDiff = mon.BaseDifficulty;
-                if (baseDiff < maxDiff)
-                {
-                    diff = GetRandomDifficulty(baseDiff, maxDiff);
-                    result[mon].Add(diff);
-                }
-                else
-                {
-                    if (baseDiff - maxDiff <= tolerance)
-                    {
-                        diff = mon.BaseDifficulty;
-                        result[mon].Add(diff);
-                        maxDiff = 0;
-                    }
-                    else
-                    {
-                        foreach (var monster in mons)
-                        {
-                            if (monster == mon) { continue; }
-                            if (monster.BaseDifficulty - maxDiff <= tolerance)
-                            {
-                                diff = monster.BaseDifficulty;
-                                result[monster].Add(diff);
-                                maxDiff = 0;
-                            }
-                        }
-                        maxDiff = 0;
-                    }
-                }
-                    maxDiff -= diff;
+        //        float baseDiff = mon.BaseDifficulty;
+        //        if (baseDiff < maxDiff)
+        //        {
+        //            diff = GetRandomDifficulty(baseDiff, maxDiff);
+        //            result[mon].Add(diff);
+        //        }
+        //        else
+        //        {
+        //            if (baseDiff - maxDiff <= tolerance)
+        //            {
+        //                diff = mon.BaseDifficulty;
+        //                result[mon].Add(diff);
+        //                maxDiff = 0;
+        //            }
+        //            else
+        //            {
+        //                foreach (var monster in mons)
+        //                {
+        //                    if (monster == mon) { continue; }
+        //                    if (monster.BaseDifficulty - maxDiff <= tolerance)
+        //                    {
+        //                        diff = monster.BaseDifficulty;
+        //                        result[monster].Add(diff);
+        //                        maxDiff = 0;
+        //                    }
+        //                }
+        //                maxDiff = 0;
+        //            }
+        //        }
+        //            maxDiff -= diff;
                 
-            }
-            return result;
-        }
+        //    }
+        //    return result;
+        //}
         public static Vector2 GetMonsterWidthAndHeight(string name)
         {
-            return new Vector2(_combatMonsterBaseData[name].Width, _combatMonsterBaseData[name].Height);
-        }
-        public static string GetMonsterTextureString(string name)
-        {
-            return _combatMonsterBaseData[name].IconTextureKey;
+            return new Vector2(_combatMonsterBaseData[name].DrawSpecifics.Width, _combatMonsterBaseData[name].DrawSpecifics.Height);
         }
     }
 }

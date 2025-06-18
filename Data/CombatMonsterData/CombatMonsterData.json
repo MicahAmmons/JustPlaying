@@ -1,28 +1,33 @@
 {
   "Ooze": {
-    "mp": 4,
-    "uniqueId": "Ooze",
-    "movementQuickness": 200,
-    "movementPattern": "arc",
-    "width": 32,
-    "height": 32,
-    "AttackData": {
-      "Slam": "Acid",
-      "Spit": "Acid"
+    "UniqueId": "Ooze",
+    "DefaultElementType": "Acid",
+    "BaseCombatStats": {
+      "MP": 4,
+      "AP": 3,
+      "Health": 6,
+      "Initiative": 2,
     },
-    "BaseAttackPoints": 3,
-    "monsterType": "Ooze",
-    "baseDifficulty": 1,
-    "elementType": "Acid",
-    "elementalAffinity": 1,
-    "baseHealth": 6,
-    "initiation": 2,
-    "baseSummonCost": 3,
-    "actionOrder": [
+    "DrawSpecifics": {
+      "Width": 32,
+      "Height": 32,
+      "MovementQuickness": 200,
+      "MovementPattern": "Arc"
+    },
+    "Animations": {
+      "Idle": [ 1, 1 ],
+      "BouncingUp": [ 1, 1 ],
+      "BouncingDown": [ 1, 1 ]
+    },
+    "AttackData":   {
+      "Slam": [ "Physical" ],
+      "Spit": [ "Acid" ]
+    },
+    "ActionOrder": [
       "MoveTowardsClosestEnemy",
       "AttackClosestEnemy"
     ],
-    "decideWhichAttack": [
+    "DecideWhichAttack": [
       "ShortestRange"
     ]
   },

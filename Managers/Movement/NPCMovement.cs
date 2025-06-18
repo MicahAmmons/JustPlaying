@@ -131,3 +131,8 @@ namespace PlayingAround.Managers.Movement
     }
     }
 }
+public enum MovementPatternType
+{
+    Arc,
+
+}

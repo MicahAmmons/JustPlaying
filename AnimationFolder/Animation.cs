@@ -31,7 +31,12 @@ namespace PlayingAround.AnimationFolder
             FrameDuration = frameDuration / 1000f; // Convert ms to seconds
             IsLooping = isLooping;
         }
-
+        public Animation(Animation originalAnimation)
+        {
+            Frames = originalAnimation.Frames;
+            FrameDuration = originalAnimation.FrameDuration;
+            IsLooping = originalAnimation.IsLooping;
+        }
 
 
 

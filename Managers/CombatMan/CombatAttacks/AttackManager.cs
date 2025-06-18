@@ -24,35 +24,18 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
     {
 
 
-        private static Dictionary<AttackName, SingleAttack> _attackData;
+        private static Dictionary<AttackName, SingleAttackData> _attackData;
 
         public static void LoadContent()
         {
-            _attackData = JsonLoader.LoadAttackData();
-            foreach (var kvp in _attackData)
-            {
-                var attack = kvp.Value;
-                var name = kvp.Key;
-                attack.Name = name;
-                if (attack.AttackHasIcon) {
-                    attack.AttackIcon = $"{attack.Name}Icon";
-                    attack.AttackIconTexture = AssetManager.GetTexture($"{attack.AttackIcon}");
-                }
-            }
-        }
-        public static List<SingleAttack> GetAttack(Dictionary<AttackName, ElementType> attacks)
-        {
-    
-            List<SingleAttack> att = new List<SingleAttack>();
-            if (attacks == null) return att;
-            foreach (var atts in attacks)
-            {
-                AttackName name = atts.Key;
-                var newAttack = _attackData[name];
-                att.Add(newAttack);
-            }
 
-            return att;
+            _attackData = JsonLoader.LoadAttackData();
+           
+        }
+        public static SingleAttack GetAttack(AttackName name, ElementType element = ElementType.None)
+        {
+            return new SingleAttack(name, _attackData[name], element);
+  
         }
         public static void PerformAttack(
            SingleAttack attack,
@@ -96,12 +79,12 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
              // texture (or some texture if needed)
              );
             CombatGuard.CurrentCombat.VisualEffectManager.AddEffect(effect);
-            tar.IsFlashingRed = true;
-            tar.DamageFlashTimer = 0.35f; // 0.35 seconds of red flash
+            tar.DrawSpecifics.IsFlashingRed = true;
+            tar.DrawSpecifics.DamageFlashTimer = 0.35f; // 0.35 seconds of red flash
         }
         public static void ApplyDamage(float damage, CombatMonster tar)
         {
-            tar.CurrentHealth -= damage;
+            tar.CurrentStats.Health -= (int)damage;
             ApplyDamageVisualEffect(tar, damage );
           
         }
@@ -163,73 +146,73 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }
             return result;
         }
-        public static Dictionary<CombatMonster, List<TileCell>> GetAttackSpecificBehavior(string targetPhrase, string key, List<TileCell> inRangeCells, TileCell origin)
+        //public static Dictionary<CombatMonster, List<TileCell>> GetAttackSpecificBehavior(string targetPhrase, string key, List<TileCell> inRangeCells, TileCell origin)
         
-            {
-                Dictionary<CombatMonster, List<TileCell>> result = new();
-                Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
-                Dictionary < CombatMonster, TileCell > aiMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
-            if (key == "Target")
-                {
-                    switch (targetPhrase)
-                    {
-                        case "closestEnemy":
-                            CombatMonster closestMon = null;
-                            TileCell closestCell = null;
-                            int shortestDistance = int.MaxValue;
+        //    {
+        //        Dictionary<CombatMonster, List<TileCell>> result = new();
+        //        Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
+        //        Dictionary < CombatMonster, TileCell > aiMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+        //    if (key == "Target")
+        //        {
+        //            switch (targetPhrase)
+        //            {
+        //                case "closestEnemy":
+        //                    CombatMonster closestMon = null;
+        //                    TileCell closestCell = null;
+        //                    int shortestDistance = int.MaxValue;
 
                             
 
-                            foreach (var kvp in playerMonsters)
-                            {
-                                CombatMonster mon = kvp.Key;
-                                TileCell cell = kvp.Value;
+        //                    foreach (var kvp in playerMonsters)
+        //                    {
+        //                        CombatMonster mon = kvp.Key;
+        //                        TileCell cell = kvp.Value;
 
-                                if (inRangeCells.Contains(cell))
-                                {
-                                    int distance = GridMovement.CheckManhattanDistance(origin, cell);
+        //                        if (inRangeCells.Contains(cell))
+        //                        {
+        //                            int distance = GridMovement.CheckManhattanDistance(origin, cell);
 
-                                    if (distance < shortestDistance)
-                                    {
-                                        shortestDistance = distance;
-                                        closestMon = mon;
-                                        closestCell = cell;
-                                    }
-                                }
-                            }
-                            if (closestMon != null && closestCell != null)
-                            {
-                                result[closestMon] = new List<TileCell> { closestCell };
-                            }
-                            break;
-                    case "lowestHPInRange":
-                        float lowestHP = int.MaxValue;
-                        CombatMonster lowestHPMon = null;
-                        TileCell lowestHPCell = null;   
-                        foreach (var kvp in playerMonsters)
-                        {
-                            CombatMonster mon = kvp.Key;
-                            TileCell cell = kvp.Value;
-                            if (inRangeCells.Contains(cell))
-                            {
-                                float hp = mon.CurrentHealth;
-                                if (hp < lowestHP)
-                                {
-                                    lowestHP = hp;
-                                    lowestHPCell = cell;
-                                    lowestHPMon = mon;
-                                }
-                            }
-                        }
-                        if (lowestHPMon != null && lowestHPCell != null)
-                        {
-                            result[lowestHPMon] = new List<TileCell> { lowestHPCell };
-                        }
-                        break;
-                }
-                }
-                return result;
-            }
+        //                            if (distance < shortestDistance)
+        //                            {
+        //                                shortestDistance = distance;
+        //                                closestMon = mon;
+        //                                closestCell = cell;
+        //                            }
+        //                        }
+        //                    }
+        //                    if (closestMon != null && closestCell != null)
+        //                    {
+        //                        result[closestMon] = new List<TileCell> { closestCell };
+        //                    }
+        //                    break;
+        //            case "lowestHPInRange":
+        //                float lowestHP = int.MaxValue;
+        //                CombatMonster lowestHPMon = null;
+        //                TileCell lowestHPCell = null;   
+        //                foreach (var kvp in playerMonsters)
+        //                {
+        //                    CombatMonster mon = kvp.Key;
+        //                    TileCell cell = kvp.Value;
+        //                    if (inRangeCells.Contains(cell))
+        //                    {
+        //                        float hp = mon.CurrentHealth;
+        //                        if (hp < lowestHP)
+        //                        {
+        //                            lowestHP = hp;
+        //                            lowestHPCell = cell;
+        //                            lowestHPMon = mon;
+        //                        }
+        //                    }
+        //                }
+        //                if (lowestHPMon != null && lowestHPCell != null)
+        //                {
+        //                    result[lowestHPMon] = new List<TileCell> { lowestHPCell };
+        //                }
+        //                break;
+        //        }
+        //        }
+        //        return result;
+        //    }
 
         // IF THE MOSNTER HAS MULTIPLE ATTACKS WITHIN RANGE TO USE, THIS METHOD DECIDES WHICH ONE
         public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) ChooseWhichAttack(
@@ -281,5 +264,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             // If no strategy matched
             return (null, new Dictionary<CombatMonster, List<TileCell>>());
         }
+
+       
     }
 }

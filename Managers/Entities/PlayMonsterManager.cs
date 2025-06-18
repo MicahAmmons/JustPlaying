@@ -52,7 +52,7 @@ namespace PlayingAround.Managers.Entities
                 Vector2 startPos = DeterminePlayMonsterSpawn(cells);
                 PlayMonsters newPlayMon = new PlayMonsters()
                 {
-                    Monsters = CombatMonsterManager.BalanceCombatMonsters(monsterOptions, difficultyMax, difficultyMin),
+                    Monsters = monsterOptions,
                     SpawnPosition = startPos,
                     CurrentPos = startPos,
 
@@ -60,8 +60,8 @@ namespace PlayingAround.Managers.Entities
                 };
                 CombatMonster comMon = newPlayMon.Monsters[0];
                 string name = comMon.Name;
-                newPlayMon.Icon = AssetManager.GetTexture(comMon.IconTextureKey);
-                newPlayMon.MovementPattern = comMon.MovementPattern;
+                newPlayMon.Icon = comMon.Icon;
+                newPlayMon.MovementPattern = comMon.DrawSpecifics.MovementPattern;
                 newPlayMon.MovementSpeed = _playMonsterData[name][0].MovementSpeed;
                 newPlayMon.PauseDurationMax = _playMonsterData[name][0].PauseDurationMax;
                 newPlayMon.PauseDurationMin = _playMonsterData[name][0].PauseDurationMin;

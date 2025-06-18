@@ -15,7 +15,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
         // Properties populated from PlayMonsterData
         public float MovementSpeed { get; set; }
-        public string MovementPattern { get; set; }
+        public MovementPatternType MovementPattern { get; set; }
         public float PauseDurationMax { get; set; } // how long to pause after a path ends
         public float PauseDurationMin { get; set; }
         public float CurrentPauseDuration { get; set; }

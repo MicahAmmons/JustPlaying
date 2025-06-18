@@ -49,7 +49,7 @@ namespace PlayingAround.Utils
         }
 
         private static readonly string AttackDataPath = GetDataPath("Attacks", "AttackData.json");
-        public static Dictionary<AttackName, SingleAttack> LoadAttackData()
+        public static Dictionary<AttackName, SingleAttackData> LoadAttackData()
         {
             string json = File.ReadAllText(AttackDataPath);
             var options = new JsonSerializerOptions
@@ -57,11 +57,11 @@ namespace PlayingAround.Utils
                 PropertyNameCaseInsensitive = true,
                 Converters = { new JsonStringEnumConverter() }
             };
-            return JsonSerializer.Deserialize<Dictionary<AttackName, SingleAttack>>(json, options);
+            return JsonSerializer.Deserialize<Dictionary<AttackName, SingleAttackData>>(json, options);
         }
 
         private static readonly string CombatMonsterPath = GetDataPath("CombatMonsterData", "CombatMonsterData.json");
-        public static Dictionary<string, CombatMonster> LoadCombatMonsterData()
+        public static Dictionary<string, CombatMonsterData> LoadCombatMonsterData()
         {
             string json = File.ReadAllText(CombatMonsterPath);
             var options = new JsonSerializerOptions
@@ -69,7 +69,7 @@ namespace PlayingAround.Utils
                 PropertyNameCaseInsensitive = true,
                 Converters = { new JsonStringEnumConverter() }
             };
-            return JsonSerializer.Deserialize<Dictionary<string, CombatMonster>>(json, options);
+            return JsonSerializer.Deserialize<Dictionary<string, CombatMonsterData>>(json, options);
         }
 
         private static readonly string ResistancePath = GetDataPath("Resistances", "Resistance.json");

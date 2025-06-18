@@ -156,4 +156,7 @@ public enum AnimationState
     WalkRight,
     IdleLeft,
     IdleRight,
+    Idle,
+    BouncingUp,
+    BouncingDown,
 }
