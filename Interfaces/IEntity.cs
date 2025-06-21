@@ -1,0 +1,60 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder;
+using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Game.Map;
+using PlayingAround.Managers.CombatMan.Aspects;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
+using System;
+using System.Collections.Generic;
+
+namespace PlayingAround.Interfaces
+{
+    public interface IEntity
+    {
+        public Texture2D Icon { get; }
+        public string UniqueId { get; }
+    }
+    public interface IDrawn : IEntity
+    {
+        public DrawSpecificStats DrawSpecifics { get; }
+    }
+    public interface IAnimatable : IDrawn
+    {
+        public AnimationController AnimationController { get; }
+        public Dictionary<AnimationState, Animation> Animation {  get; }
+        public Texture2D SpriteSheet { get; }
+        public Direction FacingDirection { get; set; }
+        public AnimationState CurrentAnimationState { get; set; }
+        public void UpdateMovement(GameTime gameTime);
+        public void SetFacingDirection(Vector2 vec);
+        public void SetCurrentAnimationState();
+        public void SetCurrentAnimationStateToIdle();
+        public void UpdateAnimation(GameTime gameTime);
+    }
+    public interface ICombatant : IAnimatable
+    {
+        public BaseCombatStats BaseStats { get; }
+        public CurrentCombatStats CurrentStats { get; }
+        public List<Aspect> Aspects { get; }
+        public List<SingleAttack> Attacks { get; }
+        public bool isDead { get; set; }
+        public List<TileCell> MoveableCells { get; set; }
+        public CombatMonsterType Is {  get; set; }
+    }
+
+
+
+
+
+    public interface IOutOfCombatAnimated
+    {
+        public OutOfCombatAnimatedStats OOCombatStats {  get; }
+
+    }
+    public interface ICollidable
+    {
+        public Vector2[] DiamondHitBox { get; }
+        public Vector2 HitBoxCenter {  get; }
+    }
+}

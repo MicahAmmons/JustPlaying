@@ -22,8 +22,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
-            _currentCombat = new CombatManager(playMonsters, _currentPlayer);
-            PlayerManager.AllowPlayerMovement(false);
+            _currentCombat = new CombatManager(playMonsters);
             SceneManager.SetState(SceneState.Combat);
         }
 
@@ -44,7 +43,6 @@ namespace PlayingAround.Managers.CombatMan
         }
         public static void EndCombat()
         {
-            PlayerManager.UpdatePlayerStatsFromCombat(_currentCombat.PlayerMonster);
             switch (_currentCombat.TheWinner)
             {
                 case WhoWon.Player:

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayingAround.Entities.Monster.SummonedMonsters
+namespace PlayingAround.Managers.Entities
 {
     public static class SummonedMonsterManager
     {
@@ -37,5 +37,6 @@ namespace PlayingAround.Entities.Monster.SummonedMonsters
         {
             return _summonedSaveData;
         }
+   
     }
 }

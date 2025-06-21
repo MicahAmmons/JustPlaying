@@ -17,7 +17,9 @@
     "AnimationData": {
       "Idle": [ 1, 1 , 500],
       "BouncingUp": [ 1, 1, 500 ],
-      "BouncingDown": [ 1, 1, 500 ]
+      "BouncingDown": [ 1, 1, 500 ],
+      "IdleLeft": [ 1, 1, 500 ],
+      "IdleRight": [ 1, 1, 500 ]
     },
     "AttackData":   {
       "Slam": "Normal",

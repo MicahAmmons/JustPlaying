@@ -18,7 +18,6 @@ using System.Text.Json.Serialization;
 using PlayingAround.Utils;
 using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.Resistances;
-using PlayingAround.Entities.Monster.SummonedMonsters;
 
 public class SaveManager
 {

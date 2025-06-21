@@ -130,12 +130,13 @@ namespace PlayingAround
                 case (SceneState.Combat):
                     CombatGuard.Update(gameTime);
                     DebugBugger.Update(gameTime);
+                    PlayerManager.Update(gameTime);
+                    CombatMonsterManager.Update(gameTime);
                     break;
                 case (SceneState.Dialogue):
                     DialogueManager.Update();
                     break;
                     case (SceneState.MapTileTransition):
-                    MovementManager.Update(gameTime);
                     MapTileTransitionManager.Update(gameTime);
                     break;
                 
@@ -175,6 +176,7 @@ namespace PlayingAround
                     CombatGuard.Draw(_spriteBatch, GraphicsDevice);
                     UIManager.Draw(_spriteBatch, GraphicsDevice);
                     DebugBugger.Draw(_spriteBatch);
+                    PlayerManager.Draw(_spriteBatch );
 
                     break;
                 case SceneState.Cinematic:

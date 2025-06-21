@@ -1,6 +1,5 @@
 {
   "Burn": {
-    "Name": "Burn",
     "DefaultElement": "Fire",
     "Description": "Deals minor damage every turn of type ",
     "Duration": 3,

@@ -46,22 +46,15 @@ namespace PlayingAround.Managers.Entities
             { 
                 // Step 1: Create a list of all available CombatMonsters based on the JSON data
                 List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
-                string firstMonName = monsterOptions[0].Name;
+                CombatMonster firstMon = monsterOptions[0];
+                string firstMonName = firstMon.Name;
                 var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[firstMonName]);
                 Vector2 startPos = DeterminePlayMonsterSpawn(cells);
-                PlayMonsters newPlayMon = new PlayMonsters()
+                PlayMonsters newPlayMon = new PlayMonsters(_playMonsterData[firstMonName], monsterOptions[0])
                 {
                     Monsters = monsterOptions,
-                    SpawnPosition = startPos,
-                    CurrentPos = startPos,
-                    Name = firstMonName,
-                    Icon = AssetManager.GetTexture($"{firstMonName}Icon"),
-                    MovementPattern = dataCopy.MovementPattern,
-                    MovementQuickness = dataCopy.MovementQuickness,
-                    PauseDurationMax = dataCopy.PauseDurationMax,
-                    PauseDurationMin = dataCopy.PauseDurationMin,
-
                 };
+                newPlayMon.OOCombatStats.CurrentPos = startPos;
                 monsters.Add(newPlayMon);
 
             }
@@ -90,7 +83,7 @@ namespace PlayingAround.Managers.Entities
                     var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
                     int width = (int)widthHeight.X;
                     int height = (int)widthHeight.Y;
-                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.CurrentPos, width, height);
+                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.OOCombatStats.CurrentPos, width, height);
                     Rectangle dest = new Rectangle(
                         (int)pos.X,
                         (int)pos.Y,
@@ -114,7 +107,7 @@ namespace PlayingAround.Managers.Entities
 
         public static void Update(GameTime gameTime)
         {
-            HandleUserInput();
+          //  HandleUserInput();
 
             MovePlayMonsters(gameTime);
         }
@@ -141,10 +134,9 @@ namespace PlayingAround.Managers.Entities
             foreach (var mon in _currentPlayMonsters)
             {
                 {
-                    var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
-                    int width = (int)widthHeight.X;
-                    int height = (int)widthHeight.Y;
-                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.CurrentPos, width, height);
+                    int width = mon.DrawSpecifics.Width;
+                    int height = mon.DrawSpecifics.Height;
+                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.OOCombatStats.CurrentPos, width, height);
                     Rectangle dest = new Rectangle(
                         (int)pos.X,
                         (int)pos.Y,
@@ -163,9 +155,20 @@ namespace PlayingAround.Managers.Entities
 
         }
 
-        internal static void RemovePlayerMonster(PlayMonsters playMonsters)
+        public static void RemovePlayerMonster(PlayMonsters playMonsters)
         {
             _currentPlayMonsters.Remove(playMonsters);
+        }
+
+        public static void UpdateAllMovement(GameTime gameTime)
+        {
+            foreach (var mon in _currentPlayMonsters)
+            {
+                if (mon.MovePath == null || mon.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
+                {
+                    mon.UpdateAnimation(gameTime);
+                }
+            }
         }
     }
 }

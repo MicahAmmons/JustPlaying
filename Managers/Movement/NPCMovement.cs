@@ -2,6 +2,7 @@
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections;
@@ -21,7 +22,7 @@ namespace PlayingAround.Managers.Movement
         {
             foreach (var mon in playMons)
             {
-                if (mon.MovementPattern == MovementPatternType.Arc)
+                if (mon.DrawSpecifics.MovementPattern == MovementPatternType.Arc)
                 {
                     if (HandlePause(mon, gameTime))
                         continue;
@@ -31,7 +32,7 @@ namespace PlayingAround.Managers.Movement
             }
         }
 
-        public static List<Vector2> MoveMonsters(CombatMonster mon, TileCell startingTile, TileCell endTile)
+        public static List<Vector2> MoveMonsters(ICombatant mon, TileCell startingTile, TileCell endTile)
         {
             Vector2 start = startingTile.CenterPoint;
             Vector2 destination = endTile.CenterPoint;
@@ -99,15 +100,15 @@ namespace PlayingAround.Managers.Movement
      
         public static bool HandlePause(PlayMonsters mon, GameTime gameTime)
         {
-            if (mon.IsPaused)
+            if (mon.OOCombatStats.IsPaused)
             {
-                mon.PauseTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (mon.PauseTimer <= 0)
+                mon.OOCombatStats.PauseTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (mon.OOCombatStats.PauseTimer <= 0)
                 {
-                    mon.IsPaused = false;
+                    mon.OOCombatStats.IsPaused = false;
                     SetCurrentPauseDuration(mon);
-                    Vector2 end = FindEndPoint(mon.CurrentPos);
-                    mon.MovePath = Movement.NPCMovement.ArcMovement(end, mon.CurrentPos);
+                    Vector2 end = FindEndPoint(mon.OOCombatStats.CurrentPos);
+                    mon.MovePath = Movement.NPCMovement.ArcMovement(end, mon.OOCombatStats.CurrentPos);
                 }
 
                 return true; // Still paused this frame
@@ -116,8 +117,8 @@ namespace PlayingAround.Managers.Movement
             // If movement path is empty, trigger a pause
             if (mon.MovePath == null || mon.MovePath.Count == 0)
             {
-                mon.IsPaused = true;
-                mon.PauseTimer = mon.CurrentPauseDuration;
+                mon.OOCombatStats.IsPaused = true;
+                mon.OOCombatStats.PauseTimer = mon.OOCombatStats.CurrentPauseDuration;
                 return true; // Pausing now
             }
 
@@ -126,7 +127,7 @@ namespace PlayingAround.Managers.Movement
 
         private static void SetCurrentPauseDuration(PlayMonsters mon)
         {
-            mon.CurrentPauseDuration = MathF.Round((float)(mon.PauseDurationMin + RandomHut.rng.NextDouble() * (mon.PauseDurationMax - mon.PauseDurationMin)),2);
+            mon.OOCombatStats.CurrentPauseDuration = MathF.Round((float)(mon.OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() * (mon.OOCombatStats.PauseDurationMax - mon.OOCombatStats.PauseDurationMin)),2);
         
     }
     }

@@ -22,8 +22,6 @@ namespace PlayingAround.Managers.Tiles
         private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
 
-        public static TileCell PlayerCurrentCell;
-
         public static void Initialize( string id)
         {
 
@@ -137,10 +135,6 @@ namespace PlayingAround.Managers.Tiles
             return new Vector2(center.X - MapTile.TileWidth / 2, center.Y - MapTile.TileHeight);
         }
 
-        public static void OnEnterNewCell(TileCell cell)
-        {
-                PlayerCurrentCell = cell;
-        }
         public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null, bool includeMonsterTiles = false)
         {
             List<TileCell> neighbors = new();

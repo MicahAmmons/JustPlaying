@@ -15,7 +15,6 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Dialogue;
 using System.Linq;
-using PlayingAround.Entities.Monster.SummonedMonsters;
 using PlayingAround.Data.SaveData;
 
 
@@ -27,8 +26,6 @@ namespace PlayingAround.Managers.UI
 
         private static Texture2D _fightBackground;
         private static Player _currentPlayer => PlayerManager.CurrentPlayer;
-        private static CombatMonster _playerMonster;
-        private static CombatMonster _standInMonster;
 
         private static string _playerStats;
 
@@ -277,13 +274,12 @@ namespace PlayingAround.Managers.UI
             if (SceneManager.IsState(SceneState.Play))
             {
 
-                _playerStats = $"Health: {_currentPlayer.CurrentCombatStats.Health} / {_currentPlayer.BaseCombatStats.Health}\n";
+                _playerStats = $"Health: {_currentPlayer.CurrentStats.Health} / {_currentPlayer.BaseStats.Health}\n";
             }
             if (SceneManager.IsState(SceneState.Combat))
             {
-                _playerMonster = CombatGuard.CurrentCombat.GetPlayerMonster();
-                _playerStats = $"Health: {_playerMonster.CurrentStats.Health} / {_playerMonster.BaseStats.Health}\n" +
-                               $"Speed: {_playerMonster.CurrentStats.MP} / {_playerMonster.BaseStats.MP}";
+                 _playerStats = $"Health: {_currentPlayer.CurrentStats.Health} / {_currentPlayer.BaseStats.Health}\n" +
+                               $"Speed: {_currentPlayer.CurrentStats.MP} / {_currentPlayer.BaseStats.MP}";
             }
         }
 
@@ -362,7 +358,7 @@ namespace PlayingAround.Managers.UI
             {
                 case InteractState.PlayMonster:
                     message = "Press F to Fight";
-                    drawPoint = _currentPlayMonster.CurrentPos;
+                    drawPoint = _currentPlayMonster.OOCombatStats.CurrentPos;
                     break;
 
                 case InteractState.NPC:

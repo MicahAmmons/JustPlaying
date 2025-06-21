@@ -215,7 +215,7 @@ namespace PlayingAround.Debug
         private static void DrawDebugOverlay(SpriteBatch spriteBatch)
         {
             Vector2[] feetHitbox = PlayerManager.CurrentPlayer.DiamondHitBox;
-            Vector2 feetCenter = PlayerManager.CurrentPlayer.HitBoxCenter;
+            Vector2 currentPos = PlayerManager.CurrentPlayer.CurrentPos;
             Vector2? clickTarget = PlayerManager.CurrentPlayer.GetDebugClickTarget();
             int mouseX = InputManager.Mouse.X;
             int mouseY = InputManager.Mouse.Y;
@@ -228,7 +228,7 @@ namespace PlayingAround.Debug
             string debugText =
                 $"Mouse Pos: X={mouseX}, Y={mouseY}\n" +
                 $"Feet Hitbox: {hitboxStr}\n" +
-                $"Feet Center: X={feetCenter.X:0}, Y={feetCenter.Y:0}\n" +
+                $"Feet Center: X={currentPos.X:0}, Y={currentPos.Y:0}\n" +
                 $"{currentMouseTile}\n" +
                 $"Outline: {(showDebugOutline ? "ON" : "OFF")}\n";
 

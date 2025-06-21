@@ -1,4 +1,5 @@
 ﻿using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Utils;
 using System;
@@ -13,14 +14,14 @@ namespace PlayingAround.Managers.CombatMan.Aspects
     public static class AspectManager
     {
 
-        public static Dictionary<string, Aspect>  _aspectData;
+        public static Dictionary<string, AspectData>  _aspectData;
 
         public static void LoadAspects()
         {
             _aspectData = JsonLoader.LoadAspectData();
 
         }
-        public static void ResolveAspect(CombatMonster mon, TickedTiming timing)
+        public static void ResolveAspect(ICombatant mon, TickedTiming timing)
         {
             foreach (var asp in mon.Aspects)
             {
@@ -39,11 +40,12 @@ namespace PlayingAround.Managers.CombatMan.Aspects
 
 
 
-        public static void ApplyAspect(CombatMonster target, SingleAttack attack, CombatMonster attacker = null)
+        public static void ApplyAspect(ICombatant target, SingleAttack attack, ICombatant attacker = null)
         {
             string effect = attack.Aspect;
-            Aspect aspectTempl = _aspectData[effect];
-            Aspect asp = new Aspect(aspectTempl)
+            AspectData aspectTempl = _aspectData[effect];
+            var aspectCopy = DeepCopyHelper.DeepCopy(aspectTempl);
+            Aspect asp = new Aspect(effect, aspectCopy)
             {
                 Damage = aspectTempl.Damage,
             };

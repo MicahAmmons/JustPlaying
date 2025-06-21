@@ -6,64 +6,93 @@ using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
-using PlayingAround.Managers.Proximity;
-using PlayingAround.Managers.Resistances;
-using PlayingAround.Managers.Tiles;
-using PlayingAround.Utils;
+using PlayingAround.Managers.CombatMan.Aspects;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+
 
 namespace PlayingAround.Entities.Player
 {
-    public class Player
+    public class Player : ICombatant, IOutOfCombatAnimated, ICollidable
     {
-        public BaseCombatStats BaseCombatStats { get; set; }
-        public CurrentCombatStats CurrentCombatStats { get; set; } 
+        public BaseCombatStats BaseStats { get; set; }
+        public CurrentCombatStats CurrentStats { get; set; } 
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Dictionary<AnimationState, Animation> Animation {  get; set; } = new Dictionary<AnimationState, Animation>();
         public Direction FacingDirection { get; set; } = Direction.Right;
-        public Texture2D PlayerSpriteSheet { get; set; }
+        public Texture2D SpriteSheet { get; set; }
         public AnimationState CurrentAnimationState { get; set; } = AnimationState.IdleRight;
         public DrawSpecificStats DrawSpecifics {  get; set; }
-        public Vector2 CurrentPos;
-        public Texture2D Icon;
+        public Texture2D Icon {  get; set; }
+        public Vector2? MoveTarget { get; set; }
+        public List<Aspect> Aspects { get; set; } = new List<Aspect>();
+        public List<SingleAttack> Attacks { get; set; } = new List<SingleAttack>();
+        public bool isDead { get; set; } = false;
+        public List<TileCell> MoveableCells { get; set; } = new List<TileCell>();
 
-        public Vector2? MoveTarget = null;
         public List<Vector2> MovementPath = new();
-        public bool AllowedToMove = true;
-        private TileCell PlayerCurrentTileCell;
-        public Vector2[] DiamondHitBox ;
-        public Vector2 HitBoxCenter;
-        public Rectangle RectHitBox;
-        private Vector2? debugClickTarget;
+        public bool AllowedToMove { get; set; } = true; 
+        public Vector2[] DiamondHitBox {  get; set; }
+        public Rectangle RectHitBox { get; set; }
+        private Vector2? debugClickTarget {  get; set; }
+        public CombatMonsterType Is { get; set; } = CombatMonsterType.Player;
+        public string UniqueId { get; set; } = "Player";
+        public Vector2 HitBoxCenter {  get; set; }
+        public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
+        public Vector2 CurrentPos
+        {
+            get
+            {
+                return SceneManager.CurrentState switch
+                {
+                    SceneState.Combat => CurrentStats.Pos,
+                    _ => OOCombatStats.CurrentPos
+                };
+            }
+            set
+            {
+                if (SceneManager.CurrentState == SceneState.Combat)
+                    CurrentStats.Pos = value;
+                else
+                    OOCombatStats.CurrentPos = value;
+            }
+        }
+
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var player = new Player()
             {
-                CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
+                
                 DrawSpecifics = new DrawSpecificStats()
                 {
                     MovementQuickness = (int)data.MovementQuickness,
                     Width = data.Width,
                     Height = data.Height,
+                    AllowedToMove = true
                 },
-                BaseCombatStats = new BaseCombatStats()
+                OOCombatStats = new OutOfCombatAnimatedStats()
+                {
+                    CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
+                },
+                BaseStats = new BaseCombatStats()
                 {
                     MP = 4,
                     AP = 3,
                     Health = 10,
                     Initiative = 3
                 },
-                CurrentCombatStats = new CurrentCombatStats()
+                CurrentStats = new CurrentCombatStats()
                 {
+                    MP = 4,
+                    AP = 3,
                     Health = data.CurrentCombatStats.Health,
                 },
-                PlayerSpriteSheet = AssetManager.GetTexture("PlayerSS"),
+                SpriteSheet = AssetManager.GetTexture("PlayerSS"),
                 Icon = AssetManager.GetTexture("Hero_Blonde"),
             };
             foreach (var kvp in data.Animations)
@@ -72,7 +101,7 @@ namespace PlayingAround.Entities.Player
                 int row = kvp.Value[0];
                 int frames = kvp.Value[1];
                 int duration = kvp.Value[2];
-                player.Animation[state] = new Animation(player.PlayerSpriteSheet, row, frames, duration);
+                player.Animation[state] = new Animation(player.SpriteSheet, row, frames, duration);
             }
             return player;
 
@@ -80,13 +109,13 @@ namespace PlayingAround.Entities.Player
 
         public Player()
         {
+
         }
 
 
         public void Update(GameTime gameTime)
         {
             GetHitbox();
-            CheckCurrentPlayerCell();
             PopulateMovementPath();
             UpdateAnimation(gameTime);
         }
@@ -121,16 +150,6 @@ namespace PlayingAround.Entities.Player
          
         }
 
-        private void CheckCurrentPlayerCell()
-        {
-            Vector2 feet = CurrentPos;
-            var currentCell = TileManager.GetCell(feet);
-            if (currentCell != PlayerCurrentTileCell)
-            {
-                PlayerCurrentTileCell = currentCell;
-                TileManager.OnEnterNewCell(currentCell);
-            }
-        }
 
         public void GetHitbox()
         {
@@ -188,6 +207,50 @@ namespace PlayingAround.Entities.Player
             CurrentPos = new Vector2(newX, newY);
         }
 
+        public void SetFacingDirection(Vector2 vec)
+        {
+            FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
+        }
 
+        public void SetCurrentAnimationState()
+        {
+            CurrentAnimationState = FacingDirection == Direction.Right
+              ? AnimationState.WalkRight
+              : AnimationState.WalkLeft;
+        }
+        public void SetCurrentAnimationStateToIdle()
+        {
+            CurrentAnimationState = FacingDirection == Direction.Right
+             ? AnimationState.IdleRight
+             : AnimationState.IdleLeft;
+        }
+
+        public void UpdateMovement(GameTime gameTime)
+        {
+
+            Vector2 nextPoint = MovementPath[0];
+            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Vector2 direction = nextPoint - CurrentPos;
+            float distance = direction.Length();
+
+            if (distance <= speed)
+            {
+                CurrentPos = nextPoint;
+                MovementPath.RemoveAt(0);
+                if (MovementPath.Count <= 0)
+                {
+                    SetCurrentAnimationStateToIdle();
+                }
+            }
+            else
+            {
+                direction.Normalize();
+                CurrentPos += direction * speed;
+                SetFacingDirection(direction);
+                SetCurrentAnimationState();
+            }
+        }
     }
-}
+    }
+

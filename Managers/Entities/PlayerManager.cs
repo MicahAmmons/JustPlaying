@@ -10,6 +10,7 @@ using PlayingAround.Manager;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Utils;
+using System;
 
 namespace PlayingAround.Managers.Entities
 {
@@ -59,10 +60,6 @@ namespace PlayingAround.Managers.Entities
             }
 
         }
-        public static void UpdatePlayerStatsFromCombat(CombatMonster playerMonster)
-        {
-            _currentPlayer.CurrentCombatStats.Health = playerMonster.CurrentStats.Health;
-        }
         public static void MovePlayerInput(GameTime gameTime)
         {
             if (!_currentPlayer.AllowedToMove)  return;
@@ -100,7 +97,7 @@ namespace PlayingAround.Managers.Entities
         private static void DrawPlayer(SpriteBatch spriteBatch)
         {
             Player player = CurrentPlayer;
-            Texture2D texture = player.PlayerSpriteSheet;
+            Texture2D texture = player.SpriteSheet;
             Vector2 currentPos = player.CurrentPos;
             Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(currentPos, player.DrawSpecifics.Width, player.DrawSpecifics.Height);
 
@@ -127,6 +124,13 @@ namespace PlayingAround.Managers.Entities
             return data;
         }
 
-
+        public static void UpdateAllMovement(GameTime gameTime)
+        {
+            if (!_currentPlayer.AllowedToMove || _currentPlayer == null || _currentPlayer.MovementPath.Count <= 0 || _currentPlayer.MovementPath == null)
+                return;
+            {
+                _currentPlayer.UpdateMovement(gameTime);
+            }
+        }
     }
 }

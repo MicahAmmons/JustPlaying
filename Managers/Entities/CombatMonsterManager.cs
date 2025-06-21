@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
-using PlayingAround.Managers.CombatMan.CombatAttacks;
-using PlayingAround.Managers.Resistances;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Utils;
 
 namespace PlayingAround.Managers.Entities
@@ -17,9 +12,7 @@ namespace PlayingAround.Managers.Entities
     public static class CombatMonsterManager
     {
         private static Dictionary<string, CombatMonsterData> _combatMonsterBaseData;
-        private static float _difficultyIncreasePerLevel = 0.2f;
-        private static float _hPIncreasePerLevel = 1f;
-        private static float _elementalAffinityIncreasePerLevel = 1f;
+        private static Queue<ICombatant> _currentCombatMonsteres => CombatGuard.CurrentCombat.TurnOrder;
 
         public static void LoadContent()
         {
@@ -42,7 +35,7 @@ namespace PlayingAround.Managers.Entities
             var dataCopy = DeepCopyHelper.DeepCopy(_combatMonsterBaseData[name]);
             CombatMonster newSummonedMon = new CombatMonster(dataCopy)
             {
-                MonsterIs = CombatMonsterType.Summoned
+                Is = CombatMonsterType.Summoned
             };
             return newSummonedMon;
         }
@@ -50,6 +43,25 @@ namespace PlayingAround.Managers.Entities
         public static Vector2 GetMonsterWidthAndHeight(string name)
         {
             return new Vector2(_combatMonsterBaseData[name].DrawSpecifics.Width, _combatMonsterBaseData[name].DrawSpecifics.Height);
+        }
+        public static void Update(GameTime gameTime)
+        {
+            foreach (var mon in _currentCombatMonsteres)
+            {
+                if (mon.Is == CombatMonsterType.AI)
+                {
+                    mon.UpdateAnimation(gameTime);
+                }
+            }
+        }
+
+        public static void UpdateAllMovement(GameTime gameTime)
+        {
+            foreach (var mon in _currentCombatMonsteres)
+            {
+                if (mon.Is ==CombatMonsterType.Player || mon.CurrentStats.MovePath == null || mon.CurrentStats.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
+                mon.UpdateMovement(gameTime);
+            }
         }
     }
 }

@@ -87,10 +87,15 @@ namespace PlayingAround.Utils
         }
 
         private static readonly string AspectDataPath = GetDataPath("Aspects", "AspectData.json");
-        public static Dictionary<string, Aspect> LoadAspectData()
+        public static Dictionary<string, AspectData> LoadAspectData()
         {
             string json = File.ReadAllText(AspectDataPath);
-            return JsonSerializer.Deserialize<Dictionary<string, Aspect>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, AspectData>>(json, options);
         }
 
         private static readonly string NPCDataPath = GetDataPath("NPCs", "NPCData.json");

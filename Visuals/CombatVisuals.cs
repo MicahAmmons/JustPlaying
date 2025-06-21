@@ -4,7 +4,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
-using PlayingAround.Managers.CombatMan.CombatBehavior;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
 using System;
 
@@ -46,7 +46,7 @@ namespace PlayingAround.Visuals
             Vector2 vecEnd = TileManager.OffSetFromCenterOfDiamond(centerCell.CenterPoint);
             EndingPosition = new Vector2(vecEnd.X + MapTile.TileWidth / 4, vecEnd.Y + MapTile.TileHeight/4);
                 MovementSpeed = att.VisualVelocity;
-                Texture = AssetManager.GetTexture($"{att.Name.ToString().Replace(" ", "")}Icon");
+                Texture = AssetManager.GetTexture($"{att.Name.ToString()}");
 
                 Color = color == default ? Color.White : color;
                 Vector2 direction = EndingPosition - Position;

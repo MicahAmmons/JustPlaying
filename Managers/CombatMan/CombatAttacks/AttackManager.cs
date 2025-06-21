@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.Movement.CombatGrid;
@@ -38,11 +39,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             return new SingleAttack(name, dataCopy, element);
 
         }
-        public static void PerformAttack(
-           SingleAttack attack,
-           CombatMonster attacker,
-           List<CombatMonster> target,
-           List<TileCell> affectedCells)
+        public static void PerformAttack(SingleAttack attack, ICombatant attacker, List<ICombatant> target, List<TileCell> affectedCells)
 
         {
             if (attack == null) return;
@@ -59,7 +56,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
             }
         }
-        public static void ApplyAspect(SingleAttack attack, CombatMonster target)
+        public static void ApplyAspect(SingleAttack attack, ICombatant target)
         {
             switch (attack.WhenApplyAspect)
             {
@@ -68,10 +65,10 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                     break;
             }
         }
-        public static void ApplyDamageVisualEffect(CombatMonster tar, float damage)
+        public static void ApplyDamageVisualEffect(ICombatant tar, float damage)
         {
             var effect = new VisualEffect(
-                 tar.currentPos + new Vector2(0, -10),  // startPos
+                 tar.CurrentStats.Pos + new Vector2(0, -10),  // startPos
                  new Vector2(0, -20),                   // velocity
                  0.5f,
                  Color.Red,// duration
@@ -83,13 +80,13 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             tar.DrawSpecifics.IsFlashingRed = true;
             tar.DrawSpecifics.DamageFlashTimer = 0.35f; // 0.35 seconds of red flash
         }
-        public static void ApplyDamage(float damage, CombatMonster tar)
+        public static void ApplyDamage(float damage, ICombatant tar)
         {
             tar.CurrentStats.Health -= (int)damage;
             ApplyDamageVisualEffect(tar, damage );
           
         }
-        public static float CalculateDamage(SingleAttack attack, CombatMonster target)
+        public static float CalculateDamage(SingleAttack attack, ICombatant target)
         {
             float minDam = attack.MinDamage;
             float maxDam = attack.MaxDamage;
@@ -97,11 +94,14 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             float finalDamage = 0;
             if (damageType != ElementType.Normal)
             {
-                Dictionary<ElementType, float> resistances = target.Resistances;
+                Dictionary<ElementType, float> resistances = target.CurrentStats.Resistances;
 
                 float baseDamage = RandomHut.rng.Next((int)minDam, (int)maxDam + 1);
-
-                float resMult = resistances[damageType];
+                float resMult = 1;
+                if (resistances.ContainsKey(damageType))
+                {
+                    resMult = resistances[damageType];
+                }
                 if (resMult == 0) resMult = 1;
 
                 finalDamage = baseDamage * resMult;
@@ -114,19 +114,19 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         }
 
 
-        public static (CombatMonster, List<TileCell>) TargetClosestEnemy(List<TileCell> inRangeCells, TileCell origin)
+        public static (ICombatant, List<TileCell>) TargetClosestEnemy(List<TileCell> inRangeCells, TileCell origin)
         {
-            CombatMonster closestMon = null;
+            ICombatant closestMon = null;
             TileCell closestCell = null;
             int shortestDistance = int.MaxValue;
-            (CombatMonster, List<TileCell>) result = new();
-            Dictionary<CombatMonster, TileCell> playerMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
-            Dictionary<CombatMonster, TileCell> aiMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
+            (ICombatant, List<TileCell>) result = new();
+            Dictionary<ICombatant, TileCell> playerMonsters = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+            Dictionary<ICombatant, TileCell> aiMonsters = CombatGuard.CurrentCombat.AIControlledMonsterMap;
 
 
             foreach (var kvp in playerMonsters)
             {
-                CombatMonster mon = kvp.Key;
+                ICombatant mon = kvp.Key;
                 TileCell cell = kvp.Value;
 
                 if (inRangeCells.Contains(cell))
@@ -216,13 +216,13 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         //    }
 
         // IF THE MOSNTER HAS MULTIPLE ATTACKS WITHIN RANGE TO USE, THIS METHOD DECIDES WHICH ONE
-        public static (SingleAttack, Dictionary<CombatMonster, List<TileCell>>) ChooseWhichAttack(
-      Dictionary<SingleAttack, Dictionary<CombatMonster, List<TileCell>>> attacks,
+        public static (SingleAttack, Dictionary<ICombatant, List<TileCell>>) ChooseWhichAttack(
+      Dictionary<SingleAttack, Dictionary<ICombatant, List<TileCell>>> attacks,
       TileCell origin,
       Queue<ChooseWhichMonsterAttack> key)
         {
             if (attacks == null || attacks.Count == 0)
-                return (null, new Dictionary<CombatMonster, List<TileCell>>());
+                return (null, new Dictionary<ICombatant, List<TileCell>>());
 
             if (attacks.Count == 1)
                 return (attacks.First().Key, attacks.First().Value);
@@ -263,7 +263,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }
 
             // If no strategy matched
-            return (null, new Dictionary<CombatMonster, List<TileCell>>());
+            return (null, new Dictionary<ICombatant, List<TileCell>>());
         }
 
        
