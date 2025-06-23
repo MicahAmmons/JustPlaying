@@ -118,10 +118,6 @@ namespace PlayingAround
                     break;
                 case (SceneState.Play):
                     UIManager.Update(gameTime);
-                    PlayerManager.Update(gameTime);
-                    PlayMonsterManager.Update(gameTime);
-                   // TileCellManager.Update(gameTime);
-                    TileManager.Update(gameTime);
                     MapTileTransitionManager.Update(gameTime);
                     ProximityManager.Update(gameTime);
                     DebugBugger.Update(gameTime);
@@ -130,8 +126,8 @@ namespace PlayingAround
                 case (SceneState.Combat):
                     CombatGuard.Update(gameTime);
                     DebugBugger.Update(gameTime);
-                    PlayerManager.Update(gameTime);
-                    CombatMonsterManager.Update(gameTime);
+                    
+
                     break;
                 case (SceneState.Dialogue):
                     DialogueManager.Update();
@@ -139,8 +135,10 @@ namespace PlayingAround
                     case (SceneState.MapTileTransition):
                     MapTileTransitionManager.Update(gameTime);
                     break;
-                
             }
+            CombatMonsterManager.Update(gameTime);
+            PlayerManager.Update(gameTime);
+            PlayMonsterManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -153,48 +151,25 @@ namespace PlayingAround
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-
-            switch (SceneManager.CurrentState)
+            if (SceneManager.CurrentState == SceneState.TitleScreen)
             {
-                case (SceneState.TitleScreen):
-                    TitleScreenManager.Draw(_spriteBatch);
-                    break;
-                case (SceneState.Play):
-                    TileManager.Draw(_spriteBatch);
-                   // TileCellManager.Draw(_spriteBatch);
-                    MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
-                    DebugBugger.Draw(_spriteBatch);
-                    PlayMonsterManager.Draw(_spriteBatch);
-                    PlayerManager.Draw(_spriteBatch);
-                    UIManager.Draw(_spriteBatch, GraphicsDevice);
-                    break;
-                case (SceneState.LoadingScreen):
-                    LoadingScreenManager.Draw(_spriteBatch);
-                    break;
-
-                    case (SceneState.Combat):
-                    CombatGuard.Draw(_spriteBatch, GraphicsDevice);
-                    UIManager.Draw(_spriteBatch, GraphicsDevice);
-                    DebugBugger.Draw(_spriteBatch);
-                    PlayerManager.Draw(_spriteBatch );
-
-                    break;
-                case SceneState.Cinematic:
-                    CinematicRuler.Draw(_spriteBatch);
-                    break;
-                    case SceneState.Dialogue:
-                    TileManager.Draw(_spriteBatch);
-                  //  TileCellManager.Draw(_spriteBatch);
-                    DebugBugger.Draw(_spriteBatch);
-                    PlayMonsterManager.Draw(_spriteBatch);
-                    PlayerManager.Draw(_spriteBatch);
-                    UIManager.Draw(_spriteBatch, GraphicsDevice);
-                    DialogueManager.Draw(_spriteBatch);
-                    
-                    break;
+                TitleScreenManager.Draw(_spriteBatch);
+                _spriteBatch.End();
+                return;
             }
+            TileManager.Draw(_spriteBatch);
+            LoadingScreenManager.Draw(_spriteBatch);
+            NPCManager.Draw(_spriteBatch);
+            CombatGuard.Draw(_spriteBatch, GraphicsDevice);
+            PlayMonsterManager.Draw(_spriteBatch);
+            CombatMonsterManager.Draw(_spriteBatch);
+            PlayerManager.Draw(_spriteBatch);
+            UIManager.Draw(_spriteBatch, GraphicsDevice);
+            DebugBugger.Draw(_spriteBatch);
             EscapeOverseer.Draw(_spriteBatch);
-            
+            MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+            CinematicRuler.Draw(_spriteBatch);
+
             _spriteBatch.End();
             base.Draw(gameTime);
 

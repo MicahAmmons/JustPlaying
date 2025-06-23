@@ -10,6 +10,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Proximity;
@@ -137,6 +138,14 @@ namespace PlayingAround.Managers.Tiles
 
         public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null, bool includeMonsterTiles = false)
         {
+            List<TileCell> combatantCells = new List<TileCell>();
+            if (SceneManager.CurrentState == SceneState.Combat)
+            {
+                foreach (var comCell in CombatGuard.CurrentCombat.AIControlledMonsterMap.Values)
+                {
+                    combatantCells.Add(comCell);
+                }
+            }
             List<TileCell> neighbors = new();
 
             Point[] directions = new Point[]
@@ -162,8 +171,8 @@ namespace PlayingAround.Managers.Tiles
 
                 bool isGoal = goal != null && neighbor == goal;
 
-                if (neighbor != null && neighbor.IsWalkable &&
-                    (!neighbor.BlockedByMonster || includeMonsterTiles || isGoal))
+                if (neighbor != null && neighbor.IsWalkable && !combatantCells.Contains(neighbor)  &&
+                    (!neighbor.BlockedByMonster || includeMonsterTiles || isGoal ))
                 {
                     neighbors.Add(neighbor);
                 }
@@ -261,12 +270,11 @@ namespace PlayingAround.Managers.Tiles
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
-
-            NPCManager.Draw(spriteBatch);
-        }
-        public static void Update(GameTime gameTime)
-        {
+            if (SceneManager.CurrentState == SceneState.Combat || SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
+            {
+                spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
+            }
+            
         }
 
 

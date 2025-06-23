@@ -107,52 +107,21 @@ namespace PlayingAround.Managers.Entities
 
         public static void Update(GameTime gameTime)
         {
-          //  HandleUserInput();
-
-            MovePlayMonsters(gameTime);
-        }
-        private static void HandleUserInput()
-        {
-            HandleMonsterSelection();
-        }
-        public static void MovePlayMonsters(GameTime gameTime)
-        {
-            if (_currentPlayMonsters.Count > 0)
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
             {
-                NPCMovement.GetPlayMonsterMovementPath(_currentPlayMonsters, gameTime);
-            }
+                foreach (var mon in _currentPlayMonsters)
+                {
+                    mon.Update(gameTime);
+                }
+            }    
         }
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            DrawPlayMonsters(spriteBatch);
-
-        }
-        public static void DrawPlayMonsters(SpriteBatch spriteBatch)
-        {
-            if (_currentPlayMonsters == null || _currentPlayMonsters.Count == 0) return;
             foreach (var mon in _currentPlayMonsters)
             {
-                {
-                    int width = mon.DrawSpecifics.Width;
-                    int height = mon.DrawSpecifics.Height;
-                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.OOCombatStats.CurrentPos, width, height);
-                    Rectangle dest = new Rectangle(
-                        (int)pos.X,
-                        (int)pos.Y,
-                        width,
-                        height
-                    );
-
-                    // Draw icon
-                    spriteBatch.Draw(mon.Icon, dest, Color.White);
-                }
-
+                mon?.Draw(spriteBatch);
             }
-
-
-
-
         }
 
         public static void RemovePlayerMonster(PlayMonsters playMonsters)
@@ -166,7 +135,7 @@ namespace PlayingAround.Managers.Entities
             {
                 if (mon.MovePath == null || mon.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
                 {
-                    mon.UpdateAnimation(gameTime);
+                    mon.UpdateMovement(gameTime);
                 }
             }
         }

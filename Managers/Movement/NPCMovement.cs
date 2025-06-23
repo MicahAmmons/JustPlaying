@@ -18,26 +18,13 @@ namespace PlayingAround.Managers.Movement
     {
         public const float ArcHeight = 50f;
 
-        public static void GetPlayMonsterMovementPath(List<PlayMonsters> playMons, GameTime gameTime)
-        {
-            foreach (var mon in playMons)
-            {
-                if (mon.DrawSpecifics.MovementPattern == MovementPatternType.Arc)
-                {
-                    if (HandlePause(mon, gameTime))
-                        continue;
-                }
-                else if (HandlePause(mon, gameTime))
-                    continue;
-            }
-        }
 
-        public static List<Vector2> MoveMonsters(ICombatant mon, TileCell startingTile, TileCell endTile)
+        public static List<Vector2> GetMovementPatternVector2List(MovementPatternType pattern, TileCell startingTile, TileCell endTile)
         {
             Vector2 start = startingTile.CenterPoint;
             Vector2 destination = endTile.CenterPoint;
 
-            return mon.DrawSpecifics.MovementPattern switch
+            return pattern switch
             {
                 MovementPatternType.Arc  => ArcMovement(destination, start),
                 MovementPatternType.Straight => StraightMovement(destination, start),
@@ -61,7 +48,6 @@ namespace PlayingAround.Managers.Movement
 
             return path;
         }
-
         public static List<Vector2> ArcMovement(Vector2 endPoint, Vector2 start)
         {
             Vector2 end = endPoint;
@@ -85,51 +71,10 @@ namespace PlayingAround.Managers.Movement
 
             return path;
         }
-
-
-
-
-        public static Vector2 FindEndPoint(Vector2 spawnPoint)
-        {
-            
-            var tiles = TileManager.GetWalkableNeighbors(TileManager.GetCell(spawnPoint));
-            if (tiles.Count > 0) return tiles[RandomHut.rng.Next(0, tiles.Count - 1)].CenterPoint;
-            else return spawnPoint;
-        }
-
      
-        public static bool HandlePause(PlayMonsters mon, GameTime gameTime)
-        {
-            if (mon.OOCombatStats.IsPaused)
-            {
-                mon.OOCombatStats.PauseTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (mon.OOCombatStats.PauseTimer <= 0)
-                {
-                    mon.OOCombatStats.IsPaused = false;
-                    SetCurrentPauseDuration(mon);
-                    Vector2 end = FindEndPoint(mon.OOCombatStats.CurrentPos);
-                    mon.MovePath = Movement.NPCMovement.ArcMovement(end, mon.OOCombatStats.CurrentPos);
-                }
+      
 
-                return true; // Still paused this frame
-            }
-
-            // If movement path is empty, trigger a pause
-            if (mon.MovePath == null || mon.MovePath.Count == 0)
-            {
-                mon.OOCombatStats.IsPaused = true;
-                mon.OOCombatStats.PauseTimer = mon.OOCombatStats.CurrentPauseDuration;
-                return true; // Pausing now
-            }
-
-            return false; // Not paused, movement can continue
-        }
-
-        private static void SetCurrentPauseDuration(PlayMonsters mon)
-        {
-            mon.OOCombatStats.CurrentPauseDuration = MathF.Round((float)(mon.OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() * (mon.OOCombatStats.PauseDurationMax - mon.OOCombatStats.PauseDurationMin)),2);
-        
-    }
+       
     }
 }
 public enum MovementPatternType

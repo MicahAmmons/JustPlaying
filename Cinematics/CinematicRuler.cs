@@ -40,6 +40,7 @@ public static class CinematicRuler
 
     public static void Draw(SpriteBatch spriteBatch)
     {
+        if (SceneManager.CurrentState != SceneState.Cinematic) return;
         _current?.Draw(spriteBatch);
     }
 }

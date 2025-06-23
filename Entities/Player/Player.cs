@@ -11,6 +11,8 @@ using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Movement;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 
@@ -34,8 +36,6 @@ namespace PlayingAround.Entities.Player
         public bool isDead { get; set; } = false;
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell>();
 
-        public List<Vector2> MovementPath = new();
-        public bool AllowedToMove { get; set; } = true; 
         public Vector2[] DiamondHitBox {  get; set; }
         public Rectangle RectHitBox { get; set; }
         private Vector2? debugClickTarget {  get; set; }
@@ -61,8 +61,6 @@ namespace PlayingAround.Entities.Player
                     OOCombatStats.CurrentPos = value;
             }
         }
-
-
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var player = new Player()
@@ -73,7 +71,8 @@ namespace PlayingAround.Entities.Player
                     MovementQuickness = (int)data.MovementQuickness,
                     Width = data.Width,
                     Height = data.Height,
-                    AllowedToMove = true
+                    AllowedToMove = true,
+                    MovementPattern = MovementPatternType.Straight
                 },
                 OOCombatStats = new OutOfCombatAnimatedStats()
                 {
@@ -106,51 +105,77 @@ namespace PlayingAround.Entities.Player
             return player;
 
         }
-
         public Player()
         {
 
         }
-
-
         public void Update(GameTime gameTime)
         {
             GetHitbox();
-            PopulateMovementPath();
+            PopulateMovementPath(gameTime);
             UpdateAnimation(gameTime);
+            AnimationController.Update(gameTime);
         }
         public void UpdateAnimation(GameTime gameTime)
         {
             AnimationController.Play( CurrentAnimationState,Animation[CurrentAnimationState]);
         }
-        public void PopulateMovementPath()
+        public void UpdateMovement(GameTime gameTime)
+        {
+
+            Vector2 nextPoint = CurrentStats.MovePath[0];
+            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Vector2 direction = nextPoint - CurrentPos;
+            float distance = direction.Length();
+
+            if (distance <= speed)
+            {
+                CurrentPos = nextPoint;
+                CurrentStats.MovePath.RemoveAt(0);
+                if (CurrentStats.MovePath.Count <= 0)
+                {
+                    SetCurrentAnimationStateToIdle();
+                }
+            }
+            else
+            {
+                direction.Normalize();
+                CurrentPos += direction * speed;
+                SetFacingDirection(direction);
+                SetCurrentAnimationState();
+            }
+        }
+        public void PopulateMovementPath(GameTime gameTime)
         {
             if (MoveTarget != null) 
             {
+                List<Vector2> fullVectorPath = new List<Vector2>();
                 Vector2 move = (Vector2)MoveTarget;
+                TileCell startingCell = TileManager.GetCell(CurrentPos);
+                List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
+                foreach (var endPos in cellPath)
+                {
+                    if (endPos == TileManager.GetCell(CurrentPos)) continue;
+                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell , endPos);
+                    fullVectorPath.AddRange(vectorRange);
+                    startingCell = endPos;
 
+                }
                 MoveTarget = null;
-                MovementPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
-
+                CurrentStats.MovePath = fullVectorPath;
             }
-
         }
-
         public void ClearMovementPath()
         {
-            MovementPath.Clear();
+            CurrentStats.MovePath.Clear();
+            SetCurrentAnimationStateToIdle();
         }
-
-       
-
-
         public void UpdatePlayerEndPoint(Vector2 vec)
         {
             MoveTarget = vec;
          
         }
-
-
         public void GetHitbox()
         {
             Rectangle rect = GetRectangleHitBox();
@@ -161,7 +186,6 @@ namespace PlayingAround.Entities.Player
 
             DiamondHitBox = new Vector2[] { top, right, bottom, left };
         }
-
         public Rectangle GetRectangleHitBox()
         {
             int hitboxWidth = DrawSpecifics.Width;
@@ -176,7 +200,6 @@ namespace PlayingAround.Entities.Player
             RectHitBox = hit;
             return hit;
         }
-
         public PlayerSaveData Save(PlayerSaveData data)
         {
             data.MovementQuickness = this.DrawSpecifics.MovementQuickness;
@@ -184,9 +207,7 @@ namespace PlayingAround.Entities.Player
             data.CurrentPosY = CurrentPos.Y;
             return data;
         }
-
         public Vector2? GetDebugClickTarget() => debugClickTarget;
-
         public void NewMapTilePosition(Vector2 dir)
         {
             ClearMovementPath();
@@ -206,12 +227,10 @@ namespace PlayingAround.Entities.Player
 
             CurrentPos = new Vector2(newX, newY);
         }
-
         public void SetFacingDirection(Vector2 vec)
         {
             FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
         }
-
         public void SetCurrentAnimationState()
         {
             CurrentAnimationState = FacingDirection == Direction.Right
@@ -224,33 +243,39 @@ namespace PlayingAround.Entities.Player
              ? AnimationState.IdleRight
              : AnimationState.IdleLeft;
         }
-
-        public void UpdateMovement(GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
-
-            Vector2 nextPoint = MovementPath[0];
-            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            Vector2 direction = nextPoint - CurrentPos;
-            float distance = direction.Length();
-
-            if (distance <= speed)
-            {
-                CurrentPos = nextPoint;
-                MovementPath.RemoveAt(0);
-                if (MovementPath.Count <= 0)
-                {
-                    SetCurrentAnimationStateToIdle();
-                }
-            }
-            else
-            {
-                direction.Normalize();
-                CurrentPos += direction * speed;
-                SetFacingDirection(direction);
-                SetCurrentAnimationState();
-            }
+            if (!DrawSpecifics.AllowedToBeDrawn) return;
+            DrawTexture(spriteBatch);
+         
         }
+        public void DrawTexture(SpriteBatch spriteBatch)
+        {
+            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(CurrentPos, DrawSpecifics.Width, DrawSpecifics.Height);
+            Rectangle destination = new Rectangle
+             (
+                                  (int)drawOffset.X,
+                                  (int)drawOffset.Y - (DrawSpecifics.Width / 2),
+                                       DrawSpecifics.Width,
+                                       DrawSpecifics.Height
+            );
+            Rectangle source = AnimationController.GetCurrentFrame();
+            spriteBatch.Draw(SpriteSheet, destination, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+          
+        }
+
+        public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
+        {
+            Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
+            Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
+            spriteBatch.Draw(SpriteSheet, rect, AnimationController.GetCurrentFrame(),  Color.White);
+        }
+
+        internal void ToggleDrawn()
+        {
+            DrawSpecifics.AllowedToBeDrawn = !DrawSpecifics.AllowedToBeDrawn;
+        }
+
     }
     }
 

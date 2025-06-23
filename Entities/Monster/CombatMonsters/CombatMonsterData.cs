@@ -41,6 +41,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float PauseDurationMax { get; set; } = 0f;
         public float PauseDurationMin { get; set; } = 0f;
         public float CurrentPauseDuration { get; set; } = 0f;
+        public float MovementQuickness { get; set; } = 0f;
     }
     public class DrawSpecificStats
     {
@@ -51,6 +52,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool IsFlashingRed = false;
         public float DamageFlashTimer = 0f;
         public bool AllowedToMove = false;
+        public bool AllowedToBeDrawn = true;
     }
     public class CurrentCombatStats
     {

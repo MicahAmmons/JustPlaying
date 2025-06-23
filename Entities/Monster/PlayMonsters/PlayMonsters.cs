@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
@@ -8,6 +9,8 @@ using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Movement;
+using PlayingAround.Managers.Tiles;
 
 namespace PlayingAround.Entities.Monster.PlayMonsters
 {
@@ -24,10 +27,9 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public Direction FacingDirection {  get; set; }
         public AnimationState CurrentAnimationState {  get; set; }
         public DrawSpecificStats DrawSpecifics {  get; set; }
-
         public string UniqueId {  get; set; }
-
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
+        public Vector2? MoveTarget { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public PlayMonsters(PlayMonsterData data, CombatMonster mon)
         {
@@ -41,23 +43,26 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 CurrentPauseDuration = 0f, // Will move immedaitely if at 0
                 PauseDurationMax = data.PauseDurationMax,
                 PauseDurationMin = data.PauseDurationMin,
+                MovementQuickness = data.MovementQuickness,
             };
             DrawSpecifics = new DrawSpecificStats()
             {
                 Width = mon.DrawSpecifics.Width,
                 Height = mon.DrawSpecifics.Height,
-                MovementQuickness = mon.DrawSpecifics.MovementQuickness,
-                MovementPattern = mon.DrawSpecifics.MovementPattern,
+                MovementPattern = data.MovementPattern,
                 IsFlashingRed = false,
                 DamageFlashTimer = 0f,
                 AllowedToMove = true
             };
-            SpriteSheet = mon.SpriteSheet;
+            //SpriteSheet = mon.SpriteSheet;\
+            SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Animation = mon.Animation;
             AnimationController = new AnimationController();
-            CurrentAnimationState = AnimationState.Idle;
+            CurrentAnimationState = AnimationState.WalkRight;
             FacingDirection = Direction.Right;
         }
+
+
         public void SetFacingDirection(Vector2 vec)
         {
             FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
@@ -68,8 +73,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             {
                 case MovementPatternType.Arc:
                     CurrentAnimationState = FacingDirection == Direction.Right
-                      ? AnimationState.BouncingUp
-                      : AnimationState.BouncingDown;
+                        ? AnimationState.WalkRight
+                        : AnimationState.WalkLeft;
                     break;
             }
         }
@@ -79,17 +84,21 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
              ? AnimationState.IdleRight
              : AnimationState.IdleLeft;
         }
-
+        public void Update(GameTime gameTime)
+        {
+            PopulateMovementPath(gameTime);
+            UpdateAnimation(gameTime);
+            AnimationController.Update(gameTime);
+        }
         public void UpdateAnimation(GameTime gameTime)
         {
             AnimationController.Play(CurrentAnimationState, Animation[CurrentAnimationState]);
         }
-
         public void UpdateMovement(GameTime gameTime)
         {
 
-                Vector2 nextPoint = MovePath[0];
-            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 nextPoint = MovePath[0];
+            float speed = OOCombatStats.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - OOCombatStats.CurrentPos;
             float distance = direction.Length();
@@ -113,6 +122,70 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 SetCurrentAnimationState();
 
             }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
+            DrawTexture(spriteBatch);
+        }
+        public void DrawTexture(SpriteBatch spriteBatch)
+        {
+            var pos = TileManager.OffSetFromCenterOfDiamond(OOCombatStats.CurrentPos, DrawSpecifics.Width, DrawSpecifics.Height);
+            Rectangle dest = new Rectangle(
+                (int)pos.X,
+                (int)pos.Y,
+                DrawSpecifics.Width,
+                DrawSpecifics.Height
+            );
+            Rectangle source = AnimationController.GetCurrentFrame();
+            spriteBatch.Draw(SpriteSheet, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+
+        }
+        public void PopulateMovementPath(GameTime gameTime)
+        {
+            if (MovePath != null && MovePath.Count > 0)
+                return;
+            if (StayPaused(gameTime))
+                return;
+            Vector2 end = FindEndPoint();
+            if (end == Vector2.Zero || end == OOCombatStats.CurrentPos)
+            {
+                // No movement - pause again
+                OOCombatStats.IsPaused = true;
+                SetCurrentPauseDuration();
+                return;
+            }
+            MovePath = NPCMovement.GetMovementPatternVector2List(
+                                                                DrawSpecifics.MovementPattern,
+                                                                TileManager.GetCell(OOCombatStats.CurrentPos),
+                                                                TileManager.GetCell(end)
+            );
+        }
+        private Vector2 FindEndPoint()
+        {
+            var tiles = TileManager.GetWalkableNeighbors(TileManager.GetCell(OOCombatStats.CurrentPos));
+            if (tiles.Count > 0) return tiles[RandomHut.rng.Next(0, tiles.Count - 1)].CenterPoint;
+            return Vector2.Zero;
+        }
+        public bool StayPaused(GameTime gameTime)
+        {
+            if (!OOCombatStats.IsPaused) return false;
+
+            OOCombatStats.PauseTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (OOCombatStats.PauseTimer <= 0)
+            {
+                OOCombatStats.IsPaused = false;
+                SetCurrentPauseDuration(); // Preload duration for next pause
+                return false;
+            }
+
+            return true; // Still paused
+        }
+        private void SetCurrentPauseDuration()
+        {
+            OOCombatStats.CurrentPauseDuration = MathF.Round((float)(OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() * (OOCombatStats.PauseDurationMax - OOCombatStats.PauseDurationMin)), 2);
+
         }
     }
 }

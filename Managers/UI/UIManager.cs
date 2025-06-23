@@ -120,6 +120,7 @@ namespace PlayingAround.Managers.UI
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+            if (SceneManager.CurrentState != SceneState.Dialogue || SceneManager.CurrentState != SceneState.Play)
             if (_summonOverlayOpen)
             {
                 DrawSummonOverlay(spriteBatch);

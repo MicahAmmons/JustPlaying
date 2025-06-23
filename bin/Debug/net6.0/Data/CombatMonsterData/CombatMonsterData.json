@@ -15,11 +15,10 @@
       "MovementPattern": "Arc"
     },
     "AnimationData": {
-      "Idle": [ 1, 1 , 500],
-      "BouncingUp": [ 1, 1, 500 ],
-      "BouncingDown": [ 1, 1, 500 ],
-      "IdleLeft": [ 1, 1, 500 ],
-      "IdleRight": [ 1, 1, 500 ]
+      "IdleRight": [ 1, 1, 5000 ],
+      "WalkRight": [ 3, 4, 200 ],
+      "IdleLeft": [ 1, 1, 1000 ],
+      "WalkLeft": [ 2, 4, 200 ]
     },
     "AttackData":   {
       "Slam": "Normal",

@@ -22,6 +22,7 @@ namespace PlayingAround.Managers.Movement
                     break;
                 case SceneState.Combat:
                     CombatMonsterManager.UpdateAllMovement(gameTime);
+                    PlayerManager.UpdateAllMovement(gameTime);
                     break;
                 case SceneState.Dialogue:
                     PlayMonsterManager.UpdateAllMovement(gameTime);

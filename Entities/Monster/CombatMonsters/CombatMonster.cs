@@ -2,11 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Game.Map;
+using PlayingAround.Game.Pathfinding;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Resistances;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 
@@ -37,8 +40,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public CombatMonsterType Is {  get; set; }
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Direction FacingDirection { get; set; } = Direction.Right;
-        public AnimationState CurrentAnimationState { get; set; } = AnimationState.Idle;
+        public AnimationState CurrentAnimationState { get; set; }
         public List<TileCell> MoveableCells {  get; set; } = new List<TileCell> { };
+        public Vector2? MoveTarget {  get; set; }
+
         public CombatMonster (CombatMonsterData data, ElementType element = ElementType.None)
         {
             ElementType = element == ElementType.None ? data.DefaultElementType : element;
@@ -82,7 +87,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
-            SpriteSheet = Icon;
+            //SpriteSheet = Icon;
+            SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Is = CombatMonsterType.AI;
             foreach (var kvp in data.AnimationData)
             {
@@ -94,12 +100,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
         }
 
-        //combatMonster template to CombatMonster
         public CombatMonster()
         {
 
         }
-
         public void SetFacingDirection(Vector2 vec)
         {
             FacingDirection =vec.X <= 0 ? Direction.Right : Direction.Left;
@@ -110,8 +114,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             {
                 case MovementPatternType.Arc:
                     CurrentAnimationState = FacingDirection == Direction.Right
-                      ? AnimationState.BouncingUp
-                      : AnimationState.BouncingDown;
+                      ? AnimationState.WalkRight
+                      : AnimationState.WalkLeft;
                     break;
             }
         }
@@ -121,12 +125,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
              ? AnimationState.IdleRight
              : AnimationState.IdleLeft;
         }
-
         public void UpdateAnimation(GameTime gameTime)
         {
             AnimationController.Play(CurrentAnimationState, Animation[CurrentAnimationState]);
         }
-
         public void UpdateMovement(GameTime gameTime)
         {
             Vector2 nextPoint = CurrentStats.MovePath[0];
@@ -153,6 +155,52 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 SetCurrentAnimationState();
 
             }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            DrawTexture(spriteBatch);
+        }
+        public void DrawTexture(SpriteBatch spriteBatch)
+        {
+            Vector2 offset = TileManager.OffSetFromCenterOfDiamond(CurrentStats.Pos, DrawSpecifics.Width, DrawSpecifics.Height);
+            Rectangle dest = new Rectangle(
+               (int)offset.X,
+               (int)offset.Y,
+               DrawSpecifics.Width,
+               DrawSpecifics.Height
+           );
+            Rectangle source = AnimationController.GetCurrentFrame();
+            spriteBatch.Draw(Icon, dest, source, DrawSpecifics.IsFlashingRed? Color.Red: Color.White);
+        }
+        public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
+        {
+            Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
+            Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
+            spriteBatch.Draw(SpriteSheet, rect, AnimationController.GetCurrentFrame(), Color.White);
+        }
+        public void PopulateMovementPath(GameTime gameTime)
+        {
+            if (MoveTarget != null)
+            {
+                List<Vector2> fullVectorPath = new List<Vector2>();
+                Vector2 move = (Vector2)MoveTarget;
+                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
+                List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentStats.Pos, move);
+                foreach (var endPos in cellPath)
+                {
+                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
+                    fullVectorPath.AddRange(vectorRange);
+                    startingCell = endPos;
+
+                }
+                MoveTarget = null;
+                CurrentStats.MovePath = fullVectorPath;
+            }
+        }
+        public void Update(GameTime gameTime)
+        {
+            UpdateAnimation(gameTime);
+            PopulateMovementPath(gameTime);
         }
     }
 

@@ -67,7 +67,7 @@ namespace PlayingAround.Debug
 
         public static void Update(GameTime gameTime)
         {
-
+            if (SceneManager.CurrentState != SceneState.Combat || SceneManager.CurrentState != SceneState.Play || SceneManager.CurrentState != SceneState.Dialogue)
             ToggleDebugLines();
             ToggleCellGridLines();
             ToggleDebugText();

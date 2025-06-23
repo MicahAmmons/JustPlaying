@@ -17,6 +17,8 @@ namespace PlayingAround.Interfaces
     }
     public interface IDrawn : IEntity
     {
+        public void Draw (SpriteBatch spriteBatch);
+        public void DrawTexture(SpriteBatch spriteBatch);
         public DrawSpecificStats DrawSpecifics { get; }
     }
     public interface IAnimatable : IDrawn
@@ -26,11 +28,13 @@ namespace PlayingAround.Interfaces
         public Texture2D SpriteSheet { get; }
         public Direction FacingDirection { get; set; }
         public AnimationState CurrentAnimationState { get; set; }
+        public Vector2? MoveTarget { get; set; }
         public void UpdateMovement(GameTime gameTime);
         public void SetFacingDirection(Vector2 vec);
         public void SetCurrentAnimationState();
         public void SetCurrentAnimationStateToIdle();
         public void UpdateAnimation(GameTime gameTime);
+        public void PopulateMovementPath(GameTime gameTime);
     }
     public interface ICombatant : IAnimatable
     {
@@ -41,6 +45,9 @@ namespace PlayingAround.Interfaces
         public bool isDead { get; set; }
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
+
+        void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
+        void Update(GameTime gameTime);
     }
 
 

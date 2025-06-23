@@ -14,7 +14,10 @@ namespace PlayingAround.Managers.LoadingScreen
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetManager.GetTexture("fightBackground"), new Rectangle(1920, 1080, 0, 0), Color.White);
+            if (SceneManager.CurrentState == SceneState.LoadingScreen)
+            {
+                spriteBatch.Draw(AssetManager.GetTexture("fightBackground"), new Rectangle(1920, 1080, 0, 0), Color.White);
+            }
         }
     }
 }

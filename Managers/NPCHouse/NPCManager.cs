@@ -38,7 +38,10 @@ namespace PlayingAround.Managers.NPCHouse
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            DrawCurrentNPCs(spriteBatch);
+            if (SceneManager.CurrentState == SceneState.Dialogue || SceneManager.CurrentState == SceneState.Play)
+            {
+                DrawCurrentNPCs(spriteBatch);
+            }
         }
         public static void DrawCurrentNPCs(SpriteBatch spriteBatch)
         {

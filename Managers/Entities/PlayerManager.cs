@@ -20,7 +20,6 @@ namespace PlayingAround.Managers.Entities
         private static Player _currentPlayer;
         public static Player CurrentPlayer => _currentPlayer;
         public static PlayerSaveData _playerData;
-        public static float deltaTime;
         public static void LoadContent(PlayerSaveData data)
         {
             _playerData = data;
@@ -28,26 +27,23 @@ namespace PlayingAround.Managers.Entities
         }
         public static void Update(GameTime gameTime)
         {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (SceneManager.CurrentState == SceneState.TitleScreen) return;
             _currentPlayer.Update(gameTime);
             UpdatePlayerInput(gameTime);
-            _currentPlayer.AnimationController.Update(gameTime);
-
-
         }
         public static void AllowPlayerMovement(bool permission)
         {
             if (!permission) 
             { 
-                _currentPlayer.AllowedToMove = false;
-                if (_currentPlayer.MovementPath.Count > 0)
+                _currentPlayer.DrawSpecifics.AllowedToMove = false;
+                if (_currentPlayer.CurrentStats.MovePath.Count > 0)
                 {
-                    _currentPlayer.CurrentPos = _currentPlayer.MovementPath[0];
+                    _currentPlayer.CurrentPos = _currentPlayer.CurrentStats.MovePath[0];
                 }
-                _currentPlayer.MovementPath.Clear();
+                _currentPlayer.CurrentStats.MovePath.Clear();
                 return;
             }
-            else if (permission) { _currentPlayer.AllowedToMove = true; }
+            else if (permission) { _currentPlayer.DrawSpecifics.AllowedToMove = true; }
         }
         public static void UpdatePlayerInput(GameTime gameTime)
         {
@@ -62,7 +58,7 @@ namespace PlayingAround.Managers.Entities
         }
         public static void MovePlayerInput(GameTime gameTime)
         {
-            if (!_currentPlayer.AllowedToMove)  return;
+            if (!_currentPlayer.DrawSpecifics.AllowedToMove)  return;
             {
                 if (InputManager.IsRightMouseDown())
                 {
@@ -82,37 +78,12 @@ namespace PlayingAround.Managers.Entities
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            switch (SceneManager.CurrentState)
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.CurrentState == SceneState.Combat)
             {
-                case SceneState.Play:
-                    DrawPlayer(spriteBatch);
-                    break;
-                case SceneState.Dialogue:
-                    DrawPlayer(spriteBatch);
-                    break;
-
+                _currentPlayer?.Draw(spriteBatch);
             }
-          
         }
-        private static void DrawPlayer(SpriteBatch spriteBatch)
-        {
-            Player player = CurrentPlayer;
-            Texture2D texture = player.SpriteSheet;
-            Vector2 currentPos = player.CurrentPos;
-            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(currentPos, player.DrawSpecifics.Width, player.DrawSpecifics.Height);
 
-           
-            Vector2 position = player.CurrentPos;
-            Rectangle destination = new Rectangle
-             (
-                                  (int)drawOffset.X,
-                                  (int)drawOffset.Y - (player.DrawSpecifics.Width / 2),
-                                       player.DrawSpecifics.Width,
-                                       player.DrawSpecifics.Height
-            );
-            Rectangle source = player.AnimationController.GetCurrentFrame();
-            spriteBatch.Draw(texture, destination, source, Color.White);
-        }
         
         
         public static PlayerSaveData SavePlayer()
@@ -126,7 +97,7 @@ namespace PlayingAround.Managers.Entities
 
         public static void UpdateAllMovement(GameTime gameTime)
         {
-            if (!_currentPlayer.AllowedToMove || _currentPlayer == null || _currentPlayer.MovementPath.Count <= 0 || _currentPlayer.MovementPath == null)
+            if (!_currentPlayer.DrawSpecifics.AllowedToMove || _currentPlayer == null || _currentPlayer.CurrentStats.MovePath.Count <= 0 || _currentPlayer.CurrentStats.MovePath == null)
                 return;
             {
                 _currentPlayer.UpdateMovement(gameTime);

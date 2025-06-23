@@ -22,6 +22,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
+
             _currentCombat = new CombatManager(playMonsters);
             SceneManager.SetState(SceneState.Combat);
         }
@@ -35,7 +36,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-
+            if (SceneManager.CurrentState != SceneState.Combat) return;
             if (_currentCombat != null)
             {
                 _currentCombat.Draw(spriteBatch, graphicsDevice);

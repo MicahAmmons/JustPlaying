@@ -13,7 +13,7 @@ namespace PlayingAround.Game.Pathfinding
         private const int ORTHOGONAL_COST = 10;
         private const int DIAGONAL_COST = 14;
 
-        public static List<Vector2> GetCellToCellPath(Vector2 startPixel, Vector2 endPixel)
+        public static List<TileCell> GetCellToCellPath(Vector2 startPixel, Vector2 endPixel)
         {
             TileCell startCell = TileManager.GetCell(startPixel);
             TileCell goalCell = TileManager.GetCell(endPixel);
@@ -23,7 +23,7 @@ namespace PlayingAround.Game.Pathfinding
 
             List<TileCell> cellPath = FindCellPath(startCell, goalCell);
 
-            return cellPath.Select(c => c.CenterPoint).ToList();
+            return cellPath.ToList();
         }
 
         private static List<TileCell> FindCellPath(TileCell start, TileCell goal)

@@ -18,7 +18,7 @@ namespace PlayingAround.AnimationFolder
 
         public void Play(AnimationState state, Animation newAnimation)
         {
-            if (_currentAnimationState == state)
+            if (_currentAnimationState == state && _currentAnimation != null)
                 return;
 
             _currentAnimation = newAnimation;
