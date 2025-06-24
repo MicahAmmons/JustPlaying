@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using PlayingAround.Game.Assets;
+using PlayingAround.Utils;
 
 namespace PlayingAround.Managers.Assets
 {
@@ -26,8 +27,13 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadMonsterIconTextures();
             AssetLoader.LoadAllSpriteSheets();
             AssetLoader.LoadPlayerIconTextures();
+            LoadCustomAssets();
         }
-
+        public static void LoadCustomAssets()
+        {
+            Texture2D text =DrawDiamondTexture.GetDiamond(128, 64, Color.White * 0.5f);
+            _textures["CellDiamond"] = text;
+        }
         // Step 1: Initialize with the Content pipeline
         public static void Initialize(ContentManager content)
         {

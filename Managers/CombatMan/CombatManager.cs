@@ -30,17 +30,8 @@ namespace PlayingAround.Managers.CombatMan
         private static int _summonOptionWidth = 64;
         private static int _summonOptionSpacing = 10;
 
-
-
-
-
-
         private static List<string> _log = new List<string>();
         private static int _maxStrings = 50;
-
-
-
-
 
         private CombatUIManager _combatUIManager;
         private CombatStateMachine _stateMachine;
@@ -55,7 +46,6 @@ namespace PlayingAround.Managers.CombatMan
 
         private MapTile _currentMapTile;
         private Texture2D _playerCellOptions;//placeholder texture
-        private Texture2D _diamondHighlight;
         private SpriteFont _font;
 
         private int _tileWidth;
@@ -105,7 +95,6 @@ namespace PlayingAround.Managers.CombatMan
             _stateMachine = new CombatStateMachine();
             _currentMapTile = TileManager.CurrentMapTile;
             _visualEffectManager = new VisualEffectManager();
-            _diamondHighlight = DrawDiamondTexture.GetDiamond(128, 64, Color.White * 0.5f);
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
             _tileHeight = MapTile.TileHeight;
@@ -318,7 +307,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_statHoverCellHighlight != null)
             {
-                DrawCellHighlight(spriteBatch, _statHoverCellHighlight, ColorPalette.DarkColor);
+                _statHoverCellHighlight.DrawCellHighlight(spriteBatch, ColorPalette.DarkColor);
             }
         }
         public void DrawDisplayStats(SpriteBatch spriteBatch)
@@ -459,25 +448,11 @@ namespace PlayingAround.Managers.CombatMan
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {
             foreach (var tile in _playerSpawnableCells)
-                DrawCellHighlight(spriteBatch, tile, Color.Green, 5);
+               tile.DrawCellHighlight(spriteBatch, Color.Green, 5);
 
             foreach (var tile in _monsterSpawnableCells)
-                DrawCellHighlight(spriteBatch, tile, Color.Red, 5);
+                tile.DrawCellHighlight(spriteBatch, Color.Red, 5);
         }
-        private void DrawCellHighlight(SpriteBatch spriteBatch, TileCell cell, Color color, int shrink = 0)
-        {
-            Vector2 coords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
-            Rectangle rect = new Rectangle(
-                (int)coords.X + shrink - MapTile.TileWidth/2,
-                (int)coords.Y + shrink,
-                128 - shrink * 2,
-                64 - shrink * 2
-            );
-            spriteBatch.Draw(_diamondHighlight, rect, color);
-        }
-
-
-
         private void DrawPlayerTurn(SpriteBatch spriteBatch)
         {
             DrawPlayerButtonOptions(spriteBatch);
@@ -527,7 +502,7 @@ namespace PlayingAround.Managers.CombatMan
                 foreach (var cell in mon.MoveableCells)
                 {
                     if (cell.BlockedByMonster || !cell.IsWalkable) continue;
-                    DrawCellHighlight(spriteBatch, cell, Color.Green, 5);
+                    cell.DrawCellHighlight(spriteBatch, Color.Green, 5);
                 }
 
                 if (_currentMouseHoverCell != null && mon.MoveableCells.Contains(_currentMouseHoverCell))
@@ -573,9 +548,7 @@ namespace PlayingAround.Managers.CombatMan
 
             foreach (var cell in _summonSpawnableCells)
             {
-                Vector2 cellCoords = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint);
-                Rectangle cellRect = new Rectangle((int)cellCoords.X, (int)cellCoords.Y, _tileWidth - 5, _tileHeight - 5);
-                DrawCellHighlight(spriteBatch, cell, Color.LimeGreen, 5);
+                cell.DrawCellHighlight(spriteBatch, Color.LimeGreen, 5);
             }
 
         }
@@ -672,7 +645,7 @@ namespace PlayingAround.Managers.CombatMan
                 {
                     Color col = Color.Red * 5f;
                     if (AIControlledMonsterMap.ContainsValue(cell) ) { col = Color.Green * 5f; }
-                    DrawCellHighlight(spriteBatch, cell, col, 5);
+                    cell.DrawCellHighlight(spriteBatch, col, 5);
                 }
             }
 
