@@ -277,7 +277,15 @@ namespace PlayingAround.Managers.Tiles
             
         }
 
+        internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
+        {
+            if (origin == null || destination == null)
+                throw new ArgumentNullException("One or both TileCells are null.");
 
+            int dx = Math.Abs(origin.X - destination.X);
+            int dy = Math.Abs(origin.Y - destination.Y);
 
+            return dx + dy;
+        }
     }
 }

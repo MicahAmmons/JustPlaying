@@ -7,6 +7,7 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
+using static CombatStateMachine;
 
 namespace PlayingAround.Interfaces
 {
@@ -48,6 +49,9 @@ namespace PlayingAround.Interfaces
 
         void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
         void Update(GameTime gameTime);
+        public void UpdateTopOfActionStats();
+        public AITurnState? DecideAction();
+        public void SpentActionPoint();
     }
 
 

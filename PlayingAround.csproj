@@ -96,6 +96,7 @@
     <Folder Include="Content\UI\" />
     <Folder Include="Data\SaveData\SaveStates\" />
     <Folder Include="Entities\Monster\SummonedMonsters\" />
+    <Folder Include="Managers\CombatMan\CombatBehaviors\" />
     <Folder Include="World\MapTiles\CombatTileCell\" />
   </ItemGroup>
   <ItemGroup>

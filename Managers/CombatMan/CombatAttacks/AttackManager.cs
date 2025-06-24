@@ -6,7 +6,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
-using PlayingAround.Managers.Movement.CombatGrid;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Utils;
 using PlayingAround.Visuals;
 using System;

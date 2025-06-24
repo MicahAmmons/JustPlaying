@@ -10,11 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlayingAround.Managers.Movement.CombatGrid
+namespace PlayingAround.Managers.Movement
 {
     public static class GridMovement
     {
-        public static List<TileCell> FindClosestPlayerControlledCell(TileCell current, List<TileCell> targets, int maxSteps)
+        public static List<TileCell> PathToClosestCell(TileCell current, List<TileCell> targets, int maxSteps)
         {
             List<TileCell> bestPath = null;
             int shortestPathLength = int.MaxValue;
@@ -33,14 +33,12 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             return bestPath ?? new List<TileCell>(); // return empty if none found
         }
-
-
-        public static (List<Vector2>?, List<Vector2>?, List<Vector2>?, Texture2D?) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
+        public static (List<Vector2>, List<Vector2>, List<Vector2>, Texture2D) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
         {
-            List<Vector2>? result1 = null;
-            List<Vector2>? result2 = null;
-            List<Vector2>? result3 = null;
-            Texture2D? texture = null;
+            List<Vector2> result1 = null;
+            List<Vector2> result2 = null;
+            List<Vector2> result3 = null;
+            Texture2D texture = null;
 
             string name = att.Name.ToString().Replace(" ", "");
 
@@ -65,9 +63,6 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             return (result1, result2, result3, texture);
         }
-
-
-
         public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)
         {
             TileCell startCell = startPos;
@@ -89,7 +84,7 @@ namespace PlayingAround.Managers.Movement.CombatGrid
                 if (current.X == endCell.X && current.Y == endCell.Y)
                 {
                     endCell.BlockedByMonster = true;
-                    return ReconstructPath(cameFrom, current, maxSteps); 
+                    return ReconstructPath(cameFrom, current, maxSteps);
                 }
                 foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current, endCell))
                 {
@@ -110,8 +105,6 @@ namespace PlayingAround.Managers.Movement.CombatGrid
             return new List<TileCell>();
             // No path found
         }
-
-
         private static List<TileCell> ReconstructPath(Dictionary<TileCell, TileCell> cameFrom, TileCell current, int maxSteps)
         {
             List<TileCell> path = new();
@@ -125,26 +118,14 @@ namespace PlayingAround.Managers.Movement.CombatGrid
 
             path.Reverse();
 
-            if (path.Count > 0 && maxSteps < 100 )
+            if (path.Count > 0 && maxSteps < 100)
                 path.RemoveAt(path.Count - 1); // optional redundancy check, can be removed too
             if (path[0] == current)
             {
-                path.Remove(path[0]);   
+                path.Remove(path[0]);
             }
             return path.Take(maxSteps).ToList();
         }
-        public static int CheckManhattanDistance(TileCell origin, TileCell destination)
-        {
-            if (origin == null || destination == null)
-                throw new ArgumentNullException("One or both TileCells are null.");
-
-            int dx = Math.Abs(origin.X - destination.X);
-            int dy = Math.Abs(origin.Y - destination.Y);
-
-            return dx + dy;
-        }
-
-
         private static float Heuristic(TileCell a, TileCell b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y); // Manhattan distance
@@ -184,8 +165,5 @@ namespace PlayingAround.Managers.Movement.CombatGrid
                 return elements.Any(e => EqualityComparer<T>.Default.Equals(e.item, item));
             }
         }
-
-
-
     }
 }

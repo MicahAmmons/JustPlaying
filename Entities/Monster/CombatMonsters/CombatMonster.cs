@@ -5,6 +5,8 @@ using PlayingAround.Game.Map;
 using PlayingAround.Game.Pathfinding;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.ActionLibrary;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
@@ -12,11 +14,14 @@ using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using static CombatStateMachine;
 
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
 {
-     public class CombatMonster: ICombatant
+    public class CombatMonster: ICombatant
     {
 
         public string UniqueId { get; set; }
@@ -43,6 +48,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public AnimationState CurrentAnimationState { get; set; }
         public List<TileCell> MoveableCells {  get; set; } = new List<TileCell> { };
         public Vector2? MoveTarget {  get; set; }
+        public List<TileCell> MoveTargetCellList { get; set; }
+        public Dictionary<MonsterActionOrder, Func<bool>> ActionExecutors { get; private set; } = new();
+        public Dictionary<MonsterActionOrder, AITurnState> ActionStates { get; private set; } = new();
+
+
+
 
         public CombatMonster (CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -64,10 +75,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 MP = BaseStats.MP,
                 Resistances = ResistanceManager.GetResistances(ElementType)
             };
+
             foreach (var action in data.ActionOrder)
             {
                 CurrentStats.ActionOrder.Enqueue(action);
                 BaseStats.ActionOrder.Enqueue(action);
+                ActionExecutors[action] = () => ActionLibrary.Executors[action](this);
+                ActionStates[action] = ActionLibrary.StateMap[action];
             }
             foreach (var choice in data.DecideWhichAttack)
             {
@@ -180,20 +194,18 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (MoveTarget != null)
+            if (MoveTargetCellList.Count > 0)
             {
                 List<Vector2> fullVectorPath = new List<Vector2>();
-                Vector2 move = (Vector2)MoveTarget;
-                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
-                List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentStats.Pos, move);
-                foreach (var endPos in cellPath)
+                TileCell startingCell = MoveTargetCellList[0];
+                foreach (var endPos in MoveTargetCellList)
                 {
                     List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
                     fullVectorPath.AddRange(vectorRange);
                     startingCell = endPos;
 
                 }
-                MoveTarget = null;
+                MoveTargetCellList.Clear();
                 CurrentStats.MovePath = fullVectorPath;
             }
         }
@@ -201,6 +213,132 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             UpdateAnimation(gameTime);
             PopulateMovementPath(gameTime);
+        }
+
+
+
+        public void UpdateTopOfActionStats()
+        {
+            switch (Is)
+            {
+                case CombatMonsterType.AI:
+                    CurrentStats.MP = BaseStats.MP;
+                    CurrentStats.ChooseWhichAttack.Clear();
+                    CurrentStats.ActionOrder.Clear();
+                    if (Is == CombatMonsterType.AI)
+                    {
+                        foreach (var str in BaseStats.DecideWhichAttack)
+                        {
+                            CurrentStats.ChooseWhichAttack.Enqueue(str);
+                        }
+                        foreach (var str in BaseStats.ActionOrder)
+                        {
+                            CurrentStats.ActionOrder.Enqueue(str);
+                        }
+                    }
+                    break;
+                case CombatMonsterType.Summoned:
+
+                    break;
+            }
+          
+        }
+        public AITurnState? DecideAction()
+        {
+            while (CurrentStats.ActionOrder.Count > 0)
+            {
+                var action = CurrentStats.ActionOrder.Dequeue();
+                var executor = ActionExecutors[action];
+                if (executor())
+                {
+                    SpendActionPoint();
+                    var turnState = ActionStates[action];
+                    return turnState;
+                }
+            }
+            return null;
+        }
+        private void SpendActionPoint()
+        {
+            CurrentStats.AP -= 1;
+        }
+        public bool GetMovementCellPathToClosestEnemy()
+        {
+            if (CurrentStats.MP > 0)
+            {
+                TileCell currentCell = TileManager.GetCell(CurrentStats.Pos);
+
+                List<TileCell> playerControlledCells = GetCombatMapHelper("PlayerControlled");
+
+                // If already adjacent, return current position
+                if (TileManager.IsNeighbor(playerControlledCells, currentCell))
+                    return false;
+
+                List<TileCell> listOfCellsPathToTarget = GridMovement.PathToClosestCell(currentCell, playerControlledCells, (int)CurrentStats.MP);
+                if (listOfCellsPathToTarget.Count <= 0) return false;
+                MoveTargetCellList = listOfCellsPathToTarget;
+            }
+            else return false;
+            return true;
+        }
+        private List<TileCell> GetCombatMapHelper(string combatants)
+        {
+            List<TileCell> list = new();
+            switch (combatants)
+            {
+                case "Player":
+
+                    break;
+                case "Summons":
+
+                    break;
+                case "PlayerControlled":
+                    list = CombatGuard.CurrentCombat.PlayerControlledMonsterMap
+                     .Select(pair => pair.Value)
+                     .Where(cell => cell != null)
+                     .ToList();
+                    break;
+                case "AI":
+
+                    break;
+            }
+            return list;
+        }
+        private bool AttackClosestEnemy()
+        {
+            TileCell currentCell = TileManager.GetCell(CurrentStats.Pos);
+
+            //inRangeMap send any and all attacks that have a valid range, including non monster cells
+            Dictionary<SingleAttack, List<TileCell>> inRangeMap = GetInRangeCellsByAttack(Attacks, currentCell);
+            if (inRangeMap.Count == 0)
+            {
+                return false;
+            }
+            // Choose targets for each attack using the targeting strategy
+            var targetData = new Dictionary<SingleAttack, Dictionary<ICombatant, List<TileCell>>>();
+
+            foreach (var pair in inRangeMap)
+            {
+                pair.Value.Remove(origin);
+                var (target, affectedCells) = AttackManager.TargetClosestEnemy(pair.Value, origin);
+                if (target != null && affectedCells.Count > 0)
+                {
+                    targetData[pair.Key] = new Dictionary<ICombatant, List<TileCell>>
+            {
+                { target, affectedCells }
+            };
+                }
+            }
+
+            // Use the selected targeting behavior to pick the final attack
+            var (chosenAttack, chosenMap) = AttackManager.ChooseWhichAttack(targetData, origin, mon.CurrentStats.ChooseWhichAttack);
+
+            SetMonsterAttackPathingInformation(
+                chosenAttack,
+                chosenMap.Keys.ToList(),
+                chosenMap.Values.SelectMany(x => x).ToList()
+            );
+            return true;
         }
     }
 
