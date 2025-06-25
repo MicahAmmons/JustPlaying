@@ -279,7 +279,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     }
                     break;
                 case CombatMonsterType.Summoned:
-
+                    CurrentStats.MP = BaseStats.MP;
                     break;
             }
 
@@ -430,9 +430,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void ClearAttackCycle()
         {
-            CurrentStats.Attack.IsFinished = false;
-            CurrentStats.Attack.Visual = null;
-            CurrentStats.Attack = null;
+            if (CurrentStats.Attack != null)
+            {
+                CurrentStats.Attack.IsFinished = false;
+                CurrentStats.Attack.Visual = null;
+                CurrentStats.Attack = null;
+            }
             CurrentStats.AttackEffectedCells = null;
             CurrentStats.AttackEffectedCombatants = null;
             CurrentStats.AttackPath1.Clear();
@@ -471,6 +474,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
     {
         Summoned,
         AI,
-        Player
+        Player,
+        Self
     }
 }

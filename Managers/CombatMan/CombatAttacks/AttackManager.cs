@@ -43,6 +43,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         {
             float damage = CalculateDamage(attack);
             target.ApplyDamage(damage, attack.ElementDamage);
+            if (attack.Aspect != null)
             target.ApplyAspect(attack.Aspect, attack.ElementDamage);  
         }
 

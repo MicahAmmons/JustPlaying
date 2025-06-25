@@ -57,32 +57,30 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public void UpdateTargetMap(TileCell currentCell)
         {
             ActiveTargetMap.Clear();
-            var playerMap = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
-            var monsterMap = CombatGuard.CurrentCombat.AIControlledMonsterMap;
-            if (TargetType.Contains(CombatMonsterType.Player))
+
+            var allMaps = new[] {
+               CombatGuard.CurrentCombat.PlayerControlledMonsterMap,
+               CombatGuard.CurrentCombat.AIControlledMonsterMap
+            };
+
+            foreach (var map in allMaps)
             {
-                foreach (var kvp in playerMap)
+                foreach (var (combatant, cell) in map)
                 {
-                    ICombatant combatant = kvp.Key;
-                    TileCell cell = kvp.Value;
+                    if (combatant == null || cell == null || combatant.isDead)
+                        continue;
+                    if (!TargetType.Contains(combatant.Is))
+                        continue;
+                    if (cell == currentCell && !TargetType.Contains(CombatMonsterType.Self))
+                        continue;
                     if (TileManager.CheckManhattanDistance(currentCell, cell) <= Range)
                     {
-                        ActiveTargetMap[combatant] = cell ;
+                        ActiveTargetMap[combatant] = cell;
                     }
                 }
-                return;
-            }
-            if (TargetType.Contains(CombatMonsterType.Player))
-            {
-
-                return;
-            }
-            if (TargetType.Contains(CombatMonsterType.Player))
-            {
-
-                return;
             }
         }
+
 
         public void SetAttackRangeOptions(TileCell cell)
         {

@@ -49,7 +49,8 @@
         SummonedChoosingTarget,
         SummonedExecutingAttack,
         SummonedExecutingMove,
-        SummonedEndingTurn
+        SummonedEndingTurn,
+        SummonedTopOfAction
     }
 
     public enum CombatState
