@@ -23,7 +23,9 @@ namespace PlayingAround.Interfaces
         public DrawSpecificStats DrawSpecifics { get; }
         public void DrawCellHighlight(SpriteBatch spriteBatch);
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
+        public void UpdateMonsterTakingDamage(GameTime gameTime);
         public void UpdateMovement(GameTime gameTime);
+        
     }
     public interface IAnimatable : IDrawn
     {
@@ -32,7 +34,7 @@ namespace PlayingAround.Interfaces
         public Texture2D SpriteSheet { get; }
         public Direction FacingDirection { get; set; }
         public AnimationState CurrentAnimationState { get; set; }
-        public Vector2? MoveTarget { get; set; }+
+        public Vector2? MoveTarget { get; set; }
         public void SetFacingDirection(Vector2 vec);
         public void SetCurrentAnimationState();
         public void SetCurrentAnimationStateToIdle();
@@ -50,7 +52,7 @@ namespace PlayingAround.Interfaces
         public CombatMonsterType Is {  get; set; }
 
         
-        void Update(GameTime gameTime);
+        void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();
         public void SpendActionPoint();

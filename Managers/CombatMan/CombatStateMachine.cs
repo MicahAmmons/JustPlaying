@@ -74,7 +74,7 @@
         ExecutingMove,
         AIAttacking,
         ExecutingAttack,
-
+        EndOfActionPause
 
     }
    

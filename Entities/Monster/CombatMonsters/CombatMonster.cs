@@ -72,7 +72,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Health = BaseStats.Health,
                 AP = BaseStats.AP,
                 MP = BaseStats.MP,
-                Resistances = ResistanceManager.GetResistances(ElementType)
+                Resistances = ResistanceManager.GetResistances(ElementType),
+                AttackPath1 = new List<Vector2>(),
+                AttackPath2 = new List<Vector2>(),
             };
 
             foreach (var action in data.ActionOrder)
@@ -218,7 +220,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             {
                 List<TileCell> list = CustomPathfinder.GetCellToCellPath(CurrentStats.Pos, (Vector2)MoveTarget);
                 MoveTarget = null;
-                if (list[0] == TileManager.GetCell(CurrentStats.Pos)) list.RemoveAt(0);
+                //if (list[0] == TileManager.GetCell(CurrentStats.Pos)) list.RemoveAt(0);
                 MoveTargetCellList = list;
             }
             if (MoveTargetCellList.Count > 0)
@@ -236,13 +238,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 CurrentStats.MovePath = fullVectorPath;
             }
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, float delta)
         {
             UpdateAnimation(gameTime);
             PopulateMovementPath(gameTime);
             UpdateMonsterTakingDamage(gameTime);
+            DrawSpecifics.VEManager.Update(delta);
         }
-        private void UpdateMonsterTakingDamage(GameTime gameTime)
+        public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
                 if (DrawSpecifics.IsFlashingRed)
                 {
@@ -343,12 +346,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             return list;
         }
         public bool AttackClosestEnemy()
-        { 
-            List<SingleAttack> attks = new List<SingleAttack>(Attacks);
+        {
+            List<SingleAttack> attks = new List<SingleAttack>();
             // Remove any attacks that don't have any targets within range
-            foreach (var att in attks)
+            foreach (var att in Attacks)
             {
-                if (att.ActiveTargetMap.Count == 0) attks.Remove(att);
+                if (att.ActiveTargetMap.Count > 0) attks.Add(att);
             }
             if (attks.Count == 0) return false;
 
@@ -397,11 +400,15 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void PerformAttack()
         {
+            if (CurrentStats.Attack.IsFinished) return;
+            CurrentStats.Attack.IsFinished = true;
             AttackManager.PerformAttack(CurrentStats.Attack, CurrentStats.AttackEffectedCombatants);
+
         }
         public bool IsAttackComplete()
         {
-            return (CurrentStats.AttackPath1.Count == 0 && CurrentStats.AttackPath2.Count == 0 && CurrentStats.MovePath.Count == 0 && CurrentStats.Attack.Visual.IsFinished && CurrentStats.Attack == null);
+            if (CurrentStats.Attack.Visual != null && !CurrentStats.Attack.Visual.IsFinished) return false;
+            return (CurrentStats.AttackPath1.Count == 0 && CurrentStats.AttackPath2.Count == 0 && CurrentStats.MovePath.Count == 0 && CurrentStats.Attack.IsFinished);
           
         }
         public void ApplyAspect(string aspect, ElementType elementDamage)
@@ -411,8 +418,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void ApplyDamage(float damage, ElementType elementDamage)
         {
-            float finalDamage = CurrentStats.Resistances[elementDamage] * damage;
-            CurrentStats.Health -= (int)finalDamage;
+            int finalDamage = (int)MathF.Round(CurrentStats.Resistances[elementDamage] * damage);
+            CurrentStats.Health -= finalDamage;
             DrawSpecifics.IsFlashingRed = true;
             DrawSpecifics.DamageFlashTimer = 0.5f;
         }
@@ -423,6 +430,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void ClearAttackCycle()
         {
+            CurrentStats.Attack.IsFinished = false;
+            CurrentStats.Attack.Visual = null;
             CurrentStats.Attack = null;
             CurrentStats.AttackEffectedCells = null;
             CurrentStats.AttackEffectedCombatants = null;

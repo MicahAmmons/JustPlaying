@@ -44,12 +44,12 @@ namespace PlayingAround.Managers.Entities
         {
             return new Vector2(_combatMonsterBaseData[name].DrawSpecifics.Width, _combatMonsterBaseData[name].DrawSpecifics.Height);
         }
-        public static void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime, float delta)
         {
             if (_currentCombatMonsters == null || _currentCombatMonsters.Count == 0) return;
             foreach (var mon in _currentCombatMonsters)
             {
-                mon.Update(gameTime);
+                mon.Update(gameTime, delta);
                     
             }
         }

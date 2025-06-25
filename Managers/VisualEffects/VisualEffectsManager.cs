@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Visuals;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace PlayingAround.Managers.CombatMan
     public  class VisualEffectManager
     {
         private List<VisualEffect> _activeEffects = new();
-
+        private SpriteFont _font = AssetManager.GetFont("mainFont");
         public void AddEffect(VisualEffect effect)
         {
             _activeEffects.Add(effect);
@@ -26,11 +27,11 @@ namespace PlayingAround.Managers.CombatMan
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var effect in _activeEffects)
             {
-                effect.Draw(spriteBatch, font);
+                effect.Draw(spriteBatch, _font);
             }
         }
     }

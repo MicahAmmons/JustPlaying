@@ -229,7 +229,7 @@ namespace PlayingAround.Managers.CombatMan
             }
             DrawDebugInfo(spriteBatch);
             DrawDisplayStats(spriteBatch);
-            _visualEffectManager.Draw(spriteBatch, _font);
+            _visualEffectManager.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
 
         }
@@ -680,8 +680,11 @@ namespace PlayingAround.Managers.CombatMan
                             break;
                         case AITurnState.ExecutingAttack:
                             if (AttackIsComplete()) {
-                                SetAITurnState(AITurnState.ActionNavigation); return; }
+                                SetAITurnState(AITurnState.EndOfActionPause); _currentCombatant.ClearAttackCycle(); return; }
                             WaitForAttackToFinish(delta);
+                            break;
+                            case AITurnState.EndOfActionPause:
+                            WaitForTimer(delta);
                             break;
                     }
                     break;
@@ -739,6 +742,15 @@ namespace PlayingAround.Managers.CombatMan
                     break;
                     
             }
+        }
+        private void WaitForTimer(float delta )
+        {
+            if (_timer >= 1f)
+            {
+                _timer = 0f;
+                SetAITurnState(AITurnState.ActionNavigation);
+            }
+            _timer += delta;
         }
         private void UpdateAttackTargetsAndRanges()
         {
@@ -919,15 +931,6 @@ namespace PlayingAround.Managers.CombatMan
         public bool MonsterFinishedMoving() =>  _currentCombatant.CurrentStats.MovePath == null || _currentCombatant.CurrentStats.MovePath.Count <= 0;
         public bool PlayerHasEndPoint() => _currentCombatant.CurrentStats.MovementEndPoint != null;
         public bool PlayerHasMovePath() => _currentCombatant.CurrentStats.MovePath.Count > 0;
-        private void AIFinishedAttack()
-        {
-            ICombatant mon = _currentCombatant;
-            if (mon.CurrentStats.MovePath == null || mon.CurrentStats.MovePath.Count <= 0)
-            {
-                _attackComplete = true;
-                _attackPerformed = false;
-            }
-        }
         private void WaitForAttackToFinish(float delta)
         {
             ICombatant mon = _currentCombatant;
@@ -976,28 +979,20 @@ namespace PlayingAround.Managers.CombatMan
                 }
                 return;
             }
-            mon.ClearAttackCycle();
- 
             switch (mon.Is)
             {
                 case CombatMonsterType.Player:
                     SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
                     break;
-                    case CombatMonsterType.Summoned:
-                    SummonedFinishedAttack();
+                case CombatMonsterType.Summoned:
+                    SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
                     break;
                 case CombatMonsterType.AI:
-                    AIFinishedAttack();
+
                     break;
             }       
 
 
-        }
-        private void SummonedFinishedAttack()
-        {
-            _attackComplete = true;
-            _attackPerformed = false;
-            SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
         }
 
 

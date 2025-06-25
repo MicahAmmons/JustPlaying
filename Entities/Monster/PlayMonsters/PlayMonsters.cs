@@ -212,5 +212,10 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         {
  
         }
+
+        public void UpdateMonsterTakingDamage(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

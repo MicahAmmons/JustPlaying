@@ -51,7 +51,13 @@ namespace PlayingAround.Managers.Resistances
                 Add("mildlyEffective", MildlyResistant);
                 Add("superVulnerable", SuperVulnerable);
                 Add("mildlyVulnerable", MildlyVulnerable);
-
+                foreach (ElementType other in Enum.GetValues(typeof(ElementType)))
+                {
+                    if (!resistanceValues.ContainsKey(other))
+                    {
+                        resistanceValues[other] = 1f;
+                    }
+                }
                 _resistAndImmunityData[elementName] = resistanceValues;
             }
         }

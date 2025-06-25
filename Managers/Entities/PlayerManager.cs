@@ -25,10 +25,10 @@ namespace PlayingAround.Managers.Entities
             _playerData = data;
             _currentPlayer = Player.LoadFromSave(data);
         }
-        public static void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime, float delta)
         {
             if (SceneManager.CurrentState == SceneState.TitleScreen) return;
-            _currentPlayer.Update(gameTime);
+            _currentPlayer.Update(gameTime, delta);
             UpdatePlayerInput(gameTime);
         }
         public static void AllowPlayerMovement(bool permission)

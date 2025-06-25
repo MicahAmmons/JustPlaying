@@ -21,6 +21,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public string Aspect { get; set; }
         public int MinDamage { get; set; }
         public int MaxDamage { get; set; }
+        public bool IsFinished { get; set; } = false;
         public float VisualVelocity { get; set; }
         public bool Animated { get; set; } = false;
          public VisualTiming VisualTiming { get; set; } 

@@ -98,11 +98,12 @@ public class SaveManager
 
     public static void LoadCurrentGameSave() 
     {
+        ResistanceManager.LoadContent(); // Loads Resistance Data
         SummonedMonsterManager.LoadContent(CurrentGameSaveData.SummonedData);
         PlayerManager.LoadContent(CurrentGameSaveData.Player);
         QuestManager.LoadContent(CurrentGameSaveData.Quests);
         UIManager.LoadContent();
-        ResistanceManager.LoadContent(); // Loads Resistance Data
+       
         PlayMonsterManager.LoadContent(); // Loads Play Monster Data
         AspectManager.LoadAspects(); // Load Aspect Data
         AttackManager.LoadContent(); //Loads attack data

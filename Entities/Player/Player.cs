@@ -12,6 +12,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
+using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace PlayingAround.Entities.Player
         {
             var player = new Player()
             {
-                
+
                 DrawSpecifics = new DrawSpecificStats()
                 {
                     MovementQuickness = (int)data.MovementQuickness,
@@ -90,6 +91,7 @@ namespace PlayingAround.Entities.Player
                     MP = 4,
                     AP = 3,
                     Health = data.CurrentCombatStats.Health,
+                    Resistances = ResistanceManager.GetResistances(ElementType.Normal)
                 },
                 SpriteSheet = AssetManager.GetTexture("PlayerSS"),
                 Icon = AssetManager.GetTexture("Hero_Blonde"),
@@ -109,12 +111,14 @@ namespace PlayingAround.Entities.Player
         {
 
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, float delta)
         {
             GetHitbox();
             PopulateMovementPath(gameTime);
             UpdateAnimation(gameTime);
             AnimationController.Update(gameTime);
+            UpdateMonsterTakingDamage(gameTime);
+            DrawSpecifics.VEManager.Update(delta);
         }
         public void UpdateAnimation(GameTime gameTime)
         {
@@ -245,6 +249,7 @@ namespace PlayingAround.Entities.Player
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            DrawSpecifics.VEManager.Draw(spriteBatch);
             if (!DrawSpecifics.AllowedToBeDrawn) return;
             DrawTexture(spriteBatch);
             DrawCellHighlight(spriteBatch);
@@ -332,12 +337,21 @@ namespace PlayingAround.Entities.Player
 
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
-            throw new NotImplementedException();
+            Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
+            Aspects.Add(asp);
         }
 
         public void ApplyDamage(float damage, ElementType elementDamage)
         {
-            throw new NotImplementedException();
+            int finalDamage = (int)MathF.Round(CurrentStats.Resistances[elementDamage] * damage);
+            CurrentStats.Health -= finalDamage;
+            DrawSpecifics.VEManager.AddEffect(new Visuals.VisualEffect(CurrentPos, new Vector2(0, -1), 1)
+            {
+                Color = ColorPalette.GetElementColor(elementDamage),
+                Text = $"{finalDamage}",
+            });
+            DrawSpecifics.IsFlashingRed = true;
+            DrawSpecifics.DamageFlashTimer = 0.5f;
         }
 
         public void CreateNewAttackVisual()
@@ -374,6 +388,20 @@ namespace PlayingAround.Entities.Player
                 Texture2D text = AssetManager.GetTexture("CellDiamond");
                 spriteBatch.Draw(text, rect, col);
             }
+
+        }
+
+        public void UpdateMonsterTakingDamage(GameTime gameTime)
+        {
+            if (DrawSpecifics.IsFlashingRed)
+            {
+                DrawSpecifics.DamageFlashTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+                if (DrawSpecifics.DamageFlashTimer <= 0f)
+                {
+                    DrawSpecifics.IsFlashingRed = false;
+                }
+            }
+
 
         }
     }

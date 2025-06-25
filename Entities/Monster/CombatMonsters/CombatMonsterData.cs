@@ -4,6 +4,7 @@ using PlayingAround.Data.SaveData;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int Width { get; set; }
         public int Height { get; set; }
         public int MovementQuickness { get; set; }
+        public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
         public MovementPatternType MovementPattern {  get; set; }
         public bool IsFlashingRed = false;
         public float DamageFlashTimer = 0f;

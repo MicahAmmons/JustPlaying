@@ -136,8 +136,8 @@ namespace PlayingAround
                     MapTileTransitionManager.Update(gameTime);
                     break;
             }
-            CombatMonsterManager.Update(gameTime);
-            PlayerManager.Update(gameTime);
+            CombatMonsterManager.Update(gameTime, delta);
+            PlayerManager.Update(gameTime, delta);
             PlayMonsterManager.Update(gameTime);
             base.Update(gameTime);
         }
