@@ -171,10 +171,22 @@ namespace PlayingAround.Managers.Tiles
 
                 bool isGoal = goal != null && neighbor == goal;
 
-                if (neighbor != null && neighbor.IsWalkable && !combatantCells.Contains(neighbor)  &&
+                if (neighbor != null && neighbor.IsWalkable  &&
                     (!neighbor.BlockedByMonster || includeMonsterTiles || isGoal ))
                 {
-                    neighbors.Add(neighbor);
+                    if (!combatantCells.Contains(neighbor))
+                    {
+                        neighbors.Add(neighbor);
+                        continue;
+                    }
+                    if (combatantCells.Contains(neighbor) && !includeMonsterTiles) continue;
+                    if (combatantCells.Contains(neighbor) && includeMonsterTiles)
+                    {
+                        neighbors.Add(neighbor);
+                        continue;
+                    }
+  
+
                 }
             }
 

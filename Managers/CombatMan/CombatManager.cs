@@ -622,7 +622,8 @@ namespace PlayingAround.Managers.CombatMan
 
             if (mon.CurrentStats.Attack != null)
             {
-                foreach (var cell in mon.CurrentStats.AttackRange)
+
+                foreach (var cell in mon.CurrentStats.Attack.CellsWithinRange)
                 {
                     Color col = Color.Red * 5f;
                     if (AIControlledMonsterMap.ContainsValue(cell) ) { col = Color.Green * 5f; }
@@ -717,7 +718,7 @@ namespace PlayingAround.Managers.CombatMan
                     switch (StatePlayerTurn)
                     {
                         case PlayerTurnState.PlayerClickedMoveButton:
-                            if (PlayerHasMovePath()) {SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove); SpendActionPoint();}
+                            if (PlayerHasMovePath()) {SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove); _currentCombatant.SpendActionPoint();}
                             break;
                         case PlayerTurnState.PlayerExecutingMove:
                             if (!PlayerHasMovePath()) { FinishedMoving(); SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); } 
@@ -754,7 +755,9 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentCombatant.Attacks.Count == 0) return;
             foreach (var att in _currentCombatant.Attacks)
             {
-                att.UpdateTargetMap(GetCombatantCurrentCell(_currentCombatant));
+                TileCell cell = GetCombatantCurrentCell(_currentCombatant);
+                att.UpdateTargetMap(cell);
+                att.SetAttackRangeOptions(cell);
             }
         }
         private bool WinnerChosen()
@@ -1132,10 +1135,10 @@ namespace PlayingAround.Managers.CombatMan
             TileCell cell = _currentClickedCell;
             if (combatant.CurrentStats.CurrentSelectedSummon != null && _summonSpawnableCells.Contains(cell))
             { 
-                    SummonSummonMonster(cell);
+                SummonSummonMonster(cell);
                 combatant.CurrentStats.CurrentSelectedSummon = null;
-                    SetPlayerTurnState(PlayerTurnState.PlayerExecutingSummoning);
-                SpendActionPoint();
+                SetPlayerTurnState(PlayerTurnState.PlayerExecutingSummoning);
+                combatant.SpendActionPoint();
                 
             }
         }
@@ -1347,16 +1350,14 @@ namespace PlayingAround.Managers.CombatMan
         private void HandleSummonedTargetingAttackClick()
         {
             ICombatant combatant = _currentCombatant;
-            if (InputManager.IsLeftClick() && combatant.CurrentStats.AttackRange.Contains(_currentMouseHoverCell) && _currentMouseHoverCell.BlockedByMonster && !_playerControlledMonsterMap.ContainsValue(_currentMouseHoverCell))
+            if (InputManager.IsLeftClick() && combatant.CurrentStats.Attack.CellsWithinRange.Contains(_currentMouseHoverCell) && _currentMouseHoverCell.BlockedByMonster && !_playerControlledMonsterMap.ContainsValue(_currentMouseHoverCell))
             {
                 SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
                 TileCell currentTarget = _currentMouseHoverCell;
-                _attackComplete = false;
                 SetPlayerAttackEffectCellsAndMonsters(currentTarget);
                 SetAttackPathForPlayer();
                 if (combatant.CurrentStats.Attack.Animated)
                     _currentAttackVisualEffect = new VisualEffect(GetCombatantCurrentCell(combatant), combatant.CurrentStats.Attack, FindCenterCell(combatant.CurrentStats.AttackEffectedCells));
-
             }
         }
         private void SetPlayerAttackEffectCellsAndMonsters(TileCell targetCell)

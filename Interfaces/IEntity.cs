@@ -53,6 +53,7 @@ namespace PlayingAround.Interfaces
         public AITurnState? DecideAction();
         public void SpendActionPoint();
         bool IsAttackComplete();
+        public void SetCurrentEffected(ICombatant combatant, TileCell cell);
         void PerformAttack();
         void ApplyAspect(string aspect, ElementType elementDamage);
         void ApplyDamage(float damage, ElementType elementDamage);

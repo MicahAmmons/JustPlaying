@@ -28,7 +28,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public Dictionary<ICombatant, TileCell> ActiveTargetMap { get; set; } 
         public List<CombatMonsterType> TargetType { get; set; } = new List<CombatMonsterType>();
         public VisualEffect Visual {  get; set; }
-
+        public List<TileCell> CellsWithinRange { get; set; } = new List<TileCell>();
        
         public SingleAttack (AttackName name, SingleAttackData data, ElementType element = ElementType.None)
         {
@@ -80,6 +80,11 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             }
         }
 
+        public void SetAttackRangeOptions(TileCell cell)
+        {
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(cell, Range, true);
+            CellsWithinRange = cells;
+        }
     }
 
 }

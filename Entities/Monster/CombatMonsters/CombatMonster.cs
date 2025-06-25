@@ -346,10 +346,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     cell = cells;
                 }
             }
-            CurrentStats.AttackEffectedCombatants = combatant;
-            CurrentStats.AttackEffectedCells = cell;
+            SetCurrentEffected(combatant, cell);
             SetCombatantAttackPathingInformation();
             return true;
+        }
+        public void SetCurrentEffected(ICombatant combatant, TileCell cell)
+        {
+            CurrentStats.AttackEffectedCombatants = combatant;
+            CurrentStats.AttackEffectedCells = cell;
         }
         private void SetCombatantAttackPathingInformation()
         {
@@ -374,13 +378,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             return (CurrentStats.AttackPath1.Count == 0 && CurrentStats.AttackPath2.Count == 0 && CurrentStats.MovePath.Count == 0 && CurrentStats.Attack.Visual.IsFinished && CurrentStats.Attack == null);
           
         }
-
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
             Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
             Aspects.Add(asp);
         }
-
         public void ApplyDamage(float damage, ElementType elementDamage)
         {
             float finalDamage = CurrentStats.Resistances[elementDamage] * damage;
@@ -393,7 +395,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             SingleAttack att = CurrentStats.Attack;
             att.Visual = new VisualEffect(CurrentStats.Pos, CurrentStats.AttackEffectedCombatants.CurrentStats.Pos, att.Name, att.VisualVelocity);
         }
-
         public void ClearAttackCycle()
         {
             CurrentStats.Attack = null;
