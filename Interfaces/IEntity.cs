@@ -32,7 +32,7 @@ namespace PlayingAround.Interfaces
         public Texture2D SpriteSheet { get; }
         public Direction FacingDirection { get; set; }
         public AnimationState CurrentAnimationState { get; set; }
-        public Vector2? MoveTarget { get; set; }
+        public Vector2? MoveTarget { get; set; }+
         public void SetFacingDirection(Vector2 vec);
         public void SetCurrentAnimationState();
         public void SetCurrentAnimationStateToIdle();
