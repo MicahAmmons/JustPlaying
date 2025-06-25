@@ -187,5 +187,30 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             OOCombatStats.CurrentPauseDuration = MathF.Round((float)(OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() * (OOCombatStats.PauseDurationMax - OOCombatStats.PauseDurationMin)), 2);
 
         }
+
+        public void DrawCellHighlight(SpriteBatch spriteBatch)
+        {
+            if (DrawSpecifics.DrawCellHightlight)
+            {
+                int shrink = DrawSpecifics.shrink;
+                DrawSpecifics.shrink = 0;
+                Color col = DrawSpecifics.HighlightCol;
+                DrawSpecifics.HighlightCol = ColorPalette.DarkColor;
+                Vector2 coords = TileManager.OffSetFromCenterOfDiamond(OOCombatStats.CurrentPos);
+                Rectangle rect = new Rectangle(
+                    (int)coords.X + shrink - MapTile.TileWidth / 2,
+                    (int)coords.Y + shrink,
+                    128 - shrink * 2,
+                    64 - shrink * 2
+                );
+                Texture2D text = AssetManager.GetTexture("CellDiamond");
+                spriteBatch.Draw(text, rect, col);
+            }
+        }
+
+        public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
+        {
+ 
+        }
     }
 }

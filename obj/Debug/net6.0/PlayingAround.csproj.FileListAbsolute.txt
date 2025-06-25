@@ -55,7 +55,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\Quests
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\Resistances\Resistance.json
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\SaveData\SaveJson\saveGameTemplate.json
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\Settings\SettingData.json
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\Summons\SummonDefJson\SummonProgressionDefinitions.json
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\PlayingAround.exe
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterIcons\TrainingDummyIcon.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0.png
@@ -81,7 +80,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\refint\Play
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.pdb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\ref\PlayingAround.dll
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\leftRightMovementTemplateSS.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerSprites.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Attacks\Spit.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\PlayingAround.csproj.AssemblyReference.cache
@@ -170,3 +168,5 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\P
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\obj\Debug\net6.0\ref\PlayingAround.dll
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\playerSS.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\PlayerSprites\PlayerSS.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerSS.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerSS.xnb

@@ -16,6 +16,7 @@ using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using static CombatStateMachine;
 
@@ -52,9 +53,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> MoveTargetCellList { get; set; } = new List<TileCell>();
         public Dictionary<MonsterActionOrder, Func<bool>> ActionExecutors { get; private set; } = new();
         public Dictionary<MonsterActionOrder, AITurnState> ActionStates { get; private set; } = new();
-
-
-
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -102,7 +100,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
-            //SpriteSheet = Icon;
             SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Is = CombatMonsterType.AI;
             foreach (var kvp in data.AnimationData)
@@ -174,6 +171,28 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawTexture(spriteBatch);
+            DrawCellHighlight(spriteBatch);
+        }
+        public void DrawCellHighlight(SpriteBatch spriteBatch)
+        {
+               if (DrawSpecifics.DrawCellHightlight)
+            {
+                DrawSpecifics.DrawCellHightlight = false;
+                int shrink = DrawSpecifics.shrink;
+                DrawSpecifics.shrink = 0;
+                Color col = DrawSpecifics.HighlightCol;
+                DrawSpecifics.HighlightCol = ColorPalette.DarkColor;
+                Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CurrentStats.Pos);
+                Rectangle rect = new Rectangle(
+                    (int)coords.X + shrink - MapTile.TileWidth / 2,
+                    (int)coords.Y + shrink,
+                    128 - shrink * 2,
+                    64 - shrink * 2
+                );
+                Texture2D text = AssetManager.GetTexture("CellDiamond");
+                spriteBatch.Draw(text, rect, col);
+            }
+            
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
@@ -185,7 +204,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                DrawSpecifics.Height
            );
             Rectangle source = AnimationController.GetCurrentFrame();
-            spriteBatch.Draw(Icon, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+            spriteBatch.Draw(SpriteSheet, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
         }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
@@ -195,6 +214,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
+            if (MoveTarget != null)
+            {
+                List<TileCell> list = CustomPathfinder.GetCellToCellPath(CurrentStats.Pos, (Vector2)MoveTarget);
+                MoveTarget = null;
+                if (list[0] == TileManager.GetCell(CurrentStats.Pos)) list.RemoveAt(0);
+                MoveTargetCellList = list;
+            }
             if (MoveTargetCellList.Count > 0)
             {
                 List<Vector2> fullVectorPath = new List<Vector2>();

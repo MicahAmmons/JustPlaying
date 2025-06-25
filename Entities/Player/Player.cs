@@ -247,7 +247,8 @@ namespace PlayingAround.Entities.Player
         {
             if (!DrawSpecifics.AllowedToBeDrawn) return;
             DrawTexture(spriteBatch);
-         
+            DrawCellHighlight(spriteBatch);
+
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
@@ -352,6 +353,28 @@ namespace PlayingAround.Entities.Player
         public void SetCombatantAttackPathingInformation()
         {
             throw new NotImplementedException();
+        }
+
+        public void DrawCellHighlight(SpriteBatch spriteBatch)
+        {
+            if (DrawSpecifics.DrawCellHightlight)
+            {
+                DrawSpecifics.DrawCellHightlight = false;
+                int shrink = DrawSpecifics.shrink;
+                DrawSpecifics.shrink = 0;
+                Color col = DrawSpecifics.HighlightCol;
+                DrawSpecifics.HighlightCol = ColorPalette.DarkColor;
+                Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CurrentStats.Pos);
+                Rectangle rect = new Rectangle(
+                    (int)coords.X + shrink - MapTile.TileWidth / 2,
+                    (int)coords.Y + shrink,
+                    128 - shrink * 2,
+                    64 - shrink * 2
+                );
+                Texture2D text = AssetManager.GetTexture("CellDiamond");
+                spriteBatch.Draw(text, rect, col);
+            }
+
         }
     }
     }

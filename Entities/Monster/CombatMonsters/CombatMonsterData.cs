@@ -3,6 +3,7 @@ using PlayingAround.AnimationFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float DamageFlashTimer = 0f;
         public bool AllowedToMove = false;
         public bool AllowedToBeDrawn = true;
+
+        public bool DrawCellHightlight = false;
+        public int shrink = 0;
+        public Color HighlightCol = ColorPalette.DarkColor; 
     }
     public class CurrentCombatStats
     {

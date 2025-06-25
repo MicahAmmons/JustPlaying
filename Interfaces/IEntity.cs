@@ -21,6 +21,9 @@ namespace PlayingAround.Interfaces
         public void Draw (SpriteBatch spriteBatch);
         public void DrawTexture(SpriteBatch spriteBatch);
         public DrawSpecificStats DrawSpecifics { get; }
+        public void DrawCellHighlight(SpriteBatch spriteBatch);
+        public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
+        public void UpdateMovement(GameTime gameTime);
     }
     public interface IAnimatable : IDrawn
     {
@@ -30,7 +33,6 @@ namespace PlayingAround.Interfaces
         public Direction FacingDirection { get; set; }
         public AnimationState CurrentAnimationState { get; set; }
         public Vector2? MoveTarget { get; set; }
-        public void UpdateMovement(GameTime gameTime);
         public void SetFacingDirection(Vector2 vec);
         public void SetCurrentAnimationState();
         public void SetCurrentAnimationStateToIdle();
@@ -47,7 +49,7 @@ namespace PlayingAround.Interfaces
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
 
-        void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
+        
         void Update(GameTime gameTime);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();

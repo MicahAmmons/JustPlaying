@@ -60,7 +60,6 @@ namespace PlayingAround.Managers.CombatMan
         public PlayMonsters PlayMonsters; // kept as reference as needed
         private List<TileCell> _playerSpawnableCells = new List<TileCell>();
         private List<TileCell> _monsterSpawnableCells = new List<TileCell>();
-        private TileCell _statHoverCellHighlight;
 
         private TileCell _currentClickedCell;
         private TileCell _currentMouseHoverCell;
@@ -230,7 +229,6 @@ namespace PlayingAround.Managers.CombatMan
             }
             DrawDebugInfo(spriteBatch);
             DrawDisplayStats(spriteBatch);
-            DrawStatHoverHighlight(spriteBatch);
             _visualEffectManager.Draw(spriteBatch, _font);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
 
@@ -282,14 +280,6 @@ namespace PlayingAround.Managers.CombatMan
             );
 
             spriteBatch.DrawString(_font, buttonText, buttonTextPos, Color.White);
-        }
-
-        public void DrawStatHoverHighlight(SpriteBatch spriteBatch)
-        {
-            if (_statHoverCellHighlight != null)
-            {
-                _statHoverCellHighlight.DrawCellHighlight(spriteBatch, ColorPalette.DarkColor);
-            }
         }
         public void DrawDisplayStats(SpriteBatch spriteBatch)
         {
@@ -1123,11 +1113,19 @@ namespace PlayingAround.Managers.CombatMan
                 Rectangle rect = kvp.Value;
                 if (rect.Contains(_currentMousePos))
                 {
-                    _statHoverCellHighlight = GetCombatantCurrentCell(mon);
+                    mon.DrawSpecifics.shrink = 5;
+                    Color col = ColorPalette.DarkColor;
+                    switch (mon.Is)
+                    {
+                        case CombatMonsterType.Player: col = Color.LimeGreen; break;
+                            case CombatMonsterType.AI: col = Color.MediumVioletRed; break;
+                            case CombatMonsterType.Summoned: col = Color.LightCoral; break;
+                    }
+                    mon.DrawSpecifics.HighlightCol = col;
+                    mon.DrawSpecifics.DrawCellHightlight = true;
                     return;
                 }
             }
-            _statHoverCellHighlight = null;
         }
         private void HandlePlayerChooseSummonedCell()
         {
