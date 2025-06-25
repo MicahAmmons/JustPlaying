@@ -49,7 +49,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public AnimationState CurrentAnimationState { get; set; }
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public Vector2? MoveTarget { get; set; }
-        public List<TileCell> MoveTargetCellList { get; set; }
+        public List<TileCell> MoveTargetCellList { get; set; } = new List<TileCell>();
         public Dictionary<MonsterActionOrder, Func<bool>> ActionExecutors { get; private set; } = new();
         public Dictionary<MonsterActionOrder, AITurnState> ActionStates { get; private set; } = new();
 
@@ -355,7 +355,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CurrentStats.AttackEffectedCombatants = combatant;
             CurrentStats.AttackEffectedCells = cell;
         }
-        private void SetCombatantAttackPathingInformation()
+        public void SetCombatantAttackPathingInformation()
         {
             SingleAttack att = CurrentStats.Attack;
             ICombatant target = CurrentStats.AttackEffectedCombatants;
@@ -400,6 +400,25 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CurrentStats.Attack = null;
             CurrentStats.AttackEffectedCells = null;
             CurrentStats.AttackEffectedCombatants = null;
+            CurrentStats.AttackPath1.Clear();
+            CurrentStats.AttackPath2.Clear();
+            CurrentStats.CurrentSelectedSummon = null;
+
+        }
+        public void ResolveAspects(TickedTiming ticked)
+        {
+
+            if (Aspects.Count == 0) return;
+            foreach (var aspect in Aspects)
+            {
+                if (aspect.WhenTicked != ticked) continue;
+                    if (aspect.IsDamage)
+                    {
+                        ApplyDamage(aspect.Damage, aspect.DamageType);
+                        aspect.Duration -= 1;
+                    }
+                if (aspect.Duration == 0) Aspects.Remove(aspect);
+            }
         }
     }
     public enum MonsterActionOrder

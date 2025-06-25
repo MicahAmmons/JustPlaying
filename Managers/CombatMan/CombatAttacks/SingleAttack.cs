@@ -42,9 +42,12 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             Animated = data.Animated;
             VisualTiming = data.VisualTiming;
             WhenApplyAspect = data.WhenApplyEffect;
-            foreach (var tar in data.TargetType)
+            if (data.TargetType.Count > 0)
             {
-                TargetType.Add(tar);
+                foreach (var tar in data.TargetType)
+                {
+                    TargetType.Add(tar);
+                }
             }
             if (data.AttackHasIcon)
                 Icon = AssetManager.GetTexture($"{Name}");

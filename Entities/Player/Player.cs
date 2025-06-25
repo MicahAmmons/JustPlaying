@@ -276,6 +276,83 @@ namespace PlayingAround.Entities.Player
             DrawSpecifics.AllowedToBeDrawn = !DrawSpecifics.AllowedToBeDrawn;
         }
 
+        public void UpdateTopOfActionStats()
+        {
+            CurrentStats.MP = BaseStats.MP;
+            CurrentStats.ChooseWhichAttack.Clear();
+            CurrentStats.ActionOrder.Clear();
+        
+        }
+
+        public CombatStateMachine.AITurnState? DecideAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SpendActionPoint()
+        {
+            CurrentStats.AP -= 1;
+        }
+        public void ResolveAspects(TickedTiming ticked)
+        {
+
+            if (Aspects.Count == 0) return;
+            foreach (var aspect in Aspects)
+            {
+                if (aspect.WhenTicked != ticked) continue;
+                if (aspect.IsDamage)
+                {
+                    ApplyDamage(aspect.Damage, aspect.DamageType);
+                    aspect.Duration -= 1;
+                }
+                if (aspect.Duration == 0) Aspects.Remove(aspect);
+            }
+        }
+
+
+
+
+
+
+        public bool IsAttackComplete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCurrentEffected(ICombatant combatant, TileCell cell)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PerformAttack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyAspect(string aspect, ElementType elementDamage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyDamage(float damage, ElementType elementDamage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateNewAttackVisual()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearAttackCycle()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCombatantAttackPathingInformation()
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

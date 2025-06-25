@@ -21,25 +21,6 @@ namespace PlayingAround.Managers.CombatMan.Aspects
             _aspectData = JsonLoader.LoadAspectData();
 
         }
-        public static void ResolveAspect(ICombatant mon, TickedTiming timing)
-        {
-            foreach (var asp in mon.Aspects)
-            {
-                if (asp.WhenTicked != timing)
-                    continue;
-
-                if (asp.IsDamage)
-                    AttackManager.ApplyDamage(asp.Damage, mon);
-
-                asp.Duration -= 1;
-            }
-
-            mon.Aspects.RemoveAll(a => a.Duration <= 0);
-        }
-
-
-
-
         public static Aspect GetAspect(string effect, ElementType element = ElementType.None)
         {
             AspectData aspectTempl = _aspectData[effect];

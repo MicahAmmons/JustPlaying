@@ -59,6 +59,8 @@ namespace PlayingAround.Interfaces
         void ApplyDamage(float damage, ElementType elementDamage);
         public void CreateNewAttackVisual();
         public void ClearAttackCycle();
+        public void SetCombatantAttackPathingInformation();
+        public void ResolveAspects(TickedTiming endOfTurn);
     }
 
 
