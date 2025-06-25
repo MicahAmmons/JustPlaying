@@ -22,7 +22,7 @@ namespace PlayingAround.Managers.CombatMan.ActionLibrary
             new()
             {
             { MonsterActionOrder.MoveTowardsClosestEnemy, AITurnState.ExecutingMove },
-            { MonsterActionOrder.AttackClosestEnemy, AITurnState.AIAttacking },
+            { MonsterActionOrder.AttackClosestEnemy, AITurnState.ExecutingAttack },
             };
     }
 }

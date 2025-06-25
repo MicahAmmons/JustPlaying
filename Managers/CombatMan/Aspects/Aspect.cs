@@ -35,6 +35,7 @@ namespace PlayingAround.Managers.CombatMan.Aspects
             IsStackable = data.IsStackable;
             Icon = AssetManager.GetTexture($"AcidIcon");
             IsDamage = data.IsDamage;
+
         }
 
     }

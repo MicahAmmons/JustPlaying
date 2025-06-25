@@ -33,35 +33,20 @@ namespace PlayingAround.Managers.Movement
 
             return bestPath ?? new List<TileCell>(); // return empty if none found
         }
-        public static (List<Vector2>, List<Vector2>, List<Vector2>, Texture2D) SplitAttackPath(List<Vector2> attackPath, SingleAttack att)
+        public static (List<Vector2>, List<Vector2>) SplitAttackPath(List<Vector2> attackPath)
         {
             List<Vector2> result1 = null;
             List<Vector2> result2 = null;
-            List<Vector2> result3 = null;
-            Texture2D texture = null;
 
-            string name = att.Name.ToString().Replace(" ", "");
-
-            if (att.Icon != null)
-                texture = att.Icon;
-
-            switch (name.ToLowerInvariant())
-            {
-                case "slam":
-                    result1 = new List<Vector2>();
-                    int half = attackPath.Count / 2;
-                    for (int i = 0; i < half; i++)
-                        result1.Add(attackPath[i]);
-                    result2 = new List<Vector2>(result1);
-                    result2.Reverse();
-                    break;
-
-                case "acidspit":
-                    result3 = new List<Vector2>(attackPath);
-                    break;
+            result1 = new List<Vector2>();
+            int half = attackPath.Count / 2;
+            for (int i = 0; i < half; i++) 
+            { 
+              result1.Add(attackPath[i]);
+              result2 = new List<Vector2>(result1);
+              result2.Reverse(); 
             }
-
-            return (result1, result2, result3, texture);
+            return (result1, result2);
         }
         public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)
         {

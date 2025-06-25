@@ -651,7 +651,6 @@ namespace PlayingAround.Managers.CombatMan
                 return;
             }
             _visualEffectManager.Update(delta);
-            UpdateMonsterTakingDamage(delta);
             ToggleIsDead(); // toggles ISDead as well as clears aspects
             UpdateCurrentMonster();
             UpdateMonsterCellMap();
@@ -668,6 +667,7 @@ namespace PlayingAround.Managers.CombatMan
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
                     UpdateMonsterTopOfRoundStats();
                     PickWhichEntitiesTurn();
+                    UpdateAttackTargetsAndRanges();
                     break;
                 case CombatState.AITurn:
                     
@@ -687,12 +687,8 @@ namespace PlayingAround.Managers.CombatMan
                             if (MonsterFinishedMoving()) { 
                                 FinishedMoving(); SetAITurnState(AITurnState.ActionNavigation); }
                             break;
-                        case AITurnState.AIAttacking:
-                            SetAITurnState(AITurnState.ExecutingAttack);
-                            if (AICanAttack()) _attackComplete = false;
-                            break;
                         case AITurnState.ExecutingAttack:
-                            if (_attackComplete) {
+                            if (AttackIsComplete()) {
                                 SetAITurnState(AITurnState.ActionNavigation); return; }
                             WaitForAttackToFinish(delta);
                             break;
@@ -751,6 +747,14 @@ namespace PlayingAround.Managers.CombatMan
                     if (_timer >= 1f) LeaveResolvingStartOfTurnEffects();
                     break;
                     
+            }
+        }
+        private void UpdateAttackTargetsAndRanges()
+        {
+            if (_currentCombatant.Attacks.Count == 0) return;
+            foreach (var att in _currentCombatant.Attacks)
+            {
+                att.UpdateTargetMap(GetCombatantCurrentCell(_currentCombatant));
             }
         }
         private bool WinnerChosen()
@@ -858,33 +862,7 @@ namespace PlayingAround.Managers.CombatMan
         //    return true;
         //}
 
-        private void SetMonsterAttackPathingInformation(SingleAttack att, List<ICombatant> mons, List<TileCell> cells)
-        {
-            // this method will set the monster property of attack path(s), current attacks, specified current target info, and visualeffect
-            ICombatant mon = _currentCombatant;
-            var attackDetails = (att, mons, cells);
-            if (attackDetails.Item1 == null)
-            {
-                AIActionNavigation();
-                return;
-            }
-            TileCell currentCell = GetCombatantCurrentCell(mon);
 
-            TileCell centerCell = FindCenterCell(attackDetails.Item3);
-            List<Vector2> path = NPCMovement.GetMovementPatternVector2List(mon.DrawSpecifics.MovementPattern, currentCell, centerCell);
-            var paths = GridMovement.SplitAttackPath(path, attackDetails.Item1);
-            mon.CurrentStats.AttackPath1 = paths.Item1;
-            mon.CurrentStats.AttackPath2 = paths.Item2;
-            mon.CurrentStats.Attack = attackDetails.Item1;
-            mon.CurrentStats.AttackEffectedCombatants = attackDetails.Item2;
-            mon.CurrentStats.AttackEffectedCells = attackDetails.Item3;
-            if (mon.CurrentStats.Attack.Animated)
-            {
-                _currentAttackVisualEffect = new VisualEffect(GetCombatantCurrentCell(mon), mon.CurrentStats.Attack, centerCell);
-            }
-
-
-        }
 
         private Dictionary<SingleAttack, List<TileCell>> GetInRangeCellsByAttack(List<SingleAttack> attacks, TileCell origin)
         {
@@ -944,8 +922,8 @@ namespace PlayingAround.Managers.CombatMan
 
         //}
         public bool AIHasMP() => _currentCombatant.CurrentStats.MP >= 0;
+        public bool AttackIsComplete() => _currentCombatant.IsAttackComplete();
         public bool MonsterFinishedMoving() =>  _currentCombatant.CurrentStats.MovePath == null || _currentCombatant.CurrentStats.MovePath.Count <= 0;
-        public bool AICanAttack() => _currentCombatant.CurrentStats.Attack != null;
         public bool PlayerHasEndPoint() => _currentCombatant.CurrentStats.MovementEndPoint != null;
         public bool PlayerHasMovePath() => _currentCombatant.CurrentStats.MovePath.Count > 0;
         private void AIFinishedAttack()
@@ -960,59 +938,53 @@ namespace PlayingAround.Managers.CombatMan
         private void WaitForAttackToFinish(float delta)
         {
             ICombatant mon = _currentCombatant;
-
-            // 🔄 Visual Effect Handling (returns true if we should pause execution)
-            if (HandleAttackVisualEffect())
+            SingleAttack att = mon.CurrentStats.Attack;
+            if (!MonsterFinishedMoving()) return;
+            if (att.Visual == null && att.VisualTiming == VisualTiming.BeforeAttack)
+            {
+                mon.CreateNewAttackVisual();
+                _visualEffectManager.AddEffect(att.Visual);
                 return;
+            }
 
-            if (mon.CurrentStats.AttackPath1 != null && mon.CurrentStats.AttackPath1.Count > 0)
+            if (mon.CurrentStats.Attack.Visual != null && !mon.CurrentStats.Attack.Visual.IsFinished ) return;
+
+            if (mon.CurrentStats.AttackPath1.Count > 0)
             {
                 mon.CurrentStats.MovePath = mon.CurrentStats.AttackPath1;
-                mon.CurrentStats.AttackPath1 = null;
-                switch (mon.Is)
+                mon.CurrentStats.AttackPath1.Clear();
+                if (mon.Is == CombatMonsterType.Summoned)
                 {
-                    case CombatMonsterType.Player:
-                        SetPlayerTurnState(PlayerTurnState.PlayerExecutingAttack);
-                        break;
-                    case CombatMonsterType.Summoned:
-                        if (StateSummoned != SummonedTurnState.SummonedExecutingAttack)
-                            SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
-                        break;
+                   SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
                 }
                 return;
-
             }
-            else if (!_attackPerformed)
+            if (att.Visual == null && att.VisualTiming == VisualTiming.DuringAttack)
             {
-                _attackPerformed = true;
-                AttackManager.PerformAttack(mon.CurrentStats.Attack, mon, mon.CurrentStats.AttackEffectedCombatants, mon.CurrentStats.AttackEffectedCells);
-
-                mon.CurrentStats.Attack = null;
-                mon.CurrentStats.AttackEffectedCombatants = null;
-                mon.CurrentStats.AttackEffectedCells = null;
-
-                // 👇 Handle "AfterAttack" visuals here
-                if (_currentAttackVisualEffect != null && _currentAttackVisualEffect.WhenToStart == VisualTiming.AfterAttack)
-                {
-                    VisualEffectManager.AddEffect(_currentAttackVisualEffect);
-                    _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
-                    return;
-                }
-
-                return;
+                mon.CreateNewAttackVisual();
+                _visualEffectManager.AddEffect(att.Visual);
             }
-            else if (mon.CurrentStats.AttackPath2 != null && mon.CurrentStats.AttackPath2.Count > 0)
+
+            mon.PerformAttack();
+
+            if (att.Visual == null && att.VisualTiming == VisualTiming.AfterAttack)
+            {
+                mon.CreateNewAttackVisual();
+                _visualEffectManager.AddEffect(att.Visual);
+            }
+            
+            if (mon.CurrentStats.AttackPath2.Count > 0)
             {
                 mon.CurrentStats.MovePath = mon.CurrentStats.AttackPath2;
                 mon.CurrentStats.AttackPath2 = null;
-                if (StateCombat == CombatState.PlayerTurn)
+                if (mon.Is == CombatMonsterType.Summoned)
                 {
-                    SetPlayerTurnState(PlayerTurnState.PlayerExecutingAttack);
+                    SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
                 }
-                if (StateCombat == CombatState.SummonedTurn) { SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack); }
                 return;
             }
-            //attack and movement associated it is finished, so go to next turn
+            mon.ClearAttackCycle();
+ 
             switch (mon.Is)
             {
                 case CombatMonsterType.Player:
@@ -1034,46 +1006,6 @@ namespace PlayingAround.Managers.CombatMan
             _attackPerformed = false;
             SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
         }
-        private bool HandleAttackVisualEffect()
-        {
-            if (_currentAttackVisualEffect == null)
-                return false;
-
-            switch (_currentAttackVisualEffect.WhenToStart)
-            {
-                case VisualTiming.BeforeAttack:
-
-                    _visualEffectManager.AddEffect(_currentAttackVisualEffect);
-                    _currentAttackVisualEffect.WhenToStart = VisualTiming.IsRunning;
-                    return true; // Hold until finished
-
-                case VisualTiming.DuringAttack:
-                    var mon = _currentCombatant;
-                    if (!_attackComplete && (mon.CurrentStats.AttackPath1 == null || mon.CurrentStats.AttackPath1.Count <= 0))
-                    {
-                        _visualEffectManager.AddEffect(_currentAttackVisualEffect);
-                        _currentAttackVisualEffect = null;
-                    }
-                    return false;
-
-                case VisualTiming.AfterAttack:
-                    return false; // We'll handle this after the attack completes
-
-                case VisualTiming.IsRunning:
-                    if (!_currentAttackVisualEffect.IsFinished)
-                        return true;
-                    else
-                        _currentAttackVisualEffect.WhenToStart = VisualTiming.Complete;
-                    return true;
-
-                case VisualTiming.Complete:
-                    _currentAttackVisualEffect = null;
-                    return false;
-            }
-
-            return false;
-        }
-
 
 
 
@@ -1344,21 +1276,6 @@ namespace PlayingAround.Managers.CombatMan
 
 
 
-        private void UpdateMonsterTakingDamage(float delta)
-        {
-            foreach (var mon in TurnOrder)
-            {
-                if (mon.DrawSpecifics.IsFlashingRed)
-                {
-                    mon.DrawSpecifics.DamageFlashTimer -= delta;
-                    if (mon.DrawSpecifics.DamageFlashTimer <= 0f)
-                    {
-                        mon.DrawSpecifics.IsFlashingRed = false;
-                    }
-                }
-            }
-
-        }
         private void ResolveAspects(TickedTiming tick)
         {
             ICombatant mon = _currentCombatant;
@@ -1604,12 +1521,6 @@ namespace PlayingAround.Managers.CombatMan
             }
             else return null;
             return startCell;
-        }
-        private TileCell FindCenterCell(List<TileCell> cells)
-        {
-            if (cells.Count == 0) return null;
-            if (cells.Count == 1) return cells[0];
-            return cells[0];
         }
         public  List<TileCell> GetPathToPlayerSelectedCell(TileCell start, TileCell destination)
         {

@@ -38,28 +38,23 @@ namespace PlayingAround.Visuals
                 Color = color == default ? Color.White : color;
             ShouldFade = true;
             }
-            public VisualEffect(TileCell cell, SingleAttack att, TileCell centerCell,  Color color = default)
+        public VisualEffect(Vector2 start, Vector2 target, AttackName name, float speed , Color color = default)
             {
-                WhenToStart = att.VisualTiming;
-            Vector2 vec = TileManager.OffSetFromCenterOfDiamond( cell.CenterPoint);
+                      Vector2 vec = TileManager.OffSetFromCenterOfDiamond(start);
                 Position =  new Vector2(vec.X + MapTile.TileWidth/4, vec.Y + MapTile.TileHeight/4);
-            Vector2 vecEnd = TileManager.OffSetFromCenterOfDiamond(centerCell.CenterPoint);
-            EndingPosition = new Vector2(vecEnd.X + MapTile.TileWidth / 4, vecEnd.Y + MapTile.TileHeight/4);
-                MovementSpeed = att.VisualVelocity;
-                Texture = AssetManager.GetTexture($"{att.Name.ToString()}");
-
+                     Vector2 vecEnd = TileManager.OffSetFromCenterOfDiamond(target);
+                EndingPosition = new Vector2(vecEnd.X + MapTile.TileWidth / 4, vecEnd.Y + MapTile.TileHeight/4);
+                Texture = AssetManager.GetTexture($"{name.ToString()}");
                 Color = color == default ? Color.White : color;
-                Vector2 direction = EndingPosition - Position;
+                     Vector2 direction = EndingPosition - Position;
                 if (direction != Vector2.Zero)
                     direction.Normalize();
+                MovementSpeed = speed;
                 Velocity = direction * MovementSpeed;
-                float distance = Vector2.Distance(Position, EndingPosition);
+                    float distance = Vector2.Distance(Position, EndingPosition);
                 Duration = distance / MovementSpeed;
-            if (att.Animated)
-            {
                 Width = 32;
                 Height = 32;
-            }
 
         }
 

@@ -51,7 +51,13 @@ namespace PlayingAround.Interfaces
         void Update(GameTime gameTime);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();
-        public void SpentActionPoint();
+        public void SpendActionPoint();
+        bool IsAttackComplete();
+        void PerformAttack();
+        void ApplyAspect(string aspect, ElementType elementDamage);
+        void ApplyDamage(float damage, ElementType elementDamage);
+        public void CreateNewAttackVisual();
+        public void ClearAttackCycle();
     }
 
 

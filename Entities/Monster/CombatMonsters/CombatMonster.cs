@@ -12,6 +12,7 @@ using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ using static CombatStateMachine;
 
 namespace PlayingAround.Entities.Monster.CombatMonsters
 {
-    public class CombatMonster: ICombatant
+    public class CombatMonster : ICombatant
     {
 
         public string UniqueId { get; set; }
@@ -42,12 +43,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool isDead { get; set; } = false;
         public Texture2D Icon { get; set; }
         public Texture2D SpriteSheet { get; set; }
-        public CombatMonsterType Is {  get; set; }
+        public CombatMonsterType Is { get; set; }
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Direction FacingDirection { get; set; } = Direction.Right;
         public AnimationState CurrentAnimationState { get; set; }
-        public List<TileCell> MoveableCells {  get; set; } = new List<TileCell> { };
-        public Vector2? MoveTarget {  get; set; }
+        public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
+        public Vector2? MoveTarget { get; set; }
         public List<TileCell> MoveTargetCellList { get; set; }
         public Dictionary<MonsterActionOrder, Func<bool>> ActionExecutors { get; private set; } = new();
         public Dictionary<MonsterActionOrder, AITurnState> ActionStates { get; private set; } = new();
@@ -55,7 +56,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
 
 
-        public CombatMonster (CombatMonsterData data, ElementType element = ElementType.None)
+        public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
             ElementType = element == ElementType.None ? data.DefaultElementType : element;
             BaseStats = new BaseCombatStats()
@@ -120,7 +121,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void SetFacingDirection(Vector2 vec)
         {
-            FacingDirection =vec.X <= 0 ? Direction.Right : Direction.Left;
+            FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
         }
         public void SetCurrentAnimationState()
         {
@@ -184,7 +185,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                DrawSpecifics.Height
            );
             Rectangle source = AnimationController.GetCurrentFrame();
-            spriteBatch.Draw(Icon, dest, source, DrawSpecifics.IsFlashingRed? Color.Red: Color.White);
+            spriteBatch.Draw(Icon, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
         }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
@@ -213,10 +214,21 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             UpdateAnimation(gameTime);
             PopulateMovementPath(gameTime);
+            UpdateMonsterTakingDamage(gameTime);
         }
+        private void UpdateMonsterTakingDamage(GameTime gameTime)
+        {
+                if (DrawSpecifics.IsFlashingRed)
+                {
+                    DrawSpecifics.DamageFlashTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+                    if (DrawSpecifics.DamageFlashTimer <= 0f)
+                    {
+                        DrawSpecifics.IsFlashingRed = false;
+                    }
+                }
+            
 
-
-
+        }
         public void UpdateTopOfActionStats()
         {
             switch (Is)
@@ -241,7 +253,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
                     break;
             }
-          
+
         }
         public AITurnState? DecideAction()
         {
@@ -258,7 +270,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             return null;
         }
-        private void SpendActionPoint()
+        public void SpendActionPoint()
         {
             CurrentStats.AP -= 1;
         }
@@ -304,44 +316,91 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             return list;
         }
-        private bool AttackClosestEnemy()
-        {
-            TileCell currentCell = TileManager.GetCell(CurrentStats.Pos);
-
-            //inRangeMap send any and all attacks that have a valid range, including non monster cells
-            Dictionary<SingleAttack, List<TileCell>> inRangeMap = GetInRangeCellsByAttack(Attacks, currentCell);
-            if (inRangeMap.Count == 0)
+        public bool AttackClosestEnemy()
+        { 
+            List<SingleAttack> attks = new List<SingleAttack>(Attacks);
+            // Remove any attacks that don't have any targets within range
+            foreach (var att in attks)
             {
-                return false;
+                if (att.ActiveTargetMap.Count == 0) attks.Remove(att);
             }
-            // Choose targets for each attack using the targeting strategy
-            var targetData = new Dictionary<SingleAttack, Dictionary<ICombatant, List<TileCell>>>();
+            if (attks.Count == 0) return false;
 
-            foreach (var pair in inRangeMap)
+            // Sort the list by range distance
+            attks = attks.OrderBy(att => att.Range).ToList();
+            CurrentStats.Attack = attks[0];
+
+            //Find the closest Target
+            int dist = int.MaxValue;
+            ICombatant combatant = null;
+            TileCell cell = null;
+            foreach (var kvp in CurrentStats.Attack.ActiveTargetMap)
             {
-                pair.Value.Remove(origin);
-                var (target, affectedCells) = AttackManager.TargetClosestEnemy(pair.Value, origin);
-                if (target != null && affectedCells.Count > 0)
+                ICombatant comb = kvp.Key;
+                TileCell cells = kvp.Value;
+                int distance = TileManager.CheckManhattanDistance(TileManager.GetCell(CurrentStats.Pos), cells);
+                if (distance < dist)
                 {
-                    targetData[pair.Key] = new Dictionary<ICombatant, List<TileCell>>
-            {
-                { target, affectedCells }
-            };
+                    dist = distance;
+                    combatant = comb;
+                    cell = cells;
                 }
             }
-
-            // Use the selected targeting behavior to pick the final attack
-            var (chosenAttack, chosenMap) = AttackManager.ChooseWhichAttack(targetData, origin, mon.CurrentStats.ChooseWhichAttack);
-
-            SetMonsterAttackPathingInformation(
-                chosenAttack,
-                chosenMap.Keys.ToList(),
-                chosenMap.Values.SelectMany(x => x).ToList()
-            );
+            CurrentStats.AttackEffectedCombatants = combatant;
+            CurrentStats.AttackEffectedCells = cell;
+            SetCombatantAttackPathingInformation();
             return true;
         }
-    }
+        private void SetCombatantAttackPathingInformation()
+        {
+            SingleAttack att = CurrentStats.Attack;
+            ICombatant target = CurrentStats.AttackEffectedCombatants;
+            TileCell cell = CurrentStats.AttackEffectedCells;
 
+            List<Vector2> fullPath = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, TileManager.GetCell(CurrentStats.Pos), cell);
+            var paths = GridMovement.SplitAttackPath(fullPath);
+            if (att.Name == AttackName.Slam)
+            {
+                CurrentStats.AttackPath1 = paths.Item1;
+                CurrentStats.AttackPath2 = paths.Item2;
+            }
+        }
+        public void PerformAttack()
+        {
+            AttackManager.PerformAttack(CurrentStats.Attack, CurrentStats.AttackEffectedCombatants);
+        }
+        public bool IsAttackComplete()
+        {
+            return (CurrentStats.AttackPath1.Count == 0 && CurrentStats.AttackPath2.Count == 0 && CurrentStats.MovePath.Count == 0 && CurrentStats.Attack.Visual.IsFinished && CurrentStats.Attack == null);
+          
+        }
+
+        public void ApplyAspect(string aspect, ElementType elementDamage)
+        {
+            Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
+            Aspects.Add(asp);
+        }
+
+        public void ApplyDamage(float damage, ElementType elementDamage)
+        {
+            float finalDamage = CurrentStats.Resistances[elementDamage] * damage;
+            CurrentStats.Health -= (int)finalDamage;
+            DrawSpecifics.IsFlashingRed = true;
+            DrawSpecifics.DamageFlashTimer = 0.5f;
+        }
+        public void CreateNewAttackVisual()
+        {
+            SingleAttack att = CurrentStats.Attack;
+            att.Visual = new VisualEffect(CurrentStats.Pos, CurrentStats.AttackEffectedCombatants.CurrentStats.Pos, att.Name, att.VisualVelocity);
+        }
+
+        public void ClearAttackCycle()
+        {
+            CurrentStats.Attack = null;
+            CurrentStats.AttackEffectedCells = null;
+            CurrentStats.AttackEffectedCombatants = null;
+        }
+    }
     public enum MonsterActionOrder
     {
         AttackClosestEnemy,

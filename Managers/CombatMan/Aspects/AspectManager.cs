@@ -40,17 +40,16 @@ namespace PlayingAround.Managers.CombatMan.Aspects
 
 
 
-        public static void ApplyAspect(ICombatant target, SingleAttack attack, ICombatant attacker = null)
+        public static Aspect GetAspect(string effect, ElementType element = ElementType.None)
         {
-            string effect = attack.Aspect;
             AspectData aspectTempl = _aspectData[effect];
             var aspectCopy = DeepCopyHelper.DeepCopy(aspectTempl);
-            Aspect asp = new Aspect(effect, aspectCopy)
+            Aspect asp = new    Aspect(effect, aspectCopy)
             {
-                Damage = aspectTempl.Damage,
+                
             };
 
-                target.Aspects.Add(asp);
+            return asp;
             
             
         }

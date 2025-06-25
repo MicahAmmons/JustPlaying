@@ -1,7 +1,13 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Game.Map;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.Tiles;
 using PlayingAround.Visuals;
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace PlayingAround.Managers.CombatMan.CombatAttacks
@@ -19,6 +25,9 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public bool Animated { get; set; } = false;
          public VisualTiming VisualTiming { get; set; } 
         public string WhenApplyAspect { get; set; }
+        public Dictionary<ICombatant, TileCell> ActiveTargetMap { get; set; } 
+        public List<CombatMonsterType> TargetType { get; set; } = new List<CombatMonsterType>();
+        public VisualEffect Visual {  get; set; }
 
        
         public SingleAttack (AttackName name, SingleAttackData data, ElementType element = ElementType.None)
@@ -33,10 +42,43 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             Animated = data.Animated;
             VisualTiming = data.VisualTiming;
             WhenApplyAspect = data.WhenApplyEffect;
+            foreach (var tar in data.TargetType)
+            {
+                TargetType.Add(tar);
+            }
             if (data.AttackHasIcon)
                 Icon = AssetManager.GetTexture($"{Name}");
+            ActiveTargetMap = new Dictionary<ICombatant, TileCell>();
         }
+        public void UpdateTargetMap(TileCell currentCell)
+        {
+            ActiveTargetMap.Clear();
+            var playerMap = CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
+            var monsterMap = CombatGuard.CurrentCombat.AIControlledMonsterMap;
+            if (TargetType.Contains(CombatMonsterType.Player))
+            {
+                foreach (var kvp in playerMap)
+                {
+                    ICombatant combatant = kvp.Key;
+                    TileCell cell = kvp.Value;
+                    if (TileManager.CheckManhattanDistance(currentCell, cell) <= Range)
+                    {
+                        ActiveTargetMap[combatant] = cell ;
+                    }
+                }
+                return;
+            }
+            if (TargetType.Contains(CombatMonsterType.Player))
+            {
 
+                return;
+            }
+            if (TargetType.Contains(CombatMonsterType.Player))
+            {
+
+                return;
+            }
+        }
 
     }
 

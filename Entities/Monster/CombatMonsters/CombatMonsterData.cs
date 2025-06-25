@@ -4,6 +4,7 @@ using PlayingAround.Data.SaveData;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -64,16 +65,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<Vector2> AttackPath1 { get; set; } = null;
         public List<Vector2> AttackPath2 { get; set; } = null;
         public SingleAttack Attack { get; set; } = null;
-        public List<ICombatant> AttackEffectedCombatants { get; set; } = null;
-        public List<TileCell> AttackEffectedCells { get; set; } = null;
-        public List<TileCell> AttackRange {  get; set; } = null;
+        public ICombatant AttackEffectedCombatants { get; set; } = null;
+        public TileCell AttackEffectedCells { get; set; } = null;
         public TileCell MovementEndPoint { get; set; } = null;
         public List<Vector2> MovePath { get; set; } = new();
         public Queue<MonsterActionOrder> ActionOrder { get; set; } = new Queue<MonsterActionOrder>();
         public Queue<ChooseWhichMonsterAttack> ChooseWhichAttack { get; set; } = new Queue<ChooseWhichMonsterAttack>();
         public ElementType ElementType { get; set; }
         public (string name, SummonedSavedStats data)? CurrentSelectedSummon {  get; set; }
-
 
     }
 }

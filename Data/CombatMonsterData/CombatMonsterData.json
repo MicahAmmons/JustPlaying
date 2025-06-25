@@ -25,8 +25,8 @@
       "Spit": "Acid" 
     },
     "ActionOrder": [
-      "MoveTowardsClosestEnemy",
-      "AttackClosestEnemy"
+      "AttackClosestEnemy",
+      "MoveTowardsClosestEnemy"
     ],
     "DecideWhichAttack": [
       "ShortestRange"

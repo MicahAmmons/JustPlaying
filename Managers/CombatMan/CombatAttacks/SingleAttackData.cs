@@ -1,4 +1,5 @@
-﻿using PlayingAround.Managers.CombatMan.Aspects;
+﻿using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public VisualTiming VisualTiming { get; set; }
         public int VisualVelocity { get; set; }
         public bool Animated { get; set; }
+        public List<CombatMonsterType> TargetType { get; set; }
 
 
     }
