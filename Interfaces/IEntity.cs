@@ -50,8 +50,6 @@ namespace PlayingAround.Interfaces
         public bool isDead { get; set; }
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
-
-        
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();

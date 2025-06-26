@@ -172,6 +172,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            DrawSpecifics.VEManager.Draw(spriteBatch);
             DrawTexture(spriteBatch);
             DrawCellHighlight(spriteBatch);
         }
@@ -420,9 +421,44 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             int finalDamage = (int)MathF.Round(CurrentStats.Resistances[elementDamage] * damage);
             CurrentStats.Health -= finalDamage;
+            CreateNumericalDamageVE(finalDamage, elementDamage);
+           
             DrawSpecifics.IsFlashingRed = true;
             DrawSpecifics.DamageFlashTimer = 0.5f;
         }
+        public void CreateNumericalDamageVE(int damage, ElementType elementDamage)
+        {
+            Vector2 perimeterPos = GetRandomPointOnPerimeter(CurrentStats.Pos, DrawSpecifics.Width, DrawSpecifics.Height);
+            DrawSpecifics.VEManager.AddEffect(new Visuals.VisualEffect(perimeterPos, new Vector2(0, -1), 1)
+            {
+                Color = ColorPalette.GetElementColor(elementDamage),
+                Text = $"{damage}",
+            });
+        }
+        private static Vector2 GetRandomPointOnPerimeter(Vector2 bottomCenter, int width, int height)
+        {
+            float halfWidth = width / 2f;
+            float topY = bottomCenter.Y - height;
+            float leftX = bottomCenter.X - halfWidth;
+            float rightX = bottomCenter.X + halfWidth;
+
+            int side = RandomHut.rng.Next(4); // 0=top, 1=right, 2=bottom, 3=left
+            switch (side)
+            {
+                case 0: // top
+                    return new Vector2(leftX + RandomHut.rng.Next(width), topY);
+                case 1: // right
+                    return new Vector2(rightX, topY + RandomHut.rng.Next(height));
+                case 2: // bottom
+                    return new Vector2(leftX + RandomHut.rng.Next(width), bottomCenter.Y);
+                case 3: // left
+                default:
+                    return new Vector2(leftX, topY + RandomHut.rng.Next(height));
+            }
+        }
+
+
+
         public void CreateNewAttackVisual()
         {
             SingleAttack att = CurrentStats.Attack;

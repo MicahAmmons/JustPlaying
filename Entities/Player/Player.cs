@@ -269,19 +269,16 @@ namespace PlayingAround.Entities.Player
             spriteBatch.Draw(SpriteSheet, destination, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
           
         }
-
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
             spriteBatch.Draw(SpriteSheet, rect, AnimationController.GetCurrentFrame(),  Color.White);
         }
-
         internal void ToggleDrawn()
         {
             DrawSpecifics.AllowedToBeDrawn = !DrawSpecifics.AllowedToBeDrawn;
         }
-
         public void UpdateTopOfActionStats()
         {
             CurrentStats.MP = BaseStats.MP;
@@ -289,12 +286,10 @@ namespace PlayingAround.Entities.Player
             CurrentStats.ActionOrder.Clear();
         
         }
-
         public CombatStateMachine.AITurnState? DecideAction()
         {
             throw new NotImplementedException();
         }
-
         public void SpendActionPoint()
         {
             CurrentStats.AP -= 1;
@@ -314,33 +309,23 @@ namespace PlayingAround.Entities.Player
                 if (aspect.Duration == 0) Aspects.Remove(aspect);
             }
         }
-
-
-
-
-
-
         public bool IsAttackComplete()
         {
             throw new NotImplementedException();
         }
-
         public void SetCurrentEffected(ICombatant combatant, TileCell cell)
         {
             throw new NotImplementedException();
         }
-
         public void PerformAttack()
         {
             throw new NotImplementedException();
         }
-
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
             Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
             Aspects.Add(asp);
         }
-
         public void ApplyDamage(float damage, ElementType elementDamage)
         {
             int finalDamage = (int)MathF.Round(CurrentStats.Resistances[elementDamage] * damage);
@@ -353,22 +338,18 @@ namespace PlayingAround.Entities.Player
             DrawSpecifics.IsFlashingRed = true;
             DrawSpecifics.DamageFlashTimer = 0.5f;
         }
-
         public void CreateNewAttackVisual()
         {
             throw new NotImplementedException();
         }
-
         public void ClearAttackCycle()
         {
             throw new NotImplementedException();
         }
-
         public void SetCombatantAttackPathingInformation()
         {
             throw new NotImplementedException();
         }
-
         public void DrawCellHighlight(SpriteBatch spriteBatch)
         {
             if (DrawSpecifics.DrawCellHightlight)
@@ -390,7 +371,6 @@ namespace PlayingAround.Entities.Player
             }
 
         }
-
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
             if (DrawSpecifics.IsFlashingRed)
