@@ -25,7 +25,6 @@ namespace PlayingAround.Game.Pathfinding
 
             return cellPath.ToList();
         }
-
         private static List<TileCell> FindCellPath(TileCell start, TileCell goal)
         {
             var openSet = new PriorityQueue<TileCell, int>();
@@ -47,8 +46,9 @@ namespace PlayingAround.Game.Pathfinding
                 if (current == goal)
                     return ReconstructPath(cameFrom, current);
 
-                foreach (var neighbor in TileManager.GetWalkableNeighbors(current, goal))
+                foreach (var neighbor in TileManager.GetWalkableNeighbors(current))
                 {
+                    if (neighbor.BlockedByMonster) continue;
                     int moveCost = IsDiagonal(current, neighbor) ? DIAGONAL_COST : ORTHOGONAL_COST;
                     int tentativeG = gScore[current] + moveCost;
 
@@ -64,7 +64,6 @@ namespace PlayingAround.Game.Pathfinding
 
             return new(); // no path
         }
-
         private static List<TileCell> ReconstructPath(Dictionary<TileCell, TileCell> cameFrom, TileCell current)
         {
             var path = new List<TileCell> { current };
@@ -75,14 +74,12 @@ namespace PlayingAround.Game.Pathfinding
             }
             return path;
         }
-
         private static int Heuristic(TileCell a, TileCell b)
         {
             int dx = Math.Abs(a.X - b.X);
             int dy = Math.Abs(a.Y - b.Y);
             return 10 * Math.Max(dx, dy); // Chebyshev distance
         }
-
         private static bool IsDiagonal(TileCell a, TileCell b)
         {
             return Math.Abs(a.X - b.X) == 1 && Math.Abs(a.Y - b.Y) == 1;

@@ -103,5 +103,10 @@ namespace PlayingAround.Managers.Entities
                 _currentPlayer.UpdateMovement(gameTime);
             }
         }
+
+        public static void ClearAllPlayerAspects()
+        {
+            _currentPlayer.ClearAllAspects();
+        }
     }
 }

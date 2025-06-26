@@ -384,6 +384,11 @@ namespace PlayingAround.Entities.Player
 
 
         }
+
+        public void ClearAllAspects()
+        {
+            Aspects.Clear();
+        }
     }
     }
 

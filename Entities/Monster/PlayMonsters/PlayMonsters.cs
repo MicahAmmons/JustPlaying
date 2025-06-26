@@ -164,8 +164,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         private Vector2 FindEndPoint()
         {
             var tiles = TileManager.GetWalkableNeighbors(TileManager.GetCell(OOCombatStats.CurrentPos));
-            if (tiles.Count > 0) return tiles[RandomHut.rng.Next(0, tiles.Count - 1)].CenterPoint;
-            return Vector2.Zero;
+            int index = RandomHut.rng.Next(tiles.Count);
+            return tiles[index].CenterPoint;
         }
         public bool StayPaused(GameTime gameTime)
         {

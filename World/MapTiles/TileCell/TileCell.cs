@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Visuals;
 
 
 
@@ -28,6 +30,7 @@ namespace PlayingAround.Game.Map
         public bool BlockedByMonster { get; set; } = false;
         public Vector2 CenterPoint { get; set; }
         public string NPCName { get; set; }
+        public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
 
         public TileCell(TileCellData data)        
         {
@@ -47,6 +50,7 @@ namespace PlayingAround.Game.Map
             CenterPoint = new Vector2(data.X * MapTile.TileWidth, data.Y * MapTile.TileHeight );
         }
 
+
         public void DrawCellHighlight(SpriteBatch spriteBatch, Color col = default, int shrink = 0)
         {
             Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CenterPoint);
@@ -60,6 +64,12 @@ namespace PlayingAround.Game.Map
             spriteBatch.Draw(text, rect, col);
         }
 
+        public void AddVisualEffect()
+        {
+            VisualEffect ve = new VisualEffect(new Vector2(0,0), new Vector2(0,0), AttackName.Slam, 500);
+            VEManager.AddEffect(ve);
+            TileCellManager.AddCellVE(this);
+        }
 
     }
 }

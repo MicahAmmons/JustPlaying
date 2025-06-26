@@ -82,6 +82,7 @@ namespace PlayingAround.Managers.UI
 
         public static void Update(GameTime gameTime)
         {
+            if (SceneManager.CurrentState != SceneState.Play) return;
             UpdatePlayer();
             UpdateInput();
             if (_currentInteractState != InteractState.None && _interactMessage == null)

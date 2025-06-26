@@ -45,6 +45,7 @@ namespace PlayingAround.Managers
         }
         public static void Update(GameTime gameTime)
         {
+            if (SceneManager.CurrentState != SceneState.MapTileTransition || SceneManager.CurrentState != SceneState.Play) return;
             if (!_isTransitioning) return;
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;

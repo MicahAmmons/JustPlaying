@@ -72,23 +72,6 @@ namespace PlayingAround.Managers.Tiles
 
             CurrentMapTile = tile;
         }
-        public static bool IsCellWalkable(int x, int y)
-        {
-            return CurrentMapTile.WalkableMap.TryGetValue((x, y), out bool isWalkable) && isWalkable;
-        }
-        public static bool IsCellWalkable(Rectangle rec)
-        {
-            Vector2 topLeft = new Vector2(rec.Left, rec.Top);
-            Vector2 topRight = new Vector2(rec.Right - 1, rec.Top);
-            Vector2 bottomLeft = new Vector2(rec.Left, rec.Bottom - 1);
-            Vector2 bottomRight = new Vector2(rec.Right - 1, rec.Bottom - 1);
-
-            return
-                GetCell(topLeft).IsWalkable &&
-                GetCell(topRight).IsWalkable &&
-                GetCell(bottomLeft).IsWalkable &&
-                GetCell(bottomRight).IsWalkable;
-        }
         public static TileCell GetCell(Vector2 pos)
         {
             TileCell closest = null;
@@ -119,8 +102,6 @@ namespace PlayingAround.Managers.Tiles
             float dy = Math.Abs(point.Y - center.Y);
             return (dx / halfWidth + dy / halfHeight) <= 1f;
         }
-
-
         public static Vector2 OffSetFromCenterOfDiamond(Vector2 center, int width = 64, int height = 64)
         {
 
@@ -129,64 +110,31 @@ namespace PlayingAround.Managers.Tiles
 
             return new Vector2(center.X - xOffset, center.Y - yOffset);
         }
-
-        public static Vector2 OffSetFromCenterOfDiamond(TileCell cell)
+        public static List<TileCell> GetWalkableNeighbors(TileCell cell)
         {
-            Vector2 center = cell.CenterPoint;
-            return new Vector2(center.X - MapTile.TileWidth / 2, center.Y - MapTile.TileHeight);
-        }
-
-        public static List<TileCell> GetWalkableNeighbors(TileCell cell, TileCell goal = null, CombatMonster self = null, bool includeMonsterTiles = false)
-        {
-            List<TileCell> combatantCells = new List<TileCell>();
-            if (SceneManager.CurrentState == SceneState.Combat)
-            {
-                foreach (var comCell in CombatGuard.CurrentCombat.AIControlledMonsterMap.Values)
-                {
-                    combatantCells.Add(comCell);
-                }
-            }
             List<TileCell> neighbors = new();
 
             Point[] directions = new Point[]
-{
-    new(1, 1),   // down-right
-    new(1, -1),  // up-right
-    new(-1, 1),  // down-left
-    new(-1, -1)  // up-left
-};
-
-            for (int i = 0; i < directions.Length; i++)
             {
-                int newX = cell.X + directions[i].X;
-                int newY = cell.Y + directions[i].Y;
+        new(1, 1),    // down-right
+        new(1, -1),   // up-right
+        new(-1, 1),   // down-left
+        new(-1, -1)   // up-left
+            };
+
+            foreach (Point dir in directions)
+            {
+                int newX = cell.X + dir.X;
+                int newY = cell.Y + dir.Y;
 
                 if (newX < 0 || newY < 0 || newX >= MapTile.GridWidth || newY >= MapTile.GridHeight)
                     continue;
 
                 TileCell neighbor = CurrentMapTile.AllValidCells.FirstOrDefault(c => c.X == newX && c.Y == newY);
 
-                if (neighbor == null)
-                    continue;
-
-                bool isGoal = goal != null && neighbor == goal;
-
-                if (neighbor != null && neighbor.IsWalkable  &&
-                    (!neighbor.BlockedByMonster || includeMonsterTiles || isGoal ))
+                if (neighbor != null && neighbor.IsWalkable)
                 {
-                    if (!combatantCells.Contains(neighbor))
-                    {
-                        neighbors.Add(neighbor);
-                        continue;
-                    }
-                    if (combatantCells.Contains(neighbor) && !includeMonsterTiles) continue;
-                    if (combatantCells.Contains(neighbor) && includeMonsterTiles)
-                    {
-                        neighbors.Add(neighbor);
-                        continue;
-                    }
-  
-
+                    neighbors.Add(neighbor);
                 }
             }
 
@@ -206,25 +154,6 @@ namespace PlayingAround.Managers.Tiles
 
             return false;
         }
-
-        public static List<TileCell> GetCellsInRange(TileCell origin, int range)
-        {
-            List<TileCell> result = new();
-
-            foreach (var cell in CurrentMapTile.AllValidCells)
-            {
-                int dx = cell.X - origin.X;
-                int dy = cell.Y - origin.Y;
-
-                if (Math.Abs(dx % 2) == Math.Abs(dy % 2) &&
-                    Math.Max(Math.Abs(dx), Math.Abs(dy)) <= range)
-                {
-                    result.Add(cell);
-                }
-            }
-
-            return result;
-        }
         public static Vector2 DirectionTraveledForNewMapTile(NextTileData data)
         {
             int currentTileX = CurrentMapTile.x;
@@ -240,10 +169,9 @@ namespace PlayingAround.Managers.Tiles
 
             return new Vector2(dx, dy);
         }
-
-        public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps, bool includeMonsterTiles = false)
+        public static List<TileCell> GetFloodFillTileWithinRange(TileCell origin, int maxSteps)
         {
-            List<TileCell> reachableCells = new();
+            List<TileCell> inRangeCells = new();
             Queue<(TileCell cell, int steps)> queue = new();
             HashSet<TileCell> visited = new();
 
@@ -257,21 +185,36 @@ namespace PlayingAround.Managers.Tiles
                 if (steps > maxSteps)
                     continue;
 
-                reachableCells.Add(current);
+                inRangeCells.Add(current);
 
-                foreach (TileCell neighbor in GetWalkableNeighbors(current, null, null, includeMonsterTiles))
+                Point[] directions = new Point[]
                 {
-                    if (!visited.Contains(neighbor))
-                    {
-                        visited.Add(neighbor);
-                        queue.Enqueue((neighbor, steps + 1));
-                    }
+            new(1, 1),   // down-right
+            new(1, -1),  // up-right
+            new(-1, 1),  // down-left
+            new(-1, -1)  // up-left
+                };
+
+                foreach (Point dir in directions)
+                {
+                    int newX = current.X + dir.X;
+                    int newY = current.Y + dir.Y;
+
+                    if (newX < 0 || newY < 0 || newX >= MapTile.GridWidth || newY >= MapTile.GridHeight)
+                        continue;
+
+                    TileCell neighbor = CurrentMapTile.AllValidCells.FirstOrDefault(c => c.X == newX && c.Y == newY);
+                    if (neighbor == null || visited.Contains(neighbor))
+                        continue;
+
+                    visited.Add(neighbor);
+                    queue.Enqueue((neighbor, steps + 1));
                 }
             }
 
-            reachableCells.Remove(origin); // Optional
+            inRangeCells.Remove(origin); // Optional: if you want to exclude the origin
 
-            return reachableCells;
+            return inRangeCells;
         }
         public static MapTileSaveData SaveMapTile()
         {
@@ -288,7 +231,6 @@ namespace PlayingAround.Managers.Tiles
             }
             
         }
-
         internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
         {
             if (origin == null || destination == null)
@@ -299,5 +241,50 @@ namespace PlayingAround.Managers.Tiles
 
             return dx + dy;
         }
+        public static List<TileCell> GetReachableCellsFromSubset(TileCell start, List<TileCell> cellSubset, int range)
+        {
+            List<TileCell> reachableCells = new();
+            Queue<(TileCell cell, int steps)> queue = new();
+            HashSet<TileCell> visited = new();
+
+            HashSet<TileCell> validCells = new(cellSubset); // So we can do fast contains checks
+
+            queue.Enqueue((start, 0));
+            visited.Add(start);
+
+            while (queue.Count > 0)
+            {
+                var (current, steps) = queue.Dequeue();
+
+                if (steps > range)
+                    continue;
+
+                reachableCells.Add(current);
+
+                Point[] directions = new Point[]
+                {
+            new(1, 1),   // down-right
+            new(1, -1),  // up-right
+            new(-1, 1),  // down-left
+            new(-1, -1)  // up-left
+                };
+
+                foreach (Point dir in directions)
+                {
+                    int newX = current.X + dir.X;
+                    int newY = current.Y + dir.Y;
+
+                    TileCell neighbor = validCells.FirstOrDefault(c => c.X == newX && c.Y == newY);
+                    if (neighbor == null || visited.Contains(neighbor))
+                        continue;
+
+                    visited.Add(neighbor);
+                    queue.Enqueue((neighbor, steps + 1));
+                }
+            }
+
+            return reachableCells;
+        }
+
     }
 }

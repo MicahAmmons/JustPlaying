@@ -494,6 +494,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (aspect.Duration == 0) Aspects.Remove(aspect);
             }
         }
+        public void ClearAllAspects()
+        {
+            Aspects.Clear();
+        }
     }
     public enum MonsterActionOrder
     {

@@ -30,7 +30,6 @@ namespace PlayingAround.Managers.CombatMan
         private static int _summonOptionSpacing = 10;
 
         private static List<string> _log = new List<string>();
-        private static int _maxStrings = 50;
 
         private CombatUIManager _combatUIManager;
         private CombatStateMachine _stateMachine;
@@ -47,8 +46,6 @@ namespace PlayingAround.Managers.CombatMan
         private Texture2D _playerCellOptions;//placeholder texture
         private SpriteFont _font;
 
-        private int _tileWidth;
-        private int _tileHeight;
         private Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
  
         private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
@@ -75,8 +72,6 @@ namespace PlayingAround.Managers.CombatMan
         private VisualEffect _currentAttackVisualEffect;
         public Dictionary<string, int> defeatedMonsters = new Dictionary<string, int>();
 
-        private bool _attackComplete = false;
-        private bool _attackPerformed = false;
         private List<TileCell> _summonSpawnableCells;
         private ICombatant _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
@@ -92,8 +87,6 @@ namespace PlayingAround.Managers.CombatMan
             _visualEffectManager = new VisualEffectManager();
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
-            _tileHeight = MapTile.TileHeight;
-            _tileWidth = MapTile.TileWidth;
 
             PlayMonsters = playMonsters;
             _currentPlayer.ToggleDrawn();
@@ -472,7 +465,6 @@ namespace PlayingAround.Managers.CombatMan
             {
                 foreach (var cell in mon.MoveableCells)
                 {
-                    if (cell.BlockedByMonster || !cell.IsWalkable) continue;
                     cell.DrawCellHighlight(spriteBatch, Color.Green, 5);
                 }
 
@@ -793,17 +785,14 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void GeneratePlayerSummonRange()
         {
-            
             ICombatant combatant = _currentCombatant;
-            
             // Later put logic here to decide how far away the palyer can summon a monster
             float range = 2f;
-
             TileCell origin = _playerControlledMonsterMap[combatant];
-
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)range);
-
-            _summonSpawnableCells = cells;
+            _summonSpawnableCells = cells
+              .Where(cell => !cell.BlockedByMonster && cell.IsWalkable)
+              .ToList();
 
         }
         public bool CheckIfAIShouldEndTurn()
@@ -1063,8 +1052,8 @@ namespace PlayingAround.Managers.CombatMan
             TileCell origin = _playerControlledMonsterMap[combatant];
 
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
-
-            combatant.MoveableCells = cells;
+            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
+            combatant.MoveableCells = TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP);
         }
         private void HandleLocationSelectionInput()
         {
@@ -1089,18 +1078,7 @@ namespace PlayingAround.Managers.CombatMan
         public void UpdateMonsterCellMap()
         {
             if (TurnOrder.Count <= 0) return;
-
-            foreach (var cell in _aIControlledMonsterMap.Values)
-            {
-                cell.BlockedByMonster = false;
-            }
-            foreach (var cell in _playerControlledMonsterMap.Values)
-            {
-                cell.BlockedByMonster = false;
-            }
-            _playerControlledMonsterMap.Clear();
-            _aIControlledMonsterMap.Clear();
-
+            ClearEntityMaps();
             foreach (var mon in TurnOrder)
             {
                 TileCell cell = TileManager.GetCell(mon.CurrentStats.Pos);
@@ -1117,6 +1095,19 @@ namespace PlayingAround.Managers.CombatMan
                 }
 
             }
+        }
+        public void ClearEntityMaps()
+        {
+            foreach (var cell in _aIControlledMonsterMap.Values)
+            {
+                cell.BlockedByMonster = false;
+            }
+            foreach (var cell in _playerControlledMonsterMap.Values)
+            {
+                cell.BlockedByMonster = false;
+            }
+            _playerControlledMonsterMap.Clear();
+            _aIControlledMonsterMap.Clear();
         }
         private void UpdateMonsterTopOfRoundStats()
         {
@@ -1213,7 +1204,6 @@ namespace PlayingAround.Managers.CombatMan
         }
 
 
-
         private void HandleSummonedTargetingAttackClick()
         {
             ICombatant combatant = _currentCombatant;
@@ -1225,13 +1215,6 @@ namespace PlayingAround.Managers.CombatMan
                 combatant.SetCombatantAttackPathingInformation();
             }
         }
-
-
-
-
-
-
-
         private void HandleAttackRectClick()
         {
             if (InputManager.IsLeftClick() && _attackRect.Contains(_currentMousePos))
@@ -1293,9 +1276,6 @@ namespace PlayingAround.Managers.CombatMan
                 EndTurn();
             }
         }
-
-      
-
         public void SummonSummonMonster(TileCell cell)
         {
             ICombatant combatant = _currentCombatant;
@@ -1377,10 +1357,6 @@ namespace PlayingAround.Managers.CombatMan
             }
             return null;
         }
-        public  List<TileCell> GetPathToPlayerSelectedCell(TileCell start, TileCell destination)
-        {
-            return GridMovement.FindPath(start, destination, int.MaxValue); // or -1 if your method supports it
-        }
         public Dictionary<string, int> CountDefeatedMonsters()
         {
            
@@ -1399,16 +1375,6 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
             return defeatedMonsters;
-        }
-
-
-        public  void Add(string message)
-        {
-            _log.Add(message);
-
-            // Keep it from growing forever
-            if (_log.Count > _maxStrings)
-                 _log.RemoveAt(0);
         }
         private void OnScreenDebug(SpriteBatch spriteBatch)
         {

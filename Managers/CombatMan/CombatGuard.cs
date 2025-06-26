@@ -18,7 +18,6 @@ namespace PlayingAround.Managers.CombatMan
         private static CombatManager _currentCombat { get; set; }
         public static CombatManager CurrentCombat => _currentCombat;
         private static CombatManager _previousCombat {  get; set; }
-        private static Player _currentPlayer => PlayerManager.CurrentPlayer;
 
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
@@ -47,7 +46,7 @@ namespace PlayingAround.Managers.CombatMan
             switch (_currentCombat.TheWinner)
             {
                 case WhoWon.Player:
-                    PlayMonsterManager.RemovePlayerMonster(_currentCombat.PlayMonsters);
+                    PlayMonsterManager.RemovePlayMonster(_currentCombat.PlayMonsters);
                     foreach (var kvp in _currentCombat.defeatedMonsters) 
                     {
                         string monName = kvp.Key;
@@ -59,6 +58,8 @@ namespace PlayingAround.Managers.CombatMan
 
                     break;
             }
+            _currentCombat.ClearEntityMaps();
+            PlayerManager.ClearAllPlayerAspects();
             _previousCombat = _currentCombat;
             _currentCombat= null;
             PlayerManager.AllowPlayerMovement(true);

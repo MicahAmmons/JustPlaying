@@ -37,20 +37,14 @@ namespace PlayingAround.Managers.Proximity
         public static event Action OnPlayerLeaveNextTile;
 
 
-
-
-
-
         public static void Update(GameTime gameTime)
         {
 
-            if (SceneManager.IsState(SceneState.Play))
-            {
+            if (!SceneManager.IsState(SceneState.Play)) return;
                 UpdatePlayerCords();
                 IsPlayerInPlayMonsterRange();
                 IsPlayerInNPCRange();
                 IsPlayerInNextTileRange();
-            }            
         }
         public static void IsPlayerInNPCRange()
         {
@@ -69,7 +63,6 @@ namespace PlayingAround.Managers.Proximity
                 OnPlayerLeaveNPC?.Invoke();
             }
         }
-
         public static void IsPlayerInPlayMonsterRange()
         {
             bool monsterWasNear = false;

@@ -71,7 +71,7 @@ namespace PlayingAround.Managers.Movement
                     endCell.BlockedByMonster = true;
                     return ReconstructPath(cameFrom, current, maxSteps);
                 }
-                foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current, endCell))
+                foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current))
                 {
                     int tentativeG = gScore[current] + 1;
 

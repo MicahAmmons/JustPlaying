@@ -913,7 +913,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": true,
+      "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": true
     },

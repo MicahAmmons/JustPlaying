@@ -63,6 +63,7 @@ namespace PlayingAround.Interfaces
         public void ClearAttackCycle();
         public void SetCombatantAttackPathingInformation();
         public void ResolveAspects(TickedTiming endOfTurn);
+        public void ClearAllAspects();
     }
 
 

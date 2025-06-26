@@ -1,18 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using PlayingAround.Data.SaveData;
 using PlayingAround.Debug;
-using PlayingAround.Entities.Player;
-using PlayingAround.Game.Assets;
-using PlayingAround.Game.Map;
-using PlayingAround.Game.Pathfinding;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
-using PlayingAround.Managers.CombatMan.Aspects;
-using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Escape.Settings;
@@ -26,10 +18,6 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
-using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
 
 namespace PlayingAround
 {
@@ -89,7 +77,6 @@ namespace PlayingAround
         {
             if (_timer >= 5.0f)
             {
-               
                SceneManager.SetState(SceneState.Play);
                 _timer = 0;
                 return;
@@ -104,41 +91,24 @@ namespace PlayingAround
             InputManager.Update(gameTime);
             EscapeOverseer.Update(gameTime);
             MovementManager.Update(gameTime);
+            TileCellManager.Update(delta);
+            CinematicRuler.Update(gameTime);
             switch (SceneManager.CurrentState)
             {
-                case (SceneState.Cinematic):
-                    CinematicRuler.Update(gameTime);
-                    break;
-                case (SceneState.TitleScreen):
-
-                    TitleScreenManager.Update(gameTime);
-                    break;
                 case (SceneState.LoadingScreen):
                     WaitUntilLoadingIsDone(delta);
                     break;
-                case (SceneState.Play):
-                    UIManager.Update(gameTime);
-                    MapTileTransitionManager.Update(gameTime);
-                    ProximityManager.Update(gameTime);
-                    DebugBugger.Update(gameTime);
-                  
-                    break; 
-                case (SceneState.Combat):
-                    CombatGuard.Update(gameTime);
-                    DebugBugger.Update(gameTime);
-                    
-
-                    break;
-                case (SceneState.Dialogue):
-                    DialogueManager.Update();
-                    break;
-                    case (SceneState.MapTileTransition):
-                    MapTileTransitionManager.Update(gameTime);
-                    break;
             }
+            ProximityManager.Update(gameTime);
+            MapTileTransitionManager.Update(gameTime);
+            DebugBugger.Update(gameTime);
+            CombatGuard.Update(gameTime);
+            UIManager.Update(gameTime);
             CombatMonsterManager.Update(gameTime, delta);
             PlayerManager.Update(gameTime, delta);
             PlayMonsterManager.Update(gameTime);
+            DialogueManager.Update();
+            TitleScreenManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -158,6 +128,7 @@ namespace PlayingAround
                 return;
             }
             TileManager.Draw(_spriteBatch);
+            TileCellManager.Draw(_spriteBatch);
             LoadingScreenManager.Draw(_spriteBatch);
             NPCManager.Draw(_spriteBatch);
             CombatGuard.Draw(_spriteBatch, GraphicsDevice);

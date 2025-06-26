@@ -8,6 +8,7 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace PlayingAround.Managers.CombatMan.CombatAttacks
@@ -84,8 +85,9 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
         public void SetAttackRangeOptions(TileCell cell)
         {
-            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(cell, Range, true);
-            CellsWithinRange = cells;
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(cell, Range);
+            var cellsWalkable = cells.Where(cell => cell.IsWalkable).ToList();
+            CellsWithinRange = cellsWalkable;
         }
     }
 

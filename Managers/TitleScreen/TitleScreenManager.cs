@@ -115,6 +115,7 @@ namespace PlayingAround.Managers.TitleScreen
 
         public static void Update(GameTime gameTime)
         {
+            if (SceneManager.CurrentState != SceneState.TitleScreen) return;
             UpdatePlayerInput(gameTime);
         }
 
