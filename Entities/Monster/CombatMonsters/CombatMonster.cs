@@ -458,7 +458,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
 
 
-
         public void CreateNewAttackVisual()
         {
             SingleAttack att = CurrentStats.Attack;

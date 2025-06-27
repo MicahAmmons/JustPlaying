@@ -68,11 +68,11 @@ namespace PlayingAround.Managers.Movement
 
                 if (current.X == endCell.X && current.Y == endCell.Y)
                 {
-                    endCell.BlockedByMonster = true;
                     return ReconstructPath(cameFrom, current, maxSteps);
                 }
                 foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current))
                 {
+                  // if (neighbor.BlockedByMonster) continue;
                     int tentativeG = gScore[current] + 1;
 
                     if (!gScore.ContainsKey(neighbor) || tentativeG < gScore[neighbor])
