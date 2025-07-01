@@ -1,28 +1,43 @@
 ﻿using PlayingAround.Entities.Monster.CombatMonsters;
-using System;
+using PlayingAround.Managers.CombatMan.ActionLibrary;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static CombatStateMachine;
+using System;
 
-namespace PlayingAround.Managers.CombatMan.ActionLibrary
+public static class ActionLibrary
 {
-    public static class ActionLibrary
+    public static readonly Dictionary<AiActionType, Func<AiAction, CombatMonster, bool>> Executors =
+        new()
+        {
+            { AiActionType.Attack, ExecuteAttack },
+            { AiActionType.Move, ExecuteMove }
+        };
+
+    private static readonly Dictionary<ActionTarget, Func<CombatMonster, AttackName, bool>> AttackExecutors =
+        new()
+        {
+            { ActionTarget.ClosestEnemy, (monster, attack) => monster.AttackClosestEnemy(attack) },
+            //{ ActionTarget.Self,         (monster, attack) => monster.AttackSelf(attack) },
+            //{ ActionTarget.RandomEnemy,  (monster, attack) => monster.AttackRandomEnemy(attack) }
+        };
+
+    private static readonly Dictionary<MovementAmount, Func<CombatMonster, ActionTarget, bool>> MoveExecutors =
+        new()
+        {
+            { MovementAmount.FullMP, (monster, target) => monster.MoveTowardTargetFullMP(target) },
+            { MovementAmount.HalfMP, (monster, target) => monster.MoveTowardTargetHalfMP(target) },
+            { MovementAmount.Fixed,  (monster, target) => monster.MoveTowardTargetFixed(target, 3) }
+        };
+
+    private static bool ExecuteAttack(AiAction action, CombatMonster monster)
     {
-        public static readonly Dictionary<MonsterActionOrder, Func<CombatMonster, bool>> Executors =
-            new()
-            {
-            { MonsterActionOrder.MoveTowardsClosestEnemy, monster => monster.GetMovementCellPathToClosestEnemy() },
-            { MonsterActionOrder.AttackClosestEnemy, monster => monster.AttackClosestEnemy() },
+        
+        var executor = AttackExecutors[action.Target];
+        return executor(monster, action.Attack!.Value);
+    }
 
-            };
-
-        public static readonly Dictionary<MonsterActionOrder, AITurnState> StateMap =
-            new()
-            {
-            { MonsterActionOrder.MoveTowardsClosestEnemy, AITurnState.ExecutingMove },
-            { MonsterActionOrder.AttackClosestEnemy, AITurnState.ExecutingAttack },
-            };
+    private static bool ExecuteMove(AiAction action, CombatMonster monster)
+    {
+        var executor = MoveExecutors[action.MovementAmount!.Value];
+        return executor(monster, action.Target!.Value);
     }
 }

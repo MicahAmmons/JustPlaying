@@ -67,12 +67,13 @@ namespace PlayingAround.Debug
 
         public static void Update(GameTime gameTime)
         {
-            if (SceneManager.CurrentState != SceneState.Combat || SceneManager.CurrentState != SceneState.Play || SceneManager.CurrentState != SceneState.Dialogue) return;
-            ToggleDebugLines();
-            ToggleCellGridLines();
-            ToggleDebugText();
-            GetCurrentMouseHoverCell();
-
+            if (SceneManager.IsState(SceneState.Combat) || SceneManager.IsState(SceneState.Dialogue) || SceneManager.IsState(SceneState.Play))
+            {
+                ToggleDebugLines();
+                ToggleCellGridLines();
+                ToggleDebugText();
+                GetCurrentMouseHoverCell();
+            }
         }
         public static void GetCurrentMouseHoverCell()
         {

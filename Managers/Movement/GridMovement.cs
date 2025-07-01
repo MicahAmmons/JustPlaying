@@ -14,24 +14,99 @@ namespace PlayingAround.Managers.Movement
 {
     public static class GridMovement
     {
+        private const int MaxSteps = 500;
+        private const int ORTHOGONAL_COST = 10;
+        private const int DIAGONAL_COST = 14;
         public static List<TileCell> BestPathToClosestCell(TileCell current, List<TileCell> targets, int maxSteps)
         {
             List<TileCell> bestPath = null;
-            int shortestPathLength = int.MaxValue;
+            int shortestPathLength = 30;
 
             foreach (var target in targets)
             {
-
-                List<TileCell> path = FindPath(current, target, maxSteps);
-
+                List<TileCell> path = GetCellToCellPath(current.CenterPoint, target.CenterPoint);
                 if (path.Count > 0 && path.Count < shortestPathLength)
                 {
                     shortestPathLength = path.Count;
                     bestPath = path;
+                    if (bestPath.Contains(target)) bestPath.Remove(target);
+                    if (bestPath.Contains(current)) bestPath.Remove(current);
+                }
+            }
+            
+            return bestPath.Count > maxSteps ? bestPath.Take(maxSteps).ToList() : bestPath;
+        }
+        public static List<TileCell> GetCellToCellPath(Vector2 startPixel, Vector2 endPixel)
+        {
+            TileCell startCell = TileManager.GetCell(startPixel);
+            TileCell goalCell = TileManager.GetCell(endPixel);
+
+            if (startCell == null || goalCell == null)
+                return new();
+
+            List<TileCell> cellPath = FindCellPath(startCell, goalCell);
+
+            return cellPath.ToList();
+        }
+        private static List<TileCell> FindCellPath(TileCell start, TileCell goal)
+        {
+            var openSet = new PriorityQueue<TileCell, int>();
+            var cameFrom = new Dictionary<TileCell, TileCell>();
+            var gScore = new Dictionary<TileCell, int>();
+            var fScore = new Dictionary<TileCell, int>();
+
+            gScore[start] = 0;
+            fScore[start] = Heuristic(start, goal);
+
+            openSet.Enqueue(start, fScore[start]);
+
+            int steps = 0;
+
+            while (openSet.Count > 0 && steps++ < MaxSteps)
+            {
+                var current = openSet.Dequeue();
+
+                if (current == goal)
+                    return ReconstructPath(cameFrom, current);
+
+                foreach (var neighbor in TileManager.GetWalkableNeighbors(current))
+                {
+                    if (neighbor.BlockedByMonster && neighbor != goal) 
+                        continue;
+                    int moveCost = IsDiagonal(current, neighbor) ? DIAGONAL_COST : ORTHOGONAL_COST;
+                    int tentativeG = gScore[current] + moveCost;
+
+                    if (!gScore.ContainsKey(neighbor) || tentativeG < gScore[neighbor])
+                    {
+                        cameFrom[neighbor] = current;
+                        gScore[neighbor] = tentativeG;
+                        fScore[neighbor] = tentativeG + Heuristic(neighbor, goal);
+                        openSet.Enqueue(neighbor, fScore[neighbor]);
+                    }
                 }
             }
 
-            return bestPath ?? new List<TileCell>(); // return empty if none found
+            return new(); // no path
+        }
+        private static List<TileCell> ReconstructPath(Dictionary<TileCell, TileCell> cameFrom, TileCell current)
+        {
+            var path = new List<TileCell> { current };
+            while (cameFrom.ContainsKey(current))
+            {
+                current = cameFrom[current];
+                path.Insert(0, current);
+            }
+            return path;
+        }
+        private static int Heuristic(TileCell a, TileCell b)
+        {
+            int dx = Math.Abs(a.X - b.X);
+            int dy = Math.Abs(a.Y - b.Y);
+            return 10 * Math.Max(dx, dy); // Chebyshev distance
+        }
+        private static bool IsDiagonal(TileCell a, TileCell b)
+        {
+            return Math.Abs(a.X - b.X) == 1 && Math.Abs(a.Y - b.Y) == 1;
         }
         public static (List<Vector2>, List<Vector2>) SplitAttackPath(List<Vector2> attackPath)
         {
@@ -48,107 +123,9 @@ namespace PlayingAround.Managers.Movement
             }
             return (result1, result2);
         }
-        public static List<TileCell> FindPath(TileCell startPos, TileCell endPos, int maxSteps)
-        {
-            TileCell startCell = startPos;
-            TileCell endCell = endPos;
-
-            var openSet = new PriorityQueue<TileCell>();
-            var cameFrom = new Dictionary<TileCell, TileCell>();
-            var gScore = new Dictionary<TileCell, int>();
-            var fScore = new Dictionary<TileCell, float>();
-
-            openSet.Enqueue(startCell, 0);
-            gScore[startCell] = 0;
-            fScore[startCell] = Heuristic(startCell, endCell);
-
-            while (openSet.Count > 0)
-            {
-                TileCell current = openSet.Dequeue();
-
-                if (current.X == endCell.X && current.Y == endCell.Y)
-                {
-                    return ReconstructPath(cameFrom, current, maxSteps);
-                }
-                foreach (TileCell neighbor in TileManager.GetWalkableNeighbors(current))
-                {
-                  // if (neighbor.BlockedByMonster) continue;
-                    int tentativeG = gScore[current] + 1;
-
-                    if (!gScore.ContainsKey(neighbor) || tentativeG < gScore[neighbor])
-                    {
-                        cameFrom[neighbor] = current;
-                        gScore[neighbor] = tentativeG;
-                        fScore[neighbor] = tentativeG + Heuristic(neighbor, endCell);
-
-                        if (!openSet.Contains(neighbor))
-                            openSet.Enqueue(neighbor, fScore[neighbor]);
-
-                    }
-                }
-            }
-            return new List<TileCell>();
-            // No path found
-        }
-        private static List<TileCell> ReconstructPath(Dictionary<TileCell, TileCell> cameFrom, TileCell current, int maxSteps)
-        {
-            List<TileCell> path = new();
-            path.Add(current);
-
-            while (cameFrom.ContainsKey(current))
-            {
-                current = cameFrom[current];
-                path.Add(current);
-            }
-
-            path.Reverse();
-
-            if (path.Count > 0 && maxSteps < 100)
-                path.RemoveAt(path.Count - 1); // optional redundancy check, can be removed too
-            if (path[0] == current)
-            {
-                path.Remove(path[0]);
-            }
-            return path.Take(maxSteps).ToList();
-        }
-        private static float Heuristic(TileCell a, TileCell b)
-        {
-            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y); // Manhattan distance
-        }
-        public class PriorityQueue<T>
-        {
-            private readonly List<(T item, float priority)> elements = new();
-
-            public int Count => elements.Count;
-
-            public void Enqueue(T item, float priority)
-            {
-                elements.Add((item, priority));
-            }
-
-            public T Dequeue()
-            {
-                int bestIndex = 0;
-                float bestPriority = elements[0].priority;
-
-                for (int i = 1; i < elements.Count; i++)
-                {
-                    if (elements[i].priority < bestPriority)
-                    {
-                        bestPriority = elements[i].priority;
-                        bestIndex = i;
-                    }
-                }
-
-                T bestItem = elements[bestIndex].item;
-                elements.RemoveAt(bestIndex);
-                return bestItem;
-            }
-
-            public bool Contains(T item)
-            {
-                return elements.Any(e => EqualityComparer<T>.Default.Equals(e.item, item));
-            }
-        }
+       
+        
+       
+        
     }
 }

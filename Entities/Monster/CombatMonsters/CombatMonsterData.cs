@@ -5,6 +5,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.ActionLibrary;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public DrawSpecificStats DrawSpecifics { get; set; } 
         public Dictionary<AnimationState, int[]> AnimationData { get; set; }
         public Dictionary<AttackName, ElementType> AttackData { get; set; }
-        public List<MonsterActionOrder> ActionOrder { get; set; }
-        public List<ChooseWhichMonsterAttack> DecideWhichAttack { get; set; }
+        public List<AiAction> Actions { get; set; } 
     }
     public class BaseCombatStats
     {
@@ -31,10 +31,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int Health { get; set; }
         public int Initiative { get; set; }
         public Dictionary<ElementType, float> Resistances { get; set; }
-        public Queue<ChooseWhichMonsterAttack> DecideWhichAttack { get; set; }
-        public Queue<MonsterActionOrder> ActionOrder { get; set; }
-
-
+        public List<AiAction> Actions { get; set; }
     }
     public class OutOfCombatAnimatedStats
     {
@@ -76,8 +73,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public TileCell AttackEffectedCells { get; set; } = null;
         public TileCell MovementEndPoint { get; set; } = null;
         public List<List<Vector2>> MovePath { get; set; } = new();
-        public Queue<MonsterActionOrder> ActionOrder { get; set; } = new Queue<MonsterActionOrder>();
-        public Queue<ChooseWhichMonsterAttack> ChooseWhichAttack { get; set; } = new Queue<ChooseWhichMonsterAttack>();
+        public List<AiAction> Actions { get; set; }
         public ElementType ElementType { get; set; }
         public (string name, SummonedSavedStats data)? CurrentSelectedSummon {  get; set; }
 

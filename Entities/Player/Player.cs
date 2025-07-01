@@ -125,9 +125,9 @@ namespace PlayingAround.Entities.Player
         }
         public void UpdateMovement(GameTime gameTime)
         {
-
             List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
             Vector2 nextPoint = nextVectorPath[0];
+
             float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - CurrentPos;
@@ -136,7 +136,8 @@ namespace PlayingAround.Entities.Player
             if (distance <= speed)
             {
                 CurrentPos = nextPoint;
-                CurrentStats.MovePath.RemoveAt(0);
+                CurrentStats.MovePath[0].RemoveAt(0);
+                if (CurrentStats.MovePath[0].Count == 0) CurrentStats.MovePath.RemoveAt(0);
                 if (CurrentStats.MovePath.Count <= 0)
                 {
                     SetCurrentAnimationStateToIdle();
@@ -152,21 +153,18 @@ namespace PlayingAround.Entities.Player
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (SceneManager.IsState(SceneState.Combat))
-            {
-
-            }
-            if (SceneManager.IsState(SceneState.Play))
+            if (SceneManager.IsState(SceneState.Play) || SceneManager.IsState(SceneState.Combat))
             {
                 if (MoveTarget != null)
                 {
                     List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
                     // Takes in a Vector2 
                     Vector2 move = (Vector2)MoveTarget;
+                    MoveTarget = null;
                     //Converts it to a TileCell
                     TileCell startingCell = TileManager.GetCell(CurrentPos);
                     //Gets cell path using WalkableNeighbors to exclude !walkable
-                    List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
+                    List<TileCell> cellPath = GridMovement.GetCellToCellPath(CurrentPos, move);
 
                     foreach (var endPos in cellPath)
                     {
@@ -177,7 +175,24 @@ namespace PlayingAround.Entities.Player
                         fullVectorPath.Add(vectorRange);
                         startingCell = endPos;
                     }
-                    MoveTarget = null;
+                    bool cont = false;
+                    do
+                    {
+                        if (fullVectorPath.Count == 0 || fullVectorPath == null)
+                        {
+                            cont = true;
+                            break;
+                        }
+                        if (fullVectorPath[0][0] == CurrentPos)
+                        {
+                            fullVectorPath[0].RemoveAt(0);
+                        }
+                        else
+                        {
+                            cont = true;
+                        }
+                    } while (!cont);
+                    
                     CurrentStats.MovePath = fullVectorPath;
                 }
             }

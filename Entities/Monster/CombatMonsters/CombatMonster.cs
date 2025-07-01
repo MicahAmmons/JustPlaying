@@ -51,8 +51,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public Vector2? MoveTarget { get; set; }
         public List<TileCell> MoveTargetCellList { get; set; } = new List<TileCell>();
-        public Dictionary<MonsterActionOrder, Func<bool>> ActionExecutors { get; private set; } = new();
-        public Dictionary<MonsterActionOrder, AITurnState> ActionStates { get; private set; } = new();
+
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -64,8 +63,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Health = data.BaseStats.Health,
                 Initiative = data.BaseStats.Initiative,
                 Resistances = ResistanceManager.GetResistances(ElementType),
-                DecideWhichAttack = new Queue<ChooseWhichMonsterAttack>(),
-                ActionOrder = new Queue<MonsterActionOrder>(),
+                Actions = new List<AiAction>()
             };
             CurrentStats = new CurrentCombatStats()
             {
@@ -75,22 +73,14 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Resistances = ResistanceManager.GetResistances(ElementType),
                 AttackPath1 = new List<Vector2>(),
                 AttackPath2 = new List<Vector2>(),
+                Actions = new List<AiAction>()
             };
 
-            foreach (var action in data.ActionOrder)
+            foreach (var action in data.Actions)
             {
-                CurrentStats.ActionOrder.Enqueue(action);
-                BaseStats.ActionOrder.Enqueue(action);
-                ActionExecutors[action] = () => ActionLibrary.Executors[action](this);
-                ActionStates[action] = ActionLibrary.StateMap[action];
-            }
-            foreach (var choice in data.DecideWhichAttack)
-            {
-                CurrentStats.ChooseWhichAttack.Enqueue(choice);
-                BaseStats.DecideWhichAttack.Enqueue(choice);
+                BaseStats.Actions.Add(action);
             }
             UniqueId = data.UniqueId;
-
             BaseStats.Resistances = ResistanceManager.GetResistances(ElementType);
             DrawSpecifics = data.DrawSpecifics;
             DrawSpecifics.AllowedToMove = true;
@@ -147,6 +137,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
             Vector2 nextPoint = nextVectorPath[0];
+
             float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - CurrentStats.Pos;
@@ -155,7 +146,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             if (distance <= speed)
             {
                 CurrentStats.Pos = nextPoint;
-                CurrentStats.MovePath.RemoveAt(0);
+                CurrentStats.MovePath[0].RemoveAt(0);
+                if (CurrentStats.MovePath[0].Count == 0) CurrentStats.MovePath.RemoveAt(0);
                 if (CurrentStats.MovePath.Count <= 0)
                 {
                     SetCurrentAnimationStateToIdle();
@@ -222,23 +214,40 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
                     // Takes in a Vector2 
                     Vector2 move = (Vector2)MoveTarget;
-                    MoveTarget = null;
-                    //Converts it to a TileCell
-                    TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
+                MoveTarget = null;
+                //Converts it to a TileCell
+                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
                     //Gets cell path using WalkableNeighbors to exclude !walkable
-                    List<TileCell> list = GridMovement.FindPath(startingCell, TileManager.GetCell(move), 99);
+                    List<TileCell> list = GridMovement.GetCellToCellPath(CurrentStats.Pos, move);
 
                     foreach (var cell in list)
                     {
                         // skips if cell is current cell so doesn't move to current cell 
-                       // if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
+                        if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
                         //Get vector list from cell to cell, adds to list 
                         List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, cell);
+               
                         fullVectorPath.Add(vectorRange);
                         startingCell = cell;
                     }
-                    
-                    CurrentStats.MovePath = fullVectorPath;
+                bool cont = false;
+                do
+                {
+                    if (fullVectorPath.Count == 0 || fullVectorPath == null)
+                    {
+                        cont = true;
+                        break;
+                    }
+                    if (fullVectorPath[0][0] == CurrentStats.Pos)
+                    {
+                        fullVectorPath[0].RemoveAt(0);
+                    }
+                    else
+                    {
+                        cont = true;
+                    }
+                } while (!cont);
+                CurrentStats.MovePath = fullVectorPath;
                 }
                 if (MoveTargetCellList.Count > 0)
             {
@@ -255,8 +264,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     finalList.Add(vectorRange);
                     startingCell = cell;
                 }
+               
+                
                 CurrentStats.MovePath = finalList;
             }
+
             
         }
         public void Update(GameTime gameTime, float delta)
@@ -307,9 +319,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public AITurnState? DecideAction()
         {
-            while (CurrentStats.ActionOrder.Count > 0)
+            while (CurrentStats.Actions.Count > 0)
             {
-                var action = CurrentStats.ActionOrder.Dequeue();
+                AiAction action = CurrentStats.Actions[0];
+                AiActionType type = action.Action;
+                AttackName attack = (AttackName)action.Attack;
+                ActionTarget target = action.Target;
+                MovementAmount mpAmount = (MovementAmount)action.MovementAmount;
                 var executor = ActionExecutors[action];
                 if (executor())
                 {
@@ -367,19 +383,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             return list;
         }
-        public bool AttackClosestEnemy()
+        public bool AttackClosestEnemy(AttackName attName)
         {
-            List<SingleAttack> attks = new List<SingleAttack>();
-            // Remove any attacks that don't have any targets within range
             foreach (var att in Attacks)
             {
-                if (att.ActiveTargetMap.Count > 0) attks.Add(att);
+                if (att.Name == attName) CurrentStats.Attack = att;
             }
-            if (attks.Count == 0) return false;
-
-            // Sort the list by range distance
-            attks = attks.OrderBy(att => att.Range).ToList();
-            CurrentStats.Attack = attks[0];
 
             //Find the closest Target
             int dist = int.MaxValue;
@@ -477,8 +486,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     return new Vector2(leftX, topY + RandomHut.rng.Next(height));
             }
         }
-
-
         public void CreateNewAttackVisual()
         {
             SingleAttack att = CurrentStats.Attack;
@@ -518,17 +525,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             Aspects.Clear();
         }
-    }
-    public enum MonsterActionOrder
-    {
-        AttackClosestEnemy,
-        MoveTowardsClosestEnemy,
-        AttackSelf,
-        Exist,
-    }
-    public enum ChooseWhichMonsterAttack
-    {
-        ShortestRange
     }
     public enum CombatMonsterType
     {
