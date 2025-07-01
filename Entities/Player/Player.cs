@@ -36,7 +36,6 @@ namespace PlayingAround.Entities.Player
         public List<SingleAttack> Attacks { get; set; } = new List<SingleAttack>();
         public bool isDead { get; set; } = false;
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell>();
-
         public Vector2[] DiamondHitBox {  get; set; }
         public Rectangle RectHitBox { get; set; }
         private Vector2? debugClickTarget {  get; set; }
@@ -127,7 +126,8 @@ namespace PlayingAround.Entities.Player
         public void UpdateMovement(GameTime gameTime)
         {
 
-            Vector2 nextPoint = CurrentStats.MovePath[0];
+            List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
+            Vector2 nextPoint = nextVectorPath[0];
             float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - CurrentPos;
@@ -152,22 +152,34 @@ namespace PlayingAround.Entities.Player
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (MoveTarget != null) 
+            if (SceneManager.IsState(SceneState.Combat))
             {
-                List<Vector2> fullVectorPath = new List<Vector2>();
-                Vector2 move = (Vector2)MoveTarget;
-                TileCell startingCell = TileManager.GetCell(CurrentPos);
-                List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
-                foreach (var endPos in cellPath)
-                {
-                    if (endPos == TileManager.GetCell(CurrentPos)) continue;
-                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell , endPos);
-                    fullVectorPath.AddRange(vectorRange);
-                    startingCell = endPos;
 
+            }
+            if (SceneManager.IsState(SceneState.Play))
+            {
+                if (MoveTarget != null)
+                {
+                    List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
+                    // Takes in a Vector2 
+                    Vector2 move = (Vector2)MoveTarget;
+                    //Converts it to a TileCell
+                    TileCell startingCell = TileManager.GetCell(CurrentPos);
+                    //Gets cell path using WalkableNeighbors to exclude !walkable
+                    List<TileCell> cellPath = CustomPathfinder.GetCellToCellPath(CurrentPos, move);
+
+                    foreach (var endPos in cellPath)
+                    {
+                        // skips if cell is current cell so doesn't move to current cell 
+                        if (endPos == TileManager.GetCell(CurrentPos)) continue;
+                        //Get vector list from cell to cell, adds to list 
+                        List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
+                        fullVectorPath.Add(vectorRange);
+                        startingCell = endPos;
+                    }
+                    MoveTarget = null;
+                    CurrentStats.MovePath = fullVectorPath;
                 }
-                MoveTarget = null;
-                CurrentStats.MovePath = fullVectorPath;
             }
         }
         public void ClearMovementPath()

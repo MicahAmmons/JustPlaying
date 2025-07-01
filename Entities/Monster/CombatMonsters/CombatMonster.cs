@@ -145,7 +145,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void UpdateMovement(GameTime gameTime)
         {
-            Vector2 nextPoint = CurrentStats.MovePath[0];
+            List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
+            Vector2 nextPoint = nextVectorPath[0];
             float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 direction = nextPoint - CurrentStats.Pos;
@@ -158,7 +159,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (CurrentStats.MovePath.Count <= 0)
                 {
                     SetCurrentAnimationStateToIdle();
-
                 }
             }
             else
@@ -217,27 +217,47 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (MoveTarget != null)
-            {
-                List<TileCell> list = CustomPathfinder.GetCellToCellPath(CurrentStats.Pos, (Vector2)MoveTarget);
-                MoveTarget = null;
-                //if (list[0] == TileManager.GetCell(CurrentStats.Pos)) list.RemoveAt(0);
-                MoveTargetCellList = list;
-            }
-            if (MoveTargetCellList.Count > 0)
-            {
-                List<Vector2> fullVectorPath = new List<Vector2>();
-                TileCell startingCell = MoveTargetCellList[0];
-                foreach (var endPos in MoveTargetCellList)
+                if (MoveTarget != null)
                 {
-                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
-                    fullVectorPath.AddRange(vectorRange);
-                    startingCell = endPos;
+                    List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
+                    // Takes in a Vector2 
+                    Vector2 move = (Vector2)MoveTarget;
+                    MoveTarget = null;
+                    //Converts it to a TileCell
+                    TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
+                    //Gets cell path using WalkableNeighbors to exclude !walkable
+                    List<TileCell> list = GridMovement.FindPath(startingCell, TileManager.GetCell(move), 99);
 
+                    foreach (var cell in list)
+                    {
+                        // skips if cell is current cell so doesn't move to current cell 
+                       // if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
+                        //Get vector list from cell to cell, adds to list 
+                        List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, cell);
+                        fullVectorPath.Add(vectorRange);
+                        startingCell = cell;
+                    }
+                    
+                    CurrentStats.MovePath = fullVectorPath;
                 }
+                if (MoveTargetCellList.Count > 0)
+            {
+                List<List<Vector2>> finalList = new List<List<Vector2>>();  
+                List<TileCell> cellList = new List<TileCell> (MoveTargetCellList);
+                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
                 MoveTargetCellList.Clear();
-                CurrentStats.MovePath = fullVectorPath;
+                foreach (var cell in cellList)
+                {
+                    // skips if cell is current cell so doesn't move to current cell 
+                  //  if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
+                    //Get vector list from cell to cell, adds to list 
+                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, cell);
+                    finalList.Add(vectorRange);
+                    startingCell = cell;
+                }
+                CurrentStats.MovePath = finalList;
             }
+            
         }
         public void Update(GameTime gameTime, float delta)
         {
@@ -316,7 +336,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (TileManager.IsNeighbor(playerControlledCells, currentCell))
                     return false;
 
-                List<TileCell> listOfCellsPathToTarget = GridMovement.PathToClosestCell(currentCell, playerControlledCells, (int)CurrentStats.MP);
+                //This uses GetPath which excludes !walkable 
+                List<TileCell> listOfCellsPathToTarget = GridMovement.BestPathToClosestCell(currentCell, playerControlledCells, (int)CurrentStats.MP);
                 if (listOfCellsPathToTarget.Count <= 0) return false;
                 MoveTargetCellList = listOfCellsPathToTarget;
             }

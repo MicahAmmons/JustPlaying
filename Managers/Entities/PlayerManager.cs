@@ -11,6 +11,7 @@ using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace PlayingAround.Managers.Entities
 {
@@ -38,7 +39,8 @@ namespace PlayingAround.Managers.Entities
                 _currentPlayer.DrawSpecifics.AllowedToMove = false;
                 if (_currentPlayer.CurrentStats.MovePath.Count > 0)
                 {
-                    _currentPlayer.CurrentPos = _currentPlayer.CurrentStats.MovePath[0];
+                    List<Vector2> fin = _currentPlayer.CurrentStats.MovePath[0];
+                    _currentPlayer.CurrentPos = fin[0];
                 }
                 _currentPlayer.CurrentStats.MovePath.Clear();
                 return;

@@ -75,7 +75,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public ICombatant AttackEffectedCombatants { get; set; } = null;
         public TileCell AttackEffectedCells { get; set; } = null;
         public TileCell MovementEndPoint { get; set; } = null;
-        public List<Vector2> MovePath { get; set; } = new();
+        public List<List<Vector2>> MovePath { get; set; } = new();
         public Queue<MonsterActionOrder> ActionOrder { get; set; } = new Queue<MonsterActionOrder>();
         public Queue<ChooseWhichMonsterAttack> ChooseWhichAttack { get; set; } = new Queue<ChooseWhichMonsterAttack>();
         public ElementType ElementType { get; set; }

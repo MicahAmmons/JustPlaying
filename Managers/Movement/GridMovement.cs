@@ -14,7 +14,7 @@ namespace PlayingAround.Managers.Movement
 {
     public static class GridMovement
     {
-        public static List<TileCell> PathToClosestCell(TileCell current, List<TileCell> targets, int maxSteps)
+        public static List<TileCell> BestPathToClosestCell(TileCell current, List<TileCell> targets, int maxSteps)
         {
             List<TileCell> bestPath = null;
             int shortestPathLength = int.MaxValue;
