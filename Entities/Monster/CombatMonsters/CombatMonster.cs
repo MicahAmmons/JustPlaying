@@ -63,7 +63,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Health = data.BaseStats.Health,
                 Initiative = data.BaseStats.Initiative,
                 Resistances = ResistanceManager.GetResistances(ElementType),
-                Actions = new List<AiAction>()
+                ActionOrder = new List<AiAction>()
             };
             CurrentStats = new CurrentCombatStats()
             {
@@ -76,9 +76,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Actions = new List<AiAction>()
             };
 
-            foreach (var action in data.Actions)
+            foreach (var action in data.ActionOrder)
             {
-                BaseStats.Actions.Add(action);
+                BaseStats.ActionOrder.Add(action);
             }
             UniqueId = data.UniqueId;
             BaseStats.Resistances = ResistanceManager.GetResistances(ElementType);
@@ -297,17 +297,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             {
                 case CombatMonsterType.AI:
                     CurrentStats.MP = BaseStats.MP;
-                    CurrentStats.ChooseWhichAttack.Clear();
-                    CurrentStats.ActionOrder.Clear();
+                    CurrentStats.Actions.Clear();
                     if (Is == CombatMonsterType.AI)
                     {
-                        foreach (var str in BaseStats.DecideWhichAttack)
-                        {
-                            CurrentStats.ChooseWhichAttack.Enqueue(str);
-                        }
                         foreach (var str in BaseStats.ActionOrder)
                         {
-                            CurrentStats.ActionOrder.Enqueue(str);
+                            CurrentStats.Actions.Add(str);
                         }
                     }
                     break;
@@ -323,16 +318,16 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             {
                 AiAction action = CurrentStats.Actions[0];
                 AiActionType type = action.Action;
-                AttackName attack = (AttackName)action.Attack;
-                ActionTarget target = action.Target;
-                MovementAmount mpAmount = (MovementAmount)action.MovementAmount;
-                var executor = ActionExecutors[action];
-                if (executor())
+
+                var executor = ActionLibrary.Executors[type];
+                bool success = executor(action, this);
+                if (success)
                 {
                     SpendActionPoint();
-                    var turnState = ActionStates[action];
+                    var turnState = ActionLibrary.ActionStates[type];
                     return turnState;
                 }
+                CurrentStats.Actions.RemoveAt(0);
             }
             return null;
         }
@@ -340,9 +335,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             CurrentStats.AP -= 1;
         }
-        public bool GetMovementCellPathToClosestEnemy()
+        public bool GetMovementCellPathToClosestEnemy(float mp)
         {
-            if (CurrentStats.MP > 0)
+            if (mp > 0)
             {
                 TileCell currentCell = TileManager.GetCell(CurrentStats.Pos);
 
@@ -387,7 +382,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             foreach (var att in Attacks)
             {
-                if (att.Name == attName) CurrentStats.Attack = att;
+                if (att.Name == attName)
+                {
+                    CurrentStats.Attack = att;
+                    break;
+                }
             }
 
             //Find the closest Target
@@ -406,6 +405,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     cell = cells;
                 }
             }
+            if (combatant == null || cell == null) return false;
             SetCurrentEffected(combatant, cell);
             SetCombatantAttackPathingInformation();
             return true;
@@ -524,6 +524,15 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void ClearAllAspects()
         {
             Aspects.Clear();
+        }
+        public bool MoveUpToFullMP(ActionTarget target)
+        {
+            switch (target)
+            {
+                case ActionTarget.ClosestEnemy:
+                    return GetMovementCellPathToClosestEnemy(CurrentStats.MP);
+            }
+            return false;
         }
     }
     public enum CombatMonsterType

@@ -20,13 +20,26 @@
       "IdleLeft": [ 1, 1, 1000 ],
       "WalkLeft": [ 2, 4, 200 ]
     },
-    "AttackData":   {
+    "AttackData": {
       "Slam": "Normal",
-      "Spit": "Acid" 
+      "Spit": "Acid"
     },
     "ActionOrder": [
-      "AttackClosestEnemy",
-      "MoveTowardsClosestEnemy"
+      {
+        "Action": "Attack",
+        "Attack": "Slam",
+        "Target": "ClosestEnemy"
+      },
+      {
+        "Action": "Attack",
+        "Attack": "Spit",
+        "Target": "ClosestEnemy"
+      },
+      {
+        "Action": "Move",
+        "MovementAmount": "FullMP",
+        "Target": "ClosestEnemy"
+      }
     ],
     "DecideWhichAttack": [
       "ShortestRange"

@@ -2,6 +2,7 @@
 using PlayingAround.Managers.CombatMan.ActionLibrary;
 using System.Collections.Generic;
 using System;
+using static CombatStateMachine;
 
 public static class ActionLibrary
 {
@@ -10,6 +11,12 @@ public static class ActionLibrary
         {
             { AiActionType.Attack, ExecuteAttack },
             { AiActionType.Move, ExecuteMove }
+        };
+    public static readonly Dictionary<AiActionType, AITurnState> ActionStates =
+        new()
+        {
+            { AiActionType.Attack, AITurnState.ExecutingAttack },
+            { AiActionType.Move, AITurnState.ExecutingMove }
         };
 
     private static readonly Dictionary<ActionTarget, Func<CombatMonster, AttackName, bool>> AttackExecutors =
@@ -23,21 +30,21 @@ public static class ActionLibrary
     private static readonly Dictionary<MovementAmount, Func<CombatMonster, ActionTarget, bool>> MoveExecutors =
         new()
         {
-            { MovementAmount.FullMP, (monster, target) => monster.MoveTowardTargetFullMP(target) },
-            { MovementAmount.HalfMP, (monster, target) => monster.MoveTowardTargetHalfMP(target) },
-            { MovementAmount.Fixed,  (monster, target) => monster.MoveTowardTargetFixed(target, 3) }
+            { MovementAmount.FullMP, (monster, target) => monster.MoveUpToFullMP(target) },
+           // { MovementAmount.HalfMP, (monster, target) => monster.MoveTowardTargetHalfMP(target) },
+           // { MovementAmount.Fixed,  (monster, target) => monster.MoveTowardTargetFixed(target, 3) }
         };
-
+    
     private static bool ExecuteAttack(AiAction action, CombatMonster monster)
     {
         
         var executor = AttackExecutors[action.Target];
-        return executor(monster, action.Attack!.Value);
+        return executor(monster, action.Attack.Value);
     }
 
     private static bool ExecuteMove(AiAction action, CombatMonster monster)
     {
-        var executor = MoveExecutors[action.MovementAmount!.Value];
-        return executor(monster, action.Target!.Value);
+        var executor = MoveExecutors[action.MovementAmount.Value];
+        return executor(monster, action.Target);
     }
 }

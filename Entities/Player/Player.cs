@@ -309,8 +309,7 @@ namespace PlayingAround.Entities.Player
         public void UpdateTopOfActionStats()
         {
             CurrentStats.MP = BaseStats.MP;
-            CurrentStats.ChooseWhichAttack.Clear();
-            CurrentStats.ActionOrder.Clear();
+            CurrentStats.Actions.Clear();
         
         }
         public CombatStateMachine.AITurnState? DecideAction()
