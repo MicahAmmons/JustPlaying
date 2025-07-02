@@ -648,13 +648,14 @@ namespace PlayingAround.Managers.CombatMan
                     SkipMonsterIfDead(); // dequees and requeues monster if dead
                     UpdateMonsterTopOfRoundStats();
                     PickWhichEntitiesTurn();
-                    UpdateAttackTargetsAndRanges();
+                    
                     break;
                 case CombatState.AITurn:
                     
                     switch (StateAI)
                     {
                         case AITurnState.ActionNavigation:
+                            UpdateAttackTargetsAndRanges();
                             _currentCombatant.UpdateTopOfActionStats();
                             if (CheckIfAIShouldEndTurn()) { EndTurn(); return; }
                             if (_currentCombatant.DecideAction() is AITurnState state)

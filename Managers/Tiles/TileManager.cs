@@ -239,7 +239,7 @@ namespace PlayingAround.Managers.Tiles
             int dx = Math.Abs(origin.X - destination.X);
             int dy = Math.Abs(origin.Y - destination.Y);
 
-            return dx + dy;
+            return (dx + dy)/2;
         }
         public static List<TileCell> GetReachableCellsFromSubset(TileCell start, List<TileCell> cellSubset, int range)
         {
