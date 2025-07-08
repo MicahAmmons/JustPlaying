@@ -43,6 +43,8 @@ namespace PlayingAround.Managers.Entities
                     _currentPlayer.CurrentPos = fin[0];
                 }
                 _currentPlayer.CurrentStats.MovePath.Clear();
+                _currentPlayer.SetCurrentAnimationStateToIdle();
+                
                 return;
             }
             else if (permission) { _currentPlayer.DrawSpecifics.AllowedToMove = true; }

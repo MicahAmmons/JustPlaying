@@ -148,18 +148,13 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             if (StayPaused(gameTime))
                 return;
             Vector2 end = FindEndPoint();
-            if (end == Vector2.Zero || end == OOCombatStats.CurrentPos)
-            {
-                // No movement - pause again
-                OOCombatStats.IsPaused = true;
-                SetCurrentPauseDuration();
-                return;
-            }
+
             MovePath = NPCMovement.GetMovementPatternVector2List(
                                                                 DrawSpecifics.MovementPattern,
                                                                 TileManager.GetCell(OOCombatStats.CurrentPos),
                                                                 TileManager.GetCell(end)
             );
+            OOCombatStats.IsPaused = true;
         }
         private Vector2 FindEndPoint()
         {
@@ -184,8 +179,11 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         }
         private void SetCurrentPauseDuration()
         {
-            OOCombatStats.CurrentPauseDuration = MathF.Round((float)(OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() * (OOCombatStats.PauseDurationMax - OOCombatStats.PauseDurationMin)), 2);
+            OOCombatStats.CurrentPauseDuration = MathF.Round(
+                (float)(OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() *
+                (OOCombatStats.PauseDurationMax - OOCombatStats.PauseDurationMin)), 2);
 
+            OOCombatStats.PauseTimer = OOCombatStats.CurrentPauseDuration;
         }
 
         public void DrawCellHighlight(SpriteBatch spriteBatch)
@@ -207,12 +205,10 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 spriteBatch.Draw(text, rect, col);
             }
         }
-
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
  
         }
-
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
             throw new NotImplementedException();

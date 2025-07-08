@@ -36,7 +36,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
     public class OutOfCombatAnimatedStats
     {
         public Vector2 CurrentPos { get; set; }
-        public bool IsPaused { get; set; } = false;
+        public bool IsPaused { get; set; } = true;
         public float PauseTimer { get; set; } = 0f;
         public float PauseDurationMax { get; set; } = 0f;
         public float PauseDurationMin { get; set; } = 0f;

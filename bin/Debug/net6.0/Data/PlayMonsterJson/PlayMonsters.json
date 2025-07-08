@@ -2,7 +2,7 @@
   "Ooze": {
     "MovementQuickness": 100,
     "MovementPattern": "Arc",
-    "PauseDurationMax": 2.5,
+    "PauseDurationMax": 3.5,
     "PauseDurationMin": 0.2
   },
   "TrainingDummy": 

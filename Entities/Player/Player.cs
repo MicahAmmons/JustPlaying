@@ -16,6 +16,7 @@ using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 
 namespace PlayingAround.Entities.Player
@@ -23,7 +24,7 @@ namespace PlayingAround.Entities.Player
     public class Player : ICombatant, IOutOfCombatAnimated, ICollidable
     {
         public BaseCombatStats BaseStats { get; set; }
-        public CurrentCombatStats CurrentStats { get; set; } 
+        [JsonIgnore] public CurrentCombatStats CurrentStats { get; set; } 
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Dictionary<AnimationState, Animation> Animation {  get; set; } = new Dictionary<AnimationState, Animation>();
         public Direction FacingDirection { get; set; } = Direction.Right;
@@ -89,7 +90,7 @@ namespace PlayingAround.Entities.Player
                 {
                     MP = 4,
                     AP = 3,
-                    Health = data.CurrentCombatStats.Health,
+                    Health = data.Health,
                     Resistances = ResistanceManager.GetResistances(ElementType.Normal)
                 },
                 SpriteSheet = AssetManager.GetTexture("PlayerSS"),

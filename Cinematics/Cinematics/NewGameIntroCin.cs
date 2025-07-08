@@ -20,14 +20,14 @@ public class NewGameIntroCin : ICinematic
 
     private List<string> _messages = new()
     {
-        "Welcome",
-        "This is your story...",
-        "A story into the depths of the chasm",
-        "Ancient ruins lie in wait...",
-        "Echoes whisper of battles past.",
-        "Monsters beyond comprhensions",
-        "Worlds to explore...",
-        "Your journey starts here"
+        "Welcome.",
+    "This is your story...",
+    "A tale descending into the depths of the chasm.",
+    "Ancient ruins lie in wait...",
+    "Echoes whisper of battles long past.",
+    "Monsters beyond comprehension stir in the dark.",
+    "Worlds await, brimming with wonder and danger...",
+    "Your journey begins now."
     };
 
     private int _currentMessageIndex = 0;

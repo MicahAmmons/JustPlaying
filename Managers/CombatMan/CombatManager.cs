@@ -684,7 +684,9 @@ namespace PlayingAround.Managers.CombatMan
                     switch (StateSummoned)
                     {
                         case SummonedTurnState.SummonedTopOfAction:
+                            if (PlayerHasMovePath()) return;
                             UpdatePlayerMoveableCells();
+                            UpdateMonsterCellMap();
                             UpdateAttackTargetsAndRanges();
                             _currentCombatant.UpdateTopOfActionStats();
                             _currentCombatant.ClearAttackCycle();
@@ -697,7 +699,7 @@ namespace PlayingAround.Managers.CombatMan
                             if (!PlayerHasMovePath()) WaitForAttackToFinish(delta);
                             break;
                         case SummonedTurnState.SummonedClickedMoveButton:
-                            if (PlayerHasMovePath()) SetSummonedTurnState(SummonedTurnState.SummonedExecutingMove);
+                            
                             break;
                             case SummonedTurnState.SummonedExecutingMove:
                             if (!PlayerHasMovePath()) { FinishedMoving(); SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction); }
@@ -709,7 +711,7 @@ namespace PlayingAround.Managers.CombatMan
                     switch (StatePlayerTurn)
                     {
                         case PlayerTurnState.PlayerClickedMoveButton:
-                            if (PlayerHasMovePath()) {SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove); _currentCombatant.SpendActionPoint();}
+                            
                             break;
                         case PlayerTurnState.PlayerExecutingMove:
                             if (!PlayerHasMovePath()) { FinishedMoving(); SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); } 
@@ -756,7 +758,7 @@ namespace PlayingAround.Managers.CombatMan
             TileCell cell = GetCombatantCurrentCell(_currentCombatant);
             foreach (var att in _currentCombatant.Attacks)
             {
-                if (_currentCombatant.Is == CombatMonsterType.AI)
+               // if (_currentCombatant.Is == CombatMonsterType.AI)
                 att.UpdateTargetMap(cell);
                 att.SetAttackRangeOptions(cell);
             }
@@ -1042,6 +1044,15 @@ namespace PlayingAround.Managers.CombatMan
             {
                 ICombatant combatant = _currentCombatant;
                 combatant.MoveTarget = _currentClickedCell.CenterPoint;
+                combatant.SpendActionPoint();
+                if (_currentCombatant.Is == CombatMonsterType.Player)
+                {
+                    SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove);
+                }
+                if (_currentCombatant.Is == CombatMonsterType.Summoned)
+                {
+                    SetSummonedTurnState(SummonedTurnState.SummonedExecutingMove);
+                }
             }
 
         }
@@ -1212,6 +1223,7 @@ namespace PlayingAround.Managers.CombatMan
                 TileCell currentTarget = _currentMouseHoverCell;
                 combatant.SetCurrentEffected(GetCombatantFromCell(_currentMouseHoverCell) ,_currentMouseHoverCell);
                 combatant.SetCombatantAttackPathingInformation();
+                combatant.SpendActionPoint();
             }
         }
         private void HandleAttackRectClick()

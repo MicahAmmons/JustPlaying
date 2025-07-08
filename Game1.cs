@@ -137,6 +137,7 @@ namespace PlayingAround
             PlayerManager.Draw(_spriteBatch);
             UIManager.Draw(_spriteBatch, GraphicsDevice);
             DebugBugger.Draw(_spriteBatch);
+            DialogueManager.Draw(_spriteBatch);
             EscapeOverseer.Draw(_spriteBatch);
             MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
             CinematicRuler.Draw(_spriteBatch);
