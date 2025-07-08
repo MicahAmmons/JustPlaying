@@ -35,7 +35,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         {
             Name = mon.Name;
             UniqueId = $"{Name}PM";
-            Icon = AssetManager.GetTexture($"{Name}Icon");
+            try { Icon = AssetManager.GetTexture($"{UniqueId}Icon"); } catch { Icon = AssetManager.GetTexture("OozeIcon"); }
+
             OOCombatStats = new OutOfCombatAnimatedStats()
             {
                 IsPaused = false,

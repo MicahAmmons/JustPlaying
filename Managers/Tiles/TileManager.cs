@@ -227,7 +227,8 @@ namespace PlayingAround.Managers.Tiles
         {
             if (SceneManager.CurrentState == SceneState.Combat || SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
             {
-                spriteBatch.Draw(CurrentMapTile.BackgroundTexture, Vector2.Zero, Color.White);
+                spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
+           color: Color.White);
             }
             
         }

@@ -47,7 +47,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public CombatMonsterType Is { get; set; }
         public AnimationController AnimationController { get; set; } = new AnimationController();
         public Direction FacingDirection { get; set; } = Direction.Right;
-        public AnimationState CurrentAnimationState { get; set; }
+        public AnimationState CurrentAnimationState { get; set; } = AnimationState.IdleRight;
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public Vector2? MoveTarget { get; set; }
         public List<TileCell> MoveTargetCellList { get; set; } = new List<TileCell>();
@@ -91,7 +91,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Attacks.Add(AttackManager.GetAttack(kvp.Key, kvp.Value));
             }
             CombatantIs = CombatMonsterType.AI;
-            Icon = AssetManager.GetTexture($"{UniqueId}Icon");
+            try { Icon = AssetManager.GetTexture($"{UniqueId}Icon"); } catch { Icon = AssetManager.GetTexture("OozeIcon"); }
             SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Is = CombatMonsterType.AI;
             foreach (var kvp in data.AnimationData)

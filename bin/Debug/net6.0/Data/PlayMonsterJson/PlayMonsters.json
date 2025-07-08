@@ -5,9 +5,15 @@
     "PauseDurationMax": 2.5,
     "PauseDurationMin": 0.2
   },
-  "TrainingDummy": 
-    {
-      "MovementQuickness": 0,
-      "MovementPattern": "None"
-    }
+  "TrainingDummy": {
+    "MovementQuickness": 0,
+    "MovementPattern": "None"
+  },
+  "OozeBoss": {
+    "MovementQuickness": 0,
+    "MovementPattern": "Arc",
+    "PauseDurationMax": 2.5,
+    "PauseDurationMin": 0.2
+  }
+
 }

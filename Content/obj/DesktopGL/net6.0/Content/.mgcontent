@@ -20,6 +20,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TileCell/arrow.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/-1_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/0_0_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/1_4_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TitleScreen/TitleScreenBackGround.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TitleScreenButtonFont.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/UI/fightBackground.png</File>
@@ -28,6 +29,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

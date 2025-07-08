@@ -45,17 +45,51 @@
       "ShortestRange"
     ]
   },
-  "TrainingDummy": {
-    "uniqueId": "training_dummy",
-    "mp": 0,
-    "movementQuickness": 0,
-    "movementPattern": "none",
-    "width": 80,
-    "height": 80,
-    "monsterType": "TrainingDummy",
-    "baseDifficulty": 1,
-    "elementType": "Normal",
-    "baseHealth": 5,
-    "initiation": 2
+  
+    "OozeBoss": {
+      "UniqueId": "OozeBoss",
+      "DefaultElementType": "Acid",
+      "BaseStats": {
+        "MP": 0,
+        "AP": 3,
+        "Health": 20,
+        "Initiative": 1
+      },
+      "DrawSpecifics": {
+        "Width": 96,
+        "Height": 96,
+        "MovementQuickness": 200,
+        "MovementPattern": "Arc"
+      },
+      "AnimationData": {
+        "IdleRight": [ 1, 1, 5000 ],
+        "WalkRight": [ 3, 4, 200 ],
+        "IdleLeft": [ 1, 1, 1000 ],
+        "WalkLeft": [ 2, 4, 200 ]
+      },
+      "AttackData": {
+        "Spit": "Acid"
+      },
+      "ActionOrder": [
+        {
+          "Action": "Attack",
+          "Attack": "Spit",
+          "Target": "ClosestEnemy"
+        }
+      ]
+      
+    },
+    "TrainingDummy": {
+      "uniqueId": "training_dummy",
+      "mp": 0,
+      "movementQuickness": 0,
+      "movementPattern": "none",
+      "width": 80,
+      "height": 80,
+      "monsterType": "TrainingDummy",
+      "baseDifficulty": 1,
+      "elementType": "Normal",
+      "baseHealth": 5,
+      "initiation": 2
+    }
   }
-}
