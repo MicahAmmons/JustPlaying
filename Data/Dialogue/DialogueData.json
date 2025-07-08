@@ -1,4 +1,165 @@
 {
+  "Mr. Npc": {
+    "npcId": "Mr. NPC",
+    "defaultNode": {
+      "text": "Careful around these parts. You never know when the Oozes will return.",
+      "responses": [
+        {
+          "text": "Thanks for the advice.",
+          "nextDialogue": null
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "1",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "NotStarted"
+          }
+        ],
+        "text": "Thank goodness you're here. Oozes are swarming the outer rim of the chasm - you've gotta help! Please slay 2 Oozes.",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": "2",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questID": "Cull_The_Ooze",
+                "stage": "Accepted"
+              }
+            ]
+          },
+          {
+            "text": "I can't now, maybe later.",
+            "nextDialogue": "1b",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questID": "Cull_The_Ooze",
+                "stage": "Declined"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "text": "That's too bad.",
+        "responses": [
+          {
+            "text": "Goodbye",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          }
+        ],
+        "text": "There are plenty of Oozes around. Please eliminate at least 2 of them.",
+        "responses": [
+          {
+            "text": "Got it",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Declined"
+          }
+        ],
+        "text": "Have you reconsidered? We could really use help slowing the oozes down.",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": "2",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questID": "Cull_The_Ooze",
+                "stage": "Accepted"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "ObjectiveCompleted1"
+          }
+        ],
+        "text": "Fantastic, you really thinned out the numbers. But we aren't done yet.",
+        "responses": [
+          {
+            "text": "What else needs to be done?",
+            "nextDialogue": "4b"
+          }
+        ]
+      },
+      {
+        "id": "4b",
+        "text": "There's been a large ooze sighted on the peninsula to the east. It seems to be a growing amalgamation of ooze—the more oozes that join it, the bigger it gets. Will you defeat it before it gets too powerful?",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questID": "Cull_The_Ooze",
+                "stage": "ObjectiveInProgress2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "ObjectiveCompleted2"
+          }
+        ],
+        "text": "Thanks adventurer — we are safe another day thanks to you.",
+        "responses": [
+          {
+            "text": "Happy to help.",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "CompleteQuest",
+                "questId": "Cull_The_Ooze"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "Cale": {
     "npcId": "Cale",
     "defaultNode": {
@@ -106,7 +267,7 @@
           {
             "type": "QuestStage",
             "questId": "getting_started",
-            "questStage": "ObjectiveCompleted"
+            "questStage": "ObjectiveCompleted1"
           }
 
         ],

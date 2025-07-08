@@ -29,8 +29,10 @@ namespace PlayingAround.Managers.Dialogue
         }
         public static void Update()
         {
-            if (SceneManager.CurrentState != SceneState.Dialogue) return;
-            UpdatePlayerInput();
+            if (SceneManager.IsState(SceneState.Dialogue))
+            {
+                UpdatePlayerInput();
+            }
         }
         public static void UpdatePlayerInput()
         {

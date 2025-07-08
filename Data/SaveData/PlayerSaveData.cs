@@ -15,7 +15,7 @@ namespace PlayingAround.Data.SaveData
         public string TextureKey { get; set; }
         public float CurrentPosX { get; set; }
         public float CurrentPosY { get; set; }
-        public CurrentCombatStats CurrentCombatStats { get; set; }
+        public int Health { get; set; }
         public Dictionary<AnimationState, int[]> Animations { get; set; }
     }
 

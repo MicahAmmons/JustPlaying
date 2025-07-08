@@ -63,14 +63,13 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "1_4_0.png - PNG [1536x1024, 24 bit, PNG]",
+              "Title": "1_4_0.png",
               "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Content\\Tiles\\1_4_0.png",
               "RelativeDocumentMoniker": "Content\\Tiles\\1_4_0.png",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Content\\Tiles\\1_4_0.png - PNG [1536x1024, 24 bit, PNG]",
-              "RelativeToolTip": "Content\\Tiles\\1_4_0.png - PNG [1536x1024, 24 bit, PNG]",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Content\\Tiles\\1_4_0.png",
+              "RelativeToolTip": "Content\\Tiles\\1_4_0.png",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-07-06T01:20:46.006Z",
-              "EditorCaption": " - PNG [1536x1024, 24 bit, PNG]"
+              "WhenOpened": "2025-07-06T01:20:46.006Z"
             },
             {
               "$type": "Document",
@@ -92,7 +91,7 @@
               "RelativeDocumentMoniker": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
               "RelativeToolTip": "Entities\\Monster\\CombatMonsters\\CombatMonster.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAxwDEAAABdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-06T01:15:14.618Z",
               "EditorCaption": ""

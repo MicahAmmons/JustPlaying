@@ -85,8 +85,10 @@ public enum QuestStage
 {
     NotStarted,
     Accepted,
-
-    ObjectiveCompleted,
+    ObjectiveInProgress1,
+    ObjectiveInProgress2,
+    ObjectiveCompleted1,
+    ObjectiveCompleted2,
     Completed,
     Failed,           // optional, in case you support quest failure
     Declined          // optional, for declined/repeatable quests

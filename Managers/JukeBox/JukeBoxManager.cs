@@ -28,7 +28,7 @@ namespace PlayingAround.Managers.JukeBox
             SetSongTo("titleScreenBG");
             Configure();
         }
-        public static void Configure(bool loop = true, float volume = 0.1f)
+        public static void Configure(bool loop = true, float volume = 0.5f)
         {
             MediaPlayer.IsRepeating = loop;
             MediaPlayer.Volume = volume;
