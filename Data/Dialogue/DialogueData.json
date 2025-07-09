@@ -35,7 +35,7 @@
               {
                 "type": "SetQuestStage",
                 "questId": "Cull_The_Ooze",
-                "stage": "Accepted"
+                "questStage": "Accepted"
               },
               {
                 "type": "SetObjectiveProgressState",

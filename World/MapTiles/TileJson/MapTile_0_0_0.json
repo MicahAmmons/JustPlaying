@@ -14,7 +14,7 @@
   },
   "difficultyMax": 1,
   "difficultyMin": 1,
-  "totalSpawns": 2,
+  "totalSpawns": 1,
   "obstacles": [],
   "cells": [
     {
@@ -1513,7 +1513,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
@@ -1663,7 +1663,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
@@ -1673,7 +1673,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
@@ -1823,7 +1823,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
@@ -2114,7 +2114,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": false,
+      "playerSpawnbable": true,
       "playMonsterSpawnable": false
     },
     {
@@ -2274,7 +2274,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": false,
+      "playerSpawnbable": true,
       "playMonsterSpawnable": false
     },
     {
@@ -2423,7 +2423,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": true,
+      "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
@@ -2714,7 +2714,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": true,
+      "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
     {
@@ -2725,7 +2725,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 15,
@@ -2864,7 +2864,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": true,
+      "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
     {
@@ -2874,7 +2874,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": true,
+      "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
     {
@@ -3024,7 +3024,7 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": true,
+      "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },
     {

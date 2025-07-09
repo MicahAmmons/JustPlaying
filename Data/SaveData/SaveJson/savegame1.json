@@ -3,12 +3,12 @@
     "CurrentTileId": "-1_0_0"
   },
   "Player": {
-    "MovementQuickness": 800,
+    "MovementQuickness": 200,
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "CurrentPosX": 1152,
-    "CurrentPosY": 384,
+    "CurrentPosX": 1410,
+    "CurrentPosY": 640,
     "Health": 8,
     "Animations": {
       "IdleRight": [
