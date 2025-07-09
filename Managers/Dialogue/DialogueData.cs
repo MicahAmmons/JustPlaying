@@ -33,16 +33,19 @@ namespace PlayingAround.Managers.Dialogue
     public class DialogueCondition
     {
         public DialogueConditionType type { get; set; }
+        public QuestObjectiveProgressionState progressionStateId { get; set; } = QuestObjectiveProgressionState.Default;
         public string questId { get; set; }
-        public string objectiveId { get; set; } // optional, only needed for objective-related conditions
+        public string objectiveId { get; set; }
         public QuestStage questStage { get; set; }
     }
 
     public class DialogueEffect
     {
-        public DialogueEffectType type { get; set; }         // "StartQuest", "CompleteQuest", etc.
+        public DialogueEffectType type { get; set; }       
         public string questId { get; set; }      // used by most effects
-        public QuestStage stage { get; set; }
+        public QuestObjectiveProgressionState progressionStateId { get; set; }
+        public string ObjectiveId { get; set; }
+        public QuestStage questStage { get; set; }
         public string itemId { get; set; }       // optional, for item-based effects
         public string customTrigger { get; set; } // optional, for game-defined triggers
     }

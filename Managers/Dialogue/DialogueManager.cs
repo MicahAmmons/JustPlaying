@@ -68,13 +68,12 @@ namespace PlayingAround.Managers.Dialogue
                 EndDialogue();
             }
         }
-
         public static void HandleEffect(DialogueEffect effect)
         {
             switch (effect.type)
             {
                 case DialogueEffectType.SetQuestStage:
-                    QuestManager.UpdateQuestStageTo(effect.questId, effect.stage);
+                    QuestManager.UpdateQuestStageTo(effect.questId, effect.questStage);
                     break;
                 case DialogueEffectType.CompleteQuest:
                     QuestManager.CompleteQuest(effect.questId);
@@ -82,6 +81,9 @@ namespace PlayingAround.Managers.Dialogue
                     break;
                 case DialogueEffectType.StartQuest:
                     QuestManager.StartQuest(effect.questId);
+                    break;
+                case DialogueEffectType.SetObjectiveProgressState:
+                    QuestManager.SetObjectiveProgress(effect.progressionStateId, effect.questId, effect.ObjectiveId);
                     break;
             }
         }
@@ -113,24 +115,26 @@ namespace PlayingAround.Managers.Dialogue
         }
         private static bool ConditionsAreMet(List<DialogueCondition> conditions)
         {
+            // return false if anything fails, otherwise true if it makes it all teh way through 
             foreach (var condition in conditions)
             {
                 switch (condition.type)
                 {
                     case DialogueConditionType.QuestStage:
-                        if (QuestManager.GetStage(condition.questId) == condition.questStage)
-                            return true;
+                        if (QuestManager.GetStage(condition.questId) != condition.questStage)
+                            return false;
                         break;
 
-                    // Add more conditions as needed...
-
-                    default:
-                        return false; // Unknown condition type = fail safe
+                    case DialogueConditionType.ObjectiveProgress:
+                        if (!QuestManager.ObjectiveProgressIs(condition.questId, condition.objectiveId, condition.progressionStateId))
+                            return false;
+                        break;
                 }
             }
 
-            return false; // All conditions passed
+            return true; // all conditions passed
         }
+
 
         private static void EndDialogue()   
         {
@@ -154,11 +158,13 @@ public enum DialogueConditionType
 {
     None,
     QuestStage,
+    ObjectiveProgress
 
 }
 public enum DialogueEffectType
 {
     SetQuestStage,
     CompleteQuest,
-    StartQuest
+    StartQuest,
+    SetObjectiveProgressState
 }

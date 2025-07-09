@@ -1,5 +1,5 @@
 {
-  "Mr. Npc": {
+  "Mr. NPC": {
     "npcId": "Mr. NPC",
     "defaultNode": {
       "text": "Careful around these parts. You never know when the Oozes will return.",
@@ -18,6 +18,12 @@
             "type": "QuestStage",
             "questId": "Cull_The_Ooze",
             "questStage": "NotStarted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "2_Oozes_Defeated"
           }
         ],
         "text": "Thank goodness you're here. Oozes are swarming the outer rim of the chasm - you've gotta help! Please slay 2 Oozes.",
@@ -28,8 +34,14 @@
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questID": "Cull_The_Ooze",
+                "questId": "Cull_The_Ooze",
                 "stage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "progressionStateId": "InProgress",
+                "questId": "Cull_The_Ooze",
+                "objectiveId": "2_Oozes_Defeated"
               }
             ]
           },
@@ -39,8 +51,8 @@
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questID": "Cull_The_Ooze",
-                "stage": "Declined"
+                "questId": "Cull_The_Ooze",
+                "questStage": "Declined"
               }
             ]
           }
@@ -63,6 +75,12 @@
             "type": "QuestStage",
             "questId": "Cull_The_Ooze",
             "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "2_Oozes_Defeated"
           }
         ],
         "text": "There are plenty of Oozes around. Please eliminate at least 2 of them.",
@@ -90,8 +108,14 @@
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questID": "Cull_The_Ooze",
-                "stage": "Accepted"
+                "questId": "Cull_The_Ooze",
+                "questStage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "questId": "Cull_The_Ooze",
+                "progressionStateId": "InProgress",
+                "objectiveId": "2_Oozes_Defeated"
               }
             ]
           },
@@ -107,7 +131,19 @@
           {
             "type": "QuestStage",
             "questId": "Cull_The_Ooze",
-            "questStage": "ObjectiveCompleted1"
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "2_Oozes_Defeated"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "Ooze_Boss_Defeated"
           }
         ],
         "text": "Fantastic, you really thinned out the numbers. But we aren't done yet.",
@@ -127,9 +163,10 @@
             "nextDialogue": null,
             "effects": [
               {
-                "type": "SetQuestStage",
+                "type": "SetObjectiveProgressState",
                 "questID": "Cull_The_Ooze",
-                "stage": "ObjectiveInProgress2"
+                "progressionStateId": "InProgress",
+                "objectiveId": "Ooze_Boss_Defeated"
               }
             ]
           }
@@ -141,7 +178,37 @@
           {
             "type": "QuestStage",
             "questId": "Cull_The_Ooze",
-            "questStage": "ObjectiveCompleted2"
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "The Ooze Boss is to the east - hurry up!",
+        "responses": [
+          {
+            "text": "I'll handle it swiftly'",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "Ooze_Boss_Defeated"
           }
         ],
         "text": "Thanks adventurer — we are safe another day thanks to you.",
@@ -153,144 +220,6 @@
               {
                 "type": "CompleteQuest",
                 "questId": "Cull_The_Ooze"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "Cale": {
-    "npcId": "Cale",
-    "defaultNode": {
-      "text": "Hello there. This is my default text.",
-      "responses": [
-        {
-          "text": "Heard",
-          "nextDialogue": null
-        }
-      ]
-    },
-    "stages": [
-      {
-        "id": "1",
-        "conditions": [
-          {
-            "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "NotStarted"
-          }
-        ],
-        "text": "This is stage 1 dialogue. Will you accept my quest to defeat the training dummy?",
-        "responses": [
-          {
-            "text": "Sure, I’ll help.",
-            "nextDialogue": "1b",
-            "effects": [
-              {
-                "type": "SetQuestStage",
-                "questID": "getting_started",
-                "stage": "Accepted"
-              }
-            ]
-          },
-          {
-            "text": "No thanks.",
-            "nextDialogue": null,
-            "effects": [
-              {
-                "type": "SetQuestStage",
-                "questId": "getting_started",
-                "stage": "Declined"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "2",
-        "conditions": [
-          {
-            "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "Declined"
-          }
-        ],
-        "text": "Quit playing around, will you defeat the training dummy or not?",
-        "responses": [
-          {
-            "text": "Sure, I’ll help.",
-            "nextDialogue": "1b",
-            "effects": [
-              {
-                "type": "StartQuest",
-                "questId": "getting_started"
-              }
-            ]
-          },
-          {
-            "text": "No thanks.",
-            "nextDialogue": null
-          }
-        ]
-      },
-      {
-        "id": "1b",
-        "text": "Glad you accepted! The training dummy is just ahead. Show me what you’ve got.",
-        "responses": [
-          {
-            "text": "Continue",
-            "nextDialogue": null
-          }
-        ]
-      },
-      {
-        "id": "3",
-        "conditions": [
-          {
-            "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "Accepted"
-          }
-        ],
-        "text": "It's right over there - go ahead.",
-        "responses": [
-          {
-            "text": "Continue",
-            "nextDialogue": null
-          }
-        ]
-      },
-      {
-        "id": "4",
-        "conditions": [
-          {
-            "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "ObjectiveCompleted1"
-          }
-
-        ],
-        "text": "You defeated the dummy - good stuff.",
-        "responses": [
-          {
-            "text": "Next",
-            "nextDialogue": "4b"
-          }
-        ]
-      },
-      {
-        "id": "4b",
-        "text": "You completed the quest. Good job.",
-
-        "responses": [
-          {
-            "text": "Thanks brah",
-            "nextDialogue": null,
-            "effects": [
-              {
-                "type": "CompleteQuest",
-                "questId": "getting_started"
               }
             ]
           }

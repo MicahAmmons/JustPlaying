@@ -9,17 +9,29 @@ namespace PlayingAround.Data.SaveData
     public class QuestSaveData
     {
         public QuestStage stage { get; set; } = QuestStage.NotStarted;
-        public Dictionary<string, QuestObjectives> objectives { get; set; } = new();
+        public Dictionary<string, SavedQuestObjective> Objectives { get; set; } = new();
     }
 
-    public class QuestObjectives
+    public class SavedQuestObjective
     {
-        public int progress { get; set; } = 0;
-        public bool completed { get; set; } = false;
+        public int ProgressCount { get; set; } = 0;
+        public QuestObjectiveProgressionState ProgressState { get; set; } = QuestObjectiveProgressionState.NotStarted;
         
     }
-
-
-
 }
 
+public enum QuestObjectiveProgressionState
+{
+    Default,
+    Completed,
+    InProgress,
+    NotStarted
+}
+public enum QuestStage
+{
+    NotStarted,
+    Accepted,
+    Completed,
+    Failed,           // optional, in case you support quest failure
+    Declined          // optional, for declined/repeatable quests
+}

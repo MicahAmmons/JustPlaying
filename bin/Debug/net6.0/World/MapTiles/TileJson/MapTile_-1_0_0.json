@@ -3,10 +3,10 @@
   "gridY": 0,
   "gridZ": 0,
   "background": "Tiles/-1_0_0",
-  "monsters": [],
+  "monsters": ["Ooze"],
   "obstacles": [],
-  "difficulty": 0,
-  "totalSpawns": 0,
+  "difficulty": 1,
+  "totalSpawns": 2,
   "cells": [
     {
       "x": 0,
@@ -3764,9 +3764,9 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 8,
@@ -3775,8 +3775,8 @@
       "z": 0,
       "nextTileCell": null,
       "monsterSpawnable": false,
-      "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playerSpawnbable": true,
+      "playMonsterSpawnable": true
     },
     {
       "x": 10,
@@ -3784,9 +3784,9 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 12,
@@ -3836,7 +3836,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "npc": "Mr. NPC"
     },
     {
       "x": 22,
@@ -3856,7 +3857,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 26,
@@ -3866,7 +3867,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 28,

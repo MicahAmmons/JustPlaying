@@ -4,7 +4,7 @@
   "gridZ": 0,
   "background": "Tiles/0_0_0",
   "monsters": [
-    "Ooze"
+    "OozeBoss"
   ],
   "pacingBoundary": {
     "x": 0,
@@ -2865,8 +2865,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": false,
-      "npc": "Cale"
+      "playMonsterSpawnable": false
     },
     {
       "x": 12,

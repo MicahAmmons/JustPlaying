@@ -1,9 +1,9 @@
 {
   "MapTile": {
-    "CurrentTileId": "1_4_0"
+    "CurrentTileId": "-1_0_0"
   },
   "Player": {
-    "MovementQuickness": 200,
+    "MovementQuickness": 800,
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
@@ -46,8 +46,22 @@
       "stage": 0,
       "objectives": {
         "training_dummy_defeated": {
-          "progress": 0,
+          "ProgressCount": 0,
           "completed": false
+        }
+      }
+
+    },
+    "Cull_The_Ooze": {
+      "stage": "NotStarted",
+      "objectives": {
+        "2_Oozes_Defeated": {
+          "ProgressCount": 0,
+          "ProgressState": "NotStarted"
+        },
+        "Ooze_Boss_Defeated": {
+          "ProgressCount": 0,
+          "ProgressState": "NotStarted"
         }
       }
     }

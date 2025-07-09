@@ -1,4 +1,5 @@
 ﻿using PlayingAround.Data.SaveData;
+using PlayingAround.Managers.Dialogue;
 using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace PlayingAround.Managers.Quests
         {
             return _questSaveData[questId].stage;
         }
-        internal static bool IsObjectiveCompleted(string questId, string objectiveId)
+        internal static bool ObjectiveProgressIs(string questId, string objectiveId, QuestObjectiveProgressionState progressId)
         {
-            return _questSaveData[questId].objectives[objectiveId].completed;
+            return _questSaveData[questId].Objectives[objectiveId].ProgressState == progressId;
         }
         internal static void UpdateQuestStageTo(string questID,  QuestStage stage)
         {
@@ -42,54 +43,59 @@ namespace PlayingAround.Managers.Quests
         {
             _questSaveData[questID].stage = QuestStage.Accepted;
         }
+        internal static void SetObjectiveProgress(QuestObjectiveProgressionState progressionState, string questId, string objectiveId)
+        {
+            _questSaveData[questId].Objectives[objectiveId].ProgressState = progressionState;
+        }
         internal static void UpdateKillCounts(string monsterName, int count)
         {
             var matchesForMonster = QuestLibrary.GetKillObjectivesFor(monsterName);
             
+            // Looks through each quest that has MONSTER as its objective kill count
             foreach (var (questId, objective) in matchesForMonster)
             {
-                var saveData = _questSaveData[questId];
-                var progress = saveData.objectives[objective.id];
+                //This is looking at the SAVED DATA and the specific Objective of that data 
+                QuestSaveData saveData = _questSaveData[questId];
+                SavedQuestObjective currentProgress = saveData.Objectives[objective.id];
 
+                // Skip if the quest isn't active or relevant
                 if (saveData.stage is QuestStage.NotStarted or QuestStage.Completed or QuestStage.Declined)
                     continue;
-                if (!ObjectiveIsActiveForStage(saveData.stage, objective.activationStage))
+                // Skip if the objective isn't in progress
+                if (currentProgress.ProgressState != QuestObjectiveProgressionState.InProgress)
                     continue;
-                if (saveData.objectives[objective.id].completed) continue;
 
-                progress.progress += count;
-                if (progress.progress >= objective.requiredCount)
-                    progress.completed = true;
-                if (progress.completed)
-                    UpdateQuestStageTo(questId, QuestStage.ObjectiveCompleted);
+                currentProgress.ProgressCount += count;
+                if (currentProgress.ProgressCount >= objective.requiredCount)
+                    currentProgress.ProgressState = QuestObjectiveProgressionState.Completed;
+
             }
         }
-        private static bool ObjectiveIsActiveForStage(QuestStage current, ObjectiveActivationStage required)
-        {
-            return required switch
-            {
-                ObjectiveActivationStage.Always => true,
-                ObjectiveActivationStage.OnAccepted => current == QuestStage.Accepted,
-                _ => false
-            };
-        }
+        //private static bool ObjectiveIsActiveForStage(QuestSaveData data, QuestObjective objective)
+        //{
+        //    QuestStage current = data.stage;
+        //    ObjectiveActivationStage required = objective.activationStage;
+        //    return required switch
+        //    {
+        //        ObjectiveActivationStage.Always => true,
+        //        ObjectiveActivationStage.OnAccepted => current == QuestStage.Accepted,
+        //        ObjectiveActivationStage.PreviousConditionCompleted => IsPreviousObjectiveCompleted(data, objective),
+        //        _ => false
+        //    };
+        //}
+        //private static bool IsPreviousObjectiveCompleted(QuestSaveData data, QuestObjective objective)
+        //{
+        //    string prev = objective.PreviousId;
+        //    if (data.objectives[prev].ProgressState == ObjectiveProgressionState.Completed == true && data.objectives[objective.id].ProgressState != ObjectiveProgressionState.Completed) return true;
+        //    return false;
 
+        //}
         internal static Dictionary<string, QuestSaveData> SaveQuestData()
         {
             return _questSaveData;
         }
+
+
     }
 }
 
-public enum QuestStage
-{
-    NotStarted,
-    Accepted,
-    ObjectiveInProgress1,
-    ObjectiveInProgress2,
-    ObjectiveCompleted1,
-    ObjectiveCompleted2,
-    Completed,
-    Failed,           // optional, in case you support quest failure
-    Declined          // optional, for declined/repeatable quests
-}

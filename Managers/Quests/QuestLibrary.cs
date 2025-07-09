@@ -25,7 +25,7 @@ namespace PlayingAround.Managers.Quests
                 {
                     if (objective.objectiveType == QuestObjectiveType.KillCount)
                     {
-                        string key = objective.targetId;
+                        string key = objective.killTargetId;
 
                         if (!_killObjectiveIndex.ContainsKey(key))
                             _killObjectiveIndex[key] = new();
