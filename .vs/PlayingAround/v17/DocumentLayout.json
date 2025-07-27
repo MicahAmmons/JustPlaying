@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 185,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -69,6 +69,10 @@
               "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "savegame1.json",
@@ -78,8 +82,7 @@
               "RelativeToolTip": "Data\\SaveData\\SaveJson\\savegame1.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-27T23:12:47.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T23:12:47.935Z"
             },
             {
               "$type": "Document",
@@ -91,8 +94,7 @@
               "RelativeToolTip": "Managers\\InputManager.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAQwDgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T22:51:57.978Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T22:51:57.978Z"
             },
             {
               "$type": "Document",
@@ -104,8 +106,7 @@
               "RelativeToolTip": "Managers\\Entities\\PlayerManager.cs",
               "ViewState": "AgIAAFkAAAAAAAAAAAAnwGYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T22:45:11.062Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T22:45:11.062Z"
             },
             {
               "$type": "Document",
@@ -117,8 +118,7 @@
               "RelativeToolTip": "Managers\\Movement\\MovementManager.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T22:45:16.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T22:45:16.421Z"
             },
             {
               "$type": "Document",
@@ -128,7 +128,7 @@
               "RelativeDocumentMoniker": "Entities\\Player\\Player.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Entities\\Player\\Player.cs",
               "RelativeToolTip": "Entities\\Player\\Player.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAmwNgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-27T21:58:54.656Z",
               "EditorCaption": ""
@@ -143,8 +143,7 @@
               "RelativeToolTip": "Managers\\Movement\\GridMovement.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAwwDIAAABnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T21:58:24.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T21:58:24.246Z"
             },
             {
               "$type": "Document",
@@ -156,8 +155,7 @@
               "RelativeToolTip": "Pathfinding\\CustomPathfinder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAnwBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T21:54:56.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T21:54:56.765Z"
             },
             {
               "$type": "Document",
@@ -169,8 +167,7 @@
               "RelativeToolTip": "World\\MapTiles\\TileJson\\MapTile_-1_0_0.json",
               "ViewState": "AgIAAGgEAAAAAAAAAAAAAH0EAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-27T21:49:58.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T21:49:58.014Z"
             },
             {
               "$type": "Document",
@@ -182,8 +179,7 @@
               "RelativeToolTip": "World\\MapTiles\\TileCell\\TileCell.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAjwDkAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T21:48:22.166Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T21:48:22.166Z"
             },
             {
               "$type": "Document",
@@ -195,8 +191,7 @@
               "RelativeToolTip": "Managers\\Tiles\\TileManager.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAA1wEwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-27T21:47:01.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-27T21:47:01.086Z"
             }
           ]
         }
