@@ -28,8 +28,6 @@
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
     <None Remove="World\MapTiles\TileJson\MapTile_-1_0_0.json" />
-    <None Remove="World\MapTiles\TileJson\MapTile_0_-1_0OLDOLD.json" />
-    <None Remove="World\MapTiles\TileJson\MapTile_0_0_0old.json" />
     <None Remove="World\MapTiles\TileJson\MapTile_1_4_0.json" />
   </ItemGroup>
   <ItemGroup>
@@ -78,13 +76,7 @@
     <Content Include="World\MapTiles\TileJson\MapTile_-1_0_0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="World\MapTiles\TileJson\MapTile_0_-1_0OLDOLD.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_0_0_0.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="World\MapTiles\TileJson\MapTile_0_0_0old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="World\MapTiles\TileJson\MapTile_1_4_0.json">

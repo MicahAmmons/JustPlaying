@@ -24,7 +24,9 @@ namespace PlayingAround.Game.Pathfinding
             List<TileCell> cellPath = FindCellPath(startCell, goalCell);
 
             return cellPath.ToList();
+            
         }
+
         private static List<TileCell> FindCellPath(TileCell start, TileCell goal)
         {
             var openSet = new PriorityQueue<TileCell, int>();

@@ -1146,7 +1146,9 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "OozeIcon"
+
     },
     {
       "x": 11,

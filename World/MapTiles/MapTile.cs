@@ -24,9 +24,8 @@ namespace PlayingAround.Game.Map
 
         public Dictionary<(int, int), bool> WalkableMap { get; private set; } = new();
         public Dictionary<Vector2, NextTileData> NextTileMap { get; private set; } = new();
-
         public List<string> OptionsOfMonsters { get; private set; } = new();
-
+        public List<TileCell> CellsWithStaticBackGround {  get; private set; } = new(); 
         public List<TileCell> MonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayMonsterSpawnableCells { get; private set; } = new List<TileCell> { };
@@ -66,7 +65,7 @@ namespace PlayingAround.Game.Map
                 var tile = new TileCell(cellData);
               
                 if (!IsDiamondAligned(tile.X, tile.Y)) continue;
-                if (tile.NextTile != null)
+                    if (tile.NextTile != null)
                     {
                         NextTileMap[tile.CenterPoint] = tile.NextTile;
                     }
@@ -78,6 +77,11 @@ namespace PlayingAround.Game.Map
                         PlayerSpawnableCells.Add(tile);
                     if (cellData.PlayMonsterSpawnable)
                        PlayMonsterSpawnableCells.Add(tile);
+                if (cellData.StaticBackGroundTexture != null)
+                {
+                    tile.BackGroundTexture = AssetManager.GetTexture(cellData.StaticBackGroundTexture);
+                    CellsWithStaticBackGround.Add(tile);
+                }
                 if (cellData.NPCName != null)
                 {
                     NPC npc = NPCManager.GenerateNPC(tile.NPCName, tile);

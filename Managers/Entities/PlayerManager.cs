@@ -67,11 +67,7 @@ namespace PlayingAround.Managers.Entities
                 if (InputManager.IsRightMouseDown())
                 {
                     Vector2 target = new Vector2(InputManager.MouseX , InputManager.MouseY);
-                    TileCell cell = TileManager.GetCell(target);
-
-                        _currentPlayer.UpdatePlayerEndPoint(target);
-
-      
+                    _currentPlayer.UpdatePlayerEndPoint(target);
                 }
                 if (InputManager.IsKeyPressed(Keys.Space))
                 {

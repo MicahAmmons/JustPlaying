@@ -31,6 +31,7 @@ namespace PlayingAround.Game.Map
         public Vector2 CenterPoint { get; set; }
         public string NPCName { get; set; }
         public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
+        public Texture2D BackGroundTexture { get; set; }
 
         public TileCell(TileCellData data)        
         {
@@ -63,7 +64,18 @@ namespace PlayingAround.Game.Map
             Texture2D text = AssetManager.GetTexture("CellDiamond");
             spriteBatch.Draw(text, rect, col);
         }
-
+        public void DrawBackGroundTexture(SpriteBatch spriteBatch)
+        {
+            Rectangle rect = new Rectangle
+                (
+                (int)CenterPoint.X,
+                (int)CenterPoint.Y,
+                128,
+                128
+                );
+                
+            spriteBatch.Draw(BackGroundTexture, rect, Color.White);
+        }
         public void AddVisualEffect()
         {
             VisualEffect ve = new VisualEffect(new Vector2(0,0), new Vector2(0,0), AttackName.Slam, 500);

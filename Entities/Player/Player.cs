@@ -154,50 +154,67 @@ namespace PlayingAround.Entities.Player
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (SceneManager.IsState(SceneState.Play) || SceneManager.IsState(SceneState.Combat))
-            {
-                if (MoveTarget != null)
-                {
-                    List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
-                    // Takes in a Vector2 
-                    Vector2 move = (Vector2)MoveTarget;
-                    MoveTarget = null;
-                    //Converts it to a TileCell
-                    TileCell startingCell = TileManager.GetCell(CurrentPos);
-                    //Gets cell path using WalkableNeighbors to exclude !walkable
-                    List<TileCell> cellPath = GridMovement.GetCellToCellPath(CurrentPos, move);
+            if (MoveTarget == null) return;
 
-                    foreach (var endPos in cellPath)
-                    {
-                        // skips if cell is current cell so doesn't move to current cell 
-                        if (endPos == TileManager.GetCell(CurrentPos)) continue;
-                        //Get vector list from cell to cell, adds to list 
-                        List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
+            Vector2 move = (Vector2)MoveTarget;
+            MoveTarget = null;
+
+            if (SceneManager.IsState(SceneState.Play))
+            {
+                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, move);
+
+                // Abort early if path is empty
+                if (cellPath == null || cellPath.Count == 0)
+                    return;
+
+                // Remove CurrentPos if it's the first point in the path
+                if (cellPath[0] == CurrentPos)
+                    cellPath.RemoveAt(0);
+
+                if (cellPath.Count == 0) // All points were removed, nothing left to move to
+                    return;
+
+                CurrentStats.MovePath = new List<List<Vector2>> { cellPath };
+            }
+            else if (SceneManager.IsState(SceneState.Combat))
+            {
+                List<List<Vector2>> fullVectorPath = new();
+
+                TileCell startingCell = TileManager.GetCell(CurrentPos);
+                List<TileCell> cellPath = GridMovement.GetCellToCellPath(CurrentPos, move);
+
+                // Abort early if no path
+                if (cellPath == null || cellPath.Count == 0)
+                    return;
+
+                foreach (var endPos in cellPath)
+                {
+                    if (endPos == TileManager.GetCell(CurrentPos)) continue;
+
+                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
+                    if (vectorRange != null && vectorRange.Count > 0)
                         fullVectorPath.Add(vectorRange);
-                        startingCell = endPos;
-                    }
-                    bool cont = false;
-                    do
-                    {
-                        if (fullVectorPath.Count == 0 || fullVectorPath == null)
-                        {
-                            cont = true;
-                            break;
-                        }
-                        if (fullVectorPath[0][0] == CurrentPos)
-                        {
-                            fullVectorPath[0].RemoveAt(0);
-                        }
-                        else
-                        {
-                            cont = true;
-                        }
-                    } while (!cont);
-                    
-                    CurrentStats.MovePath = fullVectorPath;
+
+                    startingCell = endPos;
                 }
+
+                if (fullVectorPath == null || fullVectorPath.Count == 0)
+                    return;
+
+                // Remove CurrentPos if it's the first step in the first path segment
+                if (fullVectorPath[0][0] == CurrentPos)
+                    fullVectorPath[0].RemoveAt(0);
+
+                if (fullVectorPath[0].Count == 0)
+                    fullVectorPath.RemoveAt(0);
+
+                if (fullVectorPath.Count == 0)
+                    return;
+
+                CurrentStats.MovePath = fullVectorPath;
             }
         }
+
         public void ClearMovementPath()
         {
             CurrentStats.MovePath.Clear();

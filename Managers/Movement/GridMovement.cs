@@ -48,6 +48,32 @@ namespace PlayingAround.Managers.Movement
 
             return cellPath.ToList();
         }
+        public static List<Vector2> BuildStraightLinePath(Vector2 start, Vector2 end, int stepSize = 15)
+        {
+            var path = new List<Vector2>();
+
+            Vector2 direction = end - start;
+            float distance = direction.Length();
+            if (distance == 0)
+                return path;
+
+            direction.Normalize();
+            int steps = (int)(distance / stepSize);
+
+            for (int i = 0; i <= steps; i++)
+            {
+                Vector2 current = start + direction * (i * stepSize);
+
+                var cell = TileManager.GetCell(current);
+                if (cell == null || !cell.IsWalkable)
+                    break;
+
+                path.Add(current);
+            }
+
+            return path;
+        }
+
         private static List<TileCell> FindCellPath(TileCell start, TileCell goal)
         {
             var openSet = new PriorityQueue<TileCell, int>();

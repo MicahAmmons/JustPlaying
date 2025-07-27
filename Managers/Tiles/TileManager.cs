@@ -229,6 +229,10 @@ namespace PlayingAround.Managers.Tiles
             {
                 spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
            color: Color.White);
+                foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
+                {
+                    cell.DrawBackGroundTexture(spriteBatch);
+                }
             }
             
         }
