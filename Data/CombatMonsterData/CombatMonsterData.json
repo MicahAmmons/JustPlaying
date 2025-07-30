@@ -4,7 +4,7 @@
     "DefaultElementType": "Acid",
     "BaseStats": {
       "MP": 4,
-      "AP": 3,
+      "AP": 2,
       "Health": 6,
       "Initiative": 2
     },

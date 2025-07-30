@@ -131,11 +131,15 @@ namespace PlayingAround
             TileCellManager.Draw(_spriteBatch);
             LoadingScreenManager.Draw(_spriteBatch);
             NPCManager.Draw(_spriteBatch);
-            CombatGuard.Draw(_spriteBatch, GraphicsDevice);
             PlayMonsterManager.Draw(_spriteBatch);
+            UIManager.Draw(_spriteBatch, GraphicsDevice);
+            CombatGuard.Draw(_spriteBatch, GraphicsDevice);
             CombatMonsterManager.Draw(_spriteBatch);
             PlayerManager.Draw(_spriteBatch);
-            UIManager.Draw(_spriteBatch, GraphicsDevice);
+
+
+
+
             DebugBugger.Draw(_spriteBatch);
             DialogueManager.Draw(_spriteBatch);
             EscapeOverseer.Draw(_spriteBatch);

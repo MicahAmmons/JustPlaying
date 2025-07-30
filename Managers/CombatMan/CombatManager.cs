@@ -12,6 +12,8 @@ using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.UI;
+using PlayingAround.Managers.UI.Combat;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
@@ -29,15 +31,18 @@ namespace PlayingAround.Managers.CombatMan
 
         private static List<string> _log = new List<string>();
 
-        private CombatUIManager _combatUIManager;
         private CombatStateMachine _stateMachine;
         private VisualEffectManager _visualEffectManager;
+        private CombatUIManager _combatUIManager;
         public VisualEffectManager VisualEffectManager => _visualEffectManager;
         public PlayerTurnState StatePlayerTurn => _stateMachine.CurrentPlayerTurnState;
         public CombatState StateCombat => _stateMachine.CurrentCombatState;
         public SummonedTurnState StateSummoned => _stateMachine.CurrentSummonedTurnState;
         public AITurnState StateAI => _stateMachine.CurrentAITurnState;
+        // just a list of all monsters that have entered this combat at any time
         private List<ICombatant> _referenceTurnOrder = new List<ICombatant>();
+        public int TotalCombatants = 0;
+        // the current alive turn order
         public Queue<ICombatant> TurnOrder = new Queue<ICombatant>();
 
         private MapTile _currentMapTile;
@@ -74,8 +79,10 @@ namespace PlayingAround.Managers.CombatMan
         private ICombatant _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
         private float _timer = 0;
+
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
         public ICombatant CurrentCombatant => _currentCombatant;
+
 
 
         public CombatManager(PlayMonsters playMonsters)
@@ -85,6 +92,7 @@ namespace PlayingAround.Managers.CombatMan
             _visualEffectManager = new VisualEffectManager();
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
+            _combatUIManager = new CombatUIManager();
 
             PlayMonsters = playMonsters;
             _currentPlayer.ToggleDrawn();
@@ -92,8 +100,10 @@ namespace PlayingAround.Managers.CombatMan
             SetSpawnableCells();
             SetCombatantStartingPos();
             SetTurnOrder();
+            UpdateCombatantPositions();
             UpdateCurrentMonster();
-            InitilizeUIElements();        
+            InitilizeUIElements();  
+            
         }
         public void SetSpawnableCells()
         {
@@ -187,7 +197,11 @@ namespace PlayingAround.Managers.CombatMan
                 _moveRect.Y - buttonHeight - spacing,
                 _endTurnRect.Width,
                 buttonHeight);
-
+            
+            foreach (var comb in TurnOrder)
+            {
+                AddCombatantUIInfo(comb);
+            }
         }
 
 
@@ -219,8 +233,8 @@ namespace PlayingAround.Managers.CombatMan
                     break;
             }
             DrawDebugInfo(spriteBatch);
-            DrawDisplayStats(spriteBatch);
             _visualEffectManager.Draw(spriteBatch);
+            _combatUIManager.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
 
         }
@@ -272,102 +286,7 @@ namespace PlayingAround.Managers.CombatMan
 
             spriteBatch.DrawString(_font, buttonText, buttonTextPos, Color.White);
         }
-        public void DrawDisplayStats(SpriteBatch spriteBatch)
-        {
-            int iconSize = 64;
-            int spacingX = 150; // Horizontal space between icons
-            int topY = 20; // Vertical offset from the top of the screen
-            SpriteFont font = AssetManager.GetFont("mainFont");
 
-            int count = _referenceTurnOrder.Count;
-            int totalWidth = count * spacingX;
-
-            // Center the row
-            int screenWidth = ViewportManager.ScreenWidth; // Or use GraphicsDevice.Viewport.Width if you have access
-            Vector2 startingPos = new Vector2((screenWidth - totalWidth) / 2f, topY);
-
-            int index = 0;
-            foreach (var mon in _referenceTurnOrder)
-            {
-                Vector2 iconPos = startingPos + new Vector2(index * spacingX, 0);
-                Rectangle iconRect = new Rectangle((int)iconPos.X, (int)iconPos.Y, iconSize, iconSize);
-                if (!_displayStatRectangles.TryGetValue(mon, out Rectangle existingRect) || existingRect != iconRect)
-                {
-                    _displayStatRectangles[mon] = iconRect;
-                }
-                // Determine texture key
-                Texture2D icon = mon.Icon;
-
-                // Set color depending on isDead
-                Color col = Color.White;
-                if (mon.Is == CombatMonsterType.Summoned)
-                {
-                    col = Color.White * 0.8f;
-                }
-                if (mon.isDead)
-                    col = Color.Gray * 0.4f;
-
-                if (mon == _currentCombatant) spriteBatch.Draw(_playerCellOptions, iconRect, col);
-                // Draw monster icon
-                spriteBatch.Draw(icon, iconRect, col);
-
-
-
-                // Draw health below
-                float currentHealth = MathF.Max(0, mon.CurrentStats.Health);
-                string hpText = $"{currentHealth} / {mon.BaseStats.Health}";
-                Vector2 textSize = font.MeasureString(hpText);
-                Vector2 textPos = new Vector2(
-                    iconRect.X + (iconSize - textSize.X) / 2,
-                    iconRect.Bottom + 2
-                );
-
-                // Draw aspects below icon
-                int aspectSize = 24;
-                int aspectSpacing = 4;
-                for (int i = 0; i < mon.Aspects.Count; i++)
-                {
-                    var aspect = mon.Aspects[i];
-                    Vector2 aspectPos = new Vector2(
-                        iconRect.X + i * (aspectSize + aspectSpacing),
-                        iconRect.Bottom + 25
-                    );
-                    Rectangle aspectRect = new Rectangle((int)aspectPos.X, (int)aspectPos.Y, aspectSize, aspectSize);
-
-                    spriteBatch.Draw(aspect.Icon, aspectRect, Color.White);
-
-                    // Overlay duration
-                    string turnsLeft = MathF.Ceiling(aspect.Duration).ToString();
-                    Vector2 numSize = font.MeasureString(turnsLeft);
-                    Vector2 numPos = new Vector2(
-                        aspectRect.Center.X - numSize.X / 2,
-                        aspectRect.Center.Y - numSize.Y / 2
-                    );
-
-                    spriteBatch.DrawString(font, turnsLeft, numPos, Color.Yellow);
-                }
-
-                spriteBatch.DrawString(font, hpText, textPos, Color.Black);
-                // Draw MP below HP
-                string mpText = $"MP: {mon.CurrentStats.MP} / {mon.CurrentStats.MP}";
-                Vector2 mpTextSize = font.MeasureString(mpText);
-                Vector2 mpTextPos = new Vector2(
-                    iconRect.X + (iconSize - mpTextSize.X) / 2,
-                    textPos.Y + textSize.Y + 2
-                );
-                spriteBatch.DrawString(font, mpText, mpTextPos, Color.Blue);
-                // Draw AP below MP
-                string apText = $"AP: {mon.CurrentStats.AP} / {mon.BaseStats.AP}";
-                Vector2 apTextSize = font.MeasureString(apText);
-                Vector2 apTextPos = new Vector2(
-                    iconRect.X + (iconSize - apTextSize.X) / 2,
-                    mpTextPos.Y + mpTextSize.Y + 2
-                );
-                spriteBatch.DrawString(font, apText, apTextPos, Color.Orange);
-
-                index++;
-            }
-        }
         private void DrawDebugInfo(SpriteBatch spriteBatch)
         {
             OnScreenDebug(spriteBatch);
@@ -626,6 +545,8 @@ namespace PlayingAround.Managers.CombatMan
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             UpdateMouseWhereabouts();
+            UpdateCombatantCount();
+            _combatUIManager.Update();
             UpdateInput(gameTime, delta);
             if (StateCombat == CombatState.WinnerChosen)
             {
@@ -741,6 +662,13 @@ namespace PlayingAround.Managers.CombatMan
                     if (_timer >= 1f) LeaveResolvingStartOfTurnEffects();
                     break;
                     
+            }
+        }
+        private void UpdateCombatantCount()
+        {
+            if (TotalCombatants != TurnOrder.Count)
+            {
+                TotalCombatants = TurnOrder.Count;
             }
         }
         private void WaitForTimer(float delta )
@@ -919,7 +847,6 @@ namespace PlayingAround.Managers.CombatMan
             ICombatant mon = _currentCombatant;
             if (StateSummoned is not (SummonedTurnState.SummonedExecutingMove or SummonedTurnState.SummonedExecutingAttack))
             {
-                
                 if (InputManager.IsRightClick()) SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
             }
             UpdateStatHoverMonsterCell();
@@ -927,7 +854,7 @@ namespace PlayingAround.Managers.CombatMan
             {
                 case SummonedTurnState.SummonedWaitingInput:
                     HandlePlayerEndTurn();
-                    if (mon.CurrentStats.AP > 0)
+                    if (mon.CurrentStats.MP > 0)
                     { HandleMovementRectClick();}
                     HandleAttackRectClick();
                     ResetClickValues();
@@ -965,7 +892,7 @@ namespace PlayingAround.Managers.CombatMan
                 case PlayerTurnState.PlayerWaitingInput:
                     HandleSummonRectClick();
                     HandlePlayerEndTurn();
-                    if (mon.CurrentStats.AP > 0)
+                    if (mon.CurrentStats.MP > 0)
                         HandleMovementRectClick();
                     ResetClickValues();
                     break;
@@ -1044,7 +971,6 @@ namespace PlayingAround.Managers.CombatMan
             {
                 ICombatant combatant = _currentCombatant;
                 combatant.MoveTarget = _currentClickedCell.CenterPoint;
-                combatant.SpendActionPoint();
                 if (_currentCombatant.Is == CombatMonsterType.Player)
                 {
                     SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove);
@@ -1123,6 +1049,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             ICombatant mon = _currentCombatant;
             mon.CurrentStats.AP = mon.BaseStats.AP;
+            mon.CurrentStats.MP = mon.BaseStats.MP;
            
         }
         private void PickWhichEntitiesTurn()
@@ -1171,6 +1098,7 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
             if (someOneDied) RebuildTurnOrderExcludingDead();
+            UpdateCombatantPositions();
         }
         private void RebuildTurnOrderExcludingDead()
         {
@@ -1178,6 +1106,11 @@ namespace PlayingAround.Managers.CombatMan
 
             foreach (var mon in TurnOrder)
             {
+                // remove summoned monster if they die
+                if (mon.Is == CombatMonsterType.Summoned && mon.isDead)
+                {
+                    _combatUIManager.RemoveCombatantUI(mon);
+                }
                 if (!mon.isDead)
                 {
                     newQueue.Enqueue(mon);
@@ -1186,7 +1119,6 @@ namespace PlayingAround.Managers.CombatMan
 
             TurnOrder = newQueue;
         }
-
         private void SkipMonsterIfDead()
         {
             int maxTries = TurnOrder.Count;
@@ -1325,8 +1257,22 @@ namespace PlayingAround.Managers.CombatMan
             TurnOrder = new Queue<ICombatant>(updatedList);
             updatedList.Sort((a, b) => b.BaseStats.Initiative.CompareTo(a.BaseStats.Initiative));
             _referenceTurnOrder = updatedList;
+            UpdateCombatantPositions();
+            AddCombatantUIInfo(mon);
         }
-
+        private void UpdateCombatantPositions()
+        {
+            List<ICombatant> comList = new List<ICombatant>(TurnOrder);
+            for (int i = 0; i < comList.Count; i++)
+            {
+                var comb = comList[i];
+                comb.UpdateCombatPosition(i);
+            }
+        }
+        private void AddCombatantUIInfo(ICombatant comb)
+        {
+            _combatUIManager.AddCombatantUIInfo(new CombatantInfoUI(comb));
+        }
 
         private void HandleSummonRectClick()
         {

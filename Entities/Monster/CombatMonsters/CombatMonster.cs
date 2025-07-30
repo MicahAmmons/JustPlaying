@@ -51,7 +51,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public Vector2? MoveTarget { get; set; }
         public List<TileCell> MoveTargetCellList { get; set; } = new List<TileCell>();
-
+        public int PositionInOrder { get; set; }
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -147,11 +147,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             {
                 CurrentStats.Pos = nextPoint;
                 CurrentStats.MovePath[0].RemoveAt(0);
-                if (CurrentStats.MovePath[0].Count == 0) CurrentStats.MovePath.RemoveAt(0);
-                if (CurrentStats.MovePath.Count <= 0)
-                {
-                    SetCurrentAnimationStateToIdle();
-                }
+                if (CurrentStats.MovePath[0].Count == 0) MovedOneCell();
             }
             else
             {
@@ -162,32 +158,21 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
             }
         }
+        public void MovedOneCell()
+        {
+            // Logic to check for traps or damages or things that stop movement or damage per movement
+            CurrentStats.MP -= 1;
+            CurrentStats.MovePath.RemoveAt(0);
+            if (CurrentStats.MovePath.Count <= 0)
+            {
+                SetCurrentAnimationStateToIdle();
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawSpecifics.VEManager.Draw(spriteBatch);
             DrawTexture(spriteBatch);
-            DrawCellHighlight(spriteBatch);
-        }
-        public void DrawCellHighlight(SpriteBatch spriteBatch)
-        {
-               if (DrawSpecifics.DrawCellHightlight)
-            {
-                DrawSpecifics.DrawCellHightlight = false;
-                int shrink = DrawSpecifics.shrink;
-                DrawSpecifics.shrink = 0;
-                Color col = DrawSpecifics.HighlightCol;
-                DrawSpecifics.HighlightCol = ColorPalette.DarkColor;
-                Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CurrentStats.Pos);
-                Rectangle rect = new Rectangle(
-                    (int)coords.X + shrink - MapTile.TileWidth / 2,
-                    (int)coords.Y + shrink,
-                    128 - shrink * 2,
-                    64 - shrink * 2
-                );
-                Texture2D text = AssetManager.GetTexture("CellDiamond");
-                spriteBatch.Draw(text, rect, col);
-            }
-            
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
@@ -296,7 +281,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             switch (Is)
             {
                 case CombatMonsterType.AI:
-                    CurrentStats.MP = BaseStats.MP;
                     CurrentStats.Actions.Clear();
                     if (Is == CombatMonsterType.AI)
                     {
@@ -307,7 +291,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     }
                     break;
                 case CombatMonsterType.Summoned:
-                    CurrentStats.MP = BaseStats.MP;
                     break;
             }
 
@@ -533,6 +516,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     return GetMovementCellPathToClosestEnemy(CurrentStats.MP);
             }
             return false;
+        }
+        public void UpdateCombatPosition(int pos)
+        {
+            PositionInOrder = pos;
         }
     }
     public enum CombatMonsterType

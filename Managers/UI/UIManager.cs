@@ -16,6 +16,8 @@ using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Dialogue;
 using System.Linq;
 using PlayingAround.Data.SaveData;
+using PlayingAround.Interfaces;
+using PlayingAround.Managers.UI.Combat;
 
 
 namespace PlayingAround.Managers.UI
@@ -28,6 +30,7 @@ namespace PlayingAround.Managers.UI
         private static Player _currentPlayer => PlayerManager.CurrentPlayer;
 
         private static string _playerStats;
+
 
         // 🆕 Moved rectangles to static fields
         private static Rectangle _playerStatsRect = new Rectangle(1600, 880, 200, 100);
@@ -79,15 +82,18 @@ namespace PlayingAround.Managers.UI
             );
 
         }
-
         public static void Update(GameTime gameTime)
         {
-            if (SceneManager.CurrentState != SceneState.Play) return;
-            UpdatePlayer();
-            UpdateInput();
-            if (_currentInteractState != InteractState.None && _interactMessage == null)
+            switch (SceneManager.CurrentState)
             {
-                SetInteractMessage();
+                case SceneState.Play:
+                    UpdatePlayer();
+                    UpdateInput();
+                    if (_currentInteractState != InteractState.None && _interactMessage == null)
+                    {
+                        SetInteractMessage();
+                    }
+                    break;
             }
         }
 
@@ -121,6 +127,10 @@ namespace PlayingAround.Managers.UI
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
+            switch (SceneManager.CurrentState)
+            {
+ 
+            }
             if (SceneManager.IsState(SceneState.LoadingScreen) || SceneManager.IsState(SceneState.Cinematic)) return;
             if (SceneManager.CurrentState != SceneState.Dialogue || SceneManager.CurrentState != SceneState.Play)
             if (_summonOverlayOpen)
@@ -138,7 +148,10 @@ namespace PlayingAround.Managers.UI
             {
                 DrawCurrentState(spriteBatch);
             }
+            
         }
+
+
         public static void DrawPlayMonsterDetails(SpriteBatch spriteBatch)
         {
             if (PlayMonsterManager.SelectedMonster != null)
@@ -397,6 +410,7 @@ namespace PlayingAround.Managers.UI
             else
                 return name + "s";
         }
+
 
     }
 

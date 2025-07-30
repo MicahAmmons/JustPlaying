@@ -21,7 +21,6 @@ namespace PlayingAround.Interfaces
         public void Draw (SpriteBatch spriteBatch);
         public void DrawTexture(SpriteBatch spriteBatch);
         public DrawSpecificStats DrawSpecifics { get; }
-        public void DrawCellHighlight(SpriteBatch spriteBatch);
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
         public void UpdateMonsterTakingDamage(GameTime gameTime);
         public void UpdateMovement(GameTime gameTime);
@@ -50,6 +49,7 @@ namespace PlayingAround.Interfaces
         public bool isDead { get; set; }
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
+        public int PositionInOrder {  get; set; }
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();
@@ -64,6 +64,8 @@ namespace PlayingAround.Interfaces
         public void SetCombatantAttackPathingInformation();
         public void ResolveAspects(TickedTiming endOfTurn);
         public void ClearAllAspects();
+        public void UpdateCombatPosition(int pos);
+        public void MovedOneCell();
     }
 
 

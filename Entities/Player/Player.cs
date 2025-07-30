@@ -62,6 +62,8 @@ namespace PlayingAround.Entities.Player
                     OOCombatStats.CurrentPos = value;
             }
         }
+        public int PositionInOrder { get ; set; }
+
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var player = new Player()
@@ -81,8 +83,8 @@ namespace PlayingAround.Entities.Player
                 },
                 BaseStats = new BaseCombatStats()
                 {
-                    MP = 4,
-                    AP = 3,
+                    MP = 6,
+                    AP = 2,
                     Health = 10,
                     Initiative = 3
                 },
@@ -138,11 +140,7 @@ namespace PlayingAround.Entities.Player
             {
                 CurrentPos = nextPoint;
                 CurrentStats.MovePath[0].RemoveAt(0);
-                if (CurrentStats.MovePath[0].Count == 0) CurrentStats.MovePath.RemoveAt(0);
-                if (CurrentStats.MovePath.Count <= 0)
-                {
-                    SetCurrentAnimationStateToIdle();
-                }
+                if (CurrentStats.MovePath[0].Count == 0) MovedOneCell();
             }
             else
             {
@@ -297,7 +295,6 @@ namespace PlayingAround.Entities.Player
             DrawSpecifics.VEManager.Draw(spriteBatch);
             if (!DrawSpecifics.AllowedToBeDrawn) return;
             DrawTexture(spriteBatch);
-            DrawCellHighlight(spriteBatch);
 
         }
         public void DrawTexture(SpriteBatch spriteBatch)
@@ -365,6 +362,16 @@ namespace PlayingAround.Entities.Player
         {
             throw new NotImplementedException();
         }
+        public void MovedOneCell()
+        {
+            // Logic to check for traps or damages or things that stop movement or damage per movement
+            CurrentStats.MP -= 1;
+            CurrentStats.MovePath.RemoveAt(0);
+            if (CurrentStats.MovePath.Count <= 0)
+            {
+                SetCurrentAnimationStateToIdle();
+            }
+        }
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
             Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
@@ -394,27 +401,6 @@ namespace PlayingAround.Entities.Player
         {
             throw new NotImplementedException();
         }
-        public void DrawCellHighlight(SpriteBatch spriteBatch)
-        {
-            if (DrawSpecifics.DrawCellHightlight)
-            {
-                DrawSpecifics.DrawCellHightlight = false;
-                int shrink = DrawSpecifics.shrink;
-                DrawSpecifics.shrink = 0;
-                Color col = DrawSpecifics.HighlightCol;
-                DrawSpecifics.HighlightCol = ColorPalette.DarkColor;
-                Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CurrentStats.Pos);
-                Rectangle rect = new Rectangle(
-                    (int)coords.X + shrink - MapTile.TileWidth / 2,
-                    (int)coords.Y + shrink,
-                    128 - shrink * 2,
-                    64 - shrink * 2
-                );
-                Texture2D text = AssetManager.GetTexture("CellDiamond");
-                spriteBatch.Draw(text, rect, col);
-            }
-
-        }
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
             if (DrawSpecifics.IsFlashingRed)
@@ -431,6 +417,11 @@ namespace PlayingAround.Entities.Player
         public void ClearAllAspects()
         {
             Aspects.Clear();
+        }
+
+        public void UpdateCombatPosition(int pos)
+        {
+            PositionInOrder = pos;
         }
     }
 }

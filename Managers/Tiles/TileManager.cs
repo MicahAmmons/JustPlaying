@@ -228,7 +228,7 @@ namespace PlayingAround.Managers.Tiles
             if (SceneManager.CurrentState == SceneState.Combat || SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
             {
                 spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
-           color: Color.White);
+           color: Color.Black);
                 foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
                 {
                     cell.DrawBackGroundTexture(spriteBatch);
@@ -238,13 +238,11 @@ namespace PlayingAround.Managers.Tiles
         }
         internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
         {
-            if (origin == null || destination == null)
-                throw new ArgumentNullException("One or both TileCells are null.");
-
-            int dx = Math.Abs(origin.X - destination.X);
-            int dy = Math.Abs(origin.Y - destination.Y);
-
-            return (dx + dy)/2;
+            int dx = Math.Abs(origin.X/2 - destination.X/2);
+            int dy = Math.Abs(origin.Y/2 - destination.Y/2);
+            if (dx == 1) dx = 2;
+            if (dy == 1) dy = 2;
+            return (dx + dy);
         }
         public static List<TileCell> GetReachableCellsFromSubset(TileCell start, List<TileCell> cellSubset, int range)
         {
@@ -252,7 +250,7 @@ namespace PlayingAround.Managers.Tiles
             Queue<(TileCell cell, int steps)> queue = new();
             HashSet<TileCell> visited = new();
 
-            HashSet<TileCell> validCells = new(cellSubset); // So we can do fast contains checks
+            HashSet<TileCell> validCells = new(cellSubset);
 
             queue.Enqueue((start, 0));
             visited.Add(start);
@@ -287,7 +285,7 @@ namespace PlayingAround.Managers.Tiles
                     queue.Enqueue((neighbor, steps + 1));
                 }
             }
-
+            reachableCells.Remove(start);
             return reachableCells;
         }
 
