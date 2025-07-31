@@ -87,8 +87,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 _menuOptions[option] = buttonRect;
             }
         }
-
-
         public static void Draw(SpriteBatch spriteBatch)
         {
 
@@ -112,7 +110,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 DrawEscapeConfirmation(spriteBatch);
 
         }
-
         public static void DrawEscapeConfirmation(SpriteBatch spriteBatch)
         {
             if (!_confirmEscape) return;
@@ -130,13 +127,10 @@ namespace PlayingAround.Managers.EscapeOverseer
             DrawEscapeButton(spriteBatch, _menuOptions[EscapeMenuState.Yes], "Yes");
             DrawEscapeButton(spriteBatch, _menuOptions[EscapeMenuState.No], "No");
         }
-
         public static void DrawEscapeInCombat(SpriteBatch spriteBatch)
         {
             DrawEscapeOutOfCombat(spriteBatch); // reuse for now
         }
-
-
         public static void DrawEscapeOutOfCombat(SpriteBatch spriteBatch)
         {
             foreach (var kvp in _menuOptions)
@@ -148,7 +142,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 DrawEscapeButton(spriteBatch, kvp.Value, state.ToString().Replace("ExitToDeskTop", "Exit to Desktop").Replace("ExitToMainMenu", "Exit to Main Menu"));
             }
         }
-
         private static void DrawEscapeButton(SpriteBatch spriteBatch, Rectangle rect, string text)
 {
     // Background box (optional – feel free to style)
@@ -166,18 +159,12 @@ namespace PlayingAround.Managers.EscapeOverseer
     // Foreground
     spriteBatch.DrawString(Font, text, textPos, Color.White);
 }
-
-
-
         public static void Update(GameTime gameTime)
         {
                 Point mousePoint = new Point(InputManager.MouseX, InputManager.MouseY);
                 UpdatePlayerInput(mousePoint);
                 SettingsSuper.Update();
         }
-
-
-
         public static void UpdatePlayerInput(Point mousePoint)
         {
             UpdatePlayerOpenEscapeMenuPress(mousePoint);
@@ -196,7 +183,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 }
             }
         }
-
         public static void HandlePlayerConfirmationExitClick(Point mousePoint)
         {
             if (!_confirmEscape || !InputManager.IsLeftClick()) return;
@@ -213,7 +199,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 _currentEscapeState = EscapeState.None;
             }
         }
-
         public static void UpdatePlayerOutOfCombatInput(Point mousePoint)
         {
             if (!InputManager.IsLeftClick()) return;
@@ -230,7 +215,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                 }
             }
         }
-
         private static void HandleMenuOptionClick(EscapeMenuState key)
         {
 
@@ -311,7 +295,6 @@ namespace PlayingAround.Managers.EscapeOverseer
                     break;
             }
         }
-
         public static void ExitToDesktop()
         {
             ShouldExit = true;

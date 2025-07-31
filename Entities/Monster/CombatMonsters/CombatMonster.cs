@@ -135,6 +135,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void UpdateMovement(GameTime gameTime)
         {
+            if (CurrentStats.MovePath == null || CurrentStats.MovePath.Count <= 0 || !DrawSpecifics.AllowedToMove) return;
+
             List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
             Vector2 nextPoint = nextVectorPath[0];
 
@@ -262,6 +264,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             PopulateMovementPath(gameTime);
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
+            UpdateMovement(gameTime);
         }
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {

@@ -18,6 +18,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
     {
         // A list of combat monsters that this play monster is associated with
         public List<CombatMonster> Monsters { get; set; }
+        public TileCell CurrentCell { get; set; }
         public Texture2D Icon { get; set; }
         public string Name { get; set; }
         public List<Vector2> MovePath { get; set; }
@@ -35,11 +36,11 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         {
             Name = mon.Name;
             UniqueId = $"{Name}PM";
-            try { Icon = AssetManager.GetTexture($"{UniqueId}Icon"); } catch { Icon = AssetManager.GetTexture("OozeIcon"); }
+            Icon = AssetManager.GetTexture($"{Name}Icon");
 
             OOCombatStats = new OutOfCombatAnimatedStats()
             {
-                IsPaused = false,
+                IsPaused = true,
                 PauseTimer = 0f,
                 CurrentPauseDuration = 0f, // Will move immedaitely if at 0
                 PauseDurationMax = data.PauseDurationMax,
@@ -59,11 +60,10 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Animation = mon.Animation;
             AnimationController = new AnimationController();
-            CurrentAnimationState = AnimationState.WalkRight;
+            CurrentAnimationState = AnimationState.IdleRight;
             FacingDirection = Direction.Right;
+            
         }
-
-
         public void SetFacingDirection(Vector2 vec)
         {
             FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
@@ -90,6 +90,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             PopulateMovementPath(gameTime);
             UpdateAnimation(gameTime);
             AnimationController.Update(gameTime);
+            UpdateMovement(gameTime);   
         }
         public void UpdateAnimation(GameTime gameTime)
         {
@@ -97,7 +98,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         }
         public void UpdateMovement(GameTime gameTime)
         {
-
+            if (MovePath == null || MovePath.Count <= 0 || !DrawSpecifics.AllowedToMove) return;
             Vector2 nextPoint = MovePath[0];
             float speed = OOCombatStats.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -160,8 +161,18 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         private Vector2 FindEndPoint()
         {
             var tiles = TileManager.GetWalkableNeighbors(TileManager.GetCell(OOCombatStats.CurrentPos));
-            int index = RandomHut.rng.Next(tiles.Count);
-            return tiles[index].CenterPoint;
+            List<TileCell> cells = new List<TileCell>();
+            foreach (var tile in tiles)
+            {
+                if (!TileManager.DoesCellAlreadyContainPlayerMon(tile))
+                {
+                    cells.Add(tile);
+                }
+            }
+            int index = RandomHut.rng.Next(cells.Count);
+            TileCell cell = cells[index];
+            CurrentCell = cell;
+            return cell.CenterPoint;
         }
         public bool StayPaused(GameTime gameTime)
         {
@@ -178,7 +189,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
             return true; // Still paused
         }
-        private void SetCurrentPauseDuration()
+        public void SetCurrentPauseDuration()
         {
             OOCombatStats.CurrentPauseDuration = MathF.Round(
                 (float)(OOCombatStats.PauseDurationMin + RandomHut.rng.NextDouble() *
@@ -186,7 +197,6 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
             OOCombatStats.PauseTimer = OOCombatStats.CurrentPauseDuration;
         }
-
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
  
@@ -194,6 +204,10 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
             throw new NotImplementedException();
+        }
+        public void SetPlayMonsterStartingPos(Vector2 centerPoint)
+        {
+            OOCombatStats.CurrentPos = centerPoint;
         }
     }
 }

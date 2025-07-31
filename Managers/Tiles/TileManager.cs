@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Data.MapTile;
 using PlayingAround.Debug;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
@@ -48,8 +49,6 @@ namespace PlayingAround.Managers.Tiles
             string path = $"World/MapTiles/TileJson/MapTile_{id}.json";
             MapTileData data = JsonLoader.LoadTileData(path);
 
-
-
             if (data == null)
             {
                 DebugBugger.Add($"Failed to load tile data for ID '{id}', falling back to '0_0_0'.");
@@ -57,10 +56,6 @@ namespace PlayingAround.Managers.Tiles
                     CurrentMapTile = fallback;
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(data.Background))
-                throw new Exception($"Tile ID {data.Id} has a missing texture path.");
-
             if (!AssetManager.TextureExists(data.Background))
                 AssetManager.LoadTexture(data.Background, data.Background);
 
@@ -225,16 +220,20 @@ namespace PlayingAround.Managers.Tiles
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneState.Combat || SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
-            {
-                spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
+            DrawSolidBackground(spriteBatch);
+            DrawCellStaticBackground(spriteBatch);
+        }
+        private static void DrawSolidBackground(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
            color: Color.Black);
-                foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
-                {
-                    cell.DrawBackGroundTexture(spriteBatch);
-                }
+        }
+        private static void DrawCellStaticBackground(SpriteBatch spriteBatch)
+        {
+            foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
+            {
+                cell.DrawBackGroundTexture(spriteBatch);
             }
-            
         }
         internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
         {
@@ -288,6 +287,15 @@ namespace PlayingAround.Managers.Tiles
             reachableCells.Remove(start);
             return reachableCells;
         }
-
+        public static bool DoesCellAlreadyContainPlayerMon(TileCell cell)
+        {
+            foreach (var mon in CurrentMapTile.PlayMonstersList)
+            {
+                if (mon.CurrentCell != cell) continue;
+                return true;
+            }
+            return false;
+        } 
+        
     }
 }

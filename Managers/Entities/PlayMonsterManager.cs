@@ -42,6 +42,7 @@ namespace PlayingAround.Managers.Entities
             float difficultyMax = diffMax;
             float difficultyMin = diffMin;
             int totalSpawns = maxSpawn;
+            List<TileCell> startingCellOptions = new List<TileCell>(cells);
             for (int i = 0; i < maxSpawn; i++)
             { 
                 // Step 1: Create a list of all available CombatMonsters based on the JSON data
@@ -49,27 +50,25 @@ namespace PlayingAround.Managers.Entities
                 CombatMonster firstMon = monsterOptions[0];
                 string firstMonName = firstMon.Name;
                 var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[firstMonName]);
-                Vector2 startPos = DeterminePlayMonsterSpawn(cells);
+                TileCell startingCell = PickStartingCell(startingCellOptions);
+                startingCellOptions.Remove(startingCell);
                 PlayMonsters newPlayMon = new PlayMonsters(_playMonsterData[firstMonName], monsterOptions[0])
                 {
                     Monsters = monsterOptions,
                 };
-                newPlayMon.OOCombatStats.CurrentPos = startPos;
+                newPlayMon.SetCurrentPauseDuration();
+                newPlayMon.SetPlayMonsterStartingPos(startingCell.CenterPoint);
+                
                 monsters.Add(newPlayMon);
 
             }
             return monsters;
         }
 
-        public static Vector2 DeterminePlayMonsterSpawn(List<TileCell> cells)
+        private static TileCell PickStartingCell(List<TileCell> startingCellOptions)
         {
-            List<TileCell> tileCells = new List<TileCell>(cells);
-
-            TileCell selectedCell = tileCells[RandomHut.rng.Next(tileCells.Count)];
-
-
-
-            return selectedCell.CenterPoint;
+            TileCell selectedCell = startingCellOptions[RandomHut.rng.Next(startingCellOptions.Count)];
+            return selectedCell;
         }
 
         private static void HandleMonsterSelection()
@@ -103,8 +102,6 @@ namespace PlayingAround.Managers.Entities
                 SelectedMonsterInfoAnchor = null;
             }
         }
-
-
         public static void Update(GameTime gameTime)
         {
             if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
@@ -115,7 +112,6 @@ namespace PlayingAround.Managers.Entities
                 }
             }    
         }
-
         public static void Draw(SpriteBatch spriteBatch)
         {
             foreach (var mon in _currentPlayMonsters)
@@ -123,21 +119,9 @@ namespace PlayingAround.Managers.Entities
                 mon?.Draw(spriteBatch);
             }
         }
-
         public static void RemovePlayMonster(PlayMonsters playMonsters)
         {
             _currentPlayMonsters.Remove(playMonsters);
-        }
-
-        public static void UpdateAllMovement(GameTime gameTime)
-        {
-            foreach (var mon in _currentPlayMonsters)
-            {
-                if (mon.MovePath == null || mon.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
-                {
-                    mon.UpdateMovement(gameTime);
-                }
-            }
         }
     }
 }

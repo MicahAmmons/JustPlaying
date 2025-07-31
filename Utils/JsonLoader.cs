@@ -14,6 +14,7 @@ using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Quests;
+using PlayingAround.Managers.Triggers;
 
 namespace PlayingAround.Utils
 {
@@ -142,6 +143,18 @@ namespace PlayingAround.Utils
                 Converters = { new JsonStringEnumConverter() }
             };
             return JsonSerializer.Deserialize<Dictionary<string, Setting>>(json, options);
+        }
+
+        private static readonly string TriggerDataPath = GetDataPath("Triggers", "TriggerData.json");
+        public static Dictionary<string, Trigger> LoadTriggerData()
+        {
+            string json = File.ReadAllText(TriggerDataPath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, Trigger>>(json, options);
         }
     }
 }

@@ -62,16 +62,6 @@ namespace PlayingAround.Managers.Entities
                 mon?.Draw(spriteBatch);
             }
         }
-        public static void UpdateAllMovement(GameTime gameTime)
-        {
-            if (_currentCombatMonsters == null || _currentCombatMonsters.Count == 0) return;
-            foreach (var mon in _currentCombatMonsters)
-            {
-                if ( mon.CurrentStats.MovePath == null || mon.CurrentStats.MovePath.Count <= 0 || !mon.DrawSpecifics.AllowedToMove) continue;
-                mon.UpdateMovement(gameTime);
-
-            }
-        }
         internal static void DrawPreview(SpriteBatch spriteBatch, (string name, SummonedSavedStats data)? currentSelectedSummon)
         {
 

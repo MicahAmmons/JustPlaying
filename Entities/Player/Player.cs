@@ -121,6 +121,7 @@ namespace PlayingAround.Entities.Player
             AnimationController.Update(gameTime);
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
+            UpdateMovement(gameTime);
         }
         public void UpdateAnimation(GameTime gameTime)
         {
@@ -128,6 +129,8 @@ namespace PlayingAround.Entities.Player
         }
         public void UpdateMovement(GameTime gameTime)
         {
+            if (CurrentStats.MovePath.Count <= 0 || CurrentStats.MovePath == null || !DrawSpecifics.AllowedToMove )
+                return;
             List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
             Vector2 nextPoint = nextVectorPath[0];
 

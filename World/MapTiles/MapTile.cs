@@ -19,9 +19,7 @@ namespace PlayingAround.Game.Map
         public string Id { get; }
         public Texture2D BackgroundTexture { get; }
         public List<Rectangle> Obstacles { get; } = new();
- 
         public List<TileCell> AllValidCells { get; private set; } = new();
-
         public Dictionary<(int, int), bool> WalkableMap { get; private set; } = new();
         public Dictionary<Vector2, NextTileData> NextTileMap { get; private set; } = new();
         public List<string> OptionsOfMonsters { get; private set; } = new();
@@ -34,7 +32,7 @@ namespace PlayingAround.Game.Map
         public float DifficultyMax { get; }
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
-        public List<PlayMonsters> PlayMonstersList { get; } = new List<PlayMonsters> ();
+        public List<PlayMonsters> PlayMonstersList { get; } = new List<PlayMonsters>();
 
 
 
@@ -88,21 +86,18 @@ namespace PlayingAround.Game.Map
                     NPCCells[tile] = npc;
                     NPCs.Add(npc);
                 }
+                if (cellData.Trigger != null)
+                {
+
+                }
 
             }
 
             PlayMonstersList = PlayMonsterManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters );
         }
 
+
         public static bool IsDiamondAligned(int x, int y) => (x % 2) == (y % 2);
-
-
-
-
-
-
-
-
 
 
     }

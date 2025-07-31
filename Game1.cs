@@ -16,6 +16,7 @@ using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
+using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
 
@@ -56,7 +57,6 @@ namespace PlayingAround
 
             ViewportManager.Initialize(GraphicsDevice);
 
-
             DrawDiamondTexture.LoadContent(GraphicsDevice);
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
@@ -70,6 +70,7 @@ namespace PlayingAround
             EscapeOverseer.LoadContent();
             NPCManager.LoadContent();
             DialogueBox.LoadContent();
+            TriggerLibrary.LoadContent();
 
         }
 
@@ -90,7 +91,6 @@ namespace PlayingAround
             JukeBoxManager.Update(gameTime);
             InputManager.Update(gameTime);
             EscapeOverseer.Update(gameTime);
-            MovementManager.Update(gameTime);
             TileCellManager.Update(delta);
             CinematicRuler.Update(gameTime);
             switch (SceneManager.CurrentState)

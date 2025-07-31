@@ -67,3 +67,15 @@ public enum Direction
     Left,
     Right,
 }
+public enum AnimationState
+{
+    //WalkUp,
+    //WalkDown,
+    WalkLeft,
+    WalkRight,
+    IdleLeft,
+    IdleRight,
+    Idle,
+    BouncingUp,
+    BouncingDown,
+}

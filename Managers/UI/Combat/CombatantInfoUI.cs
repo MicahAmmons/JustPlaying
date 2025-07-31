@@ -39,13 +39,14 @@ public class CombatantInfoUI
     public void Draw(SpriteBatch spriteBatch)
     {
         if (!SceneManager.IsState(SceneState.Combat) || CombatGuard.CurrentCombat.TurnOrder.Count <= 0) return;
-
         SetIconPosition();
-        DrawHighlightedCell(spriteBatch);
         DrawCombatantIcon(spriteBatch);
         DrawCombatantHealth(spriteBatch);
         DrawCombatantStats(spriteBatch);
         DrawCombatantAspects(spriteBatch);
+        // This stops the highlight from being drawn during location selection
+        if (!combatant.DrawSpecifics.AllowedToBeDrawn) return;
+        DrawHighlightedCell(spriteBatch);
     }
     private void DrawHighlightedCell(SpriteBatch spriteBatch)
     {
@@ -83,7 +84,7 @@ public class CombatantInfoUI
         Vector2 textPos = new Vector2(IconRectangle.X + (iconSize - textSize.X) / 2, IconRectangle.Bottom + 2);
 
         HealthTextRectangle = new Rectangle((int)textPos.X, (int)textPos.Y, (int)textSize.X, (int)textSize.Y);
-        spriteBatch.DrawString(Font, hpText, textPos, Color.Black);
+        spriteBatch.DrawString(Font, hpText, textPos, ColorPalette.LightColor);
     }
     private void DrawCombatantStats(SpriteBatch spriteBatch)
     {
@@ -128,7 +129,6 @@ public class CombatantInfoUI
             AspectRectangles.Add(aspectRect);
         }
     }
-
     public void ToggleMouseHover(Vector2 mouse)
     {
         if (IconRectangle.Contains(mouse))

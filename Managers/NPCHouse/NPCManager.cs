@@ -24,7 +24,6 @@ namespace PlayingAround.Managers.NPCHouse
         {
             _dataNPC = JsonLoader.LoadNPCData();
         }
-
         public static NPC GenerateNPC(string name, TileCell cell)
         {
             Vector2 currentPos = new Vector2(cell.CenterPoint.X, cell.CenterPoint.Y);

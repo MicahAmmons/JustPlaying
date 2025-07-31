@@ -26,7 +26,6 @@ namespace PlayingAround.Game.Map
         public bool PlayerSpawnable { get; }
         public bool MonsterSpawnable { get; }
         public bool PlayMonsterSpawnable { get; }
-        public CombatMonster CombatMonster { get; set; }
         public bool BlockedByMonster { get; set; } = false;
         public Vector2 CenterPoint { get; set; }
         public string NPCName { get; set; }

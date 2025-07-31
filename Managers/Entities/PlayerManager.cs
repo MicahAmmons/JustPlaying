@@ -12,6 +12,7 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace PlayingAround.Managers.Entities
 {
@@ -78,14 +79,15 @@ namespace PlayingAround.Managers.Entities
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.CurrentState == SceneState.Combat)
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
             {
                 _currentPlayer?.Draw(spriteBatch);
             }
         }
-
-        
-        
+        public static void DrawInCombat(SpriteBatch spriteBatch)
+        {
+            _currentPlayer?.Draw(spriteBatch);
+        }
         public static PlayerSaveData SavePlayer()
         {
             var data = _playerData;
@@ -94,16 +96,6 @@ namespace PlayingAround.Managers.Entities
            
             return data;
         }
-
-        public static void UpdateAllMovement(GameTime gameTime)
-        {
-            if (!_currentPlayer.DrawSpecifics.AllowedToMove || _currentPlayer == null || _currentPlayer.CurrentStats.MovePath.Count <= 0 || _currentPlayer.CurrentStats.MovePath == null)
-                return;
-            {
-                _currentPlayer.UpdateMovement(gameTime);
-            }
-        }
-
         public static void ClearAllPlayerAspects()
         {
             _currentPlayer.ClearAllAspects();

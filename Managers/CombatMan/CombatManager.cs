@@ -232,7 +232,8 @@ namespace PlayingAround.Managers.CombatMan
                     endingScreen = true;
                     break;
             }
-            DrawDebugInfo(spriteBatch);
+            PlayerManager.DrawInCombat(spriteBatch);
+            DrawTurnStateOverlay(spriteBatch);
             _visualEffectManager.Draw(spriteBatch);
             _combatUIManager.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
@@ -285,12 +286,6 @@ namespace PlayingAround.Managers.CombatMan
             );
 
             spriteBatch.DrawString(_font, buttonText, buttonTextPos, Color.White);
-        }
-
-        private void DrawDebugInfo(SpriteBatch spriteBatch)
-        {
-            OnScreenDebug(spriteBatch);
-            DrawTurnStateOverlay(spriteBatch);
         }
         private void DrawTurnStateOverlay(SpriteBatch spriteBatch)
         {
@@ -1333,34 +1328,7 @@ namespace PlayingAround.Managers.CombatMan
             }
             return defeatedMonsters;
         }
-        private void OnScreenDebug(SpriteBatch spriteBatch)
-        {
-            Vector2 startPos = new Vector2(10, 10);
-            int lineHeight = 18;
-
-            // Calculate width & height of background box
-            int maxWidth = _log.Any() ? _log.Max(line => (int)_font.MeasureString(line).X) : 0;
-            int boxHeight = lineHeight * _log.Count + 10;
-            Rectangle backgroundRect = new Rectangle((int)startPos.X - 5, (int)startPos.Y - 5, maxWidth + 10, boxHeight);
-
-            // ✅ Draw black background
-            spriteBatch.Draw(AssetManager.GetTexture("fightBackground"), backgroundRect, Color.Black);
-
-            for (int i = 0; i < _log.Count; i++)
-            {
-                Vector2 pos = startPos + new Vector2(0, i * lineHeight);
-                string text = _log[i];
-
-                // ✅ Draw "stroke" outline effect by drawing text offset in all directions
-                spriteBatch.DrawString(_font, text, pos + new Vector2(-1, -1), Color.Black);
-                spriteBatch.DrawString(_font, text, pos + new Vector2(1, -1), Color.Black);
-                spriteBatch.DrawString(_font, text, pos + new Vector2(-1, 1), Color.Black);
-                spriteBatch.DrawString(_font, text, pos + new Vector2(1, 1), Color.Black);
-
-                // ✅ Then draw main white text
-                spriteBatch.DrawString(_font, text, pos, Color.White);
-            }
-        }
+       
 
     }
 }

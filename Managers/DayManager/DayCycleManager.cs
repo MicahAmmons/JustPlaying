@@ -16,13 +16,10 @@ namespace PlayingAround.Managers.DayManager
         {
             _dayData = data;
         }
-
-
         public static float FetchDays()
         {
             return _currentDay;
         }
-
         public static DayCycleSaveData SaveDayCycle()
         {
             return _dayData;
