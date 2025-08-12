@@ -1,4 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder;
+using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Game.Map;
+using PlayingAround.Interfaces;
+using PlayingAround.Managers.Tiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,25 +15,27 @@ namespace PlayingAround.Managers.Triggers
 {
     public class Trigger
     {
-        public List<TriggerStages> Stages { get; set; }
+        public Dictionary<TriggerEffectType, List<TriggerStages>> Effects;
     }
     public class TriggerStages
     {
-        public string Id {  get; set; }
+        public string Id { get; set; }
         public List<TriggerCondition> Condition { get; set; }
         public List<TriggerEffect> Effect { get; set; }
     }
     public class TriggerCondition
     {
         public TriggerConditionType Type { get; set; }
-        public string? ItemName {  get; set; }
+        public string? ItemName { get; set; }
     }
     public class TriggerEffect
     {
         public TriggerEffectType Type { get; set; }
         public string? Text { get; set; }
     }
-}
+  
+    }
+
 public enum TriggerConditionType
 {
     ItemNotHeld,
@@ -34,5 +43,6 @@ public enum TriggerConditionType
 }
 public enum TriggerEffectType
 {
-    NotificationText
+    NotificationText,
+    Drawn
 }

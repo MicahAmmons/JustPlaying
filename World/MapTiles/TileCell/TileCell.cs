@@ -6,6 +6,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Visuals;
+using System.Xml.XPath;
 
 
 
@@ -65,12 +66,15 @@ namespace PlayingAround.Game.Map
         }
         public void DrawBackGroundTexture(SpriteBatch spriteBatch)
         {
+            // Vector2 coords = new Vector2()
+            int width = 160;
+            int height = 160;
             Rectangle rect = new Rectangle
                 (
-                (int)CenterPoint.X,
-                (int)CenterPoint.Y,
-                128,
-                128
+                (int)CenterPoint.X - (width/2),
+                (int)CenterPoint.Y - (height/2),
+                width,
+                height
                 );
                 
             spriteBatch.Draw(BackGroundTexture, rect, Color.White);

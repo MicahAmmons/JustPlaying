@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Net;
+using System.Net.WebSockets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
@@ -31,12 +33,12 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public string UniqueId {  get; set; }
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
         public Vector2? MoveTarget { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Vector2? AnimationDrawPoint { get ; set; }
 
         public PlayMonsters(PlayMonsterData data, CombatMonster mon)
         {
             Name = mon.Name;
             UniqueId = $"{Name}PM";
-            Icon = AssetManager.GetTexture($"{Name}Icon");
 
             OOCombatStats = new OutOfCombatAnimatedStats()
             {
@@ -56,34 +58,56 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 DamageFlashTimer = 0f,
                 AllowedToMove = true
             };
-            //SpriteSheet = mon.SpriteSheet;\
-            SpriteSheet = AssetManager.GetTexture("PlayerSS");
             Animation = mon.Animation;
             AnimationController = new AnimationController();
             CurrentAnimationState = AnimationState.IdleRight;
             FacingDirection = Direction.Right;
             
         }
-        public void SetFacingDirection(Vector2 vec)
+        public void SetFacingDirection(Vector2 direction)
         {
-            FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
+            if (direction != Vector2.Zero)
+                direction.Normalize();
+
+            if (direction.X > 0 && direction.Y < 0)
+                FacingDirection = Direction.UpRight;
+            else if (direction.X < 0 && direction.Y < 0)
+                FacingDirection = Direction.UpLeft;
+            else if (direction.X > 0 && direction.Y > 0)
+                FacingDirection = Direction.DownRight;
+            else
+                FacingDirection = Direction.DownLeft;
         }
         public void SetCurrentAnimationState()
         {
-            switch (DrawSpecifics.MovementPattern)
-            {
-                case MovementPatternType.Arc:
-                    CurrentAnimationState = FacingDirection == Direction.Right
-                        ? AnimationState.WalkRight
-                        : AnimationState.WalkLeft;
-                    break;
-            }
+            
         }
         public void SetCurrentAnimationStateToIdle()
         {
-            CurrentAnimationState = FacingDirection == Direction.Right
-             ? AnimationState.IdleRight
-             : AnimationState.IdleLeft;
+            if (FacingDirection == Direction.Right ||
+                FacingDirection == Direction.UpRight ||
+                FacingDirection == Direction.DownRight)
+            {
+                CurrentAnimationState = AnimationState.IdleRight;
+            }
+            else if (FacingDirection == Direction.Left ||
+                     FacingDirection == Direction.UpLeft ||
+                     FacingDirection == Direction.DownLeft)
+            {
+                CurrentAnimationState = AnimationState.IdleLeft;
+            }
+        }
+        public void SetAnimationWalkState(Vector2 direction)
+        {
+            SetFacingDirection(direction);
+            CurrentAnimationState = FacingDirection switch
+            {
+                Direction.UpRight => AnimationState.WalkUpRight,
+                Direction.UpLeft => AnimationState.WalkUpLeft,
+                Direction.DownRight => AnimationState.WalkDownRight,
+                Direction.DownLeft => AnimationState.WalkDownLeft,
+                _ => CurrentAnimationState
+            };
         }
         public void Update(GameTime gameTime)
         {
@@ -98,32 +122,16 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         }
         public void UpdateMovement(GameTime gameTime)
         {
-            if (MovePath == null || MovePath.Count <= 0 || !DrawSpecifics.AllowedToMove) return;
-            Vector2 nextPoint = MovePath[0];
-            float speed = OOCombatStats.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (OOCombatStats.DestinationPoint == null) return;
+            if (!AnimationController.IsFinished) return;
 
-            Vector2 direction = nextPoint - OOCombatStats.CurrentPos;
-            float distance = direction.Length();
+            Vector2 direction = (Vector2)OOCombatStats.DestinationPoint - OOCombatStats.CurrentPos;
 
-            if (distance <= speed)
-            {
-                OOCombatStats.CurrentPos = nextPoint;
-                MovePath.RemoveAt(0);
-                // Set idle animation once path is complete
-                if (MovePath.Count <= 0)
-                {
-                    SetCurrentAnimationStateToIdle();
+            OOCombatStats.CurrentPos = (Vector2)OOCombatStats.DestinationPoint;
+            AnimationDrawPoint = null;
+            SetFacingDirection(direction);
+            SetCurrentAnimationStateToIdle();
 
-                }
-            }
-            else
-            {
-                direction.Normalize();
-                OOCombatStats.CurrentPos += direction * speed;
-                SetFacingDirection(direction);
-                SetCurrentAnimationState();
-
-            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -132,31 +140,39 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
-            var pos = TileManager.OffSetFromCenterOfDiamond(OOCombatStats.CurrentPos, DrawSpecifics.Width, DrawSpecifics.Height);
+            if (AnimationController.CurrentAnimation == null) return;
+            Vector2 drawPoint = new Vector2(0, 0);
+            if (AnimationDrawPoint != null)
+            {
+                drawPoint = (Vector2)AnimationDrawPoint;
+            }
+            else drawPoint = OOCombatStats.CurrentPos;
+            int width = AnimationController.CurrentAnimation.Width;
+            int height = AnimationController.CurrentAnimation.Height;
+            var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint,width, height);
             Rectangle dest = new Rectangle(
                 (int)pos.X,
                 (int)pos.Y,
-                DrawSpecifics.Width,
-                DrawSpecifics.Height
+                width,
+                height
             );
             Rectangle source = AnimationController.GetCurrentFrame();
-            spriteBatch.Draw(SpriteSheet, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+            Texture2D texture = AnimationController.CurrentAnimation.SpriteSheet;
+            spriteBatch.Draw(texture, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
 
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (MovePath != null && MovePath.Count > 0)
-                return;
             if (StayPaused(gameTime))
                 return;
+            if (!AnimationController.IsFinished) 
+                return;
+            AnimationDrawPoint = OOCombatStats.CurrentPos;
             Vector2 end = FindEndPoint();
-
-            MovePath = NPCMovement.GetMovementPatternVector2List(
-                                                                DrawSpecifics.MovementPattern,
-                                                                TileManager.GetCell(OOCombatStats.CurrentPos),
-                                                                TileManager.GetCell(end)
-            );
+            OOCombatStats.DestinationPoint = end;
+            Vector2 direction = (Vector2)OOCombatStats.DestinationPoint - OOCombatStats.CurrentPos;
             OOCombatStats.IsPaused = true;
+            SetAnimationWalkState(direction);
         }
         private Vector2 FindEndPoint()
         {

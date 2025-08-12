@@ -27,6 +27,7 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadMonsterIconTextures();
             AssetLoader.LoadAllSpriteSheets();
             AssetLoader.LoadPlayerIconTextures();
+            AssetLoader.LoadBackGroundTileTextures();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()

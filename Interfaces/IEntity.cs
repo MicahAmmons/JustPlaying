@@ -34,6 +34,7 @@ namespace PlayingAround.Interfaces
         public Direction FacingDirection { get; set; }
         public AnimationState CurrentAnimationState { get; set; }
         public Vector2? MoveTarget { get; set; }
+        public Vector2? AnimationDrawPoint { get; set; }
         public void SetFacingDirection(Vector2 vec);
         public void SetCurrentAnimationState();
         public void SetCurrentAnimationStateToIdle();
@@ -50,6 +51,7 @@ namespace PlayingAround.Interfaces
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
         public int PositionInOrder {  get; set; }
+
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
         public AITurnState? DecideAction();

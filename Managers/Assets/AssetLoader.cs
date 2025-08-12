@@ -34,6 +34,12 @@ namespace PlayingAround.Game.Assets
         public static void LoadAllSpriteSheets()
         {
             AssetManager.LoadTexture("PlayerSS", "PlayerSprites/PlayerSS");
+            AssetManager.LoadTexture("FrostOozeIdle", "MonsterAnimations/FrostOoze/FrostOozeIdle");
+            AssetManager.LoadTexture("FrostOozeSlamBottomLeft", "MonsterAnimations/FrostOoze/FrostOozeSlamBottomLeft");
+            AssetManager.LoadTexture("FrostOozeSlamBottomRight", "MonsterAnimations/FrostOoze/FrostOozeSlamBottomRight");
+            AssetManager.LoadTexture("FrostOozeSlamTopRight", "MonsterAnimations/FrostOoze/FrostOozeSlamTopRight");
+            AssetManager.LoadTexture("FrostOozeSlamTopLeft", "MonsterAnimations/FrostOoze/FrostOozeSlamTopLeft");
+            AssetManager.LoadTexture("FrostOozeWalk", "MonsterAnimations/FrostOoze/FrostOozeWalk");
         }
         public static void LoadAttackIconTextures()
         {
@@ -51,6 +57,10 @@ namespace PlayingAround.Game.Assets
         public static void LoadElementIconTextures()
         {
             AssetManager.LoadTexture("AcidIcon", "Aspects/AcidIcon");
+        }
+        public static void LoadBackGroundTileTextures()
+        {
+            AssetManager.LoadTexture("GrassTile", "GrassTiles/GrassTile");
         }
         public static Dictionary<string, Song> LoadAllSongs()
         {

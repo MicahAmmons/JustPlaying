@@ -2125,8 +2125,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false,
-      "trigger": "GraveDigged"
+      "playMonsterSpawnable": false
 
     },
     {

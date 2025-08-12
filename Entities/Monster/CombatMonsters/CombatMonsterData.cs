@@ -20,7 +20,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public ElementType DefaultElementType { get; set; }
         public BaseCombatStats BaseStats {  get; set; }
         public DrawSpecificStats DrawSpecifics { get; set; } 
-        public Dictionary<AnimationState, int[]> AnimationData { get; set; }
+        public Dictionary<AnimationState, AnimationData> AnimationData { get; set; }
         public Dictionary<AttackName, ElementType> AttackData { get; set; }
         public List<AiAction> ActionOrder { get; set; } 
     }
@@ -36,6 +36,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
     public class OutOfCombatAnimatedStats
     {
         public Vector2 CurrentPos { get; set; }
+        public Vector2? DestinationPoint { get; set; } = null;
         public bool IsPaused { get; set; } = true;
         public float PauseTimer { get; set; } = 0f;
         public float PauseDurationMax { get; set; } = 0f;

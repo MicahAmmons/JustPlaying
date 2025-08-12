@@ -10,27 +10,61 @@
     "CurrentPosX": 1410,
     "CurrentPosY": 640,
     "Health": 8,
-    "Animations": {
-      "IdleRight": [
-        1,
-        1,
-        5000
-      ],
-      "WalkRight": [
-        3,
-        4,
-        200
-      ],
-      "IdleLeft": [
-        1,
-        1,
-        1000
-      ],
-      "WalkLeft": [
-        2,
-        4,
-        200
-      ]
+    "AnimationData": {
+      "WalkUpRight": {
+        "Row": 1,
+        "FrameCount": 9,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeWalk",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "WalkUpLeft": {
+        "Row": 2,
+        "FrameCount": 9,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeWalk",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "WalkDownRight": {
+        "Row": 3,
+        "FrameCount": 10,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeWalk",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "WalkDownLeft": {
+        "Row": 4,
+        "FrameCount": 10,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeWalk",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "IdleRight": {
+        "Row": 1,
+        "FrameCount": 29,
+        "FrameDurationMs": 200,
+        "IsLooping": true,
+        "SpriteSheetName": "FrostOozeIdle",
+        "FrameWidth": 40,
+        "FrameHeight": 40
+      },
+      "IdleLeft": {
+        "Row": 1,
+        "FrameCount": 29,
+        "FrameDurationMs": 200,
+        "IsLooping": true,
+        "SpriteSheetName": "FrostOozeIdle",
+        "FrameWidth": 40,
+        "FrameHeight": 40
+      }
     }
   },
   "DayCycle": {

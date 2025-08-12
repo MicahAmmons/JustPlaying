@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Managers.Assets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,35 +14,57 @@ namespace PlayingAround.AnimationFolder
         public List<Rectangle> Frames { get; private set; }
         public float FrameDuration { get; private set; } // In seconds
         public bool IsLooping { get; private set; }
+        public Texture2D SpriteSheet { get; private set; }
+        public int FrameCount { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public float EndOfCyclePause { get; private set; }
 
-        public Animation(Texture2D texture, int row, int frameCount, int frameDuration = 1500, bool isLooping = true)
+
+
+        public Animation(int frameCount, int frameWidth, int frameHeight, int frameDurationMs, int row, bool isLooping, string textureKey, float endPause)
         {
-            Frames = new List<Rectangle>();
-            int frameWidth = 300;
-            int frameHeight = 400;
-            int gap = 50;
+            Frames = new List<Rectangle>(frameCount);
+            SpriteSheet = AssetManager.GetTexture(textureKey);
+
+            // Max numb of frames per sheet width
+            int framesPerRow = Math.Max(1, SpriteSheet.Width / frameWidth);
+
+            // 0-based starting row index in the sheet
+            int startRowIndex = Math.Max(0, row - 1);
 
             for (int i = 0; i < frameCount; i++)
             {
-                int x = i * (frameWidth + gap); // 0, 350, 700, ...
-                int y = (row - 1) * (frameHeight + gap); // 0, 450, 900, ...
+                int col = i % framesPerRow;        // 0..framesPerRow-1
+                int rowOffset = i / framesPerRow;  // 0,1,2...
+
+                int x = col * frameWidth;
+                int y = (startRowIndex + rowOffset) * frameHeight;
+
+                // stop ifoutside the texture
+                if (y + frameHeight > SpriteSheet.Height)
+                    break; 
+
                 Frames.Add(new Rectangle(x, y, frameWidth, frameHeight));
             }
 
-            FrameDuration = frameDuration / 1000f; // Convert ms to seconds
+            Width = frameWidth;
+            Height = frameHeight;
+            FrameDuration = frameDurationMs / 1000f; // ms -> seconds
             IsLooping = isLooping;
+            FrameCount = Frames.Count; // in case we broke early
+            EndOfCyclePause = endPause;
         }
-        public Animation(Animation originalAnimation)
+
+
+        public Animation(Animation other)
         {
-            Frames = originalAnimation.Frames;
-            FrameDuration = originalAnimation.FrameDuration;
-            IsLooping = originalAnimation.IsLooping;
+            Frames = new List<Rectangle>(other.Frames);
+            FrameDuration = other.FrameDuration;
+            IsLooping = other.IsLooping;
+            SpriteSheet = other.SpriteSheet;
+            FrameCount = other.FrameCount;
         }
-
-
-
-        public int FrameCount => Frames.Count;
-
         public Rectangle GetFrame(int index)
         {
             if (index < 0 || index >= Frames.Count)

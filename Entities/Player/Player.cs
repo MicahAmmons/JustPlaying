@@ -16,6 +16,7 @@ using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.Json.Serialization;
 
 
@@ -63,6 +64,7 @@ namespace PlayingAround.Entities.Player
             }
         }
         public int PositionInOrder { get ; set; }
+        public Vector2? AnimationDrawPoint { get ; set; }
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -98,20 +100,17 @@ namespace PlayingAround.Entities.Player
                 SpriteSheet = AssetManager.GetTexture("PlayerSS"),
                 Icon = AssetManager.GetTexture("Hero_Blonde"),
             };
-            foreach (var kvp in data.Animations)
+            foreach (var kvp in data.AnimationData)
             {
                 AnimationState state = kvp.Key;
-                int row = kvp.Value[0];
-                int frames = kvp.Value[1];
-                int duration = kvp.Value[2];
-                player.Animation[state] = new Animation(player.SpriteSheet, row, frames, duration);
+                AnimationData datas = kvp.Value;
+                player.Animation[state] = new Animation(datas.FrameCount, datas.FrameWidth, datas.FrameHeight, (int)datas.FrameDurationMs, datas.Row, datas.IsLooping, datas.SpriteSheetName, datas.EndOfCyclePause);
             }
-            return player;
 
+            return player;
         }
         public Player()
         {
-
         }
         public void Update(GameTime gameTime, float delta)
         {
@@ -279,13 +278,42 @@ namespace PlayingAround.Entities.Player
         }
         public void SetFacingDirection(Vector2 vec)
         {
-            FacingDirection = vec.X <= 0 ? Direction.Right : Direction.Left;
+            Direction dir = Direction.Down;
+            if (vec.X > 0 && vec.Y > 0)
+            {
+                dir = Direction.UpRight;
+            }
+            if (vec.X > 0 && vec.Y < 0)
+            {
+                dir = Direction.DownRight;
+            }
+            if (vec.X < 0 && vec.Y < 0)
+            {
+                dir = Direction.UpLeft;
+            }
+            if (vec.X < 0 && vec.Y > 0)
+            {
+                dir = Direction.DownLeft;
+            }
+            FacingDirection = dir;
         }
         public void SetCurrentAnimationState()
         {
-            CurrentAnimationState = FacingDirection == Direction.Right
-              ? AnimationState.WalkRight
-              : AnimationState.WalkLeft;
+            switch (FacingDirection)
+            {
+                case Direction.UpRight:
+                    CurrentAnimationState = AnimationState.WalkUpRight;
+                    break;
+                case Direction.DownLeft:
+                    CurrentAnimationState = AnimationState.WalkDownLeft;
+                    break;
+                case Direction.UpLeft:
+                    CurrentAnimationState = AnimationState.WalkUpLeft;
+                    break;
+                case Direction.DownRight:
+                    CurrentAnimationState = AnimationState.WalkDownRight;
+                    break;
+            }
         }
         public void SetCurrentAnimationStateToIdle()
         {

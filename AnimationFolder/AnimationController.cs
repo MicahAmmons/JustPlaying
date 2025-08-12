@@ -12,7 +12,9 @@ namespace PlayingAround.AnimationFolder
         private Animation _currentAnimation;
         private int _currentFrameIndex = 0;
         private float _frameTimer = 0f;
+        private float _endTimer = 0f;
         private AnimationState _currentAnimationState;
+        public bool IsFinished = false;
 
         public Animation CurrentAnimation => _currentAnimation;
 
@@ -25,6 +27,9 @@ namespace PlayingAround.AnimationFolder
             _currentFrameIndex = 0;
             _frameTimer = 0f;
             _currentAnimationState = state;
+            _endTimer = 0f;
+            IsFinished = false;
+            if (_currentAnimation.IsLooping) IsFinished = true;
         }
 
         public void Update(GameTime gameTime)
@@ -38,14 +43,19 @@ namespace PlayingAround.AnimationFolder
             {
                 _frameTimer -= _currentAnimation.FrameDuration;
                 _currentFrameIndex++;
-                System.Diagnostics.Debug.WriteLine("Your message here");
 
                 if (_currentFrameIndex >= _currentAnimation.FrameCount)
                 {
                     if (_currentAnimation.IsLooping)
                         _currentFrameIndex = 0;
+                    else if (_endTimer < _currentAnimation.EndOfCyclePause)
+                    {
+                        _endTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        _currentFrameIndex = _currentAnimation.FrameCount - 1;
+                        _frameTimer = _currentAnimation.FrameDuration;
+                    }
                     else
-                        _currentFrameIndex = _currentAnimation.FrameCount - 1; // Stay on last frame
+                        IsFinished = true;
                 }
             }
         }
@@ -66,16 +76,22 @@ public enum Direction
     Down,
     Left,
     Right,
+    UpLeft,
+    UpRight,
+    DownLeft,
+    DownRight,
 }
 public enum AnimationState
 {
-    //WalkUp,
-    //WalkDown,
-    WalkLeft,
-    WalkRight,
+    WalkUpRight,
+    WalkUpLeft,
+    WalkDownRight,
+    WalkDownLeft,
     IdleLeft,
     IdleRight,
     Idle,
-    BouncingUp,
-    BouncingDown,
+    SlamTopLeft,
+    SlamTopRight,
+    SlamBottomLeft,
+    SlamBottomRight,
 }

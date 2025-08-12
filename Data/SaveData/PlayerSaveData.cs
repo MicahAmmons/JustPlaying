@@ -1,4 +1,5 @@
-﻿using PlayingAround.Entities.Monster.CombatMonsters;
+﻿using PlayingAround.AnimationFolder;
+using PlayingAround.Entities.Monster.CombatMonsters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace PlayingAround.Data.SaveData
         public float CurrentPosX { get; set; }
         public float CurrentPosY { get; set; }
         public int Health { get; set; }
-        public Dictionary<AnimationState, int[]> Animations { get; set; }
+        public Dictionary<AnimationState, AnimationData> AnimationData { get; set; }
     }
 
 }

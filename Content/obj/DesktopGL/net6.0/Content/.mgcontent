@@ -5,6 +5,13 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Aspects/AcidIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/GrassTiles/GrassTile.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeIdle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeSlamBottomLeft.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeSlamBottomRight.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeSlamTopLeft.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeSlamTopRight.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/MonsterAnimations/FrostOoze/FrostOozeWalk.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Attacks/Spit.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/File.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/HeroArt/BlonderHero.png</File>
@@ -26,6 +33,13 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/UI/fightBackground.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>

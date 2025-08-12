@@ -6,7 +6,7 @@
   "monsters": ["Ooze"],
   "obstacles": [],
   "difficulty": 1,
-  "totalSpawns": 2,
+  "totalSpawns": 1,
   "cells": [
     {
       "x": 0,
@@ -46,7 +46,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 8,
@@ -116,7 +117,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -126,7 +128,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -276,7 +279,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -426,7 +430,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -436,7 +441,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -586,7 +592,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -736,7 +743,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -746,7 +754,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -896,7 +905,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -1046,7 +1056,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -1056,7 +1067,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -1208,7 +1220,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -1358,7 +1371,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -1368,7 +1382,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -1518,7 +1533,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -1668,7 +1684,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -1678,7 +1695,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -1828,7 +1846,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -1978,7 +1997,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -1988,7 +2008,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -2118,7 +2139,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "trigger": "GraveDigged"
     },
     {
       "x": 19,
@@ -2138,7 +2160,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -2288,7 +2311,8 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -2298,7 +2322,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -2448,7 +2473,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -2598,7 +2624,8 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": true,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -2608,7 +2635,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -2759,7 +2787,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -2909,7 +2938,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -2919,7 +2949,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -3069,7 +3100,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -3219,7 +3251,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -3229,7 +3262,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -3379,7 +3413,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -3529,7 +3564,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -3539,7 +3575,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -3689,7 +3726,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -3839,8 +3877,9 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
-      
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
+
     },
     {
       "x": 22,
@@ -3850,7 +3889,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -4000,7 +4040,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -4150,7 +4191,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -4160,7 +4202,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -4314,7 +4357,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -4468,7 +4512,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -4478,7 +4523,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -4632,7 +4678,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -4786,7 +4833,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -4796,7 +4844,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -4950,7 +4999,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -5104,7 +5154,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
@@ -5114,7 +5165,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 24,
@@ -5268,7 +5320,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 23,
@@ -5422,7 +5475,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "staticBackGroundTexture": "GrassTile"
     },
     {
       "x": 22,
