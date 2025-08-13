@@ -21,7 +21,16 @@ namespace PlayingAround.Managers.Assets
         public static Color TransparentWhite = new Color(255, 255, 255, 128);
 
 
+        //These are the 4 green/blues used in -1,0,0
+        public static Color GreenBgArray1 = new Color(3, 158, 99);
+        public static Color GreenBgArray2 = new Color(2, 137, 93);
+        public static Color GreenBgArray3 = new Color(2, 144, 107);
+        public static Color GreenBgArray4 = new Color(1, 127, 111);
 
+        //this is the below cloud color
+        public static Color PurpleIshCloud = new Color(124, 142, 208) ; 
+
+        public static Color TestPink = Color.HotPink;
 
         public static Color Fire = new Color(255, 69, 0);              // OrangeRed
         public static Color Ice = new Color(173, 216, 230);            // LightBlue
@@ -53,5 +62,11 @@ namespace PlayingAround.Managers.Assets
                 _ => Color.White
             };
         }
+        public static Color GetColor(string name)
+        {
+            var field = typeof(ColorPalette).GetField(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            return (Color)field.GetValue(null);
+        }
+
     }
 }

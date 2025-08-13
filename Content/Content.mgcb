@@ -25,6 +25,26 @@
 /processorParam:TextureFormat=Color
 /build:Aspects/AcidIcon.png
 
+#begin Attacks/Spit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Attacks/Spit.png
+
+
+#begin File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:File.spritefont;mainFont.spritefont
+
 #begin GrassTiles/GrassTile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -36,6 +56,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GrassTiles/GrassTile.png
+
+#begin HeroArt/BlonderHero.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:HeroArt/BlonderHero.png
+
+#begin MiscAssets/GlowMound.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MiscAssets/GlowMound.png
 
 #begin MonsterAnimations/FrostOoze/FrostOozeIdle.png
 /importer:TextureImporter
@@ -109,37 +153,6 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeWalk.png
 
-#begin Attacks/Spit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Attacks/Spit.png
-
-#begin File.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:File.spritefont;mainFont.spritefont
-
-#begin HeroArt/BlonderHero.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:HeroArt/BlonderHero.png
-
 #begin MonsterIcons/AngryPlantIcon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -188,6 +201,18 @@
 /processorParam:TextureFormat=Color
 /build:NPC/DefaultNPC.png
 
+#begin PlayerSprites/PlayerSprites.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerSprites/PlayerSprites.png
+
 #begin PlayerSprites/PlayerSS.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -200,17 +225,18 @@
 /processorParam:TextureFormat=Color
 /build:PlayerSprites/PlayerSS.png
 
-#begin PlayerSprites/PlayerSprites.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:PlayerSprites/PlayerSprites.png
+#begin Shaders/ColorColumnPulse.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ColorColumnPulse.fx
+
+#begin Shaders/ColorReplace.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ColorReplace.fx
+
 
 #begin Songs/newGameIntroCinBackground.mp3
 /importer:Mp3Importer
@@ -248,7 +274,7 @@
 /processorParam:TextureFormat=Color
 /build:TileCell/arrow.png
 
-#begin Tiles/-1_0_0.png
+#begin Tiles/-1_0_0/-1_0_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -258,7 +284,55 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/-1_0_0.png
+/build:Tiles/-1_0_0/-1_0_0.png
+
+#begin Tiles/-1_0_0/Vines1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/-1_0_0/Vines1.png
+
+#begin Tiles/-1_0_0OLD (2).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/-1_0_0OLD (2).png
+
+#begin Tiles/-1_0_0OLD.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/-1_0_0OLD.png
+
+#begin Tiles/0_-1_0OLD.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/0_-1_0OLD.png
 
 #begin Tiles/0_0_0.png
 /importer:TextureImporter
@@ -271,6 +345,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/0_0_0.png
+
+#begin Tiles/0_0_0old.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/0_0_0old.png
 
 #begin Tiles/1_4_0.png
 /importer:TextureImporter

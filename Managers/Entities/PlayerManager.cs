@@ -38,11 +38,6 @@ namespace PlayingAround.Managers.Entities
             if (!permission) 
             { 
                 _currentPlayer.DrawSpecifics.AllowedToMove = false;
-                if (_currentPlayer.CurrentStats.MovePath.Count > 0)
-                {
-                    List<Vector2> fin = _currentPlayer.CurrentStats.MovePath[0];
-                    _currentPlayer.CurrentPos = fin[0];
-                }
                 _currentPlayer.CurrentStats.MovePath.Clear();
                 _currentPlayer.SetCurrentAnimationStateToIdle();
                 
@@ -68,7 +63,7 @@ namespace PlayingAround.Managers.Entities
                 if (InputManager.IsRightMouseDown())
                 {
                     Vector2 target = new Vector2(InputManager.MouseX , InputManager.MouseY);
-                    _currentPlayer.UpdatePlayerEndPoint(target);
+                    _currentPlayer.UpdatePlayerDestinationPoint(target);
                 }
                 if (InputManager.IsKeyPressed(Keys.Space))
                 {

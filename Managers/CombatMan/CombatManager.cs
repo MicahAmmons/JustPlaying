@@ -755,7 +755,7 @@ namespace PlayingAround.Managers.CombatMan
 
             if (mon.CurrentStats.AttackPath1.Count > 0)
             {
-                mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath1);
+            //    mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath1);
                 if (mon.Is == CombatMonsterType.Summoned)
                 {
                     if (_stateMachine.CurrentSummonedTurnState != SummonedTurnState.SummonedExecutingAttack)
@@ -779,7 +779,7 @@ namespace PlayingAround.Managers.CombatMan
             
             if (mon.CurrentStats.AttackPath2.Count > 0)
             {
-                mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath2);
+              //  mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath2);
                 if (mon.Is == CombatMonsterType.Summoned)
                 {
                     SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);

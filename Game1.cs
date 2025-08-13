@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder.GlowTex;
 using PlayingAround.Debug;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
@@ -127,7 +128,7 @@ namespace PlayingAround
                 _spriteBatch.End();
                 return;
             }
-            TileManager.Draw(_spriteBatch);
+            TileManager.Draw(_spriteBatch, gameTime);
             TileCellManager.Draw(_spriteBatch);
             LoadingScreenManager.Draw(_spriteBatch);
             NPCManager.Draw(_spriteBatch);
@@ -136,17 +137,21 @@ namespace PlayingAround
             CombatGuard.Draw(_spriteBatch, GraphicsDevice);
             CombatMonsterManager.Draw(_spriteBatch);
             PlayerManager.Draw(_spriteBatch);
-
-
-
-
             DebugBugger.Draw(_spriteBatch);
             DialogueManager.Draw(_spriteBatch);
             EscapeOverseer.Draw(_spriteBatch);
             MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
             CinematicRuler.Draw(_spriteBatch);
-
             _spriteBatch.End();
+
+            var glowEffect = AssetManager.GetEffect("ColorColumnPulse");
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, glowEffect);
+            GlowTextureController.Draw(_spriteBatch, gameTime);
+            _spriteBatch.End();
+
+
+
+
             base.Draw(gameTime);
 
 

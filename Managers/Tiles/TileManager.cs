@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PlayingAround.Data.MapTile;
+using PlayingAround.Data.MapTile.MapTileSaveDatas;
 using PlayingAround.Debug;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
@@ -46,22 +46,10 @@ namespace PlayingAround.Managers.Tiles
             }
 
             // Try loading from disk
-            string path = $"World/MapTiles/TileJson/MapTile_{id}.json";
+            string path = $"Data/MapTile/MapTile_{id}.json";
             MapTileData data = JsonLoader.LoadTileData(path);
-
-            if (data == null)
-            {
-                DebugBugger.Add($"Failed to load tile data for ID '{id}', falling back to '0_0_0'.");
-                if (tiles.TryGetValue("0_0_0", out var fallback))
-                    CurrentMapTile = fallback;
-                return;
-            }
-            if (!AssetManager.TextureExists(data.Background))
-                AssetManager.LoadTexture(data.Background, data.Background);
-
-            Texture2D texture = AssetManager.GetTexture(data.Background);
   
-            var tile = new MapTile(data, texture);
+            var tile = new MapTile(data);
             tiles[id] = tile; // ✅ Cache the tile by its ID
 
 
@@ -218,7 +206,7 @@ namespace PlayingAround.Managers.Tiles
                 CurrentTileId = CurrentMapTile.Id
             };
         }
-        public static void Draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             DrawSolidBackground(spriteBatch);
             DrawCellStaticBackground(spriteBatch);
@@ -226,7 +214,7 @@ namespace PlayingAround.Managers.Tiles
         private static void DrawSolidBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
-           color: Color.Black);
+           color: Color.White);
         }
         private static void DrawCellStaticBackground(SpriteBatch spriteBatch)
         {

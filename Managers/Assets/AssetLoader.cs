@@ -58,10 +58,11 @@ namespace PlayingAround.Game.Assets
         {
             AssetManager.LoadTexture("AcidIcon", "Aspects/AcidIcon");
         }
-        public static void LoadBackGroundTileTextures()
+        public static void LoadTileBackGroundTextures()
         {
-            AssetManager.LoadTexture("GrassTile", "GrassTiles/GrassTile");
+            
         }
+
         public static Dictionary<string, Song> LoadAllSongs()
         {
             Dictionary<string, Song> songs = new Dictionary<string, Song>()
@@ -72,5 +73,20 @@ namespace PlayingAround.Game.Assets
             return songs;
         }
 
+        public static void LoadTileSpecificAssets()
+        {
+            AssetManager.LoadTexture("-1_0_0", "Tiles/-1_0_0/-1_0_0");
+            AssetManager.LoadTexture("Vines1", "Tiles/-1_0_0/Vines1");
+        }
+        public static void LoadMiscMapTileAssets()
+        {
+            AssetManager.LoadTexture("GlowMound", "MiscAssets/GlowMound");
+        }
+
+        public static void LoadShaders()
+        {
+            AssetManager.LoadEffect("ColorReplace", "Shaders/ColorReplace");
+            AssetManager.LoadEffect("ColorColumnPulse", "Shaders/ColorColumnPulse");
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PlayingAround.Entities.Monster;
+﻿using PlayingAround.AnimationFolder.GlowTex;
+using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -12,7 +13,7 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("gridY")]  public int GridY { get; set; }
 
         [JsonPropertyName("gridZ")]  public int GridZ { get; set; }
-
+        [JsonPropertyName("behindGlowTexturesFullSize")] public List<GlowTextureData> GlowTexture { get; set; }
         public string Id { get; set; }
 
         [JsonPropertyName("background")]  public string Background { get; set; }

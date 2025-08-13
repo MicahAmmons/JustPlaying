@@ -18,7 +18,8 @@
         "IsLooping": false,
         "SpriteSheetName": "FrostOozeWalk",
         "FrameWidth": 192,
-        "FrameHeight": 192
+        "FrameHeight": 192,
+        "EndOfCyclePause": 0.5
       },
       "WalkUpLeft": {
         "Row": 2,
@@ -27,7 +28,8 @@
         "IsLooping": false,
         "SpriteSheetName": "FrostOozeWalk",
         "FrameWidth": 192,
-        "FrameHeight": 192
+        "FrameHeight": 192,
+        "EndOfCyclePause": 0.5
       },
       "WalkDownRight": {
         "Row": 3,
@@ -36,7 +38,8 @@
         "IsLooping": false,
         "SpriteSheetName": "FrostOozeWalk",
         "FrameWidth": 192,
-        "FrameHeight": 192
+        "FrameHeight": 192,
+        "EndOfCyclePause": 0.5
       },
       "WalkDownLeft": {
         "Row": 4,
@@ -45,7 +48,8 @@
         "IsLooping": false,
         "SpriteSheetName": "FrostOozeWalk",
         "FrameWidth": 192,
-        "FrameHeight": 192
+        "FrameHeight": 192,
+        "EndOfCyclePause": 0.5
       },
       "IdleRight": {
         "Row": 1,
@@ -53,8 +57,45 @@
         "FrameDurationMs": 200,
         "IsLooping": true,
         "SpriteSheetName": "FrostOozeIdle",
-        "FrameWidth": 40,
-        "FrameHeight": 40
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+
+      "SlamTopRight": {
+        "Row": 1,
+        "FrameCount": 31,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeSlamTopRight",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "SlamTopLeft": {
+        "Row": 1,
+        "FrameCount": 31,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeSlamTopLeft",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "SlamBottomRight": {
+        "Row": 1,
+        "FrameCount": 28,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeSlamBottomRight",
+        "FrameWidth": 192,
+        "FrameHeight": 192
+      },
+      "SlamBottomLeft": {
+        "Row": 1,
+        "FrameCount": 28,
+        "FrameDurationMs": 200,
+        "IsLooping": false,
+        "SpriteSheetName": "FrostOozeSlamBottomLeft",
+        "FrameWidth": 192,
+        "FrameHeight": 192
       },
       "IdleLeft": {
         "Row": 1,
@@ -62,8 +103,8 @@
         "FrameDurationMs": 200,
         "IsLooping": true,
         "SpriteSheetName": "FrostOozeIdle",
-        "FrameWidth": 40,
-        "FrameHeight": 40
+        "FrameWidth": 192,
+        "FrameHeight": 192
       }
     }
   },

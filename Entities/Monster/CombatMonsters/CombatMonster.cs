@@ -106,50 +106,50 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
 
         }
-        public void SetFacingDirection(Vector2 vec)
+        public void SetFacingDirection(Vector2 direction)
         {
-            Direction dir = Direction.Down;
-            if (vec.X > 0 && vec.Y > 0)
-            {
-                dir = Direction.UpRight;
-            }
-            if (vec.X > 0 && vec.Y < 0)
-            {
-                dir = Direction.DownRight;
-            }
-            if (vec.X < 0 && vec.Y < 0)
-            {
-                dir = Direction.UpLeft;
-            }
-            if (vec.X < 0 && vec.Y > 0)
-            {
-                dir = Direction.DownLeft;
-            }
-            FacingDirection = dir;
+            if (direction != Vector2.Zero)
+                direction.Normalize();
+
+            if (direction.X > 0 && direction.Y < 0)
+                FacingDirection = Direction.UpRight;
+            else if (direction.X < 0 && direction.Y < 0)
+                FacingDirection = Direction.UpLeft;
+            else if (direction.X > 0 && direction.Y > 0)
+                FacingDirection = Direction.DownRight;
+            else
+                FacingDirection = Direction.DownLeft;
         }
         public void SetCurrentAnimationState()
         {
-            switch (FacingDirection)
-            {
-                case Direction.UpRight:
-                    CurrentAnimationState = AnimationState.WalkUpRight;
-                    break;
-                case Direction.DownLeft:
-                    CurrentAnimationState = AnimationState.WalkDownLeft;
-                    break;
-                case Direction.UpLeft:
-                    CurrentAnimationState = AnimationState.WalkUpLeft;
-                    break;
-                case Direction.DownRight: 
-                    CurrentAnimationState = AnimationState.WalkDownRight;
-                    break;
-            }
+
         }
         public void SetCurrentAnimationStateToIdle()
         {
-            CurrentAnimationState = FacingDirection == Direction.Right
-             ? AnimationState.IdleRight
-             : AnimationState.IdleLeft;
+            if (FacingDirection == Direction.Right ||
+                FacingDirection == Direction.UpRight ||
+                FacingDirection == Direction.DownRight)
+            {
+                CurrentAnimationState = AnimationState.IdleRight;
+            }
+            else if (FacingDirection == Direction.Left ||
+                     FacingDirection == Direction.UpLeft ||
+                     FacingDirection == Direction.DownLeft)
+            {
+                CurrentAnimationState = AnimationState.IdleLeft;
+            }
+        }
+        public void SetAnimationWalkState(Vector2 direction)
+        {
+            SetFacingDirection(direction);
+            CurrentAnimationState = FacingDirection switch
+            {
+                Direction.UpRight => AnimationState.WalkUpRight,
+                Direction.UpLeft => AnimationState.WalkUpLeft,
+                Direction.DownRight => AnimationState.WalkDownRight,
+                Direction.DownLeft => AnimationState.WalkDownLeft,
+                _ => CurrentAnimationState
+            };
         }
         public void UpdateAnimation(GameTime gameTime)
         {
@@ -157,30 +157,16 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void UpdateMovement(GameTime gameTime)
         {
-            if (CurrentStats.MovePath == null || CurrentStats.MovePath.Count <= 0 || !DrawSpecifics.AllowedToMove) return;
+            if (CurrentStats.DestinationPoint == null) return;
+            if (!AnimationController.IsFinished) return;
 
-            List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
-            Vector2 nextPoint = nextVectorPath[0];
+            Vector2 direction = (Vector2)CurrentStats.DestinationPoint - CurrentStats.Pos;
 
-            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            CurrentStats.Pos = (Vector2)CurrentStats.DestinationPoint;
+            AnimationDrawPoint = null;
+            SetFacingDirection(direction);
+            SetCurrentAnimationStateToIdle();
 
-            Vector2 direction = nextPoint - CurrentStats.Pos;
-            float distance = direction.Length();
-
-            if (distance <= speed)
-            {
-                CurrentStats.Pos = nextPoint;
-                CurrentStats.MovePath[0].RemoveAt(0);
-                if (CurrentStats.MovePath[0].Count == 0) MovedOneCell();
-            }
-            else
-            {
-                direction.Normalize();
-                CurrentStats.Pos += direction * speed;
-                SetFacingDirection(direction);
-                SetCurrentAnimationState();
-
-            }
         }
         public void MovedOneCell()
         {
@@ -202,22 +188,26 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
+            if (AnimationController.CurrentAnimation == null) return;
             Vector2 drawPoint = new Vector2(0, 0);
             if (AnimationDrawPoint != null)
             {
                 drawPoint = (Vector2)AnimationDrawPoint;
             }
-            else { drawPoint = CurrentStats.Pos; }
-                Vector2 offset = TileManager.OffSetFromCenterOfDiamond(drawPoint, DrawSpecifics.Width, DrawSpecifics.Height);
+            else drawPoint = CurrentStats.Pos;
+            int width = AnimationController.CurrentAnimation.Width;
+            int height = AnimationController.CurrentAnimation.Height;
+            var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
             Rectangle dest = new Rectangle(
-               (int)offset.X,
-               (int)offset.Y,
-               DrawSpecifics.Width,
-               DrawSpecifics.Height
-           );
+                (int)pos.X,
+                (int)pos.Y,
+                width,
+                height
+            );
             Rectangle source = AnimationController.GetCurrentFrame();
-            SpriteSheet = AnimationController.CurrentAnimation.SpriteSheet;
-            spriteBatch.Draw(SpriteSheet, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+            Texture2D texture = AnimationController.CurrentAnimation.SpriteSheet;
+            spriteBatch.Draw(texture, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+
         }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
@@ -227,68 +217,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-                if (MoveTarget != null) 
-                {
-                AnimationDrawPoint = CurrentStats.Pos;
-                    List<List<Vector2>> fullVectorPath = new List<List<Vector2>>();
-                    // Takes in a Vector2 
-                    Vector2 move = (Vector2)MoveTarget;
-                MoveTarget = null;
-                //Converts it to a TileCell
-                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
-                    //Gets cell path using WalkableNeighbors to exclude !walkable
-                    List<TileCell> list = GridMovement.GetCellToCellPath(CurrentStats.Pos, move);
-
-                    foreach (var cell in list)
-                    {
-                        // skips if cell is current cell so doesn't move to current cell 
-                        if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
-                        //Get vector list from cell to cell, adds to list 
-                        List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, cell);
-               
-                        fullVectorPath.Add(vectorRange);
-                        startingCell = cell;
-                    }
-                bool cont = false;
-                do
-                {
-                    if (fullVectorPath.Count == 0 || fullVectorPath == null)
-                    {
-                        cont = true;
-                        break;
-                    }
-                    if (fullVectorPath[0][0] == CurrentStats.Pos)
-                    {
-                        fullVectorPath[0].RemoveAt(0);
-                    }
-                    else
-                    {
-                        cont = true;
-                    }
-                } while (!cont);
-                CurrentStats.MovePath = fullVectorPath;
-                }
-                if (MoveTargetCellList.Count > 0)
-            {
-                List<List<Vector2>> finalList = new List<List<Vector2>>();  
-                List<TileCell> cellList = new List<TileCell> (MoveTargetCellList);
-                TileCell startingCell = TileManager.GetCell(CurrentStats.Pos);
-                MoveTargetCellList.Clear();
-                foreach (var cell in cellList)
-                {
-                    // skips if cell is current cell so doesn't move to current cell 
-                  //  if (cell == TileManager.GetCell(CurrentStats.Pos)) continue;
-                    //Get vector list from cell to cell, adds to list 
-                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, cell);
-                    finalList.Add(vectorRange);
-                    startingCell = cell;
-                }
-               
-                
-                CurrentStats.MovePath = finalList;
-            }
-
-            
+            if (CurrentStats.MovePath.Count <= 0) return;
+            if (!AnimationController.IsFinished) return;
+            AnimationDrawPoint = CurrentStats.Pos;
+            CurrentStats.DestinationPoint = CurrentStats.MovePath[0].CenterPoint;
+            CurrentStats.MovePath.RemoveAt(0);
+            Vector2 direction = (Vector2)CurrentStats.DestinationPoint - CurrentStats.Pos;
+            SetAnimationWalkState(direction);
         }
         public void Update(GameTime gameTime, float delta)
         {
@@ -368,7 +303,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 //This uses GetPath which excludes !walkable 
                 List<TileCell> listOfCellsPathToTarget = GridMovement.BestPathToClosestCell(currentCell, playerControlledCells, (int)CurrentStats.MP);
                 if (listOfCellsPathToTarget.Count <= 0) return false;
-                MoveTargetCellList = listOfCellsPathToTarget;
+                CurrentStats.MovePath = listOfCellsPathToTarget;
             }
             else return false;
             return true;

@@ -65,6 +65,7 @@ namespace PlayingAround.Entities.Player
         }
         public int PositionInOrder { get ; set; }
         public Vector2? AnimationDrawPoint { get ; set; }
+        public List<Vector2> PlayerOOCMovePath { get; set; } = new List<Vector2>();
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -128,102 +129,77 @@ namespace PlayingAround.Entities.Player
         }
         public void UpdateMovement(GameTime gameTime)
         {
-            if (CurrentStats.MovePath.Count <= 0 || CurrentStats.MovePath == null || !DrawSpecifics.AllowedToMove )
-                return;
-            List<Vector2> nextVectorPath = CurrentStats.MovePath[0];
-            Vector2 nextPoint = nextVectorPath[0];
-
-            float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            Vector2 direction = nextPoint - CurrentPos;
-            float distance = direction.Length();
-
-            if (distance <= speed)
+            if (CurrentStats.MovePath.Count > 0)
             {
-                CurrentPos = nextPoint;
-                CurrentStats.MovePath[0].RemoveAt(0);
-                if (CurrentStats.MovePath[0].Count == 0) MovedOneCell();
+                if (!AnimationController.IsFinished) return;
+                AnimationDrawPoint = CurrentPos;
+                CurrentPos = CurrentStats.MovePath[0].CenterPoint;
+                CurrentStats.MovePath.RemoveAt(0);
+                Vector2 direction = (Vector2)CurrentStats.DestinationPoint - CurrentStats.Pos;
+                SetAnimationWalkState(direction);
             }
-            else
+            if (PlayerOOCMovePath.Count > 0)
             {
-                direction.Normalize();
-                CurrentPos += direction * speed;
-                SetFacingDirection(direction);
-                SetCurrentAnimationState();
+                Vector2 nextPoint = PlayerOOCMovePath[0];
+
+                float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                Vector2 direction = nextPoint - CurrentPos;
+                float distance = direction.Length();
+
+                if (distance <= speed)
+                {
+                    CurrentPos = nextPoint;
+                    PlayerOOCMovePath.RemoveAt(0);
+                    if (PlayerOOCMovePath.Count == 0)
+                    {
+                        SetCurrentAnimationStateToIdle();
+                    }
+                }
+                else
+                {
+                    direction.Normalize();
+                    CurrentPos += direction * speed;
+                    SetFacingDirection(direction);
+                    SetAnimationWalkState(direction);
+                }
             }
+          
         }
         public void PopulateMovementPath(GameTime gameTime)
         {
-            if (MoveTarget == null) return;
-
-            Vector2 move = (Vector2)MoveTarget;
-            MoveTarget = null;
-
-            if (SceneManager.IsState(SceneState.Play))
+            if (OOCombatStats.DestinationPoint != null)
             {
-                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, move);
-
-                // Abort early if path is empty
-                if (cellPath == null || cellPath.Count == 0)
+                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)OOCombatStats.DestinationPoint);
+                OOCombatStats.DestinationPoint = null;
+                if (cellPath == null || cellPath.Count == 0) // Abort early if path is empty
                     return;
-
-                // Remove CurrentPos if it's the first point in the path
-                if (cellPath[0] == CurrentPos)
+                if (cellPath[0] == CurrentPos) // Remove CurrentPos if it's the first point in the path
                     cellPath.RemoveAt(0);
-
                 if (cellPath.Count == 0) // All points were removed, nothing left to move to
                     return;
-
-                CurrentStats.MovePath = new List<List<Vector2>> { cellPath };
+                PlayerOOCMovePath = cellPath;
             }
-            else if (SceneManager.IsState(SceneState.Combat))
+            if (CurrentStats.DestinationPoint != null)
             {
-                List<List<Vector2>> fullVectorPath = new();
-
-                TileCell startingCell = TileManager.GetCell(CurrentPos);
-                List<TileCell> cellPath = GridMovement.GetCellToCellPath(CurrentPos, move);
-
-                // Abort early if no path
-                if (cellPath == null || cellPath.Count == 0)
-                    return;
-
-                foreach (var endPos in cellPath)
-                {
-                    if (endPos == TileManager.GetCell(CurrentPos)) continue;
-
-                    List<Vector2> vectorRange = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, startingCell, endPos);
-                    if (vectorRange != null && vectorRange.Count > 0)
-                        fullVectorPath.Add(vectorRange);
-
-                    startingCell = endPos;
-                }
-
-                if (fullVectorPath == null || fullVectorPath.Count == 0)
-                    return;
-
-                // Remove CurrentPos if it's the first step in the first path segment
-                if (fullVectorPath[0][0] == CurrentPos)
-                    fullVectorPath[0].RemoveAt(0);
-
-                if (fullVectorPath[0].Count == 0)
-                    fullVectorPath.RemoveAt(0);
-
-                if (fullVectorPath.Count == 0)
-                    return;
-
-                CurrentStats.MovePath = fullVectorPath;
+                CurrentStats.MovePath = GridMovement.GetCellToCellPath(CurrentPos, (Vector2)CurrentStats.DestinationPoint);
+                CurrentStats.DestinationPoint = null;
             }
+
         }
 
         public void ClearMovementPath()
         {
+            PlayerOOCMovePath.Clear();
             CurrentStats.MovePath.Clear();
             SetCurrentAnimationStateToIdle();
         }
-        public void UpdatePlayerEndPoint(Vector2 vec)
+        public void UpdatePlayerDestinationPoint(Vector2 vec)
         {
-            MoveTarget = vec;
-         
+            if (SceneManager.IsState(SceneState.Play))
+            {
+                OOCombatStats.DestinationPoint = vec;
+            }
         }
         public void GetHitbox()
         {
@@ -276,50 +252,49 @@ namespace PlayingAround.Entities.Player
 
             CurrentPos = new Vector2(newX, newY);
         }
-        public void SetFacingDirection(Vector2 vec)
+        public void SetFacingDirection(Vector2 direction)
         {
-            Direction dir = Direction.Down;
-            if (vec.X > 0 && vec.Y > 0)
-            {
-                dir = Direction.UpRight;
-            }
-            if (vec.X > 0 && vec.Y < 0)
-            {
-                dir = Direction.DownRight;
-            }
-            if (vec.X < 0 && vec.Y < 0)
-            {
-                dir = Direction.UpLeft;
-            }
-            if (vec.X < 0 && vec.Y > 0)
-            {
-                dir = Direction.DownLeft;
-            }
-            FacingDirection = dir;
+            if (direction != Vector2.Zero)
+                direction.Normalize();
+
+            if (direction.X > 0 && direction.Y < 0)
+                FacingDirection = Direction.UpRight;
+            else if (direction.X < 0 && direction.Y < 0)
+                FacingDirection = Direction.UpLeft;
+            else if (direction.X > 0 && direction.Y > 0)
+                FacingDirection = Direction.DownRight;
+            else
+                FacingDirection = Direction.DownLeft;
         }
         public void SetCurrentAnimationState()
         {
-            switch (FacingDirection)
+        }
+        public void SetAnimationWalkState(Vector2 direction)
+        {
+            SetFacingDirection(direction);
+            CurrentAnimationState = FacingDirection switch
             {
-                case Direction.UpRight:
-                    CurrentAnimationState = AnimationState.WalkUpRight;
-                    break;
-                case Direction.DownLeft:
-                    CurrentAnimationState = AnimationState.WalkDownLeft;
-                    break;
-                case Direction.UpLeft:
-                    CurrentAnimationState = AnimationState.WalkUpLeft;
-                    break;
-                case Direction.DownRight:
-                    CurrentAnimationState = AnimationState.WalkDownRight;
-                    break;
-            }
+                Direction.UpRight => AnimationState.WalkUpRight,
+                Direction.UpLeft => AnimationState.WalkUpLeft,
+                Direction.DownRight => AnimationState.WalkDownRight,
+                Direction.DownLeft => AnimationState.WalkDownLeft,
+                _ => CurrentAnimationState
+            };
         }
         public void SetCurrentAnimationStateToIdle()
         {
-            CurrentAnimationState = FacingDirection == Direction.Right
-             ? AnimationState.IdleRight
-             : AnimationState.IdleLeft;
+            if (FacingDirection == Direction.Right ||
+                FacingDirection == Direction.UpRight ||
+                FacingDirection == Direction.DownRight)
+            {
+                CurrentAnimationState = AnimationState.IdleRight;
+            }
+            else if (FacingDirection == Direction.Left ||
+                     FacingDirection == Direction.UpLeft ||
+                     FacingDirection == Direction.DownLeft)
+            {
+                CurrentAnimationState = AnimationState.IdleLeft;
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -330,17 +305,26 @@ namespace PlayingAround.Entities.Player
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
-            Vector2 drawOffset = TileManager.OffSetFromCenterOfDiamond(CurrentPos, DrawSpecifics.Width, DrawSpecifics.Height);
-            Rectangle destination = new Rectangle
-             (
-                                  (int)drawOffset.X,
-                                  (int)drawOffset.Y - (DrawSpecifics.Width / 2),
-                                       DrawSpecifics.Width,
-                                       DrawSpecifics.Height
+            if (AnimationController.CurrentAnimation == null) return;
+            Vector2 drawPoint = new Vector2(0, 0);
+            if (AnimationDrawPoint != null)
+            {
+                drawPoint = (Vector2)AnimationDrawPoint;
+            }
+            else drawPoint = CurrentPos;
+            int width = AnimationController.CurrentAnimation.Width;
+            int height = AnimationController.CurrentAnimation.Height;
+            var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
+            Rectangle dest = new Rectangle(
+                (int)pos.X,
+                (int)pos.Y,
+                width,
+                height
             );
             Rectangle source = AnimationController.GetCurrentFrame();
-            spriteBatch.Draw(SpriteSheet, destination, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
-          
+            Texture2D texture = AnimationController.CurrentAnimation.SpriteSheet;
+            spriteBatch.Draw(texture, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+
         }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
@@ -449,7 +433,6 @@ namespace PlayingAround.Entities.Player
         {
             Aspects.Clear();
         }
-
         public void UpdateCombatPosition(int pos)
         {
             PositionInOrder = pos;

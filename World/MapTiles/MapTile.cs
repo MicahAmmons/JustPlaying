@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder.GlowTex;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.Assets;
@@ -27,6 +28,7 @@ namespace PlayingAround.Game.Map
         public List<TileCell> MonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayMonsterSpawnableCells { get; private set; } = new List<TileCell> { };
+        public List<GlowTexture> BehindGlowTextures { get; private set; } = new List<GlowTexture> { };
         public List<NPC> NPCs { get; private set; } = new();
         public Dictionary<TileCell, NPC> NPCCells { get; private set; } = new Dictionary< TileCell, NPC> { };
         public float DifficultyMax { get; }
@@ -42,14 +44,18 @@ namespace PlayingAround.Game.Map
         public const int TileHeight = 32;
 
 
-        public MapTile(MapTileData data, Texture2D backgroundTexture)
+        public MapTile(MapTileData data)
         {
             Id = $"{data.GridX}_{data.GridY}_{data.GridZ}";
             x = data.GridX ; y = data.GridY ; z= data.GridZ ;
-            BackgroundTexture = backgroundTexture;
+            BackgroundTexture = AssetManager.GetTexture(data.Background);
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
+            foreach (var glowText in data.GlowTexture) 
+            { 
+               BehindGlowTextures.Add(new GlowTexture(glowText));
+            }
             MonsterSpawnableCells = new List<TileCell>();
             PlayerSpawnableCells = new List<TileCell>();
             OptionsOfMonsters = data.MonsterStrings;

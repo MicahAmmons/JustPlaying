@@ -72,8 +72,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public SingleAttack Attack { get; set; } = null;
         public ICombatant AttackEffectedCombatants { get; set; } = null;
         public TileCell AttackEffectedCells { get; set; } = null;
+        public Vector2? DestinationPoint { get; set; } = null;
         public TileCell MovementEndPoint { get; set; } = null;
-        public List<List<Vector2>> MovePath { get; set; } = new();
+        public List<TileCell> MovePath { get; set; } = new();
         public List<AiAction> Actions { get; set; }
         public ElementType ElementType { get; set; }
         public (string name, SummonedSavedStats data)? CurrentSelectedSummon {  get; set; }

@@ -16,6 +16,8 @@ namespace PlayingAround.Managers.Assets
         private static Dictionary<string, Texture2D> _textures = new();
         private static Dictionary<string, SpriteFont> _fonts = new();
         private static Dictionary<string, Song> _songs = new();
+        private static Dictionary<string, Effect> _effects = new();
+
 
 
         internal static void LoadAllAssets()
@@ -27,7 +29,8 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadMonsterIconTextures();
             AssetLoader.LoadAllSpriteSheets();
             AssetLoader.LoadPlayerIconTextures();
-            AssetLoader.LoadBackGroundTileTextures();
+            AssetLoader.LoadTileSpecificAssets();
+            AssetLoader.LoadShaders();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()
@@ -55,7 +58,6 @@ namespace PlayingAround.Managers.Assets
         {
             return _textures[key];
         }
-
         public static bool TextureExists(string key)
         {
             return _textures.ContainsKey(key);
@@ -68,12 +70,9 @@ namespace PlayingAround.Managers.Assets
         {
             return _content.Load<Song>(path);
         }
-   
         public static void LoadFont(string key, string path) =>
             _fonts[key] = _content.Load<SpriteFont>(path);
-
         public static SpriteFont GetFont(string key) => _fonts[key];
-
         public static Texture2D GetIconWithElementColored(Texture2D icon, ElementType element)
         {
 
@@ -116,6 +115,15 @@ namespace PlayingAround.Managers.Assets
             return tinted;
         }
 
+        public static void LoadEffect(string key, string path)
+        {
+            Effect effect = _content.Load<Effect>(path);
+            _effects[key] = effect;
+        }
 
+        internal static Effect GetEffect(string v)
+        {
+            return _effects[v];
+        }
     }
 }
