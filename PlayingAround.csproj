@@ -38,9 +38,14 @@
     <None Remove="Content\Tiles\-1_0_0\GlowMound.png" />
     <None Remove="Content\Tiles\-1_0_0\Vines1.png" />
     <None Remove="Content\Tiles\0_-1_0OLD.png" />
+    <None Remove="Content\Tiles\0_-1_0\0_-1_0.png" />
+    <None Remove="Content\Tiles\0_-1_0\GlowMound3_0_-1_0.png" />
+    <None Remove="Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.png" />
+    <None Remove="Content\Tiles\0_-1_0\Vines_0_-1_0.png" />
     <None Remove="Content\Tiles\0_0_0.png" />
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\1_4_0.png" />
+    <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
     <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
@@ -116,6 +121,18 @@
     <Content Include="Content\Tiles\0_-1_0OLD.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\0_-1_0\0_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\0_-1_0\GlowMound3_0_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\0_-1_0\Vines_0_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Tiles\0_0_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -123,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\1_4_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\MapTile\MapTile_0_-1_0.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\SaveData\SaveJson\savegame1.json">
@@ -136,12 +156,6 @@
     </Content>
     <Content Include="Data\MapTile\MapTile_-1_0_0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\MapTile\MapTile_0_0_0.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\MapTile\MapTile_1_4_0.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

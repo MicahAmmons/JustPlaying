@@ -77,6 +77,13 @@ namespace PlayingAround.Game.Assets
         {
             AssetManager.LoadTexture("-1_0_0", "Tiles/-1_0_0/-1_0_0");
             AssetManager.LoadTexture("Vines1", "Tiles/-1_0_0/Vines1");
+
+            AssetManager.LoadTexture("0_-1_0", "Tiles/0_-1_0/0_-1_0");
+            AssetManager.LoadTexture("Vines_0_-1_0", "Tiles/0_-1_0/Vines_0_-1_0");
+            AssetManager.LoadTexture("GrassPerimeter_0_-1_0", "Tiles/0_-1_0/GrassPerimeter_0_-1_0");
+            AssetManager.LoadTexture("GlowMound1_0_-1_0", "Tiles/0_-1_0/GlowMound1_0_-1_0");
+            AssetManager.LoadTexture("GlowMound2_0_-1_0", "Tiles/0_-1_0/GlowMound2_0_-1_0");
+            AssetManager.LoadTexture("GlowMound3_0_-1_0", "Tiles/0_-1_0/GlowMound3_0_-1_0");
         }
         public static void LoadMiscMapTileAssets()
         {

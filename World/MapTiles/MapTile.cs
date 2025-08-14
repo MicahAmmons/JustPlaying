@@ -52,9 +52,12 @@ namespace PlayingAround.Game.Map
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
-            foreach (var glowText in data.GlowTexture) 
-            { 
-               BehindGlowTextures.Add(new GlowTexture(glowText));
+            if (data.GlowTexture != null)
+            {
+                foreach (var glowText in data.GlowTexture)
+                {
+                    BehindGlowTextures.Add(new GlowTexture(glowText));
+                }
             }
             MonsterSpawnableCells = new List<TileCell>();
             PlayerSpawnableCells = new List<TileCell>();

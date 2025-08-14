@@ -1,6 +1,6 @@
 {
   "MapTile": {
-    "CurrentTileId": "-1_0_0"
+    "CurrentTileId": "0_-1_0"
   },
   "Player": {
     "MovementQuickness": 200,

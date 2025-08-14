@@ -144,7 +144,7 @@ namespace PlayingAround
             CinematicRuler.Draw(_spriteBatch);
             _spriteBatch.End();
 
-            var glowEffect = AssetManager.GetEffect("ColorColumnPulse");
+            var glowEffect = AssetManager.GetEffect("ColorReplace");
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, glowEffect);
             GlowTextureController.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();

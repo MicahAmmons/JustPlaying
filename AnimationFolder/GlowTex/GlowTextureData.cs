@@ -13,6 +13,8 @@ namespace PlayingAround.AnimationFolder.GlowTex
         public string color { get; set; }
         public float speed { get; set; }
         public float delay { get; set; }
+        public float minFade { get; set; } = 0f; 
+        public float maxFade { get; set; } = 1f;
 
 
     }
