@@ -51,8 +51,6 @@
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
-    <None Remove="Data\TileJson\MapTile_-1_0_0.json" />
-    <None Remove="Data\TileJson\MapTile_1_4_0.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shaders\ColorReplace.fx">
@@ -170,7 +168,6 @@
     <Folder Include="Content\UnAdded\" />
     <Folder Include="Content\UI\" />
     <Folder Include="Data\SaveData\SaveStates\" />
-    <Folder Include="Data\TileJson\" />
     <Folder Include="Entities\Monster\SummonedMonsters\" />
     <Folder Include="Managers\CombatMan\CombatBehaviors\" />
     <Folder Include="World\MapTiles\CombatTileCell\" />

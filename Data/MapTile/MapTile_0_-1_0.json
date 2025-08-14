@@ -16,7 +16,7 @@
       "color": "Light",
       "speed": 12.0,
       "delay": 0.0
- 
+
     },
     {
       "name": "GlowMound3_0_-1_0",
@@ -43,6 +43,13 @@
     }
   ],
   "monsters": [ "Ooze" ],
+"tileHighlights": {
+  "invalidTarget": { "color": "Red",   "fade": 0.35 },
+  "validTarget":   { "color": "White", "fade": 0.9  },
+  "walkable":      { "color": "Green", "fade": 0.6  },
+  "playerStartable":  { "color": "Blue",  "fade": 0.8 },
+  "monsterStartable": { "color": "Purple","fade": 0.8 }
+},
   "obstacles": [],
   "difficulty": 1,
   "totalSpawns": 3,

@@ -66,6 +66,7 @@ namespace PlayingAround.Entities.Player
         public int PositionInOrder { get ; set; }
         public Vector2? AnimationDrawPoint { get ; set; }
         public List<Vector2> PlayerOOCMovePath { get; set; } = new List<Vector2>();
+        public bool IsMoving = false;
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -99,7 +100,7 @@ namespace PlayingAround.Entities.Player
                     Resistances = ResistanceManager.GetResistances(ElementType.Normal)
                 },
                 SpriteSheet = AssetManager.GetTexture("PlayerSS"),
-                Icon = AssetManager.GetTexture("Hero_Blonde"),
+                Icon = AssetManager.GetTexture($"{ data.TextureKey }"),
             };
             foreach (var kvp in data.AnimationData)
             {
@@ -122,6 +123,7 @@ namespace PlayingAround.Entities.Player
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
             UpdateMovement(gameTime);
+            IsMoving = !AnimationController.IsFinished;
         }
         public void UpdateAnimation(GameTime gameTime)
         {
@@ -131,12 +133,13 @@ namespace PlayingAround.Entities.Player
         {
             if (CurrentStats.MovePath.Count > 0)
             {
-                if (!AnimationController.IsFinished) return;
+                if (IsMoving) return;
                 AnimationDrawPoint = CurrentPos;
                 CurrentPos = CurrentStats.MovePath[0].CenterPoint;
                 CurrentStats.MovePath.RemoveAt(0);
                 Vector2 direction = (Vector2)CurrentStats.DestinationPoint - CurrentStats.Pos;
                 SetAnimationWalkState(direction);
+
             }
             if (PlayerOOCMovePath.Count > 0)
             {
@@ -182,8 +185,20 @@ namespace PlayingAround.Entities.Player
             }
             if (CurrentStats.DestinationPoint != null)
             {
-                CurrentStats.MovePath = GridMovement.GetCellToCellPath(CurrentPos, (Vector2)CurrentStats.DestinationPoint);
-                CurrentStats.DestinationPoint = null;
+                List<TileCell> cells = GridMovement.GetCellToCellPath(CurrentPos, (Vector2)CurrentStats.DestinationPoint);
+                List<TileCell> cellsToRemove = new List<TileCell>();    
+                foreach (var cell in cells)
+                {
+                    if (cell.CenterPoint == CurrentPos)
+                    {
+                        cellsToRemove.Add(cell);
+                    }
+                }
+                foreach (var cell in cellsToRemove)
+                {
+                    cells.Remove(cell);
+                }
+                CurrentStats.MovePath = cells;
             }
 
         }
@@ -330,7 +345,7 @@ namespace PlayingAround.Entities.Player
         {
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
-            spriteBatch.Draw(SpriteSheet, rect, AnimationController.GetCurrentFrame(),  Color.White);
+            spriteBatch.Draw(Icon, rect, Color.White);
         }
         internal void ToggleDrawn()
         {

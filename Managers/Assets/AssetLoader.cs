@@ -48,7 +48,6 @@ namespace PlayingAround.Game.Assets
         public static void LoadMonsterIconTextures()
         {
             AssetManager.LoadTexture("OozeIcon", "MonsterIcons/OozeIcon");
-            AssetManager.LoadTexture("TrainingDummyIcon", "MonsterIcons/TrainingDummyIcon");
         }
         public static void LoadPlayerIconTextures()
         {

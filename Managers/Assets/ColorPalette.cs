@@ -64,9 +64,19 @@ namespace PlayingAround.Managers.Assets
         }
         public static Color GetColor(string name)
         {
-            var field = typeof(ColorPalette).GetField(name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-            return (Color)field.GetValue(null);
+            var field = typeof(ColorPalette).GetField(name,
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            if (field != null)
+                return (Color)field.GetValue(null);
+
+            var monoColor = typeof(Color).GetProperty(name,
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.IgnoreCase);
+            if (monoColor != null)
+                return (Color)monoColor.GetValue(null);
+
+            return Color.Transparent;
         }
+
 
     }
 }

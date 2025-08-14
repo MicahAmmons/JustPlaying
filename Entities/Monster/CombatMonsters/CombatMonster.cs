@@ -92,7 +92,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Attacks.Add(AttackManager.GetAttack(kvp.Key, kvp.Value));
             }
             CombatantIs = CombatMonsterType.AI;
-            try { Icon = AssetManager.GetTexture($"{UniqueId}Icon"); } catch { Icon = AssetManager.GetTexture("OozeIcon"); }
+            Icon = AssetManager.GetTexture($"{UniqueId}Icon");
             Is = CombatMonsterType.AI;
             foreach (var kvp in data.AnimationData)
             {
@@ -213,7 +213,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
-            spriteBatch.Draw(SpriteSheet, rect, AnimationController.GetCurrentFrame(), Color.White);
+            spriteBatch.Draw(Icon, rect, Color.White);
         }
         public void PopulateMovementPath(GameTime gameTime)
         {

@@ -1,6 +1,7 @@
 ﻿using PlayingAround.AnimationFolder.GlowTex;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.World.MapTiles.CellHighlights;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -25,6 +26,7 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("difficultyMin")] public float DifficultyMin { get; set; } = 1;
 
         [JsonPropertyName("totalSpawns")] public int TotalMonsterSpawns { get; set; }
+        [JsonPropertyName("tileHighlights")] public TileCellHighlightData TileHighlightData { get; set; }
 
 
 

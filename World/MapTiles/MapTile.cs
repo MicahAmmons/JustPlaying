@@ -6,6 +6,7 @@ using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
+using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
@@ -29,6 +30,7 @@ namespace PlayingAround.Game.Map
         public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayMonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<GlowTexture> BehindGlowTextures { get; private set; } = new List<GlowTexture> { };
+        public TileCellHighlights CellHighlights { get; private set; }
         public List<NPC> NPCs { get; private set; } = new();
         public Dictionary<TileCell, NPC> NPCCells { get; private set; } = new Dictionary< TileCell, NPC> { };
         public float DifficultyMax { get; }
@@ -52,6 +54,7 @@ namespace PlayingAround.Game.Map
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
+            CellHighlights = new TileCellHighlights(data.TileHighlightData);
             if (data.GlowTexture != null)
             {
                 foreach (var glowText in data.GlowTexture)

@@ -15,6 +15,7 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.UI.Combat;
 using PlayingAround.Visuals;
+using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,8 @@ namespace PlayingAround.Managers.CombatMan
         private TileCell _currentMouseHoverCell;
         private Vector2 _currentMousePos;
 
+        private TileCellHighlights _cellHighlightColors;
+
         private Dictionary<ICombatant, TileCell> _playerControlledMonsterMap = new();
         private Dictionary<ICombatant, TileCell> _aIControlledMonsterMap = new();
         public Dictionary<ICombatant, TileCell> AIControlledMonsterMap => _aIControlledMonsterMap;
@@ -93,6 +96,7 @@ namespace PlayingAround.Managers.CombatMan
             _playerCellOptions = AssetManager.GetTexture("fightBackground");
             _font = AssetManager.GetFont("mainFont");
             _combatUIManager = new CombatUIManager();
+            _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
 
             PlayMonsters = playMonsters;
             _currentPlayer.ToggleDrawn();
@@ -324,10 +328,10 @@ namespace PlayingAround.Managers.CombatMan
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {
             foreach (var tile in _playerSpawnableCells)
-               tile.DrawCellHighlight(spriteBatch, Color.Green, 5);
+               tile.DrawCellHighlight(spriteBatch,_cellHighlightColors.PlayerStartable, 5);
 
             foreach (var tile in _monsterSpawnableCells)
-                tile.DrawCellHighlight(spriteBatch, Color.Red, 5);
+                tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.MonsterStartable, 5);
         }
         private void DrawPlayerTurn(SpriteBatch spriteBatch)
         {
@@ -377,7 +381,7 @@ namespace PlayingAround.Managers.CombatMan
             {
                 foreach (var cell in mon.MoveableCells)
                 {
-                    cell.DrawCellHighlight(spriteBatch, Color.Green, 5);
+                    cell.DrawCellHighlight(spriteBatch, _cellHighlightColors.Walkable, 5);
                 }
 
                 if (_currentMouseHoverCell != null && mon.MoveableCells.Contains(_currentMouseHoverCell))
@@ -423,7 +427,7 @@ namespace PlayingAround.Managers.CombatMan
 
             foreach (var cell in _summonSpawnableCells)
             {
-                cell.DrawCellHighlight(spriteBatch, Color.LimeGreen, 5);
+                cell.DrawCellHighlight(spriteBatch, _cellHighlightColors.ValidTarget, 5);
             }
 
         }
@@ -519,8 +523,8 @@ namespace PlayingAround.Managers.CombatMan
 
                 foreach (var cell in mon.CurrentStats.Attack.CellsWithinRange)
                 {
-                    Color col = Color.Red * 5f;
-                    if (AIControlledMonsterMap.ContainsValue(cell) ) { col = Color.Green * 5f; }
+                    Color col = _cellHighlightColors.InvalidTarget * 5f;
+                    if (AIControlledMonsterMap.ContainsValue(cell) ) { col = _cellHighlightColors.ValidTarget * 5f; }
                     cell.DrawCellHighlight(spriteBatch, col, 5);
                 }
             }
@@ -630,7 +634,7 @@ namespace PlayingAround.Managers.CombatMan
                             
                             break;
                         case PlayerTurnState.PlayerExecutingMove:
-                            if (!PlayerHasMovePath()) { FinishedMoving(); SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); } 
+                            if (_currentPlayer.CurrentStats.MovePath.Count <= 0 && !_currentPlayer.IsMoving) SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); 
                             break;
                         case PlayerTurnState.PlayerExecutingAttack:
                             if (!PlayerHasMovePath()) WaitForAttackToFinish(delta);
@@ -691,10 +695,6 @@ namespace PlayingAround.Managers.CombatMan
             if (AIControlledMonsterMap.Count == 0) { SetWhoWon(WhoWon.Player); return true; }
             if (_currentPlayer.isDead){ SetWhoWon(WhoWon.Monster);  return true; }
             return false;
-        }
-        private void FinishedMoving()
-        {
-            _numberOfCellsMoved = 0;
         }
         private void LeaveResolvingStartOfTurnEffects()
         {
@@ -965,7 +965,7 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentCombatant.MoveableCells.Contains(_currentClickedCell))
             {
                 ICombatant combatant = _currentCombatant;
-                combatant.MoveTarget = _currentClickedCell.CenterPoint;
+                combatant.CurrentStats.DestinationPoint = _currentClickedCell.CenterPoint;
                 if (_currentCombatant.Is == CombatMonsterType.Player)
                 {
                     SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove);
