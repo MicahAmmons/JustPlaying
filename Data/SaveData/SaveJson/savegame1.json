@@ -11,101 +11,82 @@
     "CurrentPosY": 640,
     "Health": 8,
     "AnimationData": {
-      "WalkUpRight": {
-        "Row": 1,
-        "FrameCount": 9,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeWalk",
-        "FrameWidth": 192,
-        "FrameHeight": 192,
-        "EndOfCyclePause": 0.5
-      },
-      "WalkUpLeft": {
-        "Row": 2,
-        "FrameCount": 9,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeWalk",
-        "FrameWidth": 192,
-        "FrameHeight": 192,
-        "EndOfCyclePause": 0.5
-      },
-      "WalkDownRight": {
-        "Row": 3,
-        "FrameCount": 10,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeWalk",
-        "FrameWidth": 192,
-        "FrameHeight": 192,
-        "EndOfCyclePause": 0.5
-      },
-      "WalkDownLeft": {
-        "Row": 4,
-        "FrameCount": 10,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeWalk",
-        "FrameWidth": 192,
-        "FrameHeight": 192,
-        "EndOfCyclePause": 0.5
-      },
-      "IdleRight": {
-        "Row": 1,
-        "FrameCount": 29,
-        "FrameDurationMs": 200,
-        "IsLooping": true,
-        "SpriteSheetName": "FrostOozeIdle",
-        "FrameWidth": 192,
-        "FrameHeight": 192
-      },
+      "Animations": {
+        "Idle": [
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerHead",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          },
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerNeck",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          }
+        ],
+        "WalkUp": [
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerHead",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          },
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerNeck",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          }
+        ],
+        "WalkDown": [
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerHead",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          },
+          {
+            "Row": 1,
+            "FrameCount": 3,
+            "FrameDurationMs": 4000,
+            "IsLooping": true,
+            "SpriteSheetName": "PlayerNeck",
+            "Fades": true,
+            "DefaultDirection": "Left",
+            "FrameWidth": 720,
+            "FrameHeight": 1080
+          }
+        ]
 
-      "SlamTopRight": {
-        "Row": 1,
-        "FrameCount": 31,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeSlamTopRight",
-        "FrameWidth": 192,
-        "FrameHeight": 192
-      },
-      "SlamTopLeft": {
-        "Row": 1,
-        "FrameCount": 31,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeSlamTopLeft",
-        "FrameWidth": 192,
-        "FrameHeight": 192
-      },
-      "SlamBottomRight": {
-        "Row": 1,
-        "FrameCount": 28,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeSlamBottomRight",
-        "FrameWidth": 192,
-        "FrameHeight": 192
-      },
-      "SlamBottomLeft": {
-        "Row": 1,
-        "FrameCount": 28,
-        "FrameDurationMs": 200,
-        "IsLooping": false,
-        "SpriteSheetName": "FrostOozeSlamBottomLeft",
-        "FrameWidth": 192,
-        "FrameHeight": 192
-      },
-      "IdleLeft": {
-        "Row": 1,
-        "FrameCount": 29,
-        "FrameDurationMs": 200,
-        "IsLooping": true,
-        "SpriteSheetName": "FrostOozeIdle",
-        "FrameWidth": 192,
-        "FrameHeight": 192
       }
+
     }
   },
   "DayCycle": {

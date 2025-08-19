@@ -100,7 +100,7 @@ namespace PlayingAround.Managers.CombatMan
 
             PlayMonsters = playMonsters;
             _currentPlayer.ToggleDrawn();
-            _currentPlayer.ClearMovementPath();
+            _currentPlayer.MovementController.ClearMovementPath();
             SetSpawnableCells();
             SetCombatantStartingPos();
             SetTurnOrder();
@@ -173,7 +173,7 @@ namespace PlayingAround.Managers.CombatMan
                     int index = RandomHut.rng.Next(spawnableCells.Count);
                     Vector2 pos = spawnableCells[index].CenterPoint;
 
-                    mon.CurrentStats.Pos = pos;
+                    mon.MovementController.CurrentPos = pos;
                     spawnableCells.RemoveAt(index);
                 }
 
@@ -236,7 +236,6 @@ namespace PlayingAround.Managers.CombatMan
                     endingScreen = true;
                     break;
             }
-            PlayerManager.DrawInCombat(spriteBatch);
             DrawTurnStateOverlay(spriteBatch);
             _visualEffectManager.Draw(spriteBatch);
             _combatUIManager.Draw(spriteBatch);
@@ -587,7 +586,7 @@ namespace PlayingAround.Managers.CombatMan
                             break;
                         case AITurnState.ExecutingMove:
                             if (MonsterFinishedMoving()) { 
-                                FinishedMoving(); SetAITurnState(AITurnState.ActionNavigation); }
+                                SetAITurnState(AITurnState.ActionNavigation); }
                             break;
                         case AITurnState.ExecutingAttack:
                             if (AttackIsComplete()) {
@@ -622,7 +621,7 @@ namespace PlayingAround.Managers.CombatMan
                             
                             break;
                             case SummonedTurnState.SummonedExecutingMove:
-                            if (!PlayerHasMovePath()) { FinishedMoving(); SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction); }
+                            if (!PlayerHasMovePath()) {SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction); }
                             break;
                     }
                     break;
@@ -634,7 +633,7 @@ namespace PlayingAround.Managers.CombatMan
                             
                             break;
                         case PlayerTurnState.PlayerExecutingMove:
-                            if (_currentPlayer.CurrentStats.MovePath.Count <= 0 && !_currentPlayer.IsMoving) SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); 
+                            if (_currentPlayer.MovementController.TileMovePath.Count <= 0) SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput); 
                             break;
                         case PlayerTurnState.PlayerExecutingAttack:
                             if (!PlayerHasMovePath()) WaitForAttackToFinish(delta);
@@ -736,9 +735,8 @@ namespace PlayingAround.Managers.CombatMan
 
         public bool AIHasMP() => _currentCombatant.CurrentStats.MP >= 0;
         public bool AttackIsComplete() => _currentCombatant.IsAttackComplete();
-        public bool MonsterFinishedMoving() =>  _currentCombatant.CurrentStats.MovePath == null || _currentCombatant.CurrentStats.MovePath.Count <= 0;
-        public bool PlayerHasEndPoint() => _currentCombatant.CurrentStats.MovementEndPoint != null;
-        public bool PlayerHasMovePath() => _currentCombatant.CurrentStats.MovePath.Count > 0;
+        public bool MonsterFinishedMoving() =>  _currentCombatant.MovementController.TileMovePath == null || _currentCombatant.MovementController.TileMovePath.Count <= 0;
+        public bool PlayerHasMovePath() => _currentCombatant.MovementController.TileMovePath.Count > 0;
         private void WaitForAttackToFinish(float delta)
         {
             ICombatant mon = _currentCombatant;
@@ -965,7 +963,7 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentCombatant.MoveableCells.Contains(_currentClickedCell))
             {
                 ICombatant combatant = _currentCombatant;
-                combatant.CurrentStats.DestinationPoint = _currentClickedCell.CenterPoint;
+                combatant.MovementController.SetDestinationPoint(_currentClickedCell.CenterPoint);
                 if (_currentCombatant.Is == CombatMonsterType.Player)
                 {
                     SetPlayerTurnState(PlayerTurnState.PlayerExecutingMove);
@@ -990,7 +988,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
             {
-                _currentPlayer.CurrentStats.Pos = _currentMouseHoverCell.CenterPoint;
+                _currentPlayer.MovementController.CurrentPos = _currentMouseHoverCell.CenterPoint;
                 _currentPlayer.ToggleDrawn();
                 SetCombatState(CombatState.TurnStart);
 
@@ -1012,7 +1010,7 @@ namespace PlayingAround.Managers.CombatMan
             ClearEntityMaps();
             foreach (var mon in TurnOrder)
             {
-                TileCell cell = TileManager.GetCell(mon.CurrentStats.Pos);
+                TileCell cell = TileManager.GetCell(mon.MovementController.CurrentPos);
                 if (mon.Is == CombatMonsterType.Summoned || mon.Is == CombatMonsterType.Player)
                 {
                     cell.BlockedByMonster = true;
@@ -1055,12 +1053,10 @@ namespace PlayingAround.Managers.CombatMan
                 case CombatMonsterType.Player:
                     SetCombatState(CombatState.PlayerTurn);
                     SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
-                    mon.CurrentStats.MovementEndPoint = null;
                     return;
                 case CombatMonsterType.Summoned:
                     SetCombatState(CombatState.SummonedTurn);
                     SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction);
-                    mon.CurrentStats.MovementEndPoint = null;
                     return;
                 case CombatMonsterType.AI:
                     SetCombatState(CombatState.AITurn);
@@ -1220,7 +1216,7 @@ namespace PlayingAround.Managers.CombatMan
             SetPlayerTurnState(PlayerTurnState.PlayerExecutingSummoning);
 
             ICombatant comSumMon = (CombatMonsterManager.SummonMonsterToCombat(combatant.CurrentStats.CurrentSelectedSummon?.name));
-            comSumMon.CurrentStats.Pos = cell.CenterPoint;
+            comSumMon.MovementController.CurrentPos = cell.CenterPoint;
             AddComMonToTurnOrder(comSumMon);
         }
         private void AddComMonToTurnOrder(ICombatant mon)

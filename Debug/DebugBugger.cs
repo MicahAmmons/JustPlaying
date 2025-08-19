@@ -216,7 +216,7 @@ namespace PlayingAround.Debug
         private static void DrawDebugOverlay(SpriteBatch spriteBatch)
         {
             Vector2[] feetHitbox = PlayerManager.CurrentPlayer.DiamondHitBox;
-            Vector2 currentPos = PlayerManager.CurrentPlayer.CurrentPos;
+            Vector2 currentPos = PlayerManager.CurrentPlayer.MovementController.CurrentPos;
             Vector2? clickTarget = PlayerManager.CurrentPlayer.GetDebugClickTarget();
             int mouseX = InputManager.Mouse.X;
             int mouseY = InputManager.Mouse.Y;

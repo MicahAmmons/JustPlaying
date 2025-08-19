@@ -68,7 +68,7 @@ namespace PlayingAround.Managers.Proximity
             bool monsterWasNear = false;
             foreach (var mon in _currentPlayMonsters)
             {
-                if (Vector2.Distance(_playerCurrentCords, mon.OOCombatStats.CurrentPos) <= _distanceForInteract)
+                if (Vector2.Distance(_playerCurrentCords, mon.MovementController.CurrentPos) <= _distanceForInteract)
                 {
                     OnPlayerNearPlayMonster?.Invoke(mon);
                     monsterWasNear = true;
@@ -99,7 +99,7 @@ namespace PlayingAround.Managers.Proximity
         }
         private static void UpdatePlayerCords()
         {
-            _playerCurrentCords = _currentPlayer.CurrentPos;
+            _playerCurrentCords = _currentPlayer.MovementController.CurrentPos;
         }
 
 

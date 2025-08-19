@@ -374,7 +374,7 @@ namespace PlayingAround.Managers.UI
             {
                 case InteractState.PlayMonster:
                     message = "Press F to Fight";
-                    drawPoint = _currentPlayMonster.OOCombatStats.CurrentPos;
+                    drawPoint = _currentPlayMonster.MovementController.CurrentPos;
                     break;
 
                 case InteractState.NPC:

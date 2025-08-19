@@ -1,11 +1,11 @@
 {
-  "Cale": {
-    "npcId": "Cale",
+  "Mr. NPC": {
+    "npcId": "Mr. NPC",
     "defaultNode": {
-      "text": "Hello there. This is my default text.",
+      "text": "Careful around these parts. You never know when the Oozes will return.",
       "responses": [
         {
-          "text": "Heard",
+          "text": "Thanks for the advice.",
           "nextDialogue": null
         }
       ]
@@ -16,33 +16,55 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "getting_started",
+            "questId": "Cull_The_Ooze",
             "questStage": "NotStarted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "2_Oozes_Defeated"
           }
         ],
-        "text": "This is stage 1 dialogue. Will you accept my quest to defeat the training dummy?",
+        "text": "Thank goodness you're here. Oozes are swarming the outer rim of the chasm - you've gotta help! Please slay 2 Oozes.",
         "responses": [
           {
-            "text": "Sure, I’ll help.",
-            "nextDialogue": "1b",
+            "text": "I'm on it!",
+            "nextDialogue": "2",
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questID": "getting_started",
-                "stage": "Accepted"
+                "questId": "Cull_The_Ooze",
+                "questStage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "progressionStateId": "InProgress",
+                "questId": "Cull_The_Ooze",
+                "objectiveId": "2_Oozes_Defeated"
               }
             ]
           },
           {
-            "text": "No thanks.",
-            "nextDialogue": null,
+            "text": "I can't now, maybe later.",
+            "nextDialogue": "1b",
             "effects": [
               {
                 "type": "SetQuestStage",
-                "questId": "getting_started",
-                "stage": "Declined"
+                "questId": "Cull_The_Ooze",
+                "questStage": "Declined"
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "text": "That's too bad.",
+        "responses": [
+          {
+            "text": "Goodbye",
+            "nextDialogue": null
           }
         ]
       },
@@ -51,34 +73,20 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "Declined"
-          }
-        ],
-        "text": "Quit playing around, will you defeat the training dummy or not?",
-        "responses": [
-          {
-            "text": "Sure, I’ll help.",
-            "nextDialogue": "1b",
-            "effects": [
-              {
-                "type": "StartQuest",
-                "questId": "getting_started"
-              }
-            ]
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
           },
           {
-            "text": "No thanks.",
-            "nextDialogue": null
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "2_Oozes_Defeated"
           }
-        ]
-      },
-      {
-        "id": "1b",
-        "text": "Glad you accepted! The training dummy is just ahead. Show me what you’ve got.",
+        ],
+        "text": "There are plenty of Oozes around. Please eliminate at least 2 of them.",
         "responses": [
           {
-            "text": "Continue",
+            "text": "Got it",
             "nextDialogue": null
           }
         ]
@@ -88,14 +96,31 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "Accepted"
+            "questId": "Cull_The_Ooze",
+            "questStage": "Declined"
           }
         ],
-        "text": "It's right over there - go ahead.",
+        "text": "Have you reconsidered? We could really use help slowing the oozes down.",
         "responses": [
           {
-            "text": "Continue",
+            "text": "I'm on it!",
+            "nextDialogue": "2",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questId": "Cull_The_Ooze",
+                "questStage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "questId": "Cull_The_Ooze",
+                "progressionStateId": "InProgress",
+                "objectiveId": "2_Oozes_Defeated"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
             "nextDialogue": null
           }
         ]
@@ -105,31 +130,96 @@
         "conditions": [
           {
             "type": "QuestStage",
-            "questId": "getting_started",
-            "questStage": "ObjectiveCompleted"
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "2_Oozes_Defeated"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "Ooze_Boss_Defeated"
           }
-
         ],
-        "text": "You defeated the dummy - good stuff.",
+        "text": "Fantastic, you really thinned out the numbers. But we aren't done yet.",
         "responses": [
           {
-            "text": "Next",
+            "text": "What else needs to be done?",
             "nextDialogue": "4b"
           }
         ]
       },
       {
         "id": "4b",
-        "text": "You completed the quest. Good job.",
-
+        "text": "There's been a large ooze sighted on the peninsula to the east. It seems to be a growing amalgamation of ooze—the more oozes that join it, the bigger it gets. Will you defeat it before it gets too powerful?",
         "responses": [
           {
-            "text": "Thanks brah",
+            "text": "I'm on it!",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "SetObjectiveProgressState",
+                "questID": "Cull_The_Ooze",
+                "progressionStateId": "InProgress",
+                "objectiveId": "Ooze_Boss_Defeated"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "The Ooze Boss is to the east - hurry up!",
+        "responses": [
+          {
+            "text": "I'll handle it swiftly'",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "Thanks adventurer — we are safe another day thanks to you.",
+        "responses": [
+          {
+            "text": "Happy to help.",
             "nextDialogue": null,
             "effects": [
               {
                 "type": "CompleteQuest",
-                "questId": "getting_started"
+                "questId": "Cull_The_Ooze"
               }
             ]
           }

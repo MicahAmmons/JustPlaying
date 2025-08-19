@@ -10,6 +10,11 @@ namespace PlayingAround.AnimationFolder
 {
     public class AnimationData
     {
+        public Dictionary<AnimationState, List<SpecificAnimationData>> Animations { get; set; }
+
+    }
+    public class SpecificAnimationData
+    {
         public int Row { get; set; }                 // 1-based
         public int FrameCount { get; set; }
         public int FrameDurationMs { get; set; }     // from JSON
@@ -17,7 +22,7 @@ namespace PlayingAround.AnimationFolder
         public string SpriteSheetName { get; set; }
         public int FrameWidth { get; set; }
         public int FrameHeight { get; set; }
-        public float EndOfCyclePause { get; set; }
-
+        public bool Fades { get; set; } = false;
+        public Direction DefaultDirection { get; set; }
     }
 }

@@ -27,6 +27,8 @@
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
+    <None Remove="Content\PlayerSprites\PlayerHead.png" />
+    <None Remove="Content\PlayerSprites\PlayerNeck.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Content\PlayerSprites\PlayerSS.png" />
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
@@ -46,13 +48,18 @@
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\1_4_0.png" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
-    <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PlayerSprites\PlayerHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PlayerSprites\PlayerNeck.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Shaders\ColorReplace.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -141,15 +148,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_0_-1_0.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\SaveData\SaveJson\savegame1.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\SaveData\SaveJson\savegame2.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\SaveData\SaveJson\savegame3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_-1_0_0.json">

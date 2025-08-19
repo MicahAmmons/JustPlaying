@@ -31,6 +31,7 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadPlayerIconTextures();
             AssetLoader.LoadTileSpecificAssets();
             AssetLoader.LoadShaders();
+            AssetLoader.LoadPlayerSpriteSheets();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()

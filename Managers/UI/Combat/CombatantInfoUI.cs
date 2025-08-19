@@ -51,7 +51,7 @@ public class CombatantInfoUI
     private void DrawHighlightedCell(SpriteBatch spriteBatch)
     {
         if (CurrentHovered)
-            TileManager.GetCell(combatant.CurrentStats.Pos).DrawCellHighlight(spriteBatch, ColorPalette.Water);
+            TileManager.GetCell(combatant.MovementController.CurrentPos).DrawCellHighlight(spriteBatch, ColorPalette.Water);
     }
     private void SetIconPosition()
     {

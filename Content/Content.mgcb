@@ -200,6 +200,30 @@
 /processorParam:TextureFormat=Color
 /build:NPC/DefaultNPC.png
 
+#begin PlayerSprites/PlayerHead.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerSprites/PlayerHead.png
+
+#begin PlayerSprites/PlayerNeck.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerSprites/PlayerNeck.png
+
 #begin PlayerSprites/PlayerSprites.png
 /importer:TextureImporter
 /processor:TextureProcessor

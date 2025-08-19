@@ -82,7 +82,7 @@ namespace PlayingAround.Managers.Entities
                     var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
                     int width = (int)widthHeight.X;
                     int height = (int)widthHeight.Y;
-                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.OOCombatStats.CurrentPos, width, height);
+                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.MovementController.CurrentPos, width, height);
                     Rectangle dest = new Rectangle(
                         (int)pos.X,
                         (int)pos.Y,

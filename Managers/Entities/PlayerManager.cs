@@ -38,8 +38,7 @@ namespace PlayingAround.Managers.Entities
             if (!permission) 
             { 
                 _currentPlayer.DrawSpecifics.AllowedToMove = false;
-                _currentPlayer.CurrentStats.MovePath.Clear();
-                _currentPlayer.SetCurrentAnimationStateToIdle();
+                _currentPlayer.MovementController.ClearMovementPath();
                 
                 return;
             }
@@ -67,21 +66,17 @@ namespace PlayingAround.Managers.Entities
                 }
                 if (InputManager.IsKeyPressed(Keys.Space))
                 {
-                    _currentPlayer.ClearMovementPath();
+                    _currentPlayer.MovementController.ClearMovementPath();
                 }
             }
             
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.IsState(SceneState.Combat))
             {
                 _currentPlayer?.Draw(spriteBatch);
             }
-        }
-        public static void DrawInCombat(SpriteBatch spriteBatch)
-        {
-            _currentPlayer?.Draw(spriteBatch);
         }
         public static PlayerSaveData SavePlayer()
         {

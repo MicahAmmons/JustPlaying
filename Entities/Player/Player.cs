@@ -14,6 +14,7 @@ using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Movement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,14 +27,8 @@ namespace PlayingAround.Entities.Player
     {
         public BaseCombatStats BaseStats { get; set; }
         [JsonIgnore] public CurrentCombatStats CurrentStats { get; set; } 
-        public AnimationController AnimationController { get; set; } = new AnimationController();
-        public Dictionary<AnimationState, Animation> Animation {  get; set; } = new Dictionary<AnimationState, Animation>();
-        public Direction FacingDirection { get; set; } = Direction.Right;
-        public Texture2D SpriteSheet { get; set; }
-        public AnimationState CurrentAnimationState { get; set; } = AnimationState.IdleRight;
         public DrawSpecificStats DrawSpecifics {  get; set; }
         public Texture2D Icon {  get; set; }
-        public Vector2? MoveTarget { get; set; }
         public List<Aspect> Aspects { get; set; } = new List<Aspect>();
         public List<SingleAttack> Attacks { get; set; } = new List<SingleAttack>();
         public bool isDead { get; set; } = false;
@@ -45,34 +40,18 @@ namespace PlayingAround.Entities.Player
         public string UniqueId { get; set; } = "Player";
         public Vector2 HitBoxCenter {  get; set; }
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
-        public Vector2 CurrentPos
-        {
-            get
-            {
-                return SceneManager.CurrentState switch
-                {
-                    SceneState.Combat => CurrentStats.Pos,
-                    _ => OOCombatStats.CurrentPos
-                };
-            }
-            set
-            {
-                if (SceneManager.CurrentState == SceneState.Combat)
-                    CurrentStats.Pos = value;
-                else
-                    OOCombatStats.CurrentPos = value;
-            }
-        }
         public int PositionInOrder { get ; set; }
-        public Vector2? AnimationDrawPoint { get ; set; }
-        public List<Vector2> PlayerOOCMovePath { get; set; } = new List<Vector2>();
-        public bool IsMoving = false;
+        public MovementController MovementController {  get; set; }
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var player = new Player()
             {
-
+                MovementController = new MovementController(data.AnimationData, data.MovementQuickness, CombatMonsterType.Player)
+                {
+                    CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
+                    DrawPoint = new Vector2(data.CurrentPosX, data.CurrentPosY)
+                },
                 DrawSpecifics = new DrawSpecificStats()
                 {
                     MovementQuickness = (int)data.MovementQuickness,
@@ -80,10 +59,6 @@ namespace PlayingAround.Entities.Player
                     Height = data.Height,
                     AllowedToMove = true,
                     MovementPattern = MovementPatternType.Straight
-                },
-                OOCombatStats = new OutOfCombatAnimatedStats()
-                {
-                    CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
                 },
                 BaseStats = new BaseCombatStats()
                 {
@@ -99,121 +74,29 @@ namespace PlayingAround.Entities.Player
                     Health = data.Health,
                     Resistances = ResistanceManager.GetResistances(ElementType.Normal)
                 },
-                SpriteSheet = AssetManager.GetTexture("PlayerSS"),
                 Icon = AssetManager.GetTexture($"{ data.TextureKey }"),
-            };
-            foreach (var kvp in data.AnimationData)
-            {
-                AnimationState state = kvp.Key;
-                AnimationData datas = kvp.Value;
-                player.Animation[state] = new Animation(datas.FrameCount, datas.FrameWidth, datas.FrameHeight, (int)datas.FrameDurationMs, datas.Row, datas.IsLooping, datas.SpriteSheetName, datas.EndOfCyclePause);
-            }
 
+        };
+            player.MovementController.FinishedTileMove += player.FinishedMovingOneTile;
             return player;
         }
         public Player()
         {
+            
         }
         public void Update(GameTime gameTime, float delta)
         {
             GetHitbox();
-            PopulateMovementPath(gameTime);
-            UpdateAnimation(gameTime);
-            AnimationController.Update(gameTime);
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
-            UpdateMovement(gameTime);
-            IsMoving = !AnimationController.IsFinished;
-        }
-        public void UpdateAnimation(GameTime gameTime)
-        {
-            AnimationController.Play( CurrentAnimationState,Animation[CurrentAnimationState]);
-        }
-        public void UpdateMovement(GameTime gameTime)
-        {
-            if (CurrentStats.MovePath.Count > 0)
-            {
-                if (IsMoving) return;
-                AnimationDrawPoint = CurrentPos;
-                CurrentPos = CurrentStats.MovePath[0].CenterPoint;
-                CurrentStats.MovePath.RemoveAt(0);
-                Vector2 direction = (Vector2)CurrentStats.DestinationPoint - CurrentStats.Pos;
-                SetAnimationWalkState(direction);
+            MovementController.Update(gameTime);
 
-            }
-            if (PlayerOOCMovePath.Count > 0)
-            {
-                Vector2 nextPoint = PlayerOOCMovePath[0];
-
-                float speed = DrawSpecifics.MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                Vector2 direction = nextPoint - CurrentPos;
-                float distance = direction.Length();
-
-                if (distance <= speed)
-                {
-                    CurrentPos = nextPoint;
-                    PlayerOOCMovePath.RemoveAt(0);
-                    if (PlayerOOCMovePath.Count == 0)
-                    {
-                        SetCurrentAnimationStateToIdle();
-                    }
-                }
-                else
-                {
-                    direction.Normalize();
-                    CurrentPos += direction * speed;
-                    SetFacingDirection(direction);
-                    SetAnimationWalkState(direction);
-                }
-            }
-          
-        }
-        public void PopulateMovementPath(GameTime gameTime)
-        {
-            if (OOCombatStats.DestinationPoint != null)
-            {
-                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)OOCombatStats.DestinationPoint);
-                OOCombatStats.DestinationPoint = null;
-                if (cellPath == null || cellPath.Count == 0) // Abort early if path is empty
-                    return;
-                if (cellPath[0] == CurrentPos) // Remove CurrentPos if it's the first point in the path
-                    cellPath.RemoveAt(0);
-                if (cellPath.Count == 0) // All points were removed, nothing left to move to
-                    return;
-                PlayerOOCMovePath = cellPath;
-            }
-            if (CurrentStats.DestinationPoint != null)
-            {
-                List<TileCell> cells = GridMovement.GetCellToCellPath(CurrentPos, (Vector2)CurrentStats.DestinationPoint);
-                List<TileCell> cellsToRemove = new List<TileCell>();    
-                foreach (var cell in cells)
-                {
-                    if (cell.CenterPoint == CurrentPos)
-                    {
-                        cellsToRemove.Add(cell);
-                    }
-                }
-                foreach (var cell in cellsToRemove)
-                {
-                    cells.Remove(cell);
-                }
-                CurrentStats.MovePath = cells;
-            }
-
-        }
-
-        public void ClearMovementPath()
-        {
-            PlayerOOCMovePath.Clear();
-            CurrentStats.MovePath.Clear();
-            SetCurrentAnimationStateToIdle();
         }
         public void UpdatePlayerDestinationPoint(Vector2 vec)
         {
             if (SceneManager.IsState(SceneState.Play))
             {
-                OOCombatStats.DestinationPoint = vec;
+                MovementController.SetDestinationPoint(vec);
             }
         }
         public void GetHitbox()
@@ -232,8 +115,8 @@ namespace PlayingAround.Entities.Player
             int hitboxHeight = DrawSpecifics.Height/3;
 
             Rectangle hit = new Rectangle(
-                (int)(CurrentPos.X - (DrawSpecifics.Width / 2f) ),
-                (int)(CurrentPos.Y - DrawSpecifics.Height /4),
+                (int)(MovementController.CurrentPos.X - (DrawSpecifics.Width / 2f) ),
+                (int)(MovementController.CurrentPos.Y - DrawSpecifics.Height /4),
                 hitboxWidth,
                 hitboxHeight
             );
@@ -242,74 +125,30 @@ namespace PlayingAround.Entities.Player
         }
         public PlayerSaveData Save(PlayerSaveData data)
         {
-            data.MovementQuickness = this.DrawSpecifics.MovementQuickness;
-            data.CurrentPosX = CurrentPos.X;
-            data.CurrentPosY = CurrentPos.Y;
+            data.MovementQuickness = (int)this.DrawSpecifics.MovementQuickness;
+            data.CurrentPosX = MovementController.CurrentPos.X;
+            data.CurrentPosY = MovementController.CurrentPos.Y;
             return data;
         }
         public Vector2? GetDebugClickTarget() => debugClickTarget;
         public void NewMapTilePosition(Vector2 dir)
         {
-            ClearMovementPath();
+            MovementController.ClearMovementPath();
 
-            float newX = CurrentPos.X;
-            float newY = CurrentPos.Y;
+            float newX = MovementController.CurrentPos.X;
+            float newY = MovementController.CurrentPos.Y;
 
             if (dir.X < 0) // Moving left
-                newX = ViewportManager.ScreenWidth - CurrentPos.X;
+                newX = ViewportManager.ScreenWidth - MovementController.CurrentPos.X;
             else if (dir.X > 0) // Moving right
-                newX = ViewportManager.ScreenWidth - CurrentPos.X;
+                newX = ViewportManager.ScreenWidth - MovementController.CurrentPos.X;
 
             if (dir.Y < 0) // Moving up
-                newY = ViewportManager.ScreenHeight - CurrentPos.Y;
+                newY = ViewportManager.ScreenHeight - MovementController.CurrentPos.Y;
             else if (dir.Y > 0) // Moving down
-                newY = ViewportManager.ScreenHeight - CurrentPos.Y;
+                newY = ViewportManager.ScreenHeight - MovementController.CurrentPos.Y;
 
-            CurrentPos = new Vector2(newX, newY);
-        }
-        public void SetFacingDirection(Vector2 direction)
-        {
-            if (direction != Vector2.Zero)
-                direction.Normalize();
-
-            if (direction.X > 0 && direction.Y < 0)
-                FacingDirection = Direction.UpRight;
-            else if (direction.X < 0 && direction.Y < 0)
-                FacingDirection = Direction.UpLeft;
-            else if (direction.X > 0 && direction.Y > 0)
-                FacingDirection = Direction.DownRight;
-            else
-                FacingDirection = Direction.DownLeft;
-        }
-        public void SetCurrentAnimationState()
-        {
-        }
-        public void SetAnimationWalkState(Vector2 direction)
-        {
-            SetFacingDirection(direction);
-            CurrentAnimationState = FacingDirection switch
-            {
-                Direction.UpRight => AnimationState.WalkUpRight,
-                Direction.UpLeft => AnimationState.WalkUpLeft,
-                Direction.DownRight => AnimationState.WalkDownRight,
-                Direction.DownLeft => AnimationState.WalkDownLeft,
-                _ => CurrentAnimationState
-            };
-        }
-        public void SetCurrentAnimationStateToIdle()
-        {
-            if (FacingDirection == Direction.Right ||
-                FacingDirection == Direction.UpRight ||
-                FacingDirection == Direction.DownRight)
-            {
-                CurrentAnimationState = AnimationState.IdleRight;
-            }
-            else if (FacingDirection == Direction.Left ||
-                     FacingDirection == Direction.UpLeft ||
-                     FacingDirection == Direction.DownLeft)
-            {
-                CurrentAnimationState = AnimationState.IdleLeft;
-            }
+            MovementController.CurrentPos = new Vector2(newX, newY);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -320,26 +159,59 @@ namespace PlayingAround.Entities.Player
         }
         public void DrawTexture(SpriteBatch spriteBatch)
         {
-            if (AnimationController.CurrentAnimation == null) return;
-            Vector2 drawPoint = new Vector2(0, 0);
-            if (AnimationDrawPoint != null)
+            if (MovementController.AnimationManager.CurrentControllers == null ) return;    
+            foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
-                drawPoint = (Vector2)AnimationDrawPoint;
-            }
-            else drawPoint = CurrentPos;
-            int width = AnimationController.CurrentAnimation.Width;
-            int height = AnimationController.CurrentAnimation.Height;
-            var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
-            Rectangle dest = new Rectangle(
-                (int)pos.X,
-                (int)pos.Y,
-                width,
-                height
-            );
-            Rectangle source = AnimationController.GetCurrentFrame();
-            Texture2D texture = AnimationController.CurrentAnimation.SpriteSheet;
-            spriteBatch.Draw(texture, dest, source, DrawSpecifics.IsFlashingRed ? Color.Red : Color.White);
+                if (contr.Animation == null) continue;
 
+
+                Animation animation = contr.Animation;
+                bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
+                Vector2 drawPoint = MovementController.DrawPoint;
+                int width = animation.Width;
+                int height = animation.Height;
+                var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
+                Rectangle dest = new Rectangle(
+                    (int)pos.X,
+                    (int)pos.Y,
+                    width,
+                    height
+                );
+                Rectangle source = contr.GetCurrentFrame();
+                Texture2D texture = animation.SpriteSheet;
+
+                float frameFade = 1;
+                if (animation.Fades)
+                    frameFade = 1 - contr.FadeMultiplier;
+                SpriteEffects flip = flipHorizontal
+                     ? SpriteEffects.FlipHorizontally
+                     : SpriteEffects.None;
+
+                spriteBatch.Draw(
+                    texture,
+                    dest,
+                    source,
+                    DrawSpecifics.IsFlashingRed ? Color.Red * frameFade : Color.White * frameFade,
+                    0f,                  // rotation
+                    Vector2.Zero,        // origin
+                    flip,                // 👈 flip goes here
+                    0f                   // layerDepth
+                );
+                if (animation.Fades)
+                {
+                    Rectangle source2 = contr.GetNextFrame();
+                    spriteBatch.Draw(
+                         texture,
+                         dest,
+                          source2,
+                          DrawSpecifics.IsFlashingRed ? Color.Red * (1 - frameFade) : Color.White * (1 - frameFade),
+                          0f,
+                          Vector2.Zero,
+                          flip,
+                         0f
+);
+                }
+            }
         }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
@@ -392,15 +264,18 @@ namespace PlayingAround.Entities.Player
         {
             throw new NotImplementedException();
         }
-        public void MovedOneCell()
+        public void FinishedMovingOneTile()
         {
-            // Logic to check for traps or damages or things that stop movement or damage per movement
-            CurrentStats.MP -= 1;
-            CurrentStats.MovePath.RemoveAt(0);
-            if (CurrentStats.MovePath.Count <= 0)
+            if (SceneManager.IsState(SceneState.Play))
             {
-                SetCurrentAnimationStateToIdle();
+                MovementController.ApproveNextTileStep();
+                return;
             }
+
+            CurrentStats.MP -= 1;
+
+            //Will make more complicated logic for when mechanics are implemented, such as traps or movement damage or terrarin, etc.
+            MovementController.ApproveNextTileStep();
         }
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
@@ -411,7 +286,7 @@ namespace PlayingAround.Entities.Player
         {
             int finalDamage = (int)MathF.Round(CurrentStats.Resistances[elementDamage] * damage);
             CurrentStats.Health -= finalDamage;
-            DrawSpecifics.VEManager.AddEffect(new Visuals.VisualEffect(CurrentPos, new Vector2(0, -1), 1)
+            DrawSpecifics.VEManager.AddEffect(new Visuals.VisualEffect(MovementController.CurrentPos, new Vector2(0, -1), 1)
             {
                 Color = ColorPalette.GetElementColor(elementDamage),
                 Text = $"{finalDamage}",

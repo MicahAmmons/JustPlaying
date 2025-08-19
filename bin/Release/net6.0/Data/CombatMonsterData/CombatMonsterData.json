@@ -2,46 +2,153 @@
   "Ooze": {
     "UniqueId": "Ooze",
     "DefaultElementType": "Acid",
-    "BaseCombatStats": {
+    "BaseStats": {
       "MP": 4,
-      "AP": 3,
+      "AP": 2,
       "Health": 6,
       "Initiative": 2
     },
-    "DrawSpecifics": {
-      "Width": 32,
-      "Height": 32,
-      "MovementQuickness": 200,
-      "MovementPattern": "Arc"
+    "AnimationData": {
+      "Animations": {
+        "WalkUpRight": [
+          {
+            "Row": 1,
+            "FrameCount": 9,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
+          }
+        ],
+        "WalkUpLeft": [
+          {
+            "Row": 2,
+            "FrameCount": 9,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
+          }
+        ],
+        "WalkDownRight": [
+          {
+            "Row": 3,
+            "FrameCount": 10,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
+          }
+        ],
+        "WalkDownLeft": [
+          {
+            "Row": 4,
+            "FrameCount": 10,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
+          }
+        ],
+        "IdleRight": [
+          {
+            "Row": 1,
+            "FrameCount": 29,
+            "FrameDurationMs": 200,
+            "IsLooping": true,
+            "SpriteSheetName": "FrostOozeIdle",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+
+        "SlamTopRight": [
+          {
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamTopRight",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "SlamTopLeft": [
+          {
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamTopLeft",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "SlamBottomRight": [
+          {
+            "Row": 1,
+            "FrameCount": 28,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamBottomRight",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "SlamBottomLeft": [
+          {
+            "Row": 1,
+            "FrameCount": 28,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamBottomLeft",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "IdleLeft": [
+          {
+            "Row": 1,
+            "FrameCount": 29,
+            "FrameDurationMs": 200,
+            "IsLooping": true,
+            "SpriteSheetName": "FrostOozeIdle",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ]
+      }
     },
-    "Animations": {
-      "Idle": [ 1, 1 ],
-      "BouncingUp": [ 1, 1 ],
-      "BouncingDown": [ 1, 1 ]
-    },
-    "AttackData":   {
-      "Slam": [ "Physical" ],
-      "Spit": [ "Acid" ]
+    "AttackData": {
+      "Slam": "Ice"
     },
     "ActionOrder": [
-      "MoveTowardsClosestEnemy",
-      "AttackClosestEnemy"
+      {
+        "Action": "Attack",
+        "Attack": "Slam",
+        "Target": "ClosestEnemy"
+      },
+      {
+        "Action": "Attack",
+        "Attack": "Spit",
+        "Target": "ClosestEnemy"
+      },
+      {
+        "Action": "Move",
+        "MovementAmount": "FullMP",
+        "Target": "ClosestEnemy"
+      }
     ],
     "DecideWhichAttack": [
       "ShortestRange"
     ]
-  },
-  "TrainingDummy": {
-    "uniqueId": "training_dummy",
-    "mp": 0,
-    "movementQuickness": 0,
-    "movementPattern": "none",
-    "width": 80,
-    "height": 80,
-    "monsterType": "TrainingDummy",
-    "baseDifficulty": 1,
-    "elementType": "Normal",
-    "baseHealth": 5,
-    "initiation": 2
   }
 }

@@ -1,12 +1,13 @@
 {
   "Slam": {
+    "TargetType": [ "Player", "Summoned" ],
     "BaseDamageMin": 1,
     "BaseDamageMax": 3,
     "Range": 1
-
   },
   "Spit": {
-    "AttacksHasIcon": true,
+    "TargetType": [ "Player", "Summoned" ],
+    "AttackHasIcon": true,
     "BaseDamageMin": 1,
     "BaseDamageMax": 1,
     "Range": 6,

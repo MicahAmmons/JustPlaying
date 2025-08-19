@@ -5,6 +5,7 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Movement;
 using System;
 using System.Collections.Generic;
 using static CombatStateMachine;
@@ -23,23 +24,11 @@ namespace PlayingAround.Interfaces
         public DrawSpecificStats DrawSpecifics { get; }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
         public void UpdateMonsterTakingDamage(GameTime gameTime);
-        public void UpdateMovement(GameTime gameTime);
         
     }
     public interface IAnimatable : IDrawn
     {
-        public AnimationController AnimationController { get; }
-        public Dictionary<AnimationState, Animation> Animation {  get; }
-        public Texture2D SpriteSheet { get; }
-        public Direction FacingDirection { get; set; }
-        public AnimationState CurrentAnimationState { get; set; }
-        public Vector2? MoveTarget { get; set; }
-        public Vector2? AnimationDrawPoint { get; set; }
-        public void SetFacingDirection(Vector2 vec);
-        public void SetCurrentAnimationState();
-        public void SetCurrentAnimationStateToIdle();
-        public void UpdateAnimation(GameTime gameTime);
-        public void PopulateMovementPath(GameTime gameTime);
+        public MovementController MovementController {  get; }
     }
     public interface ICombatant : IAnimatable
     {
@@ -51,6 +40,7 @@ namespace PlayingAround.Interfaces
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
         public int PositionInOrder {  get; set; }
+        public MovementController MovementController {  get; set; }
 
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
@@ -67,7 +57,7 @@ namespace PlayingAround.Interfaces
         public void ResolveAspects(TickedTiming endOfTurn);
         public void ClearAllAspects();
         public void UpdateCombatPosition(int pos);
-        public void MovedOneCell();
+        public void FinishedMovingOneTile();
     }
 
 

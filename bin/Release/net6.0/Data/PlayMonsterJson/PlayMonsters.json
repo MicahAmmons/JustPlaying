@@ -1,16 +1,11 @@
 {
-  "Ooze": [
-    {
-      "movementSpeed": 100,
-      "movementPattern": "arc",
-      "pauseDurationMax": 2.5,
-        "pauseDurationMin": 0.2
-    }
-  ],
-  "TrainingDummy": [
-    {
-      "movementSpeed": 0,
-      "movementPattern": "idle"
-    }
-  ]
+  "Ooze": {
+    "MovementQuickness": 20,
+    "PauseDurationMax": 10.0,
+    "PauseDurationMin": 3.0
+  },
+  "TrainingDummy": {
+    "MovementQuickness": 0,
+    "MovementPattern": "None"
+  }
 }
