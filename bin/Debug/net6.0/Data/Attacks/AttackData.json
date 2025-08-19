@@ -1,0 +1,25 @@
+{
+  "Slam": {
+    "TargetType": [ "Player", "Summoned" ],
+    "BaseDamageMin": 1,
+    "BaseDamageMax": 3,
+    "Range": 1
+  },
+  "Spit": {
+    "TargetType": [ "Player", "Summoned" ],
+    "AttackHasIcon": true,
+    "BaseDamageMin": 1,
+    "BaseDamageMax": 1,
+    "Range": 6,
+    "Aspect": "Burn",
+    "Strength": "Weak",
+    "WhenApplyEffect": "OnDamage",
+    "VisualTiming": "BeforeAttack",
+    "VisualVelocity": 400,
+    "Animated": true
+  }
+
+}
+
+
+  

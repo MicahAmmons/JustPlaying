@@ -1,0 +1,14 @@
+{
+  "Burn": {
+    "Name": "Burn",
+    "DefaultElement": "Fire",
+    "Description": "Deals minor damage every turn of type ",
+    "Duration": 3,
+    "Damage": 1,
+    "IsBuff": false,
+    "IsDamage": true,
+    "WhenTicked": 0,
+    "IsStackable": true,
+    "DevNote": "StartOfTurn = 0, EndOfTurn = 1, AfterAttack = 2, AfterMovement = 3, OnDamage = 4, OnBeingHit = 5"
+  }
+}

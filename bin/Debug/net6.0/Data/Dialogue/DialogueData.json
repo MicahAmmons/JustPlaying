@@ -1,0 +1,230 @@
+{
+  "Mr. NPC": {
+    "npcId": "Mr. NPC",
+    "defaultNode": {
+      "text": "Careful around these parts. You never know when the Oozes will return.",
+      "responses": [
+        {
+          "text": "Thanks for the advice.",
+          "nextDialogue": null
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "1",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "NotStarted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "2_Oozes_Defeated"
+          }
+        ],
+        "text": "Thank goodness you're here. Oozes are swarming the outer rim of the chasm - you've gotta help! Please slay 2 Oozes.",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": "2",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questId": "Cull_The_Ooze",
+                "questStage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "progressionStateId": "InProgress",
+                "questId": "Cull_The_Ooze",
+                "objectiveId": "2_Oozes_Defeated"
+              }
+            ]
+          },
+          {
+            "text": "I can't now, maybe later.",
+            "nextDialogue": "1b",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questId": "Cull_The_Ooze",
+                "questStage": "Declined"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "text": "That's too bad.",
+        "responses": [
+          {
+            "text": "Goodbye",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "2_Oozes_Defeated"
+          }
+        ],
+        "text": "There are plenty of Oozes around. Please eliminate at least 2 of them.",
+        "responses": [
+          {
+            "text": "Got it",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Declined"
+          }
+        ],
+        "text": "Have you reconsidered? We could really use help slowing the oozes down.",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": "2",
+            "effects": [
+              {
+                "type": "SetQuestStage",
+                "questId": "Cull_The_Ooze",
+                "questStage": "Accepted"
+              },
+              {
+                "type": "SetObjectiveProgressState",
+                "questId": "Cull_The_Ooze",
+                "progressionStateId": "InProgress",
+                "objectiveId": "2_Oozes_Defeated"
+              }
+            ]
+          },
+          {
+            "text": "No thanks.",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "2_Oozes_Defeated"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "NotStarted",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "Fantastic, you really thinned out the numbers. But we aren't done yet.",
+        "responses": [
+          {
+            "text": "What else needs to be done?",
+            "nextDialogue": "4b"
+          }
+        ]
+      },
+      {
+        "id": "4b",
+        "text": "There's been a large ooze sighted on the peninsula to the east. It seems to be a growing amalgamation of ooze—the more oozes that join it, the bigger it gets. Will you defeat it before it gets too powerful?",
+        "responses": [
+          {
+            "text": "I'm on it!",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "SetObjectiveProgressState",
+                "questID": "Cull_The_Ooze",
+                "progressionStateId": "InProgress",
+                "objectiveId": "Ooze_Boss_Defeated"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "InProgress",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "The Ooze Boss is to the east - hurry up!",
+        "responses": [
+          {
+            "text": "I'll handle it swiftly'",
+            "nextDialogue": null
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "conditions": [
+          {
+            "type": "QuestStage",
+            "questId": "Cull_The_Ooze",
+            "questStage": "Accepted"
+          },
+          {
+
+            "type": "ObjectiveProgress",
+            "questId": "Cull_The_Ooze",
+            "progressionStateId": "Completed",
+            "objectiveId": "Ooze_Boss_Defeated"
+          }
+        ],
+        "text": "Thanks adventurer — we are safe another day thanks to you.",
+        "responses": [
+          {
+            "text": "Happy to help.",
+            "nextDialogue": null,
+            "effects": [
+              {
+                "type": "CompleteQuest",
+                "questId": "Cull_The_Ooze"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
