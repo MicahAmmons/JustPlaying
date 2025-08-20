@@ -17,6 +17,7 @@
             "FrameDurationMs": 200,
             "IsLooping": false,
             "SpriteSheetName": "FrostOozeWalk",
+            "DefaultDirection": "Left",
             "FrameWidth": 192,
             "FrameHeight": 192,
             "EndOfCyclePause": 0.5
@@ -25,35 +26,38 @@
         "WalkDown": [
           {
             "Row": 4,
-            "FrameCount": 10,
+            "FrameCount": 12,
             "FrameDurationMs": 200,
             "IsLooping": false,
             "SpriteSheetName": "FrostOozeWalk",
+            "DefaultDirection": "Left",
             "FrameWidth": 192,
             "FrameHeight": 192,
             "EndOfCyclePause": 0.5
           }
         ],
-
-
-        "SlamUp": [
+        "AttackUp": [
           {
+            "AttackName": "Slam",
             "Row": 1,
             "FrameCount": 31,
             "FrameDurationMs": 200,
             "IsLooping": false,
             "SpriteSheetName": "FrostOozeSlamTopLeft",
+            "DefaultDirection": "Left",
             "FrameWidth": 192,
             "FrameHeight": 192
           }
         ],
-        "SlamDown": [
+        "AttackDown": [
           {
+            "AttackName": "Slam",
             "Row": 1,
             "FrameCount": 28,
             "FrameDurationMs": 200,
             "IsLooping": false,
             "SpriteSheetName": "FrostOozeSlamBottomLeft",
+            "DefaultDirection": "Left",
             "FrameWidth": 192,
             "FrameHeight": 192
           }
@@ -65,6 +69,7 @@
             "FrameDurationMs": 200,
             "IsLooping": true,
             "SpriteSheetName": "FrostOozeIdle",
+            "DefaultDirection": "Left",
             "FrameWidth": 192,
             "FrameHeight": 192
           }
@@ -78,11 +83,6 @@
       {
         "Action": "Attack",
         "Attack": "Slam",
-        "Target": "ClosestEnemy"
-      },
-      {
-        "Action": "Attack",
-        "Attack": "Spit",
         "Target": "ClosestEnemy"
       },
       {

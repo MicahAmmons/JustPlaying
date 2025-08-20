@@ -77,8 +77,8 @@ namespace PlayingAround.Movement
             SetFacingDirection(direction);
             CurrentAnimationState = VerticalFacingDirection switch
             {
-                Direction.Up => AnimationState.WalkDown,
-                Direction.Down => AnimationState.WalkUp,
+                Direction.Up => AnimationState.WalkUp,
+                Direction.Down => AnimationState.WalkDown,
                 _ => CurrentAnimationState
             };
         }
@@ -99,9 +99,6 @@ namespace PlayingAround.Movement
         {
             _nextMoveReady = true;
         }
-
-
-
         public void SetMovePath(List<TileCell> movePath)
         {
             TileMovePath = new List<TileCell>(movePath);

@@ -2,7 +2,7 @@
   "gridX": 0,
   "gridY": -1,
   "gridZ": 0,
-  "background": "0_-1_0",
+  "buildBackground": [ "LowerRocks_0_-1_0", "0_-1_0", "ForeDarkFog_0_-1_0" ],
   "behindGlowTexturesFullSize": [
     {
       "name": "GlowMound1_0_-1_0",
@@ -24,32 +24,41 @@
       "speed": 11.0,
       "delay": 0.0
 
-    },
-    {
-      "name": "Vines_0_-1_0",
-      "color": "GreenBgArray1",
-      "speed": 8.0,
-      "delay": 0.0,
-      "minFade": 0.15,
-      "maxFade": 0.85
-    },
-    {
-      "name": "GrassPerimeter_0_-1_0",
-      "color": "GreenBgArray1",
-      "speed": 16.0,
-      "delay": 0.0,
-      "minFade": 0.15,
-      "maxFade": 0.85
     }
   ],
+  "backgroundSmokeTexture": {
+    "Frequency": [ 2.0, 2.0 ],
+    "Speed": [ 0.25, 0.25 ],
+    "DistortAmount": 0.05,
+    "Opacity": 1
+  },
+
+
+
+
   "monsters": [ "Ooze" ],
-"tileHighlights": {
-  "invalidTarget": { "color": "Red",   "fade": 0.35 },
-  "validTarget":   { "color": "White", "fade": 0.9  },
-  "walkable":      { "color": "Green", "fade": 0.6  },
-  "playerStartable":  { "color": "Blue",  "fade": 0.8 },
-  "monsterStartable": { "color": "Purple","fade": 0.8 }
-},
+  "tileHighlights": {
+    "invalidTarget": {
+      "color": "Red",
+      "fade": 0.35
+    },
+    "validTarget": {
+      "color": "White",
+      "fade": 0.9
+    },
+    "walkable": {
+      "color": "Green",
+      "fade": 0.6
+    },
+    "playerStartable": {
+      "color": "Blue",
+      "fade": 0.8
+    },
+    "monsterStartable": {
+      "color": "Purple",
+      "fade": 0.8
+    }
+  },
   "obstacles": [],
   "difficulty": 1,
   "totalSpawns": 3,

@@ -20,6 +20,7 @@ using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.UI;
 using PlayingAround.Utils;
+using System;
 
 namespace PlayingAround
 {
@@ -29,6 +30,8 @@ namespace PlayingAround
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private static float _timer = 0f;
+        private Effect _smokeFx;
+        private Texture2D _noiseA, _noiseB;
 
 
 
@@ -55,9 +58,8 @@ namespace PlayingAround
         {
 
             //Data that is not dependent on Save State
-
             ViewportManager.Initialize(GraphicsDevice);
-
+            CreateNoise.LoadContent(GraphicsDevice);
             DrawDiamondTexture.LoadContent(GraphicsDevice);
             SaveManager.LoadAllSaves();
             AssetManager.Initialize(Content);
@@ -73,9 +75,11 @@ namespace PlayingAround
             DialogueBox.LoadContent();
             TriggerLibrary.LoadContent();
 
+
         }
 
-        public static void WaitUntilLoadingIsDone(float delta)
+
+    public static void WaitUntilLoadingIsDone(float delta)
         {
             if (_timer >= 5.0f)
             {
@@ -121,47 +125,98 @@ namespace PlayingAround
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin();
-            if (SceneManager.CurrentState == SceneState.TitleScreen)
-            {
-                TitleScreenManager.Draw(_spriteBatch);
-                _spriteBatch.End();
-                return;
-            }
-            TileManager.Draw(_spriteBatch, gameTime);
-            TileCellManager.Draw(_spriteBatch);
-            LoadingScreenManager.Draw(_spriteBatch);
-            NPCManager.Draw(_spriteBatch);
-            PlayMonsterManager.Draw(_spriteBatch);
-            UIManager.Draw(_spriteBatch, GraphicsDevice);
-            CombatGuard.Draw(_spriteBatch, GraphicsDevice);
-            CombatMonsterManager.Draw(_spriteBatch);
-            PlayerManager.Draw(_spriteBatch);
-            DebugBugger.Draw(_spriteBatch);
-            DialogueManager.Draw(_spriteBatch);
-            EscapeOverseer.Draw(_spriteBatch);
-            MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
-            CinematicRuler.Draw(_spriteBatch);
-            _spriteBatch.End();
 
+
+            if (DrawTitleScreen(gameTime)) return;
+            DrawBackgroundSmoke(gameTime);
+            DrawMapBackground();
+
+            DrawStaticBackground(gameTime);
+            DrawPlayer(gameTime);
             var glowEffect = AssetManager.GetEffect("ColorReplace");
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, glowEffect);
             GlowTextureController.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
-
-
-
             base.Draw(gameTime);
+        }
 
+        private void DrawPlayer(GameTime gameTime)
+        {
+            var fx = AssetManager.GetEffect("Smoke");
+            fx.Parameters["GlobalTime"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+
+            // Good starting values:
+            fx.Parameters["Frequency"].SetValue(new Vector2(6f, 4f));
+            fx.Parameters["Speed"].SetValue(new Vector2(0.69f, 0.9f));
+            fx.Parameters["DistortAmount"].SetValue(0.02f);
+            fx.Parameters["Opacity"].SetValue(1.0f);
+
+            _spriteBatch.Begin(SpriteSortMode.Immediate,
+                               BlendState.NonPremultiplied,   // typical PNGs; switch to AlphaBlend if premultiplied
+                               SamplerState.LinearClamp,
+                               null, null, fx, Matrix.Identity);
+
+            PlayerManager.DrawPlayer(_spriteBatch, fx);
+
+            _spriteBatch.End();
+            _spriteBatch.Begin();
+
+            PlayerManager.DrawPlayer(_spriteBatch);
+           _spriteBatch.End();
+
+
+
+
+        }
+        private void DrawMapBackground()
+        {
+            _spriteBatch.Begin();
+            TileManager.DrawBackground(_spriteBatch);
+            _spriteBatch.End();
+        }
+        public void DrawBackgroundSmoke(GameTime gameTime)
+        {
+            var fx = AssetManager.GetEffect("Smoke");
+            fx.Parameters["GlobalTime"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+
+            // Good starting values:
+            fx.Parameters["Frequency"].SetValue(new Vector2(6f, 4f));
+            fx.Parameters["Speed"].SetValue(new Vector2(0.6f, 0.45f));
+            fx.Parameters["DistortAmount"].SetValue(0.08f);
+            fx.Parameters["Opacity"].SetValue(1.0f);
+
+            _spriteBatch.Begin(SpriteSortMode.Immediate,
+                               BlendState.NonPremultiplied,   // typical PNGs; switch to AlphaBlend if premultiplied
+                               SamplerState.LinearClamp,
+                               null, null, fx, Matrix.Identity);
+
+            TileManager.DrawBackgroundSmoke(_spriteBatch, fx);
+
+            _spriteBatch.End();
+
+        }
+        private void DrawStaticBackground(GameTime gameTime)
+        {
+            _spriteBatch.Begin();
+            PlayMonsterManager.Draw(_spriteBatch);
+            NPCManager.Draw(_spriteBatch);
+            CombatGuard.Draw(_spriteBatch, GraphicsDevice);
+            CombatMonsterManager.Draw(_spriteBatch);
+            _spriteBatch.End();
 
         }
 
 
 
-
-
-
-
+        private bool DrawTitleScreen(GameTime gameTime)
+        {
+            if (SceneManager.CurrentState != SceneState.TitleScreen) return false;
+            _spriteBatch.Begin();
+            TitleScreenManager.Draw(_spriteBatch);
+            _spriteBatch.End();
+            base.Draw(gameTime);
+            return true;
+        }
     }
 }

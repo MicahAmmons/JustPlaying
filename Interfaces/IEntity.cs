@@ -20,7 +20,6 @@ namespace PlayingAround.Interfaces
     public interface IDrawn : IEntity
     {
         public void Draw (SpriteBatch spriteBatch);
-        public void DrawTexture(SpriteBatch spriteBatch);
         public DrawSpecificStats DrawSpecifics { get; }
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell);
         public void UpdateMonsterTakingDamage(GameTime gameTime);

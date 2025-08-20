@@ -44,6 +44,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             Animated = data.Animated;
             VisualTiming = data.VisualTiming;
             WhenApplyAspect = data.WhenApplyEffect;
+
             if (data.TargetType.Count > 0)
             {
                 foreach (var tar in data.TargetType)

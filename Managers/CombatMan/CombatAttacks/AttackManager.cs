@@ -46,7 +46,6 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             if (attack.Aspect != null)
             target.ApplyAspect(attack.Aspect, attack.ElementDamage);  
         }
-
         public static float CalculateDamage(SingleAttack attack)
         {
             float minDam = attack.MinDamage;

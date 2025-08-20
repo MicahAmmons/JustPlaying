@@ -18,7 +18,8 @@ namespace PlayingAround.AnimationFolder
         public int FrameCount { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public bool Fades { get; private set; }
+        public bool FadeEffect { get; private set; }
+        public bool SmokeEffect { get; private set; }
         public Direction DefaultDirection { get; private set; }
 
 
@@ -54,7 +55,8 @@ namespace PlayingAround.AnimationFolder
             FrameDuration = data.FrameDurationMs / 1000f; // ms -> seconds
             IsLooping = data.IsLooping;
             FrameCount = Frames.Count; // in case we broke early
-            Fades = data.Fades;
+            FadeEffect = data.FadeEffect;
+            SmokeEffect = data.SmokeEffect;
         }
 
 

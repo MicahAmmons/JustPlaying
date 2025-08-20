@@ -90,7 +90,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 Texture2D texture = animation.SpriteSheet;
 
                 float frameFade = 1;
-                if (animation.Fades)
+                if (animation.FadeEffect)
                     frameFade = 1 - contr.FadeMultiplier;
                 SpriteEffects flip = flipHorizontal
                      ? SpriteEffects.FlipHorizontally
@@ -106,7 +106,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                     flip,                // 👈 flip goes here
                     0f                   // layerDepth
                 );
-                if (animation.Fades)
+                if (animation.FadeEffect)
                 {
                     Rectangle source2 = contr.GetNextFrame();
                     spriteBatch.Draw(
@@ -127,7 +127,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             if (StayPaused(gameTime))
                 return;
             if (MovementController.TileMovePath.Count > 0) return;
-            FindEndPoint();
+
+            
         }
         private void FinishedMovingOneTile()
         {
@@ -160,6 +161,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             {
                 OOCombatStats.IsPaused = false;
                 SetCurrentPauseDuration(); // Preload duration for next pause
+                FindEndPoint();
                 return false;
             }
 

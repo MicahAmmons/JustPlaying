@@ -142,7 +142,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Texture2D texture = animation.SpriteSheet;
 
                 float frameFade = 1;
-                if (animation.Fades)
+                if (animation.FadeEffect)
                     frameFade = 1 - contr.FadeMultiplier;
                 SpriteEffects flip = flipHorizontal
                      ? SpriteEffects.FlipHorizontally
@@ -158,7 +158,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     flip,                // 👈 flip goes here
                     0f                   // layerDepth
                 );
-                if (animation.Fades)
+                if (animation.FadeEffect)
                 {
                     Rectangle source2 = contr.GetNextFrame();
                     spriteBatch.Draw(

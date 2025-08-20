@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Utils;
 using System;
@@ -43,7 +45,8 @@ namespace PlayingAround.Game.Assets
         public static void LoadPlayerSpriteSheets()
         {
             AssetManager.LoadTexture("PlayerHead", "PlayerSprites/PlayerHead");
-            AssetManager.LoadTexture("PlayerNeck", "PlayerSprites/PlayerNeck");
+            AssetManager.LoadTexture("PlayerBody", "PlayerSprites/PlayerBody");
+            AssetManager.LoadTexture("PlayerBodyColored", "PlayerSprites/PlayerBodyColored");
         }
         public static void LoadAttackIconTextures()
         {
@@ -61,10 +64,6 @@ namespace PlayingAround.Game.Assets
         {
             AssetManager.LoadTexture("AcidIcon", "Aspects/AcidIcon");
         }
-        public static void LoadTileBackGroundTextures()
-        {
-            
-        }
 
         public static Dictionary<string, Song> LoadAllSongs()
         {
@@ -79,24 +78,30 @@ namespace PlayingAround.Game.Assets
         public static void LoadTileSpecificAssets()
         {
             AssetManager.LoadTexture("-1_0_0", "Tiles/-1_0_0/-1_0_0");
-            AssetManager.LoadTexture("Vines1", "Tiles/-1_0_0/Vines1");
 
             AssetManager.LoadTexture("0_-1_0", "Tiles/0_-1_0/0_-1_0");
-            AssetManager.LoadTexture("Vines_0_-1_0", "Tiles/0_-1_0/Vines_0_-1_0");
-            AssetManager.LoadTexture("GrassPerimeter_0_-1_0", "Tiles/0_-1_0/GrassPerimeter_0_-1_0");
             AssetManager.LoadTexture("GlowMound1_0_-1_0", "Tiles/0_-1_0/GlowMound1_0_-1_0");
             AssetManager.LoadTexture("GlowMound2_0_-1_0", "Tiles/0_-1_0/GlowMound2_0_-1_0");
             AssetManager.LoadTexture("GlowMound3_0_-1_0", "Tiles/0_-1_0/GlowMound3_0_-1_0");
+            AssetManager.LoadTexture("ForeDarkFog_0_-1_0", "Tiles/0_-1_0/ForeDarkFog_0_-1_0");
+            AssetManager.LoadTexture("LowerRocks_0_-1_0", "Tiles/0_-1_0/LowerRocks_0_-1_0");
         }
         public static void LoadMiscMapTileAssets()
         {
-            AssetManager.LoadTexture("GlowMound", "MiscAssets/GlowMound");
+            AssetManager.LoadTexture("NoiseA", CreateNoise.GenerateTileableFBM(256, octaves: 5, lacunarity: 2f, gain: 0.5f, seed: 42));
+            AssetManager.LoadTexture("NoiseB", CreateNoise.GenerateTileableFBM(256, octaves: 5, lacunarity: 2.2f, gain: 0.52f, seed: 1337));
+            AssetManager.LoadTexture("BackgroundSmoke", "Tiles/BackgroundSmoke");
         }
 
         public static void LoadShaders()
         {
             AssetManager.LoadEffect("ColorReplace", "Shaders/ColorReplace");
             AssetManager.LoadEffect("ColorColumnPulse", "Shaders/ColorColumnPulse");
+            AssetManager.LoadEffect("Smoke", "Shaders/Smoke");
         }
+
     }
+
+
+
 }

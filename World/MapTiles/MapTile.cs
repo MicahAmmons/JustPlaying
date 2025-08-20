@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder.GlowTex;
+using PlayingAround.AnimationFolder.SmokeText;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.Assets;
@@ -19,7 +20,7 @@ namespace PlayingAround.Game.Map
         public int y;
         public int z; 
         public string Id { get; }
-        public Texture2D BackgroundTexture { get; }
+        public List<Texture2D> BackgroundBuidldOrder { get; private set; } = new List<Texture2D>();
         public List<Rectangle> Obstacles { get; } = new();
         public List<TileCell> AllValidCells { get; private set; } = new();
         public Dictionary<(int, int), bool> WalkableMap { get; private set; } = new();
@@ -30,6 +31,7 @@ namespace PlayingAround.Game.Map
         public List<TileCell> PlayerSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<TileCell> PlayMonsterSpawnableCells { get; private set; } = new List<TileCell> { };
         public List<GlowTexture> BehindGlowTextures { get; private set; } = new List<GlowTexture> { };
+        public SmokeTexture BackgroundSmokeTexture { get; private set; } 
         public TileCellHighlights CellHighlights { get; private set; }
         public List<NPC> NPCs { get; private set; } = new();
         public Dictionary<TileCell, NPC> NPCCells { get; private set; } = new Dictionary< TileCell, NPC> { };
@@ -50,11 +52,16 @@ namespace PlayingAround.Game.Map
         {
             Id = $"{data.GridX}_{data.GridY}_{data.GridZ}";
             x = data.GridX ; y = data.GridY ; z= data.GridZ ;
-            BackgroundTexture = AssetManager.GetTexture(data.Background);
+            foreach (var str in data.BackgroundBuildOrder)
+            {
+                BackgroundBuidldOrder.Add(AssetManager.GetTexture(str));    
+            }
+            BackgroundSmokeTexture = data.BackgroundSmokeTexture;
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
             CellHighlights = new TileCellHighlights(data.TileHighlightData);
+  
             if (data.GlowTexture != null)
             {
                 foreach (var glowText in data.GlowTexture)

@@ -200,6 +200,30 @@
 /processorParam:TextureFormat=Color
 /build:NPC/DefaultNPC.png
 
+#begin PlayerSprites/PlayerBody.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerSprites/PlayerBody.png
+
+#begin PlayerSprites/PlayerBodyColored.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerSprites/PlayerBodyColored.png
+
 #begin PlayerSprites/PlayerHead.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -260,6 +284,12 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/ColorReplace.fx
 
+#begin Shaders/Smoke.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Smoke.fx
+
 #begin Songs/newGameIntroCinBackground.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -308,18 +338,6 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/-1_0_0/-1_0_0.png
 
-#begin Tiles/-1_0_0/Vines1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tiles/-1_0_0/Vines1.png
-
 #begin Tiles/-1_0_0OLD (2).png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -355,6 +373,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/0_-1_0/0_-1_0.png
+
+#begin Tiles/0_-1_0/ForeDarkFog_0_-1_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/0_-1_0/ForeDarkFog_0_-1_0.png
 
 #begin Tiles/0_-1_0/GlowMound1_0_-1_0.png
 /importer:TextureImporter
@@ -392,7 +422,7 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/0_-1_0/GlowMound3_0_-1_0.png
 
-#begin Tiles/0_-1_0/GrassPerimeter_0_-1_0.png
+#begin Tiles/0_-1_0/LowerRocks_0_-1_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -402,19 +432,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/0_-1_0/GrassPerimeter_0_-1_0.png
-
-#begin Tiles/0_-1_0/Vines_0_-1_0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tiles/0_-1_0/Vines_0_-1_0.png
+/build:Tiles/0_-1_0/LowerRocks_0_-1_0.png
 
 #begin Tiles/0_-1_0OLD.png
 /importer:TextureImporter
@@ -463,6 +481,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/1_4_0.png
+
+#begin Tiles/BackgroundSmoke.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/BackgroundSmoke.png
 
 #begin TitleScreen/TitleScreenBackGround.png
 /importer:TextureImporter

@@ -126,6 +126,7 @@ namespace PlayingAround.AnimationFolder
                         _currentFrameIndex = 0;
                     }
                     else
+                        _currentFrameIndex--;
                         IsFinished = true;
                 }
             }
@@ -174,4 +175,6 @@ public enum AnimationState
     Idle,
     SlamUp,
     SlamDown,
+    AttackUp,
+    AttackDown,
 }

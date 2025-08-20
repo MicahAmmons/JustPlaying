@@ -16,6 +16,7 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Utils;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PlayingAround.Managers.Tiles
 {
@@ -206,16 +207,7 @@ namespace PlayingAround.Managers.Tiles
                 CurrentTileId = CurrentMapTile.Id
             };
         }
-        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            DrawSolidBackground(spriteBatch);
-            DrawCellStaticBackground(spriteBatch);
-        }
-        private static void DrawSolidBackground(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(CurrentMapTile.BackgroundTexture, destinationRectangle: new Rectangle(0, 0, ViewportManager.ScreenWidth, ViewportManager.ScreenHeight),
-           color: Color.White);
-        }
+
         private static void DrawCellStaticBackground(SpriteBatch spriteBatch)
         {
             foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
@@ -283,7 +275,28 @@ namespace PlayingAround.Managers.Tiles
                 return true;
             }
             return false;
-        } 
-        
+        }
+
+     
+     
+        public static void DrawBackground(SpriteBatch spriteBatch)
+        {
+            foreach (var text in CurrentMapTile.BackgroundBuidldOrder)
+            {
+                spriteBatch.Draw(text, Vector2.Zero, Color.White);
+            }
+        }
+        internal static void DrawBackgroundSmoke(SpriteBatch spriteBatch, Effect fx)
+        {
+            var e = CurrentMapTile.BackgroundSmokeTexture;
+            fx.Parameters["Frequency"].SetValue(e.FrequencyVec);
+            fx.Parameters["Speed"].SetValue(e.SpeedVec);
+            fx.Parameters["DistortAmount"].SetValue(e.DistortAmount);
+            fx.Parameters["Opacity"].SetValue(e.Opacity);
+
+            var tex = AssetManager.GetTexture("BackgroundSmoke");
+            spriteBatch.Draw(tex, Vector2.Zero, Color.White);
+        }
     }
 }
+

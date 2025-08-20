@@ -19,7 +19,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public string UniqueId { get; set; }
         public ElementType DefaultElementType { get; set; }
         public BaseCombatStats BaseStats {  get; set; }
-        public DrawSpecificStats DrawSpecifics { get; set; } 
+        public DrawSpecificStats DrawSpecifics { get; set; } = new DrawSpecificStats() { IsFlashingRed = false};
         public AnimationData AnimationData { get; set; }
         public Dictionary<AttackName, ElementType> AttackData { get; set; }
         public List<AiAction> ActionOrder { get; set; } 

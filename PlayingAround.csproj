@@ -27,10 +27,13 @@
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
+    <None Remove="Content\PlayerSprites\PlayerBody.png" />
+    <None Remove="Content\PlayerSprites\PlayerBodyColored.png" />
     <None Remove="Content\PlayerSprites\PlayerHead.png" />
     <None Remove="Content\PlayerSprites\PlayerNeck.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Content\PlayerSprites\PlayerSS.png" />
+    <None Remove="Content\Shaders\Smoke.fx" />
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
     <None Remove="Content\TileCell\3arrows.png" />
     <None Remove="Content\TileCell\arrow.png" />
@@ -41,12 +44,12 @@
     <None Remove="Content\Tiles\-1_0_0\Vines1.png" />
     <None Remove="Content\Tiles\0_-1_0OLD.png" />
     <None Remove="Content\Tiles\0_-1_0\0_-1_0.png" />
+    <None Remove="Content\Tiles\0_-1_0\ForeDarkFog_0_-1_0.png" />
     <None Remove="Content\Tiles\0_-1_0\GlowMound3_0_-1_0.png" />
-    <None Remove="Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.png" />
-    <None Remove="Content\Tiles\0_-1_0\Vines_0_-1_0.png" />
     <None Remove="Content\Tiles\0_0_0.png" />
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\1_4_0.png" />
+    <None Remove="Content\Tiles\BackgroundSmoke.png" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
@@ -54,6 +57,12 @@
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PlayerSprites\PlayerBody.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\PlayerSprites\PlayerBodyColored.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\PlayerSprites\PlayerHead.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -99,6 +108,9 @@
     <Content Include="Content\PlayerSprites\PlayerSS.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Shaders\Smoke.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Songs\newGameIntroCinBackground.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -129,13 +141,10 @@
     <Content Include="Content\Tiles\0_-1_0\0_-1_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\0_-1_0\ForeDarkFog_0_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Tiles\0_-1_0\GlowMound3_0_-1_0.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Tiles\0_-1_0\Vines_0_-1_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\0_0_0.png">
@@ -145,6 +154,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\1_4_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\BackgroundSmoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_0_-1_0.json">

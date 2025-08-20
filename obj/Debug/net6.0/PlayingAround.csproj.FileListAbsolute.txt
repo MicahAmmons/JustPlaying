@@ -205,7 +205,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Mis
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0OLD (2).xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0OLD.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0\-1_0_0.xnb
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0\Vines1.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0\Vines2.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0\Vines3.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_0_0\Vines4.xnb
@@ -218,9 +217,7 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\MapTil
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\ColorReplace.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\ColorReplace.fx
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\ColorColumnPulse.xnb
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\ColorReplace.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\0_-1_0.png
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\Vines_0_-1_0.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\0_-1_0.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GrassPerimeter.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\Vines_0_-1_0.xnb
@@ -229,9 +226,23 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Til
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GlowMound1_0_-1_0.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GlowMound2_0_-1_0.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GlowMound3_0_-1_0.xnb
-C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\GrassPerimeter_0_-1_0.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerHead.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerNeck.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerHead.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerNeck.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\ForeDarkFog_0_-1_0.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\BackDarkFog_0_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\BackLightFog_0_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\ForeDarkFog_0_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\ForeLightFog_0_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\ColorReplace.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\Smoke.fx
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Shaders\Smoke.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_-1_0\LowerRocks_0_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\BackgroundSmoke.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\BackgroundSmoke.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerBody.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerBody.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerBodyColored.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\PlayerSprites\PlayerBodyColored.xnb

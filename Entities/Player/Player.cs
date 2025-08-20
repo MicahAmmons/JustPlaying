@@ -153,23 +153,22 @@ namespace PlayingAround.Entities.Player
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawSpecifics.VEManager.Draw(spriteBatch);
-            if (!DrawSpecifics.AllowedToBeDrawn) return;
-            DrawTexture(spriteBatch);
 
         }
-        public void DrawTexture(SpriteBatch spriteBatch)
+        public void DrawTexture(SpriteBatch spriteBatch, Effect fx = null)
         {
             if (MovementController.AnimationManager.CurrentControllers == null ) return;    
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
                 if (contr.Animation == null) continue;
-
+                if (fx != null && contr.Animation.SmokeEffect == false) continue;
+                if (fx == null && contr.Animation.SmokeEffect == true) continue;
 
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
                 Vector2 drawPoint = MovementController.DrawPoint;
-                int width = animation.Width;
-                int height = animation.Height;
+                int width = 128;
+                int height = 128;
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
                 Rectangle dest = new Rectangle(
                     (int)pos.X,
@@ -181,7 +180,7 @@ namespace PlayingAround.Entities.Player
                 Texture2D texture = animation.SpriteSheet;
 
                 float frameFade = 1;
-                if (animation.Fades)
+                if (animation.FadeEffect)
                     frameFade = 1 - contr.FadeMultiplier;
                 SpriteEffects flip = flipHorizontal
                      ? SpriteEffects.FlipHorizontally
@@ -197,7 +196,7 @@ namespace PlayingAround.Entities.Player
                     flip,                // 👈 flip goes here
                     0f                   // layerDepth
                 );
-                if (animation.Fades)
+                if (animation.FadeEffect)
                 {
                     Rectangle source2 = contr.GetNextFrame();
                     spriteBatch.Draw(
@@ -327,6 +326,10 @@ namespace PlayingAround.Entities.Player
         {
             PositionInOrder = pos;
         }
+
+      
+            
+        
     }
 }
 

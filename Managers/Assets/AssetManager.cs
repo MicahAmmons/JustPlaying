@@ -32,6 +32,7 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadTileSpecificAssets();
             AssetLoader.LoadShaders();
             AssetLoader.LoadPlayerSpriteSheets();
+            AssetLoader.LoadMiscMapTileAssets();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()
@@ -51,6 +52,11 @@ namespace PlayingAround.Managers.Assets
         public static void LoadTexture(string key, string path)
         {
             Texture2D texture = _content.Load<Texture2D>(path);
+            _textures[key] = texture;
+        }
+        public static void LoadTexture(string key, Texture2D text)
+        {
+            Texture2D texture = text;
             _textures[key] = texture;
         }
 

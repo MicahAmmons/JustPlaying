@@ -71,13 +71,6 @@ namespace PlayingAround.Managers.Entities
             }
             
         }
-        public static void Draw(SpriteBatch spriteBatch)
-        {
-            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.IsState(SceneState.Combat))
-            {
-                _currentPlayer?.Draw(spriteBatch);
-            }
-        }
         public static PlayerSaveData SavePlayer()
         {
             var data = _playerData;
@@ -89,6 +82,14 @@ namespace PlayingAround.Managers.Entities
         public static void ClearAllPlayerAspects()
         {
             _currentPlayer.ClearAllAspects();
+        }
+
+        public static void DrawPlayer(SpriteBatch spriteBatch, Effect fx = null)
+        {
+            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.IsState(SceneState.Combat))
+            {
+                _currentPlayer?.DrawTexture(spriteBatch, fx);
+            }
         }
     }
 }

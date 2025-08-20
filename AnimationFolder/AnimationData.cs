@@ -22,7 +22,9 @@ namespace PlayingAround.AnimationFolder
         public string SpriteSheetName { get; set; }
         public int FrameWidth { get; set; }
         public int FrameHeight { get; set; }
-        public bool Fades { get; set; } = false;
+        public bool FadeEffect { get; set; } = false;
+        public bool SmokeEffect {  get; set; } = false;
         public Direction DefaultDirection { get; set; }
+        public AttackName? AttackName { get; set; } = null;
     }
 }

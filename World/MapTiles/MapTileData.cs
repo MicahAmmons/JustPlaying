@@ -1,4 +1,5 @@
 ﻿using PlayingAround.AnimationFolder.GlowTex;
+using PlayingAround.AnimationFolder.SmokeText;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.World.MapTiles.CellHighlights;
@@ -16,9 +17,10 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("gridZ")]  public int GridZ { get; set; }
         [JsonPropertyName("behindGlowTexturesFullSize")] public List<GlowTextureData> GlowTexture { get; set; }
         public string Id { get; set; }
+        [JsonPropertyName("backgroundSmokeTexture")] public SmokeTexture BackgroundSmokeTexture { get; set; }
 
-        [JsonPropertyName("background")]  public string Background { get; set; }
-
+        [JsonPropertyName("buildBackground")]  public List<string> BackgroundBuildOrder { get; set; }
+        
         [JsonPropertyName("cells")]  public List<TileCellData> Cells { get; set; } = new();
 
         [JsonPropertyName("monsters")] public List<string> MonsterStrings { get; set; } = new();
