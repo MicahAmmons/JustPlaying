@@ -110,8 +110,7 @@
               "RelativeToolTip": "Managers\\Entities\\PlayMonsterManager.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAUwGcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:57:34.201Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T04:57:34.201Z"
             },
             {
               "$type": "Document",
@@ -123,8 +122,7 @@
               "RelativeToolTip": "Managers\\Entities\\CombatMonsterManager.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:57:02.469Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T04:57:02.469Z"
             },
             {
               "$type": "Document",
@@ -134,7 +132,7 @@
               "RelativeDocumentMoniker": "Managers\\Tiles\\TileCellManager.cs",
               "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Tiles\\TileCellManager.cs",
               "RelativeToolTip": "Managers\\Tiles\\TileCellManager.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-21T04:29:48.009Z",
               "EditorCaption": ""
@@ -149,8 +147,7 @@
               "RelativeToolTip": "Managers\\Tiles\\TileManager.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAA2wNAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:28:51.892Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T04:28:51.892Z"
             },
             {
               "$type": "Document",
@@ -162,8 +159,7 @@
               "RelativeToolTip": "World\\MapTiles\\TileCell\\TileCell.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAAAEEAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:22:00.25Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T04:22:00.25Z"
             },
             {
               "$type": "Document",
@@ -175,8 +171,7 @@
               "RelativeToolTip": "AnimationFolder\\Animation.cs",
               "ViewState": "AgIAADgAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:13:19.711Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T04:13:19.711Z"
             },
             {
               "$type": "Document",
@@ -188,8 +183,7 @@
               "RelativeToolTip": "Game1.cs",
               "ViewState": "AgIAAFQAAAAAAAAAAAAiwGIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T03:51:14.135Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T03:51:14.135Z"
             },
             {
               "$type": "Document",
@@ -201,8 +195,7 @@
               "RelativeToolTip": "Managers\\Entities\\SummonedMonsterManager.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAUwCwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T03:47:30.542Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T03:47:30.542Z"
             },
             {
               "$type": "Document",
@@ -214,8 +207,7 @@
               "RelativeToolTip": "Managers\\CombatMan\\CombatGuard.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAjwCgAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T03:41:54.895Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T03:41:54.895Z"
             },
             {
               "$type": "Document",
@@ -227,8 +219,7 @@
               "RelativeToolTip": "Managers\\CombatMan\\CombatManager.cs",
               "ViewState": "AgIAADsBAAAAAAAAAAAYwEoBAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T03:03:00.608Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T03:03:00.608Z"
             },
             {
               "$type": "Document",
@@ -240,8 +231,7 @@
               "RelativeToolTip": "Managers\\Dialogue\\DialogueManager.cs",
               "ViewState": "AgIAAFEAAAAAAAAAAAApwJUAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:44:35.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T00:44:35.561Z"
             },
             {
               "$type": "Document",
@@ -253,8 +243,7 @@
               "RelativeToolTip": "Managers\\Entities\\PlayerManager.cs",
               "ViewState": "AgIAABMAAAAAAAAAAADgvyAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:40:28.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T00:40:28.505Z"
             },
             {
               "$type": "Document",
@@ -266,8 +255,7 @@
               "RelativeToolTip": "Entities\\Player\\Player.cs",
               "ViewState": "AgIAAAkBAAAAAAAAAADgvxYBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:35:47.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T00:35:47.402Z"
             },
             {
               "$type": "Document",
@@ -279,8 +267,7 @@
               "RelativeToolTip": "Entities\\Monster\\CombatMonsters\\CombatMonsterData.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAIA5wEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:35:23.728Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T00:35:23.728Z"
             },
             {
               "$type": "Document",
@@ -292,8 +279,7 @@
               "RelativeToolTip": "Movement\\MovementController.cs",
               "ViewState": "AgIAAG0AAAAAAAAAAAAnwDkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:30:29.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T00:30:29.886Z"
             }
           ]
         }
