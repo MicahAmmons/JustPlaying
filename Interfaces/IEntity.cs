@@ -28,6 +28,9 @@ namespace PlayingAround.Interfaces
     public interface IAnimatable : IDrawn
     {
         public MovementController MovementController {  get; }
+        public bool ExecutingMove {  get; }
+        public void FinishedAllMovement();
+        public void IsCurrentlyMoving();
     }
     public interface ICombatant : IAnimatable
     {
@@ -39,11 +42,12 @@ namespace PlayingAround.Interfaces
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
         public int PositionInOrder {  get; set; }
-        public MovementController MovementController {  get; set; }
-
+        public bool StartOfTurnEffectsResolved { get; set; }
+        public bool EndOfTurnEffectsResolved { get; set; }
+        public bool ExecutingSummon { get; set; }
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
-        public AITurnState? DecideAction();
+        public CombatState? DecideAction();
         public void SpendActionPoint();
         bool IsAttackComplete();
         public void SetCurrentEffected(ICombatant combatant, TileCell cell);
@@ -53,10 +57,11 @@ namespace PlayingAround.Interfaces
         public void CreateNewAttackVisual();
         public void ClearAttackCycle();
         public void SetCombatantAttackPathingInformation();
-        public void ResolveAspects(TickedTiming endOfTurn);
+        public void ResolveEffects(TickedTiming endOfTurn);
         public void ClearAllAspects();
         public void UpdateCombatPosition(int pos);
         public void FinishedMovingOneTile();
+
     }
 
 

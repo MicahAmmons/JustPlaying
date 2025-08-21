@@ -539,13 +539,11 @@ namespace PlayingAround.Managers.CombatMan
             UpdateCombatantCount();
             _combatUIManager.Update();
             UpdateInput(gameTime, delta);
-            if (StateCombat == CombatState.WinnerChosen)
-            {
-                return;
-            }
+            if (StateCombat == CombatState.WinnerChosen) return;
+
             _visualEffectManager.Update(delta);
             ToggleIsDead(); // toggles ISDead as well as clears aspects
-            UpdateCurrentMonster();
+            UpdateTurnOrder();
             UpdateMonsterCellMap();
             if (WinnerChosen())
             {
@@ -556,107 +554,58 @@ namespace PlayingAround.Managers.CombatMan
             switch (StateCombat)
             {
                 case CombatState.TurnStart:
-                    SkipMonsterIfDead(); // dequees and requeues monster if dead
                     UpdateMonsterTopOfRoundStats();
-                    PickWhichEntitiesTurn();
-
+                    _currentCombatant.ResolveEffects(TickedTiming.StartOfTurn);
+                    SetCombatState(CombatState.ResolvingStartOfTurnEffects);
                     break;
-                case CombatState.AITurn:
 
-                    switch (StateAI)
-                    {
-                        case AITurnState.ActionNavigation:
-                            UpdateAttackTargetsAndRanges();
-                            _currentCombatant.UpdateTopOfActionStats();
-                            if (CheckIfAIShouldEndTurn()) { EndTurn(); return; }
-                            if (_currentCombatant.DecideAction() is AITurnState state)
-                            {
-                                SetAITurnState(state);
-                                break;
-                            }
-                            EndTurn();
-                            break;
-                        case AITurnState.ExecutingMove:
-                            if (MonsterFinishedMoving())
-                            {
-                                SetAITurnState(AITurnState.ActionNavigation);
-                            }
-                            break;
-                        case AITurnState.ExecutingAttack:
-                            if (AttackIsComplete())
-                            {
-                                SetAITurnState(AITurnState.EndOfActionPause); _currentCombatant.ClearAttackCycle(); return;
-                            }
-                            WaitForAttackToFinish(delta);
-                            break;
-                        case AITurnState.EndOfActionPause:
-                            WaitForTimer(delta);
-                            break;
-                    }
+                case CombatState.ResolvingStartOfTurnEffects:
+                    if (_currentCombatant.StartOfTurnEffectsResolved) SetCombatState(CombatState.TopOfAction);
                     break;
-                case CombatState.SummonedTurn:
 
-                    switch (StateSummoned)
-                    {
-                        case SummonedTurnState.SummonedTopOfAction:
-                            if (PlayerHasMovePath()) return;
-                            UpdatePlayerMoveableCells();
-                            UpdateMonsterCellMap();
-                            UpdateAttackTargetsAndRanges();
-                            _currentCombatant.UpdateTopOfActionStats();
-                            _currentCombatant.ClearAttackCycle();
-                            SetSummonedTurnState(SummonedTurnState.SummonedWaitingInput);
-                            break;
-                        case SummonedTurnState.SummonedWaitingInput:
-
-                            break;
-                        case SummonedTurnState.SummonedExecutingAttack:
-                            if (!PlayerHasMovePath()) WaitForAttackToFinish(delta);
-                            break;
-                        case SummonedTurnState.SummonedClickedMoveButton:
-
-                            break;
-                        case SummonedTurnState.SummonedExecutingMove:
-                            if (!PlayerHasMovePath()) { SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction); }
-                            break;
-                    }
-                    break;
-                case CombatState.PlayerTurn:
+                case CombatState.TopOfAction:
                     UpdatePlayerMoveableCells();
-                    switch (StatePlayerTurn)
+                    UpdateAttackTargetsAndRanges();
+                    _currentCombatant.UpdateTopOfActionStats();
+                    _currentCombatant.ClearAttackCycle();
+                    SetCombatState(
+                              _currentCombatant.Is == CombatMonsterType.AI
+                              ? CombatState.ActionNavigation
+                              : CombatState.WaitingPlayerInput);
+                    break;
+
+                case CombatState.WaitingPlayerInput:
+
+                    break;
+
+                case CombatState.ActionNavigation:
+                    if (CheckIfAIShouldEndTurn()) {SetCombatState(CombatState.EndingTurn); return; }
+                    if (_currentCombatant.DecideAction() is CombatState state)
                     {
-                        case PlayerTurnState.PlayerClickedMoveButton:
-
-                            break;
-                        case PlayerTurnState.PlayerExecutingMove:
-                            if (_currentPlayer.MovementController.FinishedTileMovement()) 
-                                SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
-                            break;
-                        case PlayerTurnState.PlayerExecutingAttack:
-
-                            break;
-                        case PlayerTurnState.PlayerExecutingSummoning:
-                            _timer += delta;
-                            if (_timer >= 1f) SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
-                            break;
-                        case PlayerTurnState.PlayerClickedSpecificSummoned:
-                            GeneratePlayerSummonRange();
-                            break;
-
-
+                        SetCombatState(state);
+                        break;
                     }
+                    SetCombatState(CombatState.EndingTurn);
+                    break;
+
+                case CombatState.ExecutingAttack:
+
+                    break;
+                case CombatState.ExecutingMove:
+                    if (!_currentCombatant.ExecutingMove) SetCombatState(CombatState.TopOfAction);
+                    break;
+                case CombatState.ExecutingSummon:
+                    if (!_currentCombatant.ExecutingSummon) SetCombatState(CombatState.TopOfAction);
+                    break;
+
+                case CombatState.EndingTurn:
+                    ResetAllStatesToNone();
+                    _currentCombatant.ResolveEffects(TickedTiming.EndOfTurn);
+                    SetCombatState(CombatState.ResolvingEndOfTurnEffects);
                     break;
                 case CombatState.ResolvingEndOfTurnEffects:
-                    if (_timer == 0) _currentCombatant.ResolveAspects(TickedTiming.EndOfTurn);
-                    _timer += delta;
-                    if (_timer >= 1f) LeaveResolvingEndOfTurnEffects();
+                    if (_currentCombatant.EndOfTurnEffectsResolved) SetCombatState(CombatState.TurnStart);
                     break;
-                case CombatState.ResolvingStartOfTurnEffects:
-                    if (_timer == 0) _currentCombatant.ResolveAspects(TickedTiming.StartOfTurn);
-                    _timer += delta;
-                    if (_timer >= 1f) LeaveResolvingStartOfTurnEffects();
-                    break;
-
             }
         }
         private void UpdateCombatantCount()
@@ -665,15 +614,6 @@ namespace PlayingAround.Managers.CombatMan
             {
                 TotalCombatants = TurnOrder.Count;
             }
-        }
-        private void WaitForTimer(float delta)
-        {
-            if (_timer >= 1f)
-            {
-                _timer = 0f;
-                SetAITurnState(AITurnState.ActionNavigation);
-            }
-            _timer += delta;
         }
         private void UpdateAttackTargetsAndRanges()
         {
@@ -691,17 +631,6 @@ namespace PlayingAround.Managers.CombatMan
             if (AIControlledMonsterMap.Count == 0) { SetWhoWon(WhoWon.Player); return true; }
             if (_currentPlayer.isDead) { SetWhoWon(WhoWon.Monster); return true; }
             return false;
-        }
-        private void LeaveResolvingStartOfTurnEffects()
-        {
-            _timer = 0;
-            SetCombatState(CombatState.TurnStart);
-        }
-        private void LeaveResolvingEndOfTurnEffects()
-        {
-            _timer = 0;
-            SendMonsterToBackOfQueue();
-            SetCombatState(CombatState.ResolvingStartOfTurnEffects);
         }
         private void GeneratePlayerSummonRange()
         {
@@ -722,79 +651,6 @@ namespace PlayingAround.Managers.CombatMan
                 return true;
             }
             return false;
-        }
-        private void EndTurn()
-        {
-            ResetAllStatesToNone();
-            SetCombatState(CombatState.ResolvingEndOfTurnEffects);
-
-        }
-
-        public bool AIHasMP() => _currentCombatant.CurrentStats.MP >= 0;
-        public bool AttackIsComplete() => _currentCombatant.IsAttackComplete();
-        public bool MonsterFinishedMoving() => _currentCombatant.MovementController.TileMovePath == null || _currentCombatant.MovementController.TileMovePath.Count <= 0;
-        public bool PlayerHasMovePath() => _currentCombatant.MovementController.TileMovePath.Count > 0;
-        private void WaitForAttackToFinish(float delta)
-        {
-            ICombatant mon = _currentCombatant;
-            SingleAttack att = mon.CurrentStats.Attack;
-            if (!MonsterFinishedMoving()) return;
-            if (att.Visual == null && att.VisualTiming == VisualTiming.BeforeAttack && att.Animated)
-            {
-                mon.CreateNewAttackVisual();
-                _visualEffectManager.AddEffect(att.Visual);
-                return;
-            }
-
-            if (mon.CurrentStats.Attack.Visual != null && !mon.CurrentStats.Attack.Visual.IsFinished) return;
-
-            if (mon.CurrentStats.AttackPath1.Count > 0)
-            {
-                //    mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath1);
-                if (mon.Is == CombatMonsterType.Summoned)
-                {
-                    if (_stateMachine.CurrentSummonedTurnState != SummonedTurnState.SummonedExecutingAttack)
-                        SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
-                }
-                return;
-            }
-            if (att.Visual == null && att.VisualTiming == VisualTiming.DuringAttack && att.Animated)
-            {
-                mon.CreateNewAttackVisual();
-                _visualEffectManager.AddEffect(att.Visual);
-            }
-
-            mon.PerformAttack();
-
-            if (att.Visual == null && att.VisualTiming == VisualTiming.AfterAttack && att.Animated)
-            {
-                mon.CreateNewAttackVisual();
-                _visualEffectManager.AddEffect(att.Visual);
-            }
-
-            if (mon.CurrentStats.AttackPath2.Count > 0)
-            {
-                //  mon.CurrentStats.MovePath.Add(mon.CurrentStats.AttackPath2);
-                if (mon.Is == CombatMonsterType.Summoned)
-                {
-                    SetSummonedTurnState(SummonedTurnState.SummonedExecutingAttack);
-                }
-                return;
-            }
-            switch (mon.Is)
-            {
-                case CombatMonsterType.Player:
-                    SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
-                    break;
-                case CombatMonsterType.Summoned:
-                    SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction);
-                    break;
-                case CombatMonsterType.AI:
-
-                    break;
-            }
-
-
         }
 
 
@@ -975,6 +831,7 @@ namespace PlayingAround.Managers.CombatMan
         private void UpdatePlayerMoveableCells()
         {
             ICombatant combatant = _currentCombatant;
+            if (combatant.Is == CombatMonsterType.AI) return;
             TileCell origin = _playerControlledMonsterMap[combatant];
 
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
@@ -1038,31 +895,13 @@ namespace PlayingAround.Managers.CombatMan
         private void UpdateMonsterTopOfRoundStats()
         {
             ICombatant mon = _currentCombatant;
+            mon.StartOfTurnEffectsResolved = false;
             mon.CurrentStats.AP = mon.BaseStats.AP;
             mon.CurrentStats.MP = mon.BaseStats.MP;
 
         }
-        private void PickWhichEntitiesTurn()
-        {
-            ICombatant mon = _currentCombatant;
-            switch (mon.Is)
-            {
-                case CombatMonsterType.Player:
-                    SetCombatState(CombatState.PlayerTurn);
-                    SetPlayerTurnState(PlayerTurnState.PlayerWaitingInput);
-                    return;
-                case CombatMonsterType.Summoned:
-                    SetCombatState(CombatState.SummonedTurn);
-                    SetSummonedTurnState(SummonedTurnState.SummonedTopOfAction);
-                    return;
-                case CombatMonsterType.AI:
-                    SetCombatState(CombatState.AITurn);
-                    SetAITurnState(AITurnState.ActionNavigation);
-                    return;
-            }
-            SetCombatState(CombatState.Debug);
 
-        }
+        
 
 
 
@@ -1107,7 +946,7 @@ namespace PlayingAround.Managers.CombatMan
 
             TurnOrder = newQueue;
         }
-        private void SkipMonsterIfDead()
+        private void UpdateTurnOrder()
         {
             int maxTries = TurnOrder.Count;
             while (maxTries-- > 0)
@@ -1119,7 +958,6 @@ namespace PlayingAround.Managers.CombatMan
                     return;
                 }
                 SendMonsterToBackOfQueue();
-
             }
         }
         private void SendMonsterToBackOfQueue()

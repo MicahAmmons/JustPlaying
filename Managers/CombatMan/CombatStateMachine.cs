@@ -56,16 +56,26 @@
     public enum CombatState
     {
         None,
+        ActionNavigation,
+        ExecutingMove,
+        ExecutingAttack,
+        ExecutingSummon,
+        ResolvingStartOfTurnEffects,
+        ResolvingEndOfTurnEffects,
+        EndingTurn,
+        WinnerChosen,
+        TopOfPlayerTurn,
+        TopOfAction,
+        WaitingPlayerInput,
+
         LocationSelection,
         TurnStart,
         PlayerTurn,
         AITurn,
         SummonedTurn,
         Debug,
-        ResolvingStartOfTurnEffects,
-        ResolvingEndOfTurnEffects,
-        EndingTurn,
-        WinnerChosen,
+
+
     }
 
     public enum AITurnState

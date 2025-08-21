@@ -28,8 +28,11 @@ namespace PlayingAround.Movement
         public Direction HorizontalFacingDirection { get; set; } = Direction.Right;
         public Direction VerticalFacingDirection { get; set; } = Direction.Up;
         public CombatMonsterType Is {  get; set; }
+
         public event Action StartedTileMove;
         public event Action FinishedTileMove;
+        public event Action FinishedAllMovement;
+        public event Action CurrentlyMoving;
 
         private bool _nextMoveReady = true;
         public bool IsMoving = false;
@@ -96,10 +99,15 @@ namespace PlayingAround.Movement
             _nextMoveReady = false;
             StartedTileMove?.Invoke();
 
+
         }
         public void ApproveNextTileStep()
         {
             _nextMoveReady = true;
+            if (TileMovePath.Count <= 0 && VectorMovePath.Count <= 0)
+            {
+                FinishedAllMovement();
+            }
         }
         public void SetMovePath(List<TileCell> movePath)
         {
@@ -135,8 +143,8 @@ namespace PlayingAround.Movement
                 Vector2 direction = CurrentPos - oldPos; 
                 SetAnimationWalkState(direction);
 
-                DrawPoint = oldPos;     
-                 
+                DrawPoint = oldPos;
+
                 return;      
             }
             if (VectorMovePath.Count > 0)
@@ -194,7 +202,7 @@ namespace PlayingAround.Movement
         {
                 if (DestinationPoint != null)
                 {
-                
+                CurrentlyMoving();
                 List<TileCell> cells = GridMovement.GetCellToCellPath(CurrentPos, (Vector2)DestinationPoint);
                     List<TileCell> cellsToRemove = new List<TileCell>();
                     foreach (var cell in cells)
@@ -216,7 +224,8 @@ namespace PlayingAround.Movement
         {
                 if (DestinationPoint != null)
                 {
-                    List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)DestinationPoint);
+                CurrentlyMoving();
+                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)DestinationPoint);
                     DestinationPoint = null;
                     if (cellPath == null || cellPath.Count == 0) // Abort early if path is empty
                         return;
@@ -256,10 +265,10 @@ namespace PlayingAround.Movement
         {
             AllowedToBeDrawn = allowed;
         }
-
+       
         internal bool FinishedTileMovement()
         {
-            return TileMovePath.Count <= 0 && AnimationManager.IsFinished;
+            return TileMovePath.Count <= 0 && AnimationManager.IsFinished && _nextMoveReady;
         }
     }
 }

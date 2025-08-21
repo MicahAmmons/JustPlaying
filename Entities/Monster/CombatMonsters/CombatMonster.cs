@@ -50,6 +50,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public int PositionInOrder { get; set; }
         public MovementController MovementController { get; set; }
+        public bool ExecutingMove { get; set; } = false;
+        public bool StartOfTurnEffectsResolved { get; set; } = false;
+        public bool EndOfTurnEffectsResolved { get; set; } = false;
+        public bool ExecutingSummon { get; set; } = false;
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -92,6 +96,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Is = CombatMonsterType.AI;
             MovementController = new MovementController(data.AnimationData, 0, Is);
             MovementController.FinishedTileMove += FinishedMovingOneTile;
+            MovementController.FinishedAllMovement += FinishedAllMovement;
+            MovementController.CurrentlyMoving += IsCurrentlyMoving;
         }
 
         public CombatMonster()
@@ -219,7 +225,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
 
         }
-        public AITurnState? DecideAction()
+        public CombatState? DecideAction()
         {
             while (CurrentStats.Actions.Count > 0)
             {
@@ -444,6 +450,15 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void UpdateCombatPosition(int pos)
         {
             PositionInOrder = pos;
+        }
+        public void FinishedAllMovement()
+        {
+            ExecutingMove = false;
+            MovementController.ClearMovementPath();
+        }
+        public void IsCurrentlyMoving()
+        {
+            ExecutingMove = true;
         }
     }
     public enum CombatMonsterType

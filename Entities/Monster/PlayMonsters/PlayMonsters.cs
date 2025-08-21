@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers;
@@ -28,7 +29,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public string UniqueId {  get; set; }
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
         public MovementController MovementController { get; set; }
-
+        public bool ExecutingMove { get; set; } = false;
 
         public PlayMonsters(PlayMonsterData data, CombatMonster mon)
         {
@@ -51,6 +52,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
             MovementController = new MovementController(mon.MovementController.AnimationManager);
             MovementController.FinishedTileMove += FinishedMovingOneTile;
+            MovementController.FinishedAllMovement += FinishedAllMovement;
+            MovementController.CurrentlyMoving += IsCurrentlyMoving;
         }
      
         public void Update(GameTime gameTime)
@@ -185,6 +188,15 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         {
             MovementController.CurrentPos = centerPoint;
             MovementController.DrawPoint = centerPoint;
+        }
+        public void FinishedAllMovement()
+        {
+            ExecutingMove = false;
+            MovementController.ClearMovementPath();
+        }
+        public void IsCurrentlyMoving()
+        {
+            ExecutingMove = true;
         }
     }
 }

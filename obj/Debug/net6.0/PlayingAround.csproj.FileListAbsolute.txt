@@ -1,0 +1,6 @@
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.csproj.AssemblyReference.cache
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.AssemblyInfoInputs.cache
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.AssemblyInfo.cs
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.csproj.CoreCompileInputs.cache
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.sourcelink.json

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using PlayingAround.AnimationFolder;
+using PlayingAround.ButtonsFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
@@ -42,6 +44,11 @@ namespace PlayingAround.Entities.Player
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
         public int PositionInOrder { get ; set; }
         public MovementController MovementController {  get; set; }
+        public bool ExecutingMove { get; set; } = false;
+        public bool StartOfTurnEffectsResolved { get; set; } = false;
+        public bool EndOfTurnEffectsResolved { get; set; } = false;
+        public bool ExecutingSummon { get; set; } = false;
+        public ButtonManager ButtonManager { get; set; }
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -77,6 +84,8 @@ namespace PlayingAround.Entities.Player
 
         };
             player.MovementController.FinishedTileMove += player.FinishedMovingOneTile;
+            player.MovementController.FinishedAllMovement += player.FinishedAllMovement;
+            player.MovementController.CurrentlyMoving += player.IsCurrentlyMoving;
             return player;
         }
         public Player()
@@ -233,20 +242,21 @@ namespace PlayingAround.Entities.Player
         {
             CurrentStats.AP -= 1;
         }
-        public void ResolveAspects(TickedTiming ticked)
-        {
 
-            if (Aspects.Count == 0) return;
-            foreach (var aspect in Aspects)
-            {
-                if (aspect.WhenTicked != ticked) continue;
-                if (aspect.IsDamage)
+        public void ResolveEffects(TickedTiming ticked)
+        { 
+                if (Aspects.Count == 0) return;
+                foreach (var aspect in Aspects)
                 {
-                    ApplyDamage(aspect.Damage, aspect.DamageType);
-                    aspect.Duration -= 1;
+                    if (aspect.WhenTicked != ticked) continue;
+                    if (aspect.IsDamage)
+                    {
+                        ApplyDamage(aspect.Damage, aspect.DamageType);
+                        aspect.Duration -= 1;
+                    }
+                    if (aspect.Duration == 0) Aspects.Remove(aspect);
                 }
-                if (aspect.Duration == 0) Aspects.Remove(aspect);
-            }
+            StartOfTurnEffectsResolved = true;
         }
         public bool IsAttackComplete()
         {
@@ -331,6 +341,15 @@ namespace PlayingAround.Entities.Player
         public void UpdateCombatPosition(int pos)
         {
             PositionInOrder = pos;
+        }
+        public void FinishedAllMovement()
+        {
+            ExecutingMove = false;
+            MovementController.ClearMovementPath();
+        }
+        public void IsCurrentlyMoving()
+        {
+            ExecutingMove = true;
         }
 
       

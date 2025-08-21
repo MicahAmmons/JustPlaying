@@ -12,11 +12,11 @@ public static class ActionLibrary
             { AiActionType.Attack, ExecuteAttack },
             { AiActionType.Move, ExecuteMove }
         };
-    public static readonly Dictionary<AiActionType, AITurnState> ActionStates =
+    public static readonly Dictionary<AiActionType, CombatState> ActionStates =
         new()
         {
-            { AiActionType.Attack, AITurnState.ExecutingAttack },
-            { AiActionType.Move, AITurnState.ExecutingMove }
+            { AiActionType.Attack, CombatState.ExecutingAttack },
+            { AiActionType.Move, CombatState.ExecutingMove }
         };
 
     private static readonly Dictionary<ActionTarget, Func<CombatMonster, AttackName, bool>> AttackExecutors =

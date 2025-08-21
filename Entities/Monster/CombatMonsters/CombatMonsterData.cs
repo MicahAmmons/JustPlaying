@@ -61,6 +61,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int MP { get; set; }
         public int AP { get; set; }
         public int Health { get; set; }
+
         public Dictionary<ElementType, float> Resistances { get; set; }
         public List<Vector2> AttackPath1 { get; set; } = null;
         public List<Vector2> AttackPath2 { get; set; } = null;

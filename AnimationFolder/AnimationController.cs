@@ -107,7 +107,7 @@ namespace PlayingAround.AnimationFolder
         public void Update(GameTime gameTime)
         {
 
-            if (_animation == null || _animation.FrameCount <= 1)
+            if (_animation == null || _animation.FrameCount < 1)
                 return;
             if (_animation.IsLooping) IsFinished = true;
 
