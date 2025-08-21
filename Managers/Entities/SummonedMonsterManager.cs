@@ -43,16 +43,5 @@ namespace PlayingAround.Managers.Entities
         {
             return _summonedSaveData;
         }
-
-        internal static void DrawPreview(SpriteBatch spriteBatch, TileCell cell, (string name, SummonedSavedStats data)? currentSelectedSummon)
-        {
-            var name = currentSelectedSummon?.name;
-            var data = currentSelectedSummon?.data;
-            var comMon = CombatMonsterManager.GetMonsterWidthAndHeight(name);
-            Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, (int)comMon.X, (int)comMon.Y);
-            Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - (int)comMon.Y / 2, (int)comMon.X, (int)comMon.Y);
-            spriteBatch.Draw(_summonedSaveData[name].Icon, rect,  Color.Gray * 8f);
-        
-    }
     }
 }

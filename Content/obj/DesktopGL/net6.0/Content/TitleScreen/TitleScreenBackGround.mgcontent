@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreen/TitleScreenBackGround.png</SourceFile>
-  <SourceTime>2025-05-24T09:33:59.7678097-04:00</SourceTime>
-  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/TitleScreen/TitleScreenBackGround.xnb</DestFile>
-  <DestTime>2025-08-12T08:37:16.1388257-04:00</DestTime>
+  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/TitleScreen/TitleScreenBackGround.png</SourceFile>
+  <SourceTime>2025-05-18T18:55:29.9343777-04:00</SourceTime>
+  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/bin/DesktopGL/Content/TitleScreen/TitleScreenBackGround.xnb</DestFile>
+  <DestTime>2025-08-20T23:00:17.4373217-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -116,6 +116,7 @@ namespace PlayingAround.Movement
 
                 if (AnimationManager.IsFinished)
                 {
+                    
                     DrawPoint = CurrentPos;
                     SetCurrentAnimationStateToIdle();
                     FinishedTileMove?.Invoke();
@@ -124,6 +125,7 @@ namespace PlayingAround.Movement
             }
             if (TileMovePath.Count > 0)
             {
+                OnStartMoveOneTile();
                 // Consume next tile: keep DrawPoint at old tile, jump CurrentPos to new tile, start walk anim
                 Vector2 oldPos = CurrentPos;
                 CurrentPos = TileMovePath[0].CenterPoint;
@@ -134,7 +136,7 @@ namespace PlayingAround.Movement
                 SetAnimationWalkState(direction);
 
                 DrawPoint = oldPos;     
-                OnStartMoveOneTile();  
+                 
                 return;      
             }
             if (VectorMovePath.Count > 0)
@@ -248,10 +250,16 @@ namespace PlayingAround.Movement
         public void SetCurrentPos(Vector2 vec)
         {
             CurrentPos = vec;
+            DrawPoint = vec;
         }
         public void ToggleAllowedToBeDrawn(bool allowed)
         {
             AllowedToBeDrawn = allowed;
+        }
+
+        internal bool FinishedTileMovement()
+        {
+            return TileMovePath.Count <= 0 && AnimationManager.IsFinished;
         }
     }
 }

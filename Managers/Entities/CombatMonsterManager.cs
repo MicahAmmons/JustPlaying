@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Interfaces;
@@ -40,9 +41,9 @@ namespace PlayingAround.Managers.Entities
             };
             return newSummonedMon;
         }
-        public static Vector2 GetMonsterWidthAndHeight(string name)
+        public static AnimationData GetMonsterIdleAnimation(string name)
         {
-            return new Vector2(_combatMonsterBaseData[name].DrawSpecifics.Width, _combatMonsterBaseData[name].DrawSpecifics.Height);
+            return _combatMonsterBaseData[name].AnimationData;
         }
         public static void Update(GameTime gameTime, float delta)
         {

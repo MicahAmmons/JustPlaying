@@ -156,7 +156,8 @@ namespace PlayingAround.Entities.Player
         }
         public void DrawTexture(SpriteBatch spriteBatch, Effect fx = null)
         {
-            if (!MovementController.AllowedToBeDrawn) return;
+            if (!MovementController.AllowedToBeDrawn) {
+                return; }
             if (MovementController.AnimationManager.CurrentControllers == null ) return;    
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
@@ -259,6 +260,8 @@ namespace PlayingAround.Entities.Player
         {
             throw new NotImplementedException();
         }
+
+        private float _movetimer = 0;
         public void FinishedMovingOneTile()
         {
             if (SceneManager.IsState(SceneState.Play))
@@ -267,10 +270,17 @@ namespace PlayingAround.Entities.Player
                 return;
             }
 
-            CurrentStats.MP -= 1;
+ 
 
             //Will make more complicated logic for when mechanics are implemented, such as traps or movement damage or terrarin, etc.
-            MovementController.ApproveNextTileStep();
+            _movetimer += 0.1667f;
+            if (_movetimer >= 3)
+            {
+                CurrentStats.MP -= 1;
+                MovementController.ApproveNextTileStep();
+                _movetimer = 0;
+            }
+
         }
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {

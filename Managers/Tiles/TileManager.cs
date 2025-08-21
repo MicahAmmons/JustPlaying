@@ -207,14 +207,6 @@ namespace PlayingAround.Managers.Tiles
                 CurrentTileId = CurrentMapTile.Id
             };
         }
-
-        private static void DrawCellStaticBackground(SpriteBatch spriteBatch)
-        {
-            foreach (var cell in CurrentMapTile.CellsWithStaticBackGround)
-            {
-                cell.DrawBackGroundTexture(spriteBatch);
-            }
-        }
         internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
         {
             int dx = Math.Abs(origin.X/2 - destination.X/2);
@@ -276,9 +268,6 @@ namespace PlayingAround.Managers.Tiles
             }
             return false;
         }
-
-     
-     
         public static void DrawBackground(SpriteBatch spriteBatch)
         {
             foreach (var text in CurrentMapTile.BackgroundBuidldOrder)

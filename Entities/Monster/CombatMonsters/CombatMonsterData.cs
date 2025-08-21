@@ -69,7 +69,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public TileCell AttackEffectedCells { get; set; } = null;
         public List<AiAction> Actions { get; set; }
         public ElementType ElementType { get; set; }
-        public (string name, SummonedSavedStats data)? CurrentSelectedSummon {  get; set; }
+        public (string name, AnimationData ani)? CurrentSelectedSummon {  get; set; }
 
     }
 }

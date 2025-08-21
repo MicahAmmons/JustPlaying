@@ -96,7 +96,7 @@ namespace PlayingAround
             JukeBoxManager.Update(gameTime);
             InputManager.Update(gameTime);
             EscapeOverseer.Update(gameTime);
-            TileCellManager.Update(delta);
+            TileCellManager.Update(gameTime);
             CinematicRuler.Update(gameTime);
             switch (SceneManager.CurrentState)
             {
@@ -223,6 +223,7 @@ namespace PlayingAround
         {
             _spriteBatch.Begin();
             CombatGuard.Draw(_spriteBatch, GraphicsDevice);
+            TileCellManager.Draw(_spriteBatch);
             CombatMonsterManager.Draw(_spriteBatch);
             PlayMonsterManager.Draw(_spriteBatch);
             NPCManager.Draw(_spriteBatch);

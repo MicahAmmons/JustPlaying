@@ -71,37 +71,37 @@ namespace PlayingAround.Managers.Entities
             return selectedCell;
         }
 
-        private static void HandleMonsterSelection()
-        {
-            if (InputManager.IsLeftClick())
-            {
-                Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
+        //private static void HandleMonsterSelection()
+        //{
+        //    if (InputManager.IsLeftClick())
+        //    {
+        //        Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
 
-                foreach (var mon in _currentPlayMonsters)
-                {
-                    var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
-                    int width = (int)widthHeight.X;
-                    int height = (int)widthHeight.Y;
-                    var pos = TileManager.OffSetFromCenterOfDiamond(mon.MovementController.CurrentPos, width, height);
-                    Rectangle dest = new Rectangle(
-                        (int)pos.X,
-                        (int)pos.Y,
-                        width,
-                        height
-                    );
+        //        foreach (var mon in _currentPlayMonsters)
+        //        {
+        //            var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
+        //            int width = (int)widthHeight.X;
+        //            int height = (int)widthHeight.Y;
+        //            var pos = TileManager.OffSetFromCenterOfDiamond(mon.MovementController.CurrentPos, width, height);
+        //            Rectangle dest = new Rectangle(
+        //                (int)pos.X,
+        //                (int)pos.Y,
+        //                width,
+        //                height
+        //            );
 
-                    if (dest.Contains(mousePos))
-                    {
-                        SelectedMonster = mon;
-                        SelectedMonsterInfoAnchor = mousePos; // Capture click position
-                        return;
-                    }
-                }
+        //            if (dest.Contains(mousePos))
+        //            {
+        //                SelectedMonster = mon;
+        //                SelectedMonsterInfoAnchor = mousePos; // Capture click position
+        //                return;
+        //            }
+        //        }
 
-                SelectedMonster = null;
-                SelectedMonsterInfoAnchor = null;
-            }
-        }
+        //        SelectedMonster = null;
+        //        SelectedMonsterInfoAnchor = null;
+        //    }
+        //}
         public static void Update(GameTime gameTime)
         {
             if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)

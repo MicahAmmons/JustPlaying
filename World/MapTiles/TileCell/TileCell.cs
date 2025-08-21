@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Movement;
 using PlayingAround.Visuals;
+using System;
+using System.Collections.Generic;
 using System.Xml.XPath;
 
 
@@ -32,6 +36,7 @@ namespace PlayingAround.Game.Map
         public string NPCName { get; set; }
         public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
         public Texture2D BackGroundTexture { get; set; }
+        public AnimationManager AnimationManager { get; set; } 
 
         public TileCell(TileCellData data)        
         {
@@ -48,10 +53,54 @@ namespace PlayingAround.Game.Map
             NPCName = data.NPCName;
             Trigger = data.Trigger;
             NextTile = data.NextTile;
+        
             CenterPoint = new Vector2(data.X * MapTile.TileWidth, data.Y * MapTile.TileHeight );
         }
 
+        public void Update(GameTime gameTime)
+        {
+            float delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            _removeAnimationTimer += delta;
 
+            AnimationManager.Update(gameTime, AnimationState.Idle);
+            if (_removeAnimationTimer >= delta * 3) AnimationManager = null;
+        }
+        public void DrawAnimation(SpriteBatch spriteBatch)
+        {
+            if (AnimationManager != null)
+            {
+                foreach (var contr in AnimationManager.CurrentControllers)
+                {
+                    if (contr.Animation == null) continue;
+
+                    Animation animation = contr.Animation;
+                    int width = animation.Width;
+                    int height = animation.Height;
+                    var pos = TileManager.OffSetFromCenterOfDiamond(CenterPoint, width, height);
+                    Rectangle dest = new Rectangle(
+                        (int)pos.X,
+                        (int)pos.Y,
+                        width,
+                        height
+                    );
+                    Rectangle source = contr.GetCurrentFrame();
+                    Texture2D texture = animation.SpriteSheet;
+                    spriteBatch.Draw(
+                        texture,
+                        dest,
+                        source,
+                       Color.White
+                    );
+                }
+            }
+        }
+        private float _removeAnimationTimer = 0f;
+        public void AddAnimation(SpriteBatch spriteBatch, AnimationData ani)
+        {
+            _removeAnimationTimer = 0;
+            if (AnimationManager == null)
+            AnimationManager = new AnimationManager(ani);
+        }
         public void DrawCellHighlight(SpriteBatch spriteBatch, Color col = default, int shrink = 0)
         {
             Vector2 coords = TileManager.OffSetFromCenterOfDiamond(CenterPoint);
@@ -85,6 +134,7 @@ namespace PlayingAround.Game.Map
             VEManager.AddEffect(ve);
             TileCellManager.AddCellVE(this);
         }
+
 
     }
 }
