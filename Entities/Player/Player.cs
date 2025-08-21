@@ -57,7 +57,6 @@ namespace PlayingAround.Entities.Player
                     MovementQuickness = (int)data.MovementQuickness,
                     Width = data.Width,
                     Height = data.Height,
-                    AllowedToMove = true,
                     MovementPattern = MovementPatternType.Straight
                 },
                 BaseStats = new BaseCombatStats()
@@ -157,6 +156,7 @@ namespace PlayingAround.Entities.Player
         }
         public void DrawTexture(SpriteBatch spriteBatch, Effect fx = null)
         {
+            if (!MovementController.AllowedToBeDrawn) return;
             if (MovementController.AnimationManager.CurrentControllers == null ) return;    
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
@@ -217,10 +217,6 @@ namespace PlayingAround.Entities.Player
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
             spriteBatch.Draw(Icon, rect, Color.White);
-        }
-        internal void ToggleDrawn()
-        {
-            DrawSpecifics.AllowedToBeDrawn = !DrawSpecifics.AllowedToBeDrawn;
         }
         public void UpdateTopOfActionStats()
         {

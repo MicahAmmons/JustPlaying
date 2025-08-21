@@ -45,10 +45,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             };
             DrawSpecifics = new DrawSpecificStats()
             {
-            
                 IsFlashingRed = false,
                 DamageFlashTimer = 0f,
-                AllowedToMove = true
             };
 
             MovementController = new MovementController(mon.MovementController.AnimationManager);

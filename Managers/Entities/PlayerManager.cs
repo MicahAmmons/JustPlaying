@@ -33,17 +33,6 @@ namespace PlayingAround.Managers.Entities
             _currentPlayer.Update(gameTime, delta);
             UpdatePlayerInput(gameTime);
         }
-        public static void AllowPlayerMovement(bool permission)
-        {
-            if (!permission) 
-            { 
-                _currentPlayer.DrawSpecifics.AllowedToMove = false;
-                _currentPlayer.MovementController.ClearMovementPath();
-                
-                return;
-            }
-            else if (permission) { _currentPlayer.DrawSpecifics.AllowedToMove = true; }
-        }
         public static void UpdatePlayerInput(GameTime gameTime)
         {
 
@@ -57,8 +46,6 @@ namespace PlayingAround.Managers.Entities
         }
         public static void MovePlayerInput(GameTime gameTime)
         {
-            if (!_currentPlayer.DrawSpecifics.AllowedToMove)  return;
-            {
                 if (InputManager.IsRightMouseDown())
                 {
                     Vector2 target = new Vector2(InputManager.MouseX , InputManager.MouseY);
@@ -68,8 +55,6 @@ namespace PlayingAround.Managers.Entities
                 {
                     _currentPlayer.MovementController.ClearMovementPath();
                 }
-            }
-            
         }
         public static PlayerSaveData SavePlayer()
         {

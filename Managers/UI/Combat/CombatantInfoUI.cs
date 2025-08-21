@@ -45,7 +45,7 @@ public class CombatantInfoUI
         DrawCombatantStats(spriteBatch);
         DrawCombatantAspects(spriteBatch);
         // This stops the highlight from being drawn during location selection
-        if (!combatant.DrawSpecifics.AllowedToBeDrawn) return;
+        if (!combatant.MovementController.AllowedToBeDrawn) return;
         DrawHighlightedCell(spriteBatch);
     }
     private void DrawHighlightedCell(SpriteBatch spriteBatch)

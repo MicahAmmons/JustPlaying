@@ -51,8 +51,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public float MovementQuickness { get; set; }
         public bool IsFlashingRed = false;
         public float DamageFlashTimer = 0f;
-        public bool AllowedToMove = false;
-        public bool AllowedToBeDrawn = true;
 
         public bool DrawCellHightlight = false;
         public int shrink = 0;

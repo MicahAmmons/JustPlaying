@@ -93,7 +93,7 @@ namespace PlayingAround.Managers.Dialogue
         }
         public static void StartNewDialogue(NPC npc)
         {
-            PlayerManager.AllowPlayerMovement(false);
+            PlayerManager.CurrentPlayer.MovementController.ToggleAllowedToBeDrawn(false);
             _currentDialogue = npc.AllDialogue;
             _currentDialogueStage = FetchCurrentStage(npc.AllDialogue);
                 DialogueBox.SetDialogue(
@@ -147,7 +147,7 @@ namespace PlayingAround.Managers.Dialogue
                 _currentDialogueStage = null;
             }
             DialogueBox.ClearDialogue();
-            PlayerManager.AllowPlayerMovement(true);
+            PlayerManager.CurrentPlayer.MovementController.ToggleAllowedToBeDrawn(true);
             SceneManager.SetState(SceneState.Play);
         }
 

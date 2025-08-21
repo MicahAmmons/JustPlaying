@@ -130,17 +130,40 @@ namespace PlayingAround
             if (DrawTitleScreen(gameTime)) return;
             DrawBackgroundSmoke(gameTime);
             DrawMapBackground();
+            DrawMapGlowTextures(gameTime);
 
-            DrawStaticBackground(gameTime);
+
+            DrawBehindPlayer(gameTime);
+
             DrawPlayer(gameTime);
+
+            DrawForeground();
+
+
+
+
+            base.Draw(gameTime);
+        }
+        private void DrawForeground()
+        {
+            _spriteBatch.Begin();
+
+            DialogueManager.Draw(_spriteBatch);
+            UIManager.Draw(_spriteBatch);
+
+            CinematicRuler.Draw(_spriteBatch);
+            MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
+            DebugBugger.Draw(_spriteBatch);
+
+            _spriteBatch.End();
+        }
+        private void DrawMapGlowTextures(GameTime gameTime)
+        {
             var glowEffect = AssetManager.GetEffect("ColorReplace");
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, glowEffect);
             GlowTextureController.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
-
         private void DrawPlayer(GameTime gameTime)
         {
             var fx = AssetManager.GetEffect("Smoke");
@@ -196,13 +219,13 @@ namespace PlayingAround
             _spriteBatch.End();
 
         }
-        private void DrawStaticBackground(GameTime gameTime)
+        private void DrawBehindPlayer(GameTime gameTime)
         {
             _spriteBatch.Begin();
-            PlayMonsterManager.Draw(_spriteBatch);
-            NPCManager.Draw(_spriteBatch);
             CombatGuard.Draw(_spriteBatch, GraphicsDevice);
             CombatMonsterManager.Draw(_spriteBatch);
+            PlayMonsterManager.Draw(_spriteBatch);
+            NPCManager.Draw(_spriteBatch);
             _spriteBatch.End();
 
         }

@@ -99,8 +99,8 @@ namespace PlayingAround.Managers.CombatMan
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
 
             PlayMonsters = playMonsters;
-            _currentPlayer.ToggleDrawn();
             _currentPlayer.MovementController.ClearMovementPath();
+            _currentPlayer.MovementController.CachPos();
             SetSpawnableCells();
             SetCombatantStartingPos();
             SetTurnOrder();
@@ -314,6 +314,14 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentMouseHoverCell != null && _currentMouseHoverCell.PlayerSpawnable)
                 DrawEntityPreviewOnCell(spriteBatch, _currentMouseHoverCell);
         }
+        private void DrawSpawnableTiles(SpriteBatch spriteBatch)
+        {
+            foreach (var tile in _playerSpawnableCells)
+                tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.PlayerStartable, 5);
+
+            foreach (var tile in _monsterSpawnableCells)
+                tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.MonsterStartable, 5);
+        }
         private void DrawEntityPreviewOnCell(SpriteBatch spriteBatch, TileCell cell, ICombatant mon = null)
         {
             if (mon == null) mon = _currentCombatant;
@@ -323,14 +331,6 @@ namespace PlayingAround.Managers.CombatMan
                 return;
             }
             mon.DrawEntityCellPreview(spriteBatch, cell);
-        }
-        private void DrawSpawnableTiles(SpriteBatch spriteBatch)
-        {
-            foreach (var tile in _playerSpawnableCells)
-               tile.DrawCellHighlight(spriteBatch,_cellHighlightColors.PlayerStartable, 5);
-
-            foreach (var tile in _monsterSpawnableCells)
-                tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.MonsterStartable, 5);
         }
         private void DrawPlayerTurn(SpriteBatch spriteBatch)
         {
@@ -373,7 +373,7 @@ namespace PlayingAround.Managers.CombatMan
             DrawButton(spriteBatch, _endTurnRect, "End Turn");
 
         }
-        public void DrawPlayerClickedMoveButton(SpriteBatch spriteBatch)
+         public void DrawPlayerClickedMoveButton(SpriteBatch spriteBatch)
         {
             ICombatant mon = _currentCombatant;
             if (_currentCombatant.CurrentStats.MP > 0)
@@ -530,15 +530,6 @@ namespace PlayingAround.Managers.CombatMan
 
         }
 
-
-
-
-
-
-
-
-
-
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -560,7 +551,6 @@ namespace PlayingAround.Managers.CombatMan
                 CountDefeatedMonsters();
                 return; 
             }
-
                 switch (StateCombat)
             {
                 case CombatState.TurnStart:
@@ -988,8 +978,8 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) && InputManager.IsLeftClick())
             {
-                _currentPlayer.MovementController.CurrentPos = _currentMouseHoverCell.CenterPoint;
-                _currentPlayer.ToggleDrawn();
+                _currentPlayer.MovementController.SetCurrentPos(_currentMouseHoverCell.CenterPoint);
+                _currentPlayer.MovementController.ToggleAllowedToBeDrawn(true);
                 SetCombatState(CombatState.TurnStart);
 
             }
@@ -1010,7 +1000,7 @@ namespace PlayingAround.Managers.CombatMan
             ClearEntityMaps();
             foreach (var mon in TurnOrder)
             {
-                TileCell cell = TileManager.GetCell(mon.MovementController.CurrentPos);
+                TileCell cell = TileManager.GetCell((Vector2)mon.MovementController.CurrentPos);
                 if (mon.Is == CombatMonsterType.Summoned || mon.Is == CombatMonsterType.Player)
                 {
                     cell.BlockedByMonster = true;

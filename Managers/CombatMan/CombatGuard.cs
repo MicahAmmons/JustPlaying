@@ -62,7 +62,11 @@ namespace PlayingAround.Managers.CombatMan
             PlayerManager.ClearAllPlayerAspects();
             _previousCombat = _currentCombat;
             _currentCombat= null;
-            PlayerManager.AllowPlayerMovement(true);
+            var player = PlayerManager.CurrentPlayer.MovementController;
+
+            player.SetCurrentPos((Vector2)player.CachedPosition);
+            player.ClearCachPos();
+            player.ToggleAllowedToBeDrawn(true);
             SceneManager.SetState(SceneState.Play);
 
         }

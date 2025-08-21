@@ -125,7 +125,7 @@ namespace PlayingAround.Managers.UI
 
 
         }
-        public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             switch (SceneManager.CurrentState)
             {

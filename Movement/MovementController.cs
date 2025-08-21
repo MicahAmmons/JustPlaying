@@ -22,6 +22,7 @@ namespace PlayingAround.Movement
         public List<TileCell> TileMovePath { get; set; } = new List<TileCell> { };
         public Vector2? DestinationPoint { get; private set; }
         public float MovementQuickness { get; set; }
+        public Vector2? CachedPosition { get; private set; }
         public AnimationManager AnimationManager { get; set; }
         public AnimationState CurrentAnimationState { get; set; } = AnimationState.Idle;
         public Direction HorizontalFacingDirection { get; set; } = Direction.Right;
@@ -32,6 +33,7 @@ namespace PlayingAround.Movement
 
         private bool _nextMoveReady = true;
         public bool IsMoving = false;
+        public bool AllowedToBeDrawn = true;
 
         // player and combat monster constructor
         public MovementController(AnimationData data, float moveQuickness, CombatMonsterType type)
@@ -137,6 +139,7 @@ namespace PlayingAround.Movement
             }
             if (VectorMovePath.Count > 0)
             {
+
                 float speed = MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Vector2 nextPoint = VectorMovePath[0];
                 Vector2 direction = nextPoint - CurrentPos;
@@ -229,10 +232,26 @@ namespace PlayingAround.Movement
             VectorMovePath.Clear();
             SetCurrentAnimationStateToIdle();
         }
-
         public bool FlipHorizontally(Direction dir)
         {
             return dir != HorizontalFacingDirection;
+        }
+        public void CachPos()
+        {
+            CachedPosition = CurrentPos;
+            ToggleAllowedToBeDrawn(false);
+        }
+        public void ClearCachPos()
+        {
+            CachedPosition = null;
+        }
+        public void SetCurrentPos(Vector2 vec)
+        {
+            CurrentPos = vec;
+        }
+        public void ToggleAllowedToBeDrawn(bool allowed)
+        {
+            AllowedToBeDrawn = allowed;
         }
     }
 }
