@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PlayingAround.AnimationFolder;
+using PlayingAround.ButtonsFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
@@ -37,10 +39,7 @@ namespace PlayingAround.Managers.CombatMan
         private VisualEffectManager _visualEffectManager;
         private CombatUIManager _combatUIManager;
         public VisualEffectManager VisualEffectManager => _visualEffectManager;
-        public PlayerTurnState StatePlayerTurn => _stateMachine.CurrentPlayerTurnState;
         public CombatState StateCombat => _stateMachine.CurrentCombatState;
-        public SummonedTurnState StateSummoned => _stateMachine.CurrentSummonedTurnState;
-        public AITurnState StateAI => _stateMachine.CurrentAITurnState;
         // just a list of all monsters that have entered this combat at any time
         private List<ICombatant> _referenceTurnOrder = new List<ICombatant>();
         public int TotalCombatants = 0;
@@ -51,10 +50,9 @@ namespace PlayingAround.Managers.CombatMan
         private Texture2D _playerCellOptions;//placeholder texture
         private SpriteFont _font;
 
-        private Rectangle _backBackGroundButtonOptions = new Rectangle(1600, 720, 200, 100);
 
         private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
-        private Rectangle _summonRect, _attackRect, _endTurnRect, _moveRect;
+
         private Dictionary<ICombatant, Rectangle> _displayStatRectangles = new Dictionary<ICombatant, Rectangle>();
         private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
         private Rectangle _exitCombatButtonRect = new Rectangle(885, 580, 150, 50);
@@ -84,8 +82,10 @@ namespace PlayingAround.Managers.CombatMan
         public WhoWon TheWinner = WhoWon.None;
         private float _timer = 0;
 
+        private CombatButtonManager _combatButtonManager;
+
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
-        public ICombatant CurrentCombatant => _currentCombatant;
+
 
 
 
@@ -98,6 +98,12 @@ namespace PlayingAround.Managers.CombatMan
             _font = AssetManager.GetFont("mainFont");
             _combatUIManager = new CombatUIManager();
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
+            _combatButtonManager = new CombatButtonManager();
+            _combatButtonManager.MoveButton.Clicked += OnMoveClicked;
+            _combatButtonManager.AttackButton.Clicked += OnAttackClicked;
+            _combatButtonManager.EndTurnButton.Clicked += OnEndTurnClicked;
+            _combatButtonManager.SummonButton.Clicked += OnSummonClicked;
+
 
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
@@ -123,29 +129,17 @@ namespace PlayingAround.Managers.CombatMan
         }
         public void SetCombatState(CombatState state)
         {
+
             _stateMachine.SetCombatState(state);
-        }
-        public void SetPlayerTurnState(PlayerTurnState state)
-        {
-            _stateMachine.SetPlayerTurnState(state);
-        }
-        public void SetSummonedTurnState(SummonedTurnState state)
-        {
-            _stateMachine.SetSummonedTurnState(state);
+            _combatButtonManager.ResetAllFlags();
+            _combatButtonManager.ApplyPermissions(state);
         }
         public void SetWhoWon(WhoWon whoWon)
         {
             TheWinner = whoWon;
         }
-        public void SetAITurnState(AITurnState state)
-        {
-            _stateMachine.SetAITurnState(state);
-        }
         public void ResetAllStatesToNone()
         {
-            SetPlayerTurnState(PlayerTurnState.None);
-            SetAITurnState(AITurnState.None);
-            SetSummonedTurnState(SummonedTurnState.None);
             SetCombatState(CombatState.None);
         }
         private void SetTurnOrder()
@@ -182,26 +176,6 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void InitilizeUIElements()
         {
-            // Button dimensions and spacing
-            int buttonHeight = _backBackGroundButtonOptions.Height;
-            int spacing = 10;
-
-            _endTurnRect = _backBackGroundButtonOptions;
-            _attackRect = new Rectangle(
-                _endTurnRect.X,
-                _endTurnRect.Y - buttonHeight - spacing,
-                _endTurnRect.Width,
-                buttonHeight);
-            _moveRect = new Rectangle(
-                _attackRect.X,
-                _attackRect.Y - buttonHeight - spacing,
-                _endTurnRect.Width,
-                buttonHeight);
-            _summonRect = new Rectangle(
-                _moveRect.X,
-                _moveRect.Y - buttonHeight - spacing,
-                _endTurnRect.Width,
-                buttonHeight);
 
             foreach (var comb in TurnOrder)
             {

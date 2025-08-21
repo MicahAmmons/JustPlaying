@@ -74,6 +74,7 @@ namespace PlayingAround
             NPCManager.LoadContent();
             DialogueBox.LoadContent();
             TriggerLibrary.LoadContent();
+            CombatGuard.LoadContent();
 
 
         }

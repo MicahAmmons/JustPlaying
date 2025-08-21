@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.ButtonsFolder;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Managers.Entities;
@@ -18,19 +19,27 @@ namespace PlayingAround.Managers.CombatMan
         private static CombatManager _currentCombat { get; set; }
         public static CombatManager CurrentCombat => _currentCombat;
         private static CombatManager _previousCombat {  get; set; }
+        private static CombatButtonManager _buttonManager { get; set; }
 
+        public static void LoadContent()
+        {
+            _buttonManager = new CombatButtonManager();
+        }
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
 
             _currentCombat = new CombatManager(playMonsters);
+            _currentCombat.OnCombatStateChange += OnCombatStateChange;
 
         }
-
         public static void Update(GameTime gameTime)
         {
             if (_currentCombat != null) 
             {
+                _buttonManager.UpdateInput();
                 _currentCombat.Update(gameTime);
+
+
             }
         }
         public static void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
@@ -38,6 +47,7 @@ namespace PlayingAround.Managers.CombatMan
             if (SceneManager.CurrentState != SceneState.Combat) return;
             if (_currentCombat != null)
             {
+                _buttonManager.Draw(spriteBatch);
                 _currentCombat.Draw(spriteBatch, graphicsDevice);
             }
         }
@@ -70,5 +80,9 @@ namespace PlayingAround.Managers.CombatMan
             SceneManager.SetState(SceneState.Play);
 
         }
+
+
+
+
     }
 }

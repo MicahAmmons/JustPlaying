@@ -48,7 +48,6 @@ namespace PlayingAround.Entities.Player
         public bool StartOfTurnEffectsResolved { get; set; } = false;
         public bool EndOfTurnEffectsResolved { get; set; } = false;
         public bool ExecutingSummon { get; set; } = false;
-        public ButtonManager ButtonManager { get; set; }
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
