@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.ActFolder;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Player;
 using PlayingAround.Game.Map;
@@ -46,6 +47,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool isDead { get; set; } = false;
         public Texture2D Icon { get; set; }
         public CombatMonsterType Is { get; set; }
+        public ActController ActController { get; set; }
         public Direction FacingDirection { get; set; } = Direction.Right;
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public int PositionInOrder { get; set; }
@@ -65,7 +67,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Health = data.BaseStats.Health,
                 Initiative = data.BaseStats.Initiative,
                 Resistances = ResistanceManager.GetResistances(ElementType),
-                ActionOrder = new List<AiAction>()
             };
             CurrentStats = new CurrentCombatStats()
             {
@@ -78,19 +79,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Actions = new List<AiAction>()
             };
 
-            foreach (var action in data.ActionOrder)
-            {
-                BaseStats.ActionOrder.Add(action);
-            }
+            ActController = new ActController(data.ActionOrder);
             UniqueId = data.UniqueId;
             BaseStats.Resistances = ResistanceManager.GetResistances(ElementType);
             DrawSpecifics = data.DrawSpecifics;
             Name = UniqueId;
 
-            foreach (var kvp in data.AttackData)
-            {
-                Attacks.Add(AttackManager.GetAttack(kvp.Key, kvp.Value));
-            }
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
             Is = CombatMonsterType.AI;

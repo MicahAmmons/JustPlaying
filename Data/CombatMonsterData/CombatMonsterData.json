@@ -81,18 +81,16 @@
     },
     "ActionOrder": [
       {
-        "Action": "Attack",
-        "Attack": "Slam",
-        "Target": "ClosestEnemy"
+        "Type": "Attack",
+        "AttackName": "Slam",
+        "ElementType": "Ice",
+        "ActionTarget": "ClosestEnemy"
       },
       {
         "Action": "Move",
         "MovementAmount": "FullMP",
         "Target": "ClosestEnemy"
       }
-    ],
-    "DecideWhichAttack": [
-      "ShortestRange"
     ]
   }
 }

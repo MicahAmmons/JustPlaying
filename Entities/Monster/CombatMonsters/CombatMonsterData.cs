@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using PlayingAround.ActFolder;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Data.SaveData;
 using PlayingAround.Game.Map;
@@ -22,7 +23,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public DrawSpecificStats DrawSpecifics { get; set; } = new DrawSpecificStats() { IsFlashingRed = false};
         public AnimationData AnimationData { get; set; }
         public Dictionary<AttackName, ElementType> AttackData { get; set; }
-        public List<AiAction> ActionOrder { get; set; } 
+        public ActData ActionOrder { get; set; } 
     }
     public class BaseCombatStats
     {
@@ -31,7 +32,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int Health { get; set; }
         public int Initiative { get; set; }
         public Dictionary<ElementType, float> Resistances { get; set; }
-        public List<AiAction> ActionOrder { get; set; }
     }
     public class OutOfCombatAnimatedStats
     {

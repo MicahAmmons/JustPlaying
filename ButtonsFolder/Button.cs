@@ -106,9 +106,9 @@ namespace PlayingAround.ButtonsFolder
             }
             public override bool TryGetPermission(CombatState state, out ButtonPermission perm)
         => _permissions.TryGetValue(state, out perm);
-        }
+                    }
         public class AttackButton : Button
-    {
+              {
         private readonly Dictionary<CombatState, ButtonPermission> _permissions;
         public AttackButton()
         {
@@ -131,9 +131,9 @@ namespace PlayingAround.ButtonsFolder
         }
         public override bool TryGetPermission(CombatState state, out ButtonPermission perm)
     => _permissions.TryGetValue(state, out perm);
-    }
+              }
         public class EndTurnButton : Button
-    {
+              {
         private readonly Dictionary<CombatState, ButtonPermission> _permissions;
         public EndTurnButton()
         {
@@ -156,9 +156,9 @@ namespace PlayingAround.ButtonsFolder
         }
         public override bool TryGetPermission(CombatState state, out ButtonPermission perm)
     => _permissions.TryGetValue(state, out perm);
-    }
+             }
         public class SummonButton : Button
-    {
+              {
         private readonly Dictionary<CombatState, ButtonPermission> _permissions;
         
         public SummonButton()
@@ -182,13 +182,13 @@ namespace PlayingAround.ButtonsFolder
         }
         public override bool TryGetPermission(CombatState state, out ButtonPermission perm)
     => _permissions.TryGetValue(state, out perm);
-    }
+              }
         public struct ButtonPermission
-    {
+              {
         public bool Draw;
         public bool Input;
         public ButtonPermission(bool draw, bool input) { Draw = draw; Input = input; }
-    }
+              }
     public class Button
     {
 
