@@ -79,7 +79,8 @@ namespace PlayingAround.ButtonsFolder
                 if (!b.AllowedToBeDrawn) continue;
                 b.Draw(spriteBatch);
             }
-        } }
+        }
+    }
         public class MoveButton : Button
         {
             private readonly Dictionary<CombatState, ButtonPermission> _permissions;
@@ -159,6 +160,7 @@ namespace PlayingAround.ButtonsFolder
         public class SummonButton : Button
     {
         private readonly Dictionary<CombatState, ButtonPermission> _permissions;
+        
         public SummonButton()
         {
             DrawRectangle = new Rectangle(50, 900, 200, 100);
@@ -187,7 +189,7 @@ namespace PlayingAround.ButtonsFolder
         public bool Input;
         public ButtonPermission(bool draw, bool input) { Draw = draw; Input = input; }
     }
-        public class Button
+    public class Button
     {
 
         public bool AllowedToBeDrawn = false;
@@ -197,15 +199,33 @@ namespace PlayingAround.ButtonsFolder
         public bool MouseHovered = false;
         public bool MouseClicked = false;
         public event Action Clicked;
+        public event Action ButtonUNSelected;
+        public event Action ButtonSelected;
+        public bool CurrentlySelected = false;
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, DrawRectangle, Color.White);
+            Color col = Color.White;
+            if (CurrentlySelected) col = Color.Red;
+            if (MouseHovered) col = Color.Blue;
+       
+            spriteBatch.Draw(Texture, DrawRectangle, col);
         }
         public void UpdateInput(Point mousePoint, bool leftPressedThisFrame)
         {
             MouseHovered = DrawRectangle.Contains(mousePoint);
-            if (MouseHovered && leftPressedThisFrame) Clicked?.Invoke();
+            if (MouseHovered && leftPressedThisFrame)
+            {
+                Clicked.Invoke();
+                if (CurrentlySelected)
+                {
+                    CurrentlySelected = false;
+                }
+                else
+                {
+                    CurrentlySelected = true;
+                }
+            }
         }
         public virtual bool TryGetPermission(CombatState state, out ButtonPermission perm)
         {
@@ -216,11 +236,12 @@ namespace PlayingAround.ButtonsFolder
         {
             MouseHovered = false;
             MouseClicked = false;
+            CurrentlySelected= false;
         }
         public void ResetPermissions()
         {
             AllowedToBeDrawn = false;
             AllowedToInputTrack = false;
         }
-
     }
+}

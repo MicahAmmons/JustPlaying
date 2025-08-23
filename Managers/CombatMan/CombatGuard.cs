@@ -29,7 +29,6 @@ namespace PlayingAround.Managers.CombatMan
         {
 
             _currentCombat = new CombatManager(playMonsters);
-            _currentCombat.OnCombatStateChange += OnCombatStateChange;
 
         }
         public static void Update(GameTime gameTime)

@@ -75,6 +75,7 @@ namespace PlayingAround
             DialogueBox.LoadContent();
             TriggerLibrary.LoadContent();
             CombatGuard.LoadContent();
+            TileCellManager.LoadContent(_spriteBatch);
 
 
         }

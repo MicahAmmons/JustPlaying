@@ -11,6 +11,11 @@ namespace PlayingAround.Managers.Tiles
     {
         private static List<TileCell> _activeVisualEffectCells = new List<TileCell>();
         private static List<TileCell> _activeAnimation = new List<TileCell>();
+        private static SpriteBatch _sb; 
+        public static void LoadContent(SpriteBatch spriteBatch)
+        {
+            _sb = spriteBatch;
+        }
         public static void Update(GameTime gameTime)
         {
             UpdateActiveAnimation(gameTime);
@@ -58,6 +63,14 @@ namespace PlayingAround.Managers.Tiles
         public static void AddCellVE(TileCell tileCell)
         {
             _activeVisualEffectCells.Add(tileCell);
+        }
+
+        internal static void DrawMovementHighlights(List<TileCell> moveableCells, Color walkable)
+        {
+            foreach (var cell in moveableCells)
+            {
+                cell.DrawCellHighlight(_sb, walkable, 5);
+            }
         }
     }
 

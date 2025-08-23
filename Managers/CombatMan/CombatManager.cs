@@ -99,7 +99,7 @@ namespace PlayingAround.Managers.CombatMan
             _combatUIManager = new CombatUIManager();
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
             _combatButtonManager = new CombatButtonManager();
-            _combatButtonManager.MoveButton.Clicked += OnMoveClicked;
+            _combatButtonManager.MoveButton.Clicked += PlayerClickedMoveButton;
             _combatButtonManager.AttackButton.Clicked += OnAttackClicked;
             _combatButtonManager.EndTurnButton.Clicked += OnEndTurnClicked;
             _combatButtonManager.SummonButton.Clicked += OnSummonClicked;
@@ -201,9 +201,6 @@ namespace PlayingAround.Managers.CombatMan
                 case CombatState.PlayerTurn:
                     DrawPlayerTurn(spriteBatch);
                     break;
-                case CombatState.AITurn:
-
-                    break;
                 case CombatState.SummonedTurn:
                     DrawSummonedTurn(spriteBatch);
                     break;
@@ -297,27 +294,20 @@ namespace PlayingAround.Managers.CombatMan
             foreach (var tile in _monsterSpawnableCells)
                 tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.MonsterStartable, 5);
         }
-        private void DrawEntityIdlePreviewOnCell(SpriteBatch spriteBatch, TileCell cell, ICombatant mon = null)
+        private void DrawEntityIdlePreviewOnCell(TileCell cell, ICombatant mon = null)
         {
             if (mon == null) mon = _currentCombatant;
             if (mon.CurrentStats.CurrentSelectedSummon != null)
             {
                 TileCellManager.AddActiveAnimationCell(cell);
-                cell.AddAnimation(spriteBatch, mon.CurrentStats.CurrentSelectedSummon.Value.ani);
+                cell.AddAnimation(mon.CurrentStats.CurrentSelectedSummon.Value.ani);
                 return;
             }
-            mon.DrawEntityCellPreview(spriteBatch, cell);
         }
         private void DrawPlayerTurn(SpriteBatch spriteBatch)
         {
-            DrawPlayerButtonOptions(spriteBatch);
             switch (StatePlayerTurn)
             {
-                case (PlayerTurnState.None):
-                    break;
-                case PlayerTurnState.PlayerClickedMoveButton:
-                    DrawPlayerClickedMoveButton(spriteBatch);
-                    break;
                 case PlayerTurnState.PlayerClickedSummonButton:
                     DrawPlayClickedSummonButton(spriteBatch);
                     break;
@@ -330,41 +320,31 @@ namespace PlayingAround.Managers.CombatMan
 
             }
         }
-        private void DrawButton(SpriteBatch spriteBatch, Rectangle rect, string label)
+
+
+        public void UpdateButtonLogic()
         {
-            spriteBatch.Draw(_playerCellOptions, rect, Color.Aqua);
-
-            Vector2 textSize = _font.MeasureString(label);
-            Vector2 textPosition = new Vector2(
-                rect.X + (rect.Width - textSize.X) / 2,
-                rect.Y + (rect.Height - textSize.Y) / 2
-            );
-
-            spriteBatch.DrawString(_font, label, textPosition, Color.White);
+            if (_combatButtonManager.MoveButton.CurrentlySelected) PlayerClickedMoveButton();
+            if (_combatButtonManager.SummonButton.CurrentlySelected) PlayerClickedSummonButton();
         }
-        private void DrawPlayerButtonOptions(SpriteBatch spriteBatch)
+        public void PlayerClickedMoveButton()
         {
-            DrawButton(spriteBatch, _moveRect, "Move");
-            DrawButton(spriteBatch, _summonRect, "Summon");
-            DrawButton(spriteBatch, _endTurnRect, "End Turn");
+            bool selected = _combatButtonManager.MoveButton.CurrentlySelected;
 
-        }
-        public void DrawPlayerClickedMoveButton(SpriteBatch spriteBatch)
-        {
-            ICombatant mon = _currentCombatant;
             if (_currentCombatant.CurrentStats.MP > 0)
             {
-                foreach (var cell in mon.MoveableCells)
+                if (selected)
                 {
-                    cell.DrawCellHighlight(spriteBatch, _cellHighlightColors.Walkable, 5);
-                }
-
-                if (_currentMouseHoverCell != null && mon.MoveableCells.Contains(_currentMouseHoverCell))
-                {
-                    DrawEntityIdlePreviewOnCell(spriteBatch, _currentMouseHoverCell);
+                    TileCellManager.DrawMovementHighlights(_currentCombatant.MoveableCells, _cellHighlightColors.Walkable);
+                    if (_currentCombatant.MoveableCells.Contains(_currentMouseHoverCell)) { DrawEntityIdlePreviewOnCell(_currentMouseHoverCell); }
                 }
             }
         }
+        public void PlayerClickedSummonButton()
+        {
+
+        }
+
         private void DrawPlayClickedSummonButton(SpriteBatch spriteBatch)
         {
             ICombatant mon = _currentCombatant;
@@ -519,6 +499,7 @@ namespace PlayingAround.Managers.CombatMan
             ToggleIsDead(); // toggles ISDead as well as clears aspects
             UpdateTurnOrder();
             UpdateMonsterCellMap();
+            UpdateButtonLogic();
             if (WinnerChosen())
             {
                 SetCombatState(CombatState.WinnerChosen);

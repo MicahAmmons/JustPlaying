@@ -95,7 +95,7 @@ namespace PlayingAround.Game.Map
             }
         }
         private float _removeAnimationTimer = 0f;
-        public void AddAnimation(SpriteBatch spriteBatch, AnimationData ani)
+        public void AddAnimation(AnimationData ani)
         {
             _removeAnimationTimer = 0;
             if (AnimationManager == null)
