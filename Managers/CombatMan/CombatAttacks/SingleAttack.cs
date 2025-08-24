@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.ActFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
@@ -16,35 +17,31 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
     public class SingleAttack
     {
         public AttackName Name { get; set; }
-        public Texture2D Icon { get; set; }
-        public ElementType ElementDamage { get; set; } = ElementType.None;
-        public int Range { get; set; }
-        public string Aspect { get; set; }
         public int MinDamage { get; set; }
         public int MaxDamage { get; set; }
-        public bool IsFinished { get; set; } = false;
-        public float VisualVelocity { get; set; }
-        public bool Animated { get; set; } = false;
-         public VisualTiming VisualTiming { get; set; } 
-        public string WhenApplyAspect { get; set; }
-        public Dictionary<ICombatant, TileCell> ActiveTargetMap { get; set; } 
+        public int Range { get; set; }
+        public string Aspect { get; set; }
         public List<CombatMonsterType> TargetType { get; set; } = new List<CombatMonsterType>();
-        public VisualEffect Visual {  get; set; }
-        public List<TileCell> CellsWithinRange { get; set; } = new List<TileCell>();
+        public ElementType ElementDamage { get; set; } = ElementType.None;
+
+        public int AttackPerformedFrame { get; set; }
+        public AnimationState AttackUpAnimation { get; set; }
+        public AnimationState AttackDownAnimation { get; set; }
+
+        public bool IsFinished { get; set; } = false;
+
        
-        public SingleAttack (AttackName name, SingleAttackData data, ElementType element = ElementType.None)
+        public SingleAttack (SingleAttackData data )
         {
-            Name = name;
-            ElementDamage = element == ElementType.None ? ElementType.Normal : element;
+            Name = data.AttackName;
+            ElementDamage = data.ElementType;
             Range = data.Range;
             Aspect = data.Aspect;
             MinDamage = data.BaseDamageMin;
             MaxDamage = data.BaseDamageMax;
-            VisualVelocity = data.VisualVelocity > 0? data.VisualVelocity: 200f;
-            Animated = data.Animated;
-            VisualTiming = data.VisualTiming;
-            WhenApplyAspect = data.WhenApplyEffect;
-
+            AttackPerformedFrame = data.AttackPerformedFrame;
+            AttackUpAnimation = data.AttackUpAnimation;
+            AttackDownAnimation = data.AttackDownAnimation;
             if (data.TargetType.Count > 0)
             {
                 foreach (var tar in data.TargetType)
@@ -52,43 +49,6 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                     TargetType.Add(tar);
                 }
             }
-            if (data.AttackHasIcon)
-                Icon = AssetManager.GetTexture($"{Name}");
-            ActiveTargetMap = new Dictionary<ICombatant, TileCell>();
-        }
-        public void UpdateTargetMap(TileCell currentCell)
-        {
-            ActiveTargetMap.Clear();
-
-            var allMaps = new[] {
-               CombatGuard.CurrentCombat.PlayerControlledMonsterMap,
-               CombatGuard.CurrentCombat.AIControlledMonsterMap
-            };
-
-            foreach (var map in allMaps)
-            {
-                foreach (var (combatant, cell) in map)
-                {
-                    if (combatant == null || cell == null || combatant.isDead)
-                        continue;
-                    if (!TargetType.Contains(combatant.Is))
-                        continue;
-                    if (cell == currentCell && !TargetType.Contains(CombatMonsterType.Self))
-                        continue;
-                    if (TileManager.CheckManhattanDistance(currentCell, cell) <= Range)
-                    {
-                        ActiveTargetMap[combatant] = cell;
-                    }
-                }
-            }
-        }
-
-
-        public void SetAttackRangeOptions(TileCell cell)
-        {
-            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(cell, Range);
-            var cellsWalkable = cells.Where(cell => cell.IsWalkable).ToList();
-            CellsWithinRange = cellsWalkable;
         }
     }
 

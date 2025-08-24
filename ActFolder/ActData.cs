@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayingAround.Managers.CombatMan.CombatAttacks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,7 @@ namespace PlayingAround.ActFolder
     public class SpecificActData
     {
         public ActType Type { get; set; }
-        public AttackName AttackName { get; set; }
-        public ElementType ElementType { get; set; }
+        public SingleAttackData AttackData { get; set; }
         public ActionTarget ActionTarget { get; set; }
         public MovementAmount MovementAmount { get; set; }
     }

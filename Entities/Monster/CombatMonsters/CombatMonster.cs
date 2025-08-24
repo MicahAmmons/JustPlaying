@@ -8,8 +8,6 @@ using PlayingAround.Game.Pathfinding;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
-using PlayingAround.Managers.CombatMan;
-using PlayingAround.Managers.CombatMan.ActionLibrary;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
@@ -57,6 +55,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool StartOfTurnEffectsResolved { get; set; } = false;
         public bool EndOfTurnEffectsResolved { get; set; } = false;
         public bool ExecutingSummon { get; set; } = false;
+        public bool ExecutingAttack { get; set; } = false;
+
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
@@ -77,7 +77,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Resistances = ResistanceManager.GetResistances(ElementType),
                 AttackPath1 = new List<Vector2>(),
                 AttackPath2 = new List<Vector2>(),
-                Actions = new List<AiAction>()
             };
 
             ActController = new ActController(data.ActionOrder);
@@ -186,7 +185,19 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
+            UpdateAct(delta);
             MovementController.Update(gameTime);
+        }
+        public void UpdateAct(float delta)
+        {
+            if (AttackAct != null)
+            {
+                Vector2 currentPos = MovementController.CurrentPos;
+                Vector2 targetPos = AttackAct.EffectedTargets.First().Key.MovementController.CurrentPos;
+                Vector2 direction = currentPos - targetPos;
+                direction.Normalize();
+                MovementController.SetAttackAnimation(direction);
+            }
         }
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
@@ -220,17 +231,18 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
 
         }
-        public void BeginAct(AttackAct act)
+        public void BeginAct(Act act)
         {
+            switch (act.ActType)
+            {
+                case ActType.Attack:
+                    ExecutingAttack = true;
+                    AttackAct = (AttackAct)act;
+                    break;
+                case ActType.Move:
 
-        }
-        public void BeginAct(MoveAct act)
-        {
-
-        }
-        public void BeginAct(SummonAct act)
-        {
-
+                    break;
+            }
         }
         public void SpendActionPoint()
         {

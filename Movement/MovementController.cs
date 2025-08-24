@@ -91,6 +91,16 @@ namespace PlayingAround.Movement
         {
                 CurrentAnimationState = AnimationState.Idle;
         }
+        public void SetAttackAnimation(Vector2 direction)
+        {
+            SetFacingDirection(direction);
+            CurrentAnimationState = VerticalFacingDirection switch
+            {
+                Direction.Up => AnimationState.AttackUp,
+                Direction.Down => AnimationState.AttackDown,
+                _ => CurrentAnimationState
+            };
+        }
 
 
         private void OnStartMoveOneTile()

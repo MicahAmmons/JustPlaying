@@ -12,17 +12,15 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
     public class SingleAttackData
     {
-
+        public AttackName AttackName {  get; set; }
         public int BaseDamageMin {  get; set; }
         public int BaseDamageMax { get; set; }
-        public bool AttackHasIcon { get; set; } = false;
         public int Range {  get; set; }
-        public string Aspect { get; set; }
-        public string Strength { get; set; }
-        public string WhenApplyEffect { get; set; }
-        public VisualTiming VisualTiming { get; set; }
-        public int VisualVelocity { get; set; }
-        public bool Animated { get; set; }
+        public string Aspect { get; set; } = null;
         public List<CombatMonsterType> TargetType { get; set; }
+        public ElementType ElementType { get; set; }
+        public int AttackPerformedFrame { get; set; }
+        public AnimationState AttackUpAnimation { get; set; }
+        public AnimationState AttackDownAnimation { get; set; }
     }
 }

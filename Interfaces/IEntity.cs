@@ -29,7 +29,6 @@ namespace PlayingAround.Interfaces
     public interface IAnimatable : IDrawn
     {
         public MovementController MovementController {  get; }
-        public bool ExecutingMove {  get; }
         public void FinishedAllMovement();
         public void IsCurrentlyMoving();
     }
@@ -46,25 +45,23 @@ namespace PlayingAround.Interfaces
         public bool StartOfTurnEffectsResolved { get; set; }
         public bool EndOfTurnEffectsResolved { get; set; }
         public bool ExecutingSummon { get; set; }
+        public bool ExecutingAttack { get; set; }
+        public bool ExecutingMove { get; set; }
         public ActController ActController { get; set; }
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
-        public CombatState? DecideAction();
         public void SpendActionPoint();
-        bool IsAttackComplete();
-        public void SetCurrentEffected(ICombatant combatant, TileCell cell);
         void PerformAttack();
         void ApplyAspect(string aspect, ElementType elementDamage);
         void ApplyDamage(float damage, ElementType elementDamage);
-        public void CreateNewAttackVisual();
         public void ClearAttackCycle();
         public void SetCombatantAttackPathingInformation();
         public void ResolveEffects(TickedTiming endOfTurn);
         public void ClearAllAspects();
         public void UpdateCombatPosition(int pos);
         public void FinishedMovingOneTile();
-        void BeginAttackAct(Act act);
-        void BeginAct(Act act);
+        public void BeginAct(Act act);
+
     }
 
 

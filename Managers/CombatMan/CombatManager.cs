@@ -540,7 +540,7 @@ namespace PlayingAround.Managers.CombatMan
                     break;
 
                 case CombatState.ExecutingAttack:
-
+                    if (!_currentCombatant.ExecutingAttack) SetCombatState(CombatState.TopOfAction);
                     break;
                 case CombatState.ExecutingMove:
                     if (!_currentCombatant.ExecutingMove) SetCombatState(CombatState.TopOfAction);

@@ -23,21 +23,11 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
     public static class AttackManager
     {
-
-
-        private static Dictionary<AttackName, SingleAttackData> _attackData;
-
         public static void LoadContent()
         {
 
-            _attackData = JsonLoader.LoadAttackData();
-           
-        }
-        public static SingleAttack GetAttack(AttackName name, ElementType element = ElementType.None)
-        {
-            var dataCopy = DeepCopyHelper.DeepCopy(_attackData[name]);
-            return new SingleAttack(name, dataCopy, element);
 
+           
         }
         public static void PerformAttack(SingleAttack attack, ICombatant target)
         {

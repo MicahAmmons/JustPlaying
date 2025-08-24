@@ -173,8 +173,6 @@ public enum AnimationState
     WalkUp,
     WalkDown,
     Idle,
-    SlamUp,
-    SlamDown,
     AttackUp,
     AttackDown,
 }
