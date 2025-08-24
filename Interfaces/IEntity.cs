@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.ActFolder;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
@@ -45,6 +46,7 @@ namespace PlayingAround.Interfaces
         public bool StartOfTurnEffectsResolved { get; set; }
         public bool EndOfTurnEffectsResolved { get; set; }
         public bool ExecutingSummon { get; set; }
+        public ActController ActController { get; set; }
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
         public CombatState? DecideAction();
@@ -61,7 +63,8 @@ namespace PlayingAround.Interfaces
         public void ClearAllAspects();
         public void UpdateCombatPosition(int pos);
         public void FinishedMovingOneTile();
-
+        void BeginAttackAct(Act act);
+        void BeginAct(Act act);
     }
 
 

@@ -84,7 +84,10 @@
         "Type": "Attack",
         "AttackName": "Slam",
         "ElementType": "Ice",
-        "ActionTarget": "ClosestEnemy"
+        "ActionTarget": "ClosestEnemy",
+        "AttackPerformedFrame": 21,
+        "UpAnimation": "AttackUp",
+        "DownAnimation"
       },
       {
         "Action": "Move",

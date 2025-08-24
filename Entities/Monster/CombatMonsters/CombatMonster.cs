@@ -12,6 +12,7 @@ using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.ActionLibrary;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
@@ -52,7 +53,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public int PositionInOrder { get; set; }
         public MovementController MovementController { get; set; }
-        public bool ExecutingMove { get; set; } = false;
+        public AttackAct AttackAct { get; set; } = null;
         public bool StartOfTurnEffectsResolved { get; set; } = false;
         public bool EndOfTurnEffectsResolved { get; set; } = false;
         public bool ExecutingSummon { get; set; } = false;
@@ -219,24 +220,17 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
 
         }
-        public CombatState? DecideAction()
+        public void BeginAct(AttackAct act)
         {
-            while (CurrentStats.Actions.Count > 0)
-            {
-                AiAction action = CurrentStats.Actions[0];
-                AiActionType type = action.Action;
 
-                var executor = ActionLibrary.Executors[type];
-                bool success = executor(action, this);
-                if (success)
-                {
-                    SpendActionPoint();
-                    var turnState = ActionLibrary.ActionStates[type];
-                    return turnState;
-                }
-                CurrentStats.Actions.RemoveAt(0);
-            }
-            return null;
+        }
+        public void BeginAct(MoveAct act)
+        {
+
+        }
+        public void BeginAct(SummonAct act)
+        {
+
         }
         public void SpendActionPoint()
         {
@@ -261,80 +255,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             }
             else return false;
             return true;
-        }
-        private List<TileCell> GetCombatMapHelper(string combatants)
-        {
-            List<TileCell> list = new();
-            switch (combatants)
-            {
-                case "Player":
-
-                    break;
-                case "Summons":
-
-                    break;
-                case "PlayerControlled":
-                    list = CombatGuard.CurrentCombat.PlayerControlledMonsterMap
-                     .Select(pair => pair.Value)
-                     .Where(cell => cell != null)
-                     .ToList();
-                    break;
-                case "AI":
-
-                    break;
-            }
-            return list;
-        }
-        public bool AttackClosestEnemy(AttackName attName)
-        {
-            foreach (var att in Attacks)
-            {
-                if (att.Name == attName)
-                {
-                    CurrentStats.Attack = att;
-                    break;
-                }
-            }
-
-            //Find the closest Target
-            int dist = int.MaxValue;
-            ICombatant combatant = null;
-            TileCell cell = null;
-            foreach (var kvp in CurrentStats.Attack.ActiveTargetMap)
-            {
-                ICombatant comb = kvp.Key;
-                TileCell cells = kvp.Value;
-                int distance = TileManager.CheckManhattanDistance(TileManager.GetCell(MovementController.CurrentPos), cells);
-                if (distance < dist)
-                {
-                    dist = distance;
-                    combatant = comb;
-                    cell = cells;
-                }
-            }
-            if (combatant == null || cell == null) return false;
-            SetCurrentEffected(combatant, cell);
-            SetCombatantAttackPathingInformation();
-            return true;
-        }
-        public void SetCurrentEffected(ICombatant combatant, TileCell cell)
-        {
-            CurrentStats.AttackEffectedCombatants = combatant;
-            CurrentStats.AttackEffectedCells = cell;
-        }
-        public void SetCombatantAttackPathingInformation()
-        {
-            SingleAttack att = CurrentStats.Attack;
-            ICombatant target = CurrentStats.AttackEffectedCombatants;
-            TileCell cell = CurrentStats.AttackEffectedCells;
-
-            List<Vector2> fullPath = NPCMovement.GetMovementPatternVector2List(DrawSpecifics.MovementPattern, TileManager.GetCell(MovementController.CurrentPos), cell);
-            var paths = GridMovement.SplitAttackPath(fullPath);
-            if (att.Name == AttackName.Slam)
-            {
-                CurrentStats.AttackPath1 = paths.Item1;
-                CurrentStats.AttackPath2 = paths.Item2;
-            }
         }
         public void PerformAttack()
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.ActFolder;
 using PlayingAround.AnimationFolder;
 using PlayingAround.ButtonsFolder;
 using PlayingAround.Data.SaveData;
@@ -22,6 +23,7 @@ using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using static CombatStateMachine;
 
 namespace PlayingAround.Managers.CombatMan
@@ -79,13 +81,12 @@ namespace PlayingAround.Managers.CombatMan
 
         private List<TileCell> _summonSpawnableCells;
         private ICombatant _currentCombatant;
+        public ICombatant CurrentCombatant => _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
         private float _timer = 0;
 
-        private CombatButtonManager _combatButtonManager;
-
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
-
+        private ActManager _actManager;
 
 
 
@@ -98,12 +99,7 @@ namespace PlayingAround.Managers.CombatMan
             _font = AssetManager.GetFont("mainFont");
             _combatUIManager = new CombatUIManager();
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
-            _combatButtonManager = new CombatButtonManager();
-            _combatButtonManager.MoveButton.Clicked += PlayerClickedMoveButton;
-            _combatButtonManager.AttackButton.Clicked += OnAttackClicked;
-            _combatButtonManager.EndTurnButton.Clicked += OnEndTurnClicked;
-            _combatButtonManager.SummonButton.Clicked += OnSummonClicked;
-
+            _actManager = new ActManager();
 
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
@@ -193,6 +189,7 @@ namespace PlayingAround.Managers.CombatMan
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             bool endingScreen = false;
+            _actManager.Draw(spriteBatch);
             switch (StateCombat)
             {
                 case CombatState.LocationSelection:
@@ -324,8 +321,7 @@ namespace PlayingAround.Managers.CombatMan
 
         public void UpdateButtonLogic()
         {
-            if (_combatButtonManager.MoveButton.CurrentlySelected) PlayerClickedMoveButton();
-            if (_combatButtonManager.SummonButton.CurrentlySelected) PlayerClickedSummonButton();
+            
         }
         public void PlayerClickedMoveButton()
         {
@@ -500,6 +496,7 @@ namespace PlayingAround.Managers.CombatMan
             UpdateTurnOrder();
             UpdateMonsterCellMap();
             UpdateButtonLogic();
+            _actManager.Update();
             if (WinnerChosen())
             {
                 SetCombatState(CombatState.WinnerChosen);
@@ -535,11 +532,10 @@ namespace PlayingAround.Managers.CombatMan
 
                 case CombatState.ActionNavigation:
                     if (CheckIfAIShouldEndTurn()) {SetCombatState(CombatState.EndingTurn); return; }
-                    if (_currentCombatant.DecideAction() is CombatState state)
-                    {
-                        SetCombatState(state);
-                        break;
-                    }
+
+                    CombatState? state = _actManager.DecideNextAct();
+                    if (state != null) {SetCombatState((CombatState)state); break;}
+
                     SetCombatState(CombatState.EndingTurn);
                     break;
 

@@ -1,22 +1,22 @@
 ﻿using PlayingAround.Entities.Monster.CombatMonsters;
-using PlayingAround.Managers.CombatMan.ActionLibrary;
 using System.Collections.Generic;
 using System;
 using static CombatStateMachine;
+using PlayingAround.ActFolder;
 
 public static class ActionLibrary
 {
-    public static readonly Dictionary<AiActionType, Func<AiAction, CombatMonster, bool>> Executors =
+    public static readonly Dictionary<AiActionType, Func<ActType, CombatMonster, bool>> Executors =
         new()
         {
-            { AiActionType.Attack, ExecuteAttack },
-            { AiActionType.Move, ExecuteMove }
+            { ActType.Attack, ExecuteAttack },
+            { ActType.Move, ExecuteMove }
         };
-    public static readonly Dictionary<AiActionType, CombatState> ActionStates =
+    public static readonly Dictionary<ActType, CombatState> ActionStates =
         new()
         {
-            { AiActionType.Attack, CombatState.ExecutingAttack },
-            { AiActionType.Move, CombatState.ExecutingMove }
+            { ActType.Attack, CombatState.ExecutingAttack },
+            { ActType.Move, CombatState.ExecutingMove }
         };
 
     private static readonly Dictionary<ActionTarget, Func<CombatMonster, AttackName, bool>> AttackExecutors =
@@ -35,14 +35,14 @@ public static class ActionLibrary
            // { MovementAmount.Fixed,  (monster, target) => monster.MoveTowardTargetFixed(target, 3) }
         };
     
-    private static bool ExecuteAttack(AiAction action, CombatMonster monster)
+    private static bool ExecuteAttack(Act action, CombatMonster monster)
     {
         
         var executor = AttackExecutors[action.Target];
         return executor(monster, action.Attack.Value);
     }
 
-    private static bool ExecuteMove(AiAction action, CombatMonster monster)
+    private static bool ExecuteMove(Act action, CombatMonster monster)
     {
         var executor = MoveExecutors[action.MovementAmount.Value];
         return executor(monster, action.Target);
