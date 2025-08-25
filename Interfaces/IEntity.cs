@@ -30,14 +30,13 @@ namespace PlayingAround.Interfaces
     {
         public MovementController MovementController {  get; }
         public void FinishedAllMovement();
-        public void IsCurrentlyMoving();
+
     }
     public interface ICombatant : IAnimatable
     {
         public BaseCombatStats BaseStats { get; }
         public CurrentCombatStats CurrentStats { get; }
         public List<Aspect> Aspects { get; }
-        public List<SingleAttack> Attacks { get; }
         public bool isDead { get; set; }
         public List<TileCell> MoveableCells { get; set; }
         public CombatMonsterType Is {  get; set; }
@@ -54,13 +53,13 @@ namespace PlayingAround.Interfaces
         void PerformAttack();
         void ApplyAspect(string aspect, ElementType elementDamage);
         void ApplyDamage(float damage, ElementType elementDamage);
-        public void ClearAttackCycle();
-        public void SetCombatantAttackPathingInformation();
         public void ResolveEffects(TickedTiming endOfTurn);
         public void ClearAllAspects();
         public void UpdateCombatPosition(int pos);
         public void FinishedMovingOneTile();
         public void BeginAct(Act act);
+
+
 
     }
 

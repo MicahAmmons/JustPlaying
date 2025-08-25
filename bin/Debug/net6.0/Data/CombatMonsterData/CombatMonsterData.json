@@ -76,23 +76,29 @@
         ]
       }
     },
-    "AttackData": {
-      "Slam": "Ice"
-    },
-    "ActionOrder": [
-      {
-        "Action": "Attack",
-        "Attack": "Slam",
-        "Target": "ClosestEnemy"
-      },
-      {
-        "Action": "Move",
-        "MovementAmount": "FullMP",
-        "Target": "ClosestEnemy"
-      }
-    ],
-    "DecideWhichAttack": [
-      "ShortestRange"
-    ]
-  }
+   
+      "ActionOrder": [
+        {
+          "Type": "Attack",
+          "ActionTarget": "ClosestEnemy",
+          "AttackData":
+            {
+                "AttackName": "Slam",
+                "TargetType": [ "Player", "Summoned" ],
+                "BaseDamageMin": 1,
+                "BaseDamageMax": 3,
+                "Range": 1,
+                "ElementType": "Ice",
+                "AttackPerformedFrame": 21,
+                "AttackUpAnimation": "AttackUp",
+                "AttackDownAnimation": "AttackDown"
+            }
+        },
+        {
+          "Type": "Move",
+          "MovementAmount": "FullMP",
+          "Target": "ClosestEnemy"
+        }
+      ]
+    }
 }

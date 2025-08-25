@@ -95,7 +95,7 @@
             }
         },
         {
-          "Action": "Move",
+          "Type": "Move",
           "MovementAmount": "FullMP",
           "Target": "ClosestEnemy"
         }

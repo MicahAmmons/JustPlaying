@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using PlayingAround.ActFolder;
 using PlayingAround.AnimationFolder;
 using PlayingAround.ButtonsFolder;
 using PlayingAround.Data.SaveData;
@@ -48,6 +49,8 @@ namespace PlayingAround.Entities.Player
         public bool StartOfTurnEffectsResolved { get; set; } = false;
         public bool EndOfTurnEffectsResolved { get; set; } = false;
         public bool ExecutingSummon { get; set; } = false;
+        public bool ExecutingAttack { get; set ; }
+        public ActController ActController { get; set; }
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -229,13 +232,7 @@ namespace PlayingAround.Entities.Player
         }
         public void UpdateTopOfActionStats()
         {
-            CurrentStats.MP = BaseStats.MP;
-            CurrentStats.Actions.Clear();
-        
-        }
-        public CombatStateMachine.AITurnState? DecideAction()
-        {
-            throw new NotImplementedException();
+            CurrentStats.MP = BaseStats.MP;        
         }
         public void SpendActionPoint()
         {
@@ -243,8 +240,14 @@ namespace PlayingAround.Entities.Player
         }
 
         public void ResolveEffects(TickedTiming ticked)
-        { 
-                if (Aspects.Count == 0) return;
+        {
+
+            if (Aspects.Count == 0)
+            {
+                if (ticked == TickedTiming.EndOfTurn) { EndOfTurnEffectsResolved = true; }
+                if (ticked == TickedTiming.StartOfTurn) { StartOfTurnEffectsResolved = true; }
+                return;
+            }
                 foreach (var aspect in Aspects)
                 {
                     if (aspect.WhenTicked != ticked) continue;
@@ -255,7 +258,10 @@ namespace PlayingAround.Entities.Player
                     }
                     if (aspect.Duration == 0) Aspects.Remove(aspect);
                 }
-            StartOfTurnEffectsResolved = true;
+            if (ticked == TickedTiming.EndOfTurn) { EndOfTurnEffectsResolved = true; }
+            if (ticked == TickedTiming.StartOfTurn) { StartOfTurnEffectsResolved = true; }
+
+
         }
         public bool IsAttackComplete()
         {
@@ -351,9 +357,10 @@ namespace PlayingAround.Entities.Player
             ExecutingMove = true;
         }
 
-      
-            
-        
+        public void BeginAct(Act act)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

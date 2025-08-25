@@ -45,33 +45,19 @@ namespace PlayingAround.ButtonsFolder
                 b.ResetPermissions();
             }
         }
-        public void ApplyPermissions(CombatState state)
-        {
-            foreach (var b in _buttons)
-            {
-                b.ResetPermissions();
-                if (b.TryGetPermission(state, out var p))
-                {
-                    b.AllowedToBeDrawn = p.Draw;
-                    b.AllowedToInputTrack = p.Input;
-                }
-            }
-        }
-        public CombatButtonManager()
-        {
-            MoveButton = new MoveButton();
-            AttackButton = new AttackButton();
-            EndTurnButton = new EndTurnButton();
-            SummonButton = new SummonButton();
+        //public void ApplyPermissions(CombatState state)
+        //{
+        //    foreach (var b in _buttons)
+        //    {
+        //        b.ResetPermissions();
+        //        if (b.TryGetPermission(state, out var p))
+        //        {
+        //            b.AllowedToBeDrawn = p.Draw;
+        //            b.AllowedToInputTrack = p.Input;
+        //        }
+        //    }
+        //}
 
-            _buttons.AddRange(new Button[]
-            {
-                    MoveButton,
-                    AttackButton,
-                    EndTurnButton,
-                    SummonButton
-            });
-        }
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var b in _buttons)

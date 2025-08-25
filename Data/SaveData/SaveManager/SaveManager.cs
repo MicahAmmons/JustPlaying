@@ -106,7 +106,6 @@ public class SaveManager
        
         PlayMonsterManager.LoadContent(); // Loads Play Monster Data
         AspectManager.LoadAspects(); // Load Aspect Data
-        AttackManager.LoadContent(); //Loads attack data
         CombatMonsterManager.LoadContent(); // Loads Combat Monster Data
         TileManager.Initialize(CurrentGameSaveData.MapTile.CurrentTileId);
         SceneManager.SetState(SceneState.Play);

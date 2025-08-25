@@ -37,6 +37,7 @@ namespace PlayingAround.ActFolder
         }
         public void Draw(SpriteBatch sb)
         {
+            if (_actController == null) return;
             _actController.DrawButtons(sb);
         }
         public void Update()
@@ -66,7 +67,6 @@ namespace PlayingAround.ActFolder
             }
             return null;
         }
-
         public CombatState StateHelper(ActType type)
         {
             switch (type)
@@ -83,7 +83,6 @@ namespace PlayingAround.ActFolder
             _confirmedAct = _actController.ConfirmedAct;
             _actController.ResetController();
         }
-
     }
 
     public class ActController
@@ -99,9 +98,9 @@ namespace PlayingAround.ActFolder
         int y = (ViewportManager.ScreenHeight - ButtonSize - Buffer);
 
 
-        public ActController(ActData data)
+        public ActController(List<SpecificActData> data)
         {
-            foreach (var act in data.ActionOrder)
+            foreach (var act in data)
             {
                 switch (act.Type)
                 {

@@ -22,7 +22,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public DrawSpecificStats DrawSpecifics { get; set; } = new DrawSpecificStats() { IsFlashingRed = false};
         public AnimationData AnimationData { get; set; }
 
-        public ActData ActionOrder { get; set; } 
+        public List<SpecificActData> ActionOrder { get; set; }
     }
     public class BaseCombatStats
     {
@@ -62,13 +62,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int Health { get; set; }
 
         public Dictionary<ElementType, float> Resistances { get; set; }
-        public List<Vector2> AttackPath1 { get; set; } = null;
-        public List<Vector2> AttackPath2 { get; set; } = null;
-        public SingleAttack Attack { get; set; } = null;
-        public ICombatant AttackEffectedCombatants { get; set; } = null;
-        public TileCell AttackEffectedCells { get; set; } = null;
-        public List<AiAction> Actions { get; set; }
-        public ElementType ElementType { get; set; }
         public (string name, AnimationData ani)? CurrentSelectedSummon {  get; set; }
 
     }

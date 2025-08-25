@@ -41,13 +41,11 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public CurrentCombatStats CurrentStats { get; set; }
         public DrawSpecificStats DrawSpecifics { get; set; }
         public List<Aspect> Aspects { get; set; } = new List<Aspect>();
-        public List<SingleAttack> Attacks { get; set; } = new List<SingleAttack> { };
         public CombatMonsterType CombatantIs { get; set; }
         public bool isDead { get; set; } = false;
         public Texture2D Icon { get; set; }
         public CombatMonsterType Is { get; set; }
         public ActController ActController { get; set; }
-        public Direction FacingDirection { get; set; } = Direction.Right;
         public List<TileCell> MoveableCells { get; set; } = new List<TileCell> { };
         public int PositionInOrder { get; set; }
         public MovementController MovementController { get; set; }
@@ -77,8 +75,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 AP = BaseStats.AP,
                 MP = BaseStats.MP,
                 Resistances = ResistanceManager.GetResistances(ElementType),
-                AttackPath1 = new List<Vector2>(),
-                AttackPath2 = new List<Vector2>(),
             };
 
             ActController = new ActController(data.ActionOrder);
@@ -182,7 +178,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             Rectangle rect = new Rectangle((int)drawPoint.X, (int)drawPoint.Y - DrawSpecifics.Height / 2, DrawSpecifics.Width, DrawSpecifics.Height);
             spriteBatch.Draw(Icon, rect, Color.White);
         }
-
         public void Update(GameTime gameTime, float delta)
         {
             UpdateMonsterTakingDamage(gameTime);
@@ -217,7 +212,17 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             if (MoveAct != null)
             {
                 MovementController.SetMovePath(MoveAct.ActMovementCellPath);
+                MoveAct = null;
             }
+        }
+        public void FinishedAllMovement()
+        {
+            ExecutingMove = false;
+            MovementController.ClearMovementPath();
+        }
+        public void IsCurrentlyMoving()
+        {
+            ExecutingMove = true;
         }
         public void PerformAttack()
         {
@@ -246,21 +251,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         }
         public void UpdateTopOfActionStats()
         {
-            switch (Is)
-            {
-                case CombatMonsterType.AI:
-                    CurrentStats.Actions.Clear();
-                    if (Is == CombatMonsterType.AI)
-                    {
-                        foreach (var str in BaseStats.ActionOrder)
-                        {
-                            CurrentStats.Actions.Add(str);
-                        }
-                    }
-                    break;
-                case CombatMonsterType.Summoned:
-                    break;
-            }
 
         }
         public void BeginAct(Act act)
@@ -282,12 +272,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CurrentStats.AP -= 1;
         }
 
-        public bool IsAttackComplete()
-        {
-            if (CurrentStats.Attack.Visual != null && !CurrentStats.Attack.Visual.IsFinished) return false;
-            return (CurrentStats.AttackPath1.Count == 0 && CurrentStats.AttackPath2.Count == 0 && MovementController.TileMovePath.Count == 0 && CurrentStats.Attack.IsFinished);
-          
-        }
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
             Aspect asp = AspectManager.GetAspect(aspect, elementDamage);
@@ -332,21 +316,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     return new Vector2(leftX, topY + RandomHut.rng.Next(height));
             }
         }
-        public void ResolveAspects(TickedTiming ticked)
-        {
-
-            if (Aspects.Count == 0) return;
-            foreach (var aspect in Aspects)
-            {
-                if (aspect.WhenTicked != ticked) continue;
-                    if (aspect.IsDamage)
-                    {
-                        ApplyDamage(aspect.Damage, aspect.DamageType);
-                        aspect.Duration -= 1;
-                    }
-                if (aspect.Duration == 0) Aspects.Remove(aspect);
-            }
-        }
         public void ClearAllAspects()
         {
             Aspects.Clear();
@@ -354,6 +323,24 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void UpdateCombatPosition(int pos)
         {
             PositionInOrder = pos;
+        }
+
+
+        public void ResolveEffects(TickedTiming ticked)
+        {
+            if (Aspects.Count == 0) return;
+            foreach (var aspect in Aspects)
+            {
+                if (aspect.WhenTicked != ticked) continue;
+                if (aspect.IsDamage)
+                {
+                    ApplyDamage(aspect.Damage, aspect.DamageType);
+                    aspect.Duration -= 1;
+                }
+                if (aspect.Duration == 0) Aspects.Remove(aspect);
+            }
+            if (ticked == TickedTiming.EndOfTurn) { EndOfTurnEffectsResolved = true; }
+            if (ticked == TickedTiming.StartOfTurn) { StartOfTurnEffectsResolved = true; }
         }
     }
     public enum CombatMonsterType
