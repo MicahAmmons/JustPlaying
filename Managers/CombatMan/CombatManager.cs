@@ -407,6 +407,7 @@ namespace PlayingAround.Managers.CombatMan
                     break;
             }
         }
+
         private void UpdateCombatantCount()
         {
             if (TotalCombatants != TurnOrder.Count)
@@ -504,6 +505,7 @@ namespace PlayingAround.Managers.CombatMan
                 {
                     _currentPlayer.MovementController.SetCurrentPos(_currentMouseHoverCell.CenterPoint);
                     _currentPlayer.MovementController.ToggleAllowedToBeDrawn(true);
+                    _currentPlayer.CreateNewActController();
                     SetCombatState(CombatState.TurnStart);
                 }
 

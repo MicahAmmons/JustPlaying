@@ -100,6 +100,10 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadEffect("Smoke", "Shaders/Smoke");
         }
 
+        public static void LoadActIcons()
+        {
+            AssetManager.LoadTexture("MoveActIcon", "ActIcons/MoveActIcon");
+        }
     }
 
 

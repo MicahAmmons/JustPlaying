@@ -1,4 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/ActIcons/MoveActIcon.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/ActIcons/MoveActIcon.xnb","TextureProcessor","Texture2DContent",53215,102957,0.0863418
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Aspects/AcidIcon.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Aspects/AcidIcon.xnb","TextureProcessor","Texture2DContent",1225434,4194389,0.201808
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Attacks/Spit.png","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Attacks/Spit.xnb","TextureProcessor","Texture2DContent",1463704,4194389,0.0925709
 "C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont","C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/mainFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.09267

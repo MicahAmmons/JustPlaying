@@ -33,6 +33,7 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadShaders();
             AssetLoader.LoadPlayerSpriteSheets();
             AssetLoader.LoadMiscMapTileAssets();
+            AssetLoader.LoadActIcons();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()

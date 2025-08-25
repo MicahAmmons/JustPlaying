@@ -19,11 +19,9 @@ namespace PlayingAround.Managers.CombatMan
         private static CombatManager _currentCombat { get; set; }
         public static CombatManager CurrentCombat => _currentCombat;
         private static CombatManager _previousCombat {  get; set; }
-        private static CombatButtonManager _buttonManager { get; set; }
 
         public static void LoadContent()
         {
-            _buttonManager = new CombatButtonManager();
         }
         public static void CreateNewCombat(PlayMonsters playMonsters)
         {
@@ -35,7 +33,6 @@ namespace PlayingAround.Managers.CombatMan
         {
             if (_currentCombat != null) 
             {
-                _buttonManager.UpdateInput();
                 _currentCombat.Update(gameTime);
 
 
@@ -46,7 +43,6 @@ namespace PlayingAround.Managers.CombatMan
             if (SceneManager.CurrentState != SceneState.Combat) return;
             if (_currentCombat != null)
             {
-                _buttonManager.Draw(spriteBatch);
                 _currentCombat.Draw(spriteBatch, graphicsDevice);
             }
         }

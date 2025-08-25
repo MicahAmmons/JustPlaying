@@ -23,6 +23,7 @@ public enum ActType
 {
     Attack,
     Move,
+    Summon
 
 }
 public enum AiActionType

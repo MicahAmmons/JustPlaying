@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PlayingAround.ButtonsFolder;
+using PlayingAround.Data.SaveData;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
+using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Movement;
@@ -42,7 +46,8 @@ namespace PlayingAround.ActFolder
         }
         public void Update()
         {
-
+            if (_actController == null) return;
+            _actController.Update();
         }
         public CombatState? DecideNextAct()
         {
@@ -88,8 +93,10 @@ namespace PlayingAround.ActFolder
     public class ActController
     {
         public List<Act> ActsOrder {  get; set; } = new List<Act>();
+        private readonly Dictionary<Button, Act> _buttonToAct = new();
         public Act SelectedAct { get; set; } = null;
         public Act ConfirmedAct { get; set; } = null;
+        public ButtonManager ButtonManager { get; set; } = new ButtonManager();
 
 
         const int ButtonSize = 64;
@@ -104,63 +111,73 @@ namespace PlayingAround.ActFolder
             {
                 switch (act.Type)
                 {
-                    case ActType.Attack:
-                        ActsOrder.Add(new AttackAct(act));
-                    break;
-
-                    case ActType.Move:
-                        ActsOrder.Add(new MoveAct(act));
-                        break;
+                    case ActType.Attack: ActsOrder.Add(new AttackAct(act)); break;
+                    case ActType.Move: ActsOrder.Add(new MoveAct(act)); break;
                 }
             }
-            for (int i = 0; i < ActsOrder.Count - 1; i++)
+            BuildButtonsAndMap();
+            ButtonManager.ButtonSelected += OnButtonSelected;
+        }
+        // play controller
+        public ActController()
+        {
+            ActsOrder.Add(new MoveAct()
+            {
+                Target = ActionTarget.Self,
+                ActType = ActType.Move,
+            });
+                foreach (var sumMon in SummonedMonsterManager.UnlockedSummons)
+            {
+                string name = sumMon.Key;
+                SummonedSavedStats stats = sumMon.Value;
+                ActsOrder.Add(new SummonAct(name, stats));
+            }
+            BuildButtonsAndMap();
+            ButtonManager.ButtonSelected += OnButtonSelected;
+        }
+        private void BuildButtonsAndMap()
+        {
+            for (int i = 0; i < ActsOrder.Count; i++)
             {
                 int x = startingX - (i * (ButtonSize + Buffer));
-                Rectangle rect = new Rectangle(x, y, ButtonSize, ButtonSize);
-                ActsOrder[i].ActButton = new Button(rect);
+                var rect = new Rectangle(x, y, ButtonSize, ButtonSize);
+                var btn = new Button(rect);
+
+                // decorate textures
+                var act = ActsOrder[i];
+                if (act.ActType == ActType.Summon) btn.Texture = act.Icon;
+                if (act.ActType == ActType.Move) btn.Texture = AssetManager.GetTexture("MoveActIcon");
+
+                // wire map + hand to ButtonManager
+                _buttonToAct[btn] = act;
+                ButtonManager.SetCurrentButtons(btn);
             }
         }
-        public void UpdateInput()
-        {
-            var mousePoint = new Point(InputManager.MouseX, InputManager.MouseY);
-            bool leftPressedThisFrame = InputManager.IsLeftClick();
-            if (leftPressedThisFrame)
-            {
-                foreach (var act in ActsOrder)
-                {
-                    if (act.ActButton.DrawRectangle.Contains(mousePoint))
-                    {
-                        ResetAllButtons();
-                        act.ActButton.CurrentlySelected = true;
-                        SelectedAct = act;
-                    }
-                }
-            }
-        }
+
         public void ConfirmAct()
         {
             ConfirmedAct = SelectedAct;
-            ResetAllButtons() ;
         }
-        public void ResetAllButtons()
+        public void Update()
         {
-            SelectedAct = null;
-            foreach (var act in ActsOrder)
-            {
-                act.ActButton.ResetPermissions();
-            }
+
+            ButtonManager.UpdateInput();
         }
         public void DrawButtons(SpriteBatch sb)
         {
-            foreach (var act in ActsOrder)
-            {
-                act.ActButton.Draw(sb); 
-            }
+            ButtonManager.Draw(sb); 
         }
         public void ResetController()
         {
             ConfirmedAct = null;
             SelectedAct = null;
+        }
+        private void OnButtonSelected(Button b)
+        {
+            if (_buttonToAct.TryGetValue(b, out var act))
+            {
+                SelectedAct = act;
+            }
         }
     }
     public abstract class Act
@@ -171,6 +188,7 @@ namespace PlayingAround.ActFolder
         public ICombatant _combatant { get; set; } = null;
         public Dictionary<ICombatant, TileCell> _playerMap { get; set; } = new Dictionary<ICombatant, TileCell>();
         public Dictionary<ICombatant, TileCell> _aiMap { get; set; } = new Dictionary<ICombatant, TileCell>();
+        public Texture2D Icon { get; set; }
         public abstract void ClearActParams();
 
         public abstract bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap);
@@ -280,6 +298,7 @@ namespace PlayingAround.ActFolder
             MovementAmount = data.MovementAmount;
             ActType = data.Type;
         }
+        public MoveAct() { }
         public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
         {
             int movementLeft = _combatant.CurrentStats.MP;
@@ -336,8 +355,14 @@ namespace PlayingAround.ActFolder
     }
     public class SummonAct : Act
     {
-        public SummonAct(SpecificActData data)
+        public SummonedSavedStats SummonedMonsterStats {  get; set; }
+        public string SummonedName { get; set; }
+        public SummonAct(string name, SummonedSavedStats sumMon)
         {
+            Icon = sumMon.Icon;
+            SummonedName = name;
+            ActType = ActType.Summon;
+            SummonedMonsterStats = sumMon;
 
         }
 

@@ -144,3 +144,5 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\runtimes\wi
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingA.77B4FBCF.Up2Date
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\ref\PlayingAround.dll
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\ActIcons\MoveActIcon.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\ActIcons\MoveActIcon.xnb

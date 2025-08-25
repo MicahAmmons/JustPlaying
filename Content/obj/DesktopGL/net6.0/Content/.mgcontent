@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/ActIcons/MoveActIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Aspects/AcidIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Attacks/Spit.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/File.spritefont</File>
@@ -52,6 +53,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/UI/fightBackground.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>

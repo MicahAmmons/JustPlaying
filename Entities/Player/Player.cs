@@ -82,7 +82,7 @@ namespace PlayingAround.Entities.Player
                     Health = data.Health,
                     Resistances = ResistanceManager.GetResistances(ElementType.Normal)
                 },
-                Icon = AssetManager.GetTexture($"{ data.TextureKey }"),
+                Icon = AssetManager.GetTexture($"{data.TextureKey}"),
 
         };
             player.MovementController.FinishedTileMove += player.FinishedMovingOneTile;
@@ -360,6 +360,11 @@ namespace PlayingAround.Entities.Player
         public void BeginAct(Act act)
         {
             throw new NotImplementedException();
+        }
+
+        public void CreateNewActController()
+        {
+            ActController = new ActController();
         }
     }
 }
