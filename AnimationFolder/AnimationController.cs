@@ -154,6 +154,10 @@ namespace PlayingAround.AnimationFolder
                 next = 0;
             return _animation.GetFrame(next);
         }
+        public int GetCurrentFrameIndex()
+        {
+            return _currentFrameIndex;
+        }
     }
 
 }

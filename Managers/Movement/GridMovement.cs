@@ -149,9 +149,6 @@ namespace PlayingAround.Managers.Movement
             }
             return (result1, result2);
         }
-       
-        
-       
-        
+
     }
 }

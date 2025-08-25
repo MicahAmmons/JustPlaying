@@ -124,17 +124,15 @@ namespace PlayingAround.Managers.Tiles
 
             return neighbors;
         }
-        public static bool IsNeighbor(List<TileCell> targets, TileCell current)
+        public static bool IsNeighbor(TileCell target, TileCell current)
         {
-            foreach (var target in targets)
-            {
+
                 int dx = target.X - current.X;
                 int dy = target.Y - current.Y;
 
                 // Valid neighbors are diagonally adjacent: (±1, ±1)
                 if (Math.Abs(dx) == 1 && Math.Abs(dy) == 1)
                     return true;
-            }
 
             return false;
         }

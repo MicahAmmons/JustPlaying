@@ -52,10 +52,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public int PositionInOrder { get; set; }
         public MovementController MovementController { get; set; }
         public AttackAct AttackAct { get; set; } = null;
+        public MoveAct MoveAct { get; set; } = null;
         public bool StartOfTurnEffectsResolved { get; set; } = false;
         public bool EndOfTurnEffectsResolved { get; set; } = false;
         public bool ExecutingSummon { get; set; } = false;
         public bool ExecutingAttack { get; set; } = false;
+        public bool ExecutingMove {  get; set; } = false;
 
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
@@ -192,12 +194,42 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             if (AttackAct != null)
             {
+                SingleAttack attack = AttackAct.Attack;
                 Vector2 currentPos = MovementController.CurrentPos;
                 Vector2 targetPos = AttackAct.EffectedTargets.First().Key.MovementController.CurrentPos;
                 Vector2 direction = currentPos - targetPos;
                 direction.Normalize();
                 MovementController.SetAttackAnimation(direction);
+                int frame = MovementController.AnimationManager.CurrentControllers.First().GetCurrentFrameIndex();
+
+                if (attack.AttackPerformedFrame <= frame)
+                {
+                    if (!AttackAct.Attack.IsFinished)
+                    PerformAttack();
+                }
+                if (attack.IsFinished && MovementController.AnimationManager.IsFinished)
+                {
+                    SpendActionPoint();
+                    AttackAct.ClearActParams();
+                    AttackAct = null;
+                }
             }
+            if (MoveAct != null)
+            {
+                MovementController.SetMovePath(MoveAct.ActMovementCellPath);
+            }
+        }
+        public void PerformAttack()
+        {
+            AttackAct.Attack.IsFinished = true;
+            foreach (var comb in AttackAct.EffectedTargets)
+            {
+                ICombatant combatant = comb.Key;
+                TileCell cell = comb.Value;
+                AttackManager.PerformAttack(AttackAct.Attack, combatant, cell);
+            }
+
+
         }
         public void UpdateMonsterTakingDamage(GameTime gameTime)
         {
@@ -240,7 +272,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     AttackAct = (AttackAct)act;
                     break;
                 case ActType.Move:
-
+                    ExecutingMove = true;
+                    MoveAct = (MoveAct)act;
                     break;
             }
         }
@@ -248,33 +281,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             CurrentStats.AP -= 1;
         }
-        public bool GetMovementCellPathToClosestEnemy(float mp)
-        {
-            if (mp > 0)
-            {
-                TileCell currentCell = TileManager.GetCell(MovementController.CurrentPos);
 
-                List<TileCell> playerControlledCells = GetCombatMapHelper("PlayerControlled");
-
-                // If already adjacent, return current position
-                if (TileManager.IsNeighbor(playerControlledCells, currentCell))
-                    return false;
-
-                //This uses GetPath which excludes !walkable 
-                List<TileCell> listOfCellsPathToTarget = GridMovement.BestPathToClosestCell(currentCell, playerControlledCells, (int)CurrentStats.MP);
-                if (listOfCellsPathToTarget.Count <= 0) return false;
-                MovementController.SetMovePath(listOfCellsPathToTarget);
-            }
-            else return false;
-            return true;
-        }
-        public void PerformAttack()
-        {
-            if (CurrentStats.Attack.IsFinished) return;
-            CurrentStats.Attack.IsFinished = true;
-            AttackManager.PerformAttack(CurrentStats.Attack, CurrentStats.AttackEffectedCombatants);
-
-        }
         public bool IsAttackComplete()
         {
             if (CurrentStats.Attack.Visual != null && !CurrentStats.Attack.Visual.IsFinished) return false;
@@ -325,26 +332,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     return new Vector2(leftX, topY + RandomHut.rng.Next(height));
             }
         }
-        public void CreateNewAttackVisual()
-        {
-            SingleAttack att = CurrentStats.Attack;
-            att.Visual = new VisualEffect(MovementController.CurrentPos, CurrentStats.AttackEffectedCombatants.MovementController.CurrentPos, att.Name, att.VisualVelocity);
-        }
-        public void ClearAttackCycle()
-        {
-            if (CurrentStats.Attack != null)
-            {
-                CurrentStats.Attack.IsFinished = false;
-                CurrentStats.Attack.Visual = null;
-                CurrentStats.Attack = null;
-            }
-            CurrentStats.AttackEffectedCells = null;
-            CurrentStats.AttackEffectedCombatants = null;
-            CurrentStats.AttackPath1.Clear();
-            CurrentStats.AttackPath2.Clear();
-            CurrentStats.CurrentSelectedSummon = null;
-
-        }
         public void ResolveAspects(TickedTiming ticked)
         {
 
@@ -364,27 +351,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
             Aspects.Clear();
         }
-        public bool MoveUpToFullMP(ActionTarget target)
-        {
-            switch (target)
-            {
-                case ActionTarget.ClosestEnemy:
-                    return GetMovementCellPathToClosestEnemy(CurrentStats.MP);
-            }
-            return false;
-        }
         public void UpdateCombatPosition(int pos)
         {
             PositionInOrder = pos;
-        }
-        public void FinishedAllMovement()
-        {
-            ExecutingMove = false;
-            MovementController.ClearMovementPath();
-        }
-        public void IsCurrentlyMoving()
-        {
-            ExecutingMove = true;
         }
     }
     public enum CombatMonsterType

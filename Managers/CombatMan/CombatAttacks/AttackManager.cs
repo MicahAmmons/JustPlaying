@@ -23,13 +23,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 {
     public static class AttackManager
     {
-        public static void LoadContent()
-        {
-
-
-           
-        }
-        public static void PerformAttack(SingleAttack attack, ICombatant target)
+        public static void PerformAttack(SingleAttack attack, ICombatant target, TileCell cell)
         {
             float damage = CalculateDamage(attack);
             target.ApplyDamage(damage, attack.ElementDamage);

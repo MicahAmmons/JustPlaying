@@ -8,6 +8,7 @@ using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Movement;
 using System;
@@ -274,18 +275,81 @@ namespace PlayingAround.ActFolder
     public class MoveAct : Act
     {
         public MovementAmount MovementAmount { get; set; }
+        public List<TileCell> ActMovementCellPath { get; set; } = new List<TileCell>();
         public MoveAct(SpecificActData data)
         {
             MovementAmount = data.MovementAmount;
-            Target = data.ActionTarget;
             ActType = data.Type;
         }
+        public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
+        {
+            int movementLeft = _combatant.CurrentStats.MP;
+            if (movementLeft <= 0) return false;
+            int maxMovementAllowed = movementLeft;
+            switch (MovementAmount)
+            {
+                case MovementAmount.FullMP:
+                    maxMovementAllowed = movementLeft;
+                    break;
+            }
+            switch (Target)
+            {
+                case ActionTarget.ClosestEnemy:
+                    if (!SetMovementPathToClosestEnemy(maxMovementAllowed, playerMap)) return false ;
+                    break;
+            }
+            return true;
+        }
+        public bool SetMovementPathToClosestEnemy(int max, Dictionary<ICombatant, TileCell> playerMap)
+        {
+            TileCell currentCell = TileManager.GetCell(_combatant.MovementController.CurrentPos);
+            Dictionary<ICombatant, TileCell> playerControlledCells = playerMap;
+            List<TileCell> bestPath = null;
+            int shortestPathLength = 30;
+            foreach (var kvp in playerControlledCells)
+            {
+                if (TileManager.IsNeighbor(kvp.Value, currentCell))
+                    return false;
+                //already next to enemy
+
+                List<TileCell> path = GridMovement.GetCellToCellPath(currentCell.CenterPoint, kvp.Value.CenterPoint);
+                if (path.Count < shortestPathLength && path.Count > 0)
+                {
+                    shortestPathLength = path.Count;
+                    bestPath = path;
+                    if (bestPath.Contains(kvp.Value)) bestPath.Remove(kvp.Value);
+                    if (bestPath.Contains(currentCell)) bestPath.Remove(currentCell);
+                }
+            }
+            if (bestPath.Count <= 0) return false;
+
+            ActMovementCellPath = bestPath.Count > max ? bestPath.Take(max).ToList() : bestPath;
+            return true;
+
+
+        }
+        public override void ClearActParams()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
     public class SummonAct : Act
     {
         public SummonAct(SpecificActData data)
         {
 
+        }
+
+        public override void ClearActParams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
+        {
+            throw new NotImplementedException();
         }
     }
    
