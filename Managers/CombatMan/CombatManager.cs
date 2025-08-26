@@ -112,6 +112,7 @@ namespace PlayingAround.Managers.CombatMan
             UpdateCurrentMonster();
             InitilizeUIElements();
             SceneManager.SetState(SceneState.Combat);
+            _currentCombatant.ReadyToSummon += SummonSummonMonster;
         }
         public void SetSpawnableCells()
         {
@@ -183,14 +184,16 @@ namespace PlayingAround.Managers.CombatMan
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             bool endingScreen = false;
-            _actManager.Draw(spriteBatch);
-            DrawActVisuals(spriteBatch);
+
+
             switch (StateCombat)
             {
                 case CombatState.LocationSelection:
                     DrawLocationSelection(spriteBatch);
                     break;
-             
+                case CombatState.WaitingPlayerInput:
+                    DrawActVisuals(spriteBatch);
+                    break;
                 case CombatState.WinnerChosen:
                     endingScreen = true;
                     break;
@@ -198,6 +201,8 @@ namespace PlayingAround.Managers.CombatMan
             DrawTurnStateOverlay(spriteBatch);
             _visualEffectManager.Draw(spriteBatch);
             _combatUIManager.Draw(spriteBatch);
+            if (StateCombat != CombatState.LocationSelection)
+            _actManager.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
 
         }
@@ -215,11 +220,50 @@ namespace PlayingAround.Managers.CombatMan
 
                         break;
                     case ActType.Summon:
-
+                        DrawSummonAct(sb);
                         break;
                 }
             }
         }
+
+        private void DrawSummonAct(SpriteBatch sb)
+        {
+            DrawSummonableCells(sb);
+        }
+        private void DrawSummonableCells(SpriteBatch sb)
+        {
+            ICombatant comb = _currentCombatant;
+            if (comb.Is == CombatMonsterType.AI) return;
+            TileCell origin = _playerControlledMonsterMap[comb];
+
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, 2);
+            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
+
+            foreach (var cell in openCells)
+            {
+                cell.DrawCellHighlight(sb, _cellHighlightColors.ValidTarget, 5);
+                if (_currentMouseHoverCell == cell)
+                {
+                    Act act = _actManager.SelectedAct;
+                    if (act is SummonAct summonAct)
+                    {
+                        string name = summonAct.SummonedName;
+                        DrawEntityIdlePreviewOnCell(cell, CombatMonsterManager.GetIdleAnimationData(name));
+                    }
+                }
+                if (_currentClickedCell == cell)
+                {
+                    PlayerSelectedSummonDestination(cell);
+                    return;
+                }
+            }
+        }
+
+        private void PlayerSelectedSummonDestination(TileCell cell)
+        {
+            _actManager.ConfirmSummonAct(cell);
+        }
+
         public void DrawMoveAct(SpriteBatch sb)
         {
             DrawMoveableCells(sb);
@@ -232,12 +276,14 @@ namespace PlayingAround.Managers.CombatMan
 
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
             var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
-            foreach (var cell in TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP))
+            var reachableCells = TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP);
+            foreach (var cell in reachableCells)
             {
-                cell.DrawCellHighlight(sb, _cellHighlightColors.Walkable);
+                cell.DrawCellHighlight(sb, _cellHighlightColors.Walkable, 5);
                 if (_currentMouseHoverCell == cell)
                 {
-                    DrawEntityIdlePreviewOnCell(cell);
+                    AnimationData data = combatant.Is == CombatMonsterType.Player ? data = PlayerManager.GetIdleAnimationData() : data = CombatMonsterManager.GetIdleAnimationData(combatant.UniqueId);
+                    DrawEntityIdlePreviewOnCell(cell, data);
                 }
                 if (_currentClickedCell == cell)
                 {
@@ -249,13 +295,11 @@ namespace PlayingAround.Managers.CombatMan
         }
         public void PlayerSelectedMoveDestination(List<TileCell> cells)
         {
-            _actManager.ConfirmMoveAct(cells);
+                cells.RemoveAll(c => c == TileManager.GetCell(_currentCombatant.MovementController.CurrentPos));
+                _actManager.ConfirmMoveAct(cells);
 
         }
-        public void HandleMoveableCells()
-        {
 
-        }
         public void DrawCombatEndScreen(SpriteBatch spriteBatch)
         {
             // Background panel
@@ -320,7 +364,7 @@ namespace PlayingAround.Managers.CombatMan
             DrawSpawnableTiles(spriteBatch);
 
             if (_playerSpawnableCells.Contains( _currentMouseHoverCell))
-                DrawEntityIdlePreviewOnCell(_currentMouseHoverCell, _currentPlayer);
+                DrawEntityIdlePreviewOnCell(_currentMouseHoverCell, PlayerManager.GetIdleAnimationData());
         }
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {
@@ -330,68 +374,12 @@ namespace PlayingAround.Managers.CombatMan
             foreach (var tile in _monsterSpawnableCells)
                 tile.DrawCellHighlight(spriteBatch, _cellHighlightColors.MonsterStartable, 5);
         }
-        private void DrawEntityIdlePreviewOnCell(TileCell cell, ICombatant mon = null)
+        private void DrawEntityIdlePreviewOnCell(TileCell cell, AnimationData data )
         {
-            if (mon == null) mon = _currentCombatant;
-            if (mon.CurrentStats.CurrentSelectedSummon != null)
-            {
                 TileCellManager.AddActiveAnimationCell(cell);
-                cell.AddAnimation(mon.CurrentStats.CurrentSelectedSummon.Value.ani);
+                cell.AddAnimation(data);
                 return;
-            }
         }
-      
-        //private void DrawPlayClickedSummonButton(SpriteBatch spriteBatch)
-        //{
-        //    ICombatant mon = _currentCombatant;
-
-        //    if (SummonedMonsterManager.UnlockedSummons != null && SummonedMonsterManager.UnlockedSummons.Count > 0)
-        //    {
-        //        int iteration = 0;
-        //        foreach (var kvp in SummonedMonsterManager.UnlockedSummons)
-        //        {
-        //            string name = kvp.Key;
-        //            SummonedSavedStats stats = kvp.Value;
-        //            Texture2D icon = stats.Icon;
-
-        //            Rectangle summonIconRect = new Rectangle(
-        //                _summonRect.X,
-        //                _summonRect.Y - ((iteration + 1) * (_summonOptionHeight + _summonOptionSpacing)),
-        //                _summonOptionWidth,
-        //                _summonOptionHeight
-        //            );
-
-        //            spriteBatch.Draw(icon, summonIconRect, Color.White);
-
-        //            // Optional: draw border or hover highlight
-        //            if (summonIconRect.Contains(_currentMousePos))
-        //                spriteBatch.Draw(_playerCellOptions, summonIconRect, Color.Yellow * 0.4f);
-        //            iteration++;
-        //        }
-
-        //    }
-        //}
-        private void DrawSummonSpawnLocationOptions(SpriteBatch spriteBatch)
-        {
-
-            if (_currentCombatant.CurrentStats.CurrentSelectedSummon?.ani == null) return;
-
-            foreach (var cell in _summonSpawnableCells)
-            {
-                cell.DrawCellHighlight(spriteBatch, _cellHighlightColors.ValidTarget, 5);
-            }
-
-        }
-        private void DrawSummonHover(SpriteBatch spriteBatch)
-        {
-            if (!_summonSpawnableCells.Contains(_currentMouseHoverCell)) return;
-
-            if (_currentMouseHoverCell != null && _summonSpawnableCells.Contains(_currentMouseHoverCell))
-            {
-                DrawEntityIdlePreviewOnCell(_currentMouseHoverCell);
-            }
-        }
-
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -414,8 +402,9 @@ namespace PlayingAround.Managers.CombatMan
             switch (StateCombat)
             {
                 case CombatState.TurnStart:
-                    UpdateMonsterTopOfRoundStats();
-                    _currentCombatant.ResolveEffects(TickedTiming.StartOfTurn);
+                    ICombatant com = _currentCombatant;
+                    com.UpdateTopOfRoundStats();
+                    com.ResolveEffects(TickedTiming.StartOfTurn);
                     SetCombatState(CombatState.ResolvingStartOfTurnEffects);
                     break;
                 case CombatState.ResolvingStartOfTurnEffects:
@@ -444,24 +433,39 @@ namespace PlayingAround.Managers.CombatMan
                     SetCombatState(CombatState.EndingTurn);
                     break;
                 case CombatState.ExecutingAttack:
-                    if (!_currentCombatant.ExecutingAttack) SetCombatState(CombatState.TopOfAction);
+                    if (!_currentCombatant.ExecutingAttack)
+                    {
+                        EndOfAction();
+                    }
                     break;
                 case CombatState.ExecutingMove:
-                    if (!_currentCombatant.ExecutingMove) SetCombatState(CombatState.TopOfAction);
+                    if (!_currentCombatant.ExecutingMove) EndOfAction();
                     break;
                 case CombatState.ExecutingSummon:
-                    if (!_currentCombatant.ExecutingSummon) SetCombatState(CombatState.TopOfAction);
+                    if (!_currentCombatant.ExecutingSummon) EndOfAction();
                     break;
                 case CombatState.EndingTurn:
                     _currentCombatant.ResolveEffects(TickedTiming.EndOfTurn);
                     SetCombatState(CombatState.ResolvingEndOfTurnEffects);
                     break;
                 case CombatState.ResolvingEndOfTurnEffects:
-                    if (_currentCombatant.EndOfTurnEffectsResolved) SetCombatState(CombatState.TurnStart);
+                    if (_currentCombatant.EndOfTurnEffectsResolved) Endturn();
+
                     break;
             }
         }
 
+        private void Endturn()
+        {
+            SendMonsterToBackOfQueue();
+            SetCombatState(CombatState.TurnStart);
+        }
+
+        private void EndOfAction()
+        { 
+            _actManager.ResetActs();
+            SetCombatState(CombatState.TopOfAction);
+        }
         private void UpdateCombatantCount()
         {
             if (TotalCombatants != TurnOrder.Count)
@@ -529,7 +533,7 @@ namespace PlayingAround.Managers.CombatMan
             TileCell cell = _currentClickedCell;
             if (combatant.CurrentStats.CurrentSelectedSummon != null && _summonSpawnableCells.Contains(cell))
             {
-                SummonSummonMonster(cell);
+                
                 combatant.CurrentStats.CurrentSelectedSummon = null;
                 combatant.SpendActionPoint();
 
@@ -599,15 +603,6 @@ namespace PlayingAround.Managers.CombatMan
             }
             _playerControlledMonsterMap.Clear();
             _aIControlledMonsterMap.Clear();
-        }
-        private void UpdateMonsterTopOfRoundStats()
-        {
-            ICombatant mon = _currentCombatant;
-            mon.StartOfTurnEffectsResolved = false;
-            mon.EndOfTurnEffectsResolved = false;
-            mon.CurrentStats.AP = mon.BaseStats.AP;
-            mon.CurrentStats.MP = mon.BaseStats.MP;
-
         }
 
         
@@ -683,12 +678,10 @@ namespace PlayingAround.Managers.CombatMan
 
 
  
-        public void SummonSummonMonster(TileCell cell)
+        public void SummonSummonMonster(SummonAct act)
         {
-            ICombatant combatant = _currentCombatant;
-
-            ICombatant comSumMon = (CombatMonsterManager.SummonMonsterToCombat(combatant.CurrentStats.CurrentSelectedSummon?.name));
-            comSumMon.MovementController.SetCurrentPos(cell.CenterPoint);
+            ICombatant comSumMon = (CombatMonsterManager.SummonMonsterToCombat(act.SummonedName));
+            comSumMon.MovementController.SetCurrentPos(act.SummonedCell.CenterPoint);
             AddComMonToTurnOrder(comSumMon);
         }
         private void AddComMonToTurnOrder(ICombatant mon)

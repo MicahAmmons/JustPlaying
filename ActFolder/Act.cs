@@ -32,7 +32,7 @@ namespace PlayingAround.ActFolder
         private Dictionary<ICombatant, TileCell> AIMap => CombatGuard.CurrentCombat.AIControlledMonsterMap;
         private Dictionary<ICombatant, TileCell> PlayerMap => CombatGuard.CurrentCombat.PlayerControlledMonsterMap;
         public Act ConfirmedAct = null;
-        public Act SelectedAct = null;
+        public Act SelectedAct => _actController.SelectedAct;
         private Queue<Act> ActOrderTry = new Queue<Act>();
 
 
@@ -49,7 +49,6 @@ namespace PlayingAround.ActFolder
         {
             if (_actController == null) return;
             _actController.Update();
-            UpdateConfirmedAndSelectedAct();
         }
         public CombatState? DecideNextAct()
         {
@@ -87,15 +86,13 @@ namespace PlayingAround.ActFolder
         }
         public void ResetConfirmedAndSelectedAct()
         {
+           
+            _actController.SelectedAct = null;
             ConfirmedAct = null;
-            SelectedAct = null;
         }
-        public void UpdateConfirmedAndSelectedAct()
+        public void ResetActs()
         {
-            if (_actController.SelectedAct == null) return;
-            SelectedAct = _actController.SelectedAct;
-            if (_actController.ConfirmedAct == null) return;
-            ConfirmedAct = _actController.ConfirmedAct;
+            ConfirmedAct = null;
             _actController.ResetController();
         }
 
@@ -107,6 +104,14 @@ namespace PlayingAround.ActFolder
                 ConfirmedAct = moveAct;
             }
         }
+        public void ConfirmSummonAct(TileCell cell)
+        {
+            if (SelectedAct is SummonAct summonAct)
+            {
+                summonAct.SummonedCell = cell;
+                ConfirmedAct = summonAct;
+            }
+        }
     }
 
     public class ActController
@@ -114,7 +119,6 @@ namespace PlayingAround.ActFolder
         public List<Act> ActsOrder {  get; set; } = new List<Act>();
         private readonly Dictionary<Button, Act> _buttonToAct = new();
         public Act SelectedAct { get; set; } = null;
-        public Act ConfirmedAct { get; set; } = null;
         public ButtonManager ButtonManager { get; set; } = new ButtonManager();
 
 
@@ -135,7 +139,11 @@ namespace PlayingAround.ActFolder
                 }
             }
             BuildButtonsAndMap();
-            ButtonManager.ButtonSelected += OnButtonSelected;
+            ButtonManager.ButtonSelected += b => SelectedAct = _buttonToAct[b];
+            ButtonManager.ButtonDeselected += () =>
+            {
+                SelectedAct = null;
+            };
         }
         // play controller
         public ActController()
@@ -152,7 +160,12 @@ namespace PlayingAround.ActFolder
                 ActsOrder.Add(new SummonAct(name, stats));
             }
             BuildButtonsAndMap();
-            ButtonManager.ButtonSelected += OnButtonSelected;
+            ButtonManager.ButtonSelected += b => SelectedAct = _buttonToAct[b];
+            ButtonManager.ButtonDeselected += () =>
+            {
+                SelectedAct = null;
+            };
+
         }
         private void BuildButtonsAndMap()
         {
@@ -172,10 +185,6 @@ namespace PlayingAround.ActFolder
                 ButtonManager.SetCurrentButtons(btn);
             }
         }
-        public void ConfirmAct()
-        {
-            ConfirmedAct = SelectedAct;
-        }
         public void Update()
         {
 
@@ -187,17 +196,10 @@ namespace PlayingAround.ActFolder
         }
         public void ResetController()
         {
-            ConfirmedAct = null;
             SelectedAct = null;
             ButtonManager.ResetButtons();
         }
-        private void OnButtonSelected(Button b)
-        {
-            if (_buttonToAct.TryGetValue(b, out var act))
-            {
-                SelectedAct = act;
-            }
-        }
+
     }
     public abstract class Act
     {
@@ -305,7 +307,6 @@ namespace PlayingAround.ActFolder
         }
         public override void ClearActParams()
         {
-            _combatant = null;
             _playerMap.Clear();
             _aiMap.Clear();
             EffectedTargets.Clear();
@@ -316,6 +317,7 @@ namespace PlayingAround.ActFolder
     {
         public MovementAmount MovementAmount { get; set; }
         public List<TileCell> ActMovementCellPath { get; set; } = new List<TileCell>();
+
         public MoveAct(SpecificActData data)
         {
             MovementAmount = data.MovementAmount;
@@ -328,7 +330,7 @@ namespace PlayingAround.ActFolder
         }
         public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
         {
-            int movementLeft = _combatant.CurrentStats.MP;
+            int movementLeft = currentCombatant.CurrentStats.MP;
             if (movementLeft <= 0) return false;
             int maxMovementAllowed = movementLeft;
             switch (MovementAmount)
@@ -340,14 +342,14 @@ namespace PlayingAround.ActFolder
             switch (Target)
             {
                 case ActionTarget.ClosestEnemy:
-                    if (!SetMovementPathToClosestEnemy(maxMovementAllowed, playerMap)) return false ;
+                    if (!SetMovementPathToClosestEnemy(currentCombatant, maxMovementAllowed, playerMap)) return false ;
                     break;
             }
             return true;
         }
-        public bool SetMovementPathToClosestEnemy(int max, Dictionary<ICombatant, TileCell> playerMap)
+        public bool SetMovementPathToClosestEnemy(ICombatant currentCombatant, int max, Dictionary<ICombatant, TileCell> playerMap)
         {
-            TileCell currentCell = TileManager.GetCell(_combatant.MovementController.CurrentPos);
+            TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
             Dictionary<ICombatant, TileCell> playerControlledCells = playerMap;
             List<TileCell> bestPath = null;
             int shortestPathLength = 30;
@@ -375,7 +377,9 @@ namespace PlayingAround.ActFolder
         }
         public override void ClearActParams()
         {
-            throw new NotImplementedException();
+            _playerMap.Clear();
+            _aiMap.Clear();
+            ActMovementCellPath.Clear();
         }
 
 
@@ -384,6 +388,8 @@ namespace PlayingAround.ActFolder
     {
         public SummonedSavedStats SummonedMonsterStats {  get; set; }
         public string SummonedName { get; set; }
+        public TileCell SummonedCell {  get; set; }
+
         public SummonAct(string name, SummonedSavedStats sumMon)
         {
             Icon = sumMon.Icon;
@@ -398,7 +404,9 @@ namespace PlayingAround.ActFolder
         }
         public override void ClearActParams()
         {
-            throw new NotImplementedException();
+            _playerMap.Clear();
+            _aiMap.Clear();
+            SummonedCell = null;
         }
         public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
         {

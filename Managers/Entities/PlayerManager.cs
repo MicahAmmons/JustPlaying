@@ -68,7 +68,10 @@ namespace PlayingAround.Managers.Entities
         {
             _currentPlayer.ClearAllAspects();
         }
-
+        public static AnimationData GetIdleAnimationData()
+        {
+            return _playerData.AnimationData;
+        }
         public static void DrawPlayer(SpriteBatch spriteBatch, Effect fx = null)
         {
             if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.IsState(SceneState.Combat))

@@ -16,6 +16,7 @@ namespace PlayingAround.ButtonsFolder
     {
         private List<Button> _buttons = new List<Button>() { };
         public event Action<Button> ButtonSelected;
+        public event Action ButtonDeselected;
         public void SetCurrentButtons(Button button) => _buttons.Add(button);
         public void UpdateInput()
         {
@@ -28,6 +29,7 @@ namespace PlayingAround.ButtonsFolder
             if (rightPressedThisFrame) 
             {
                 ResetButtons();
+                ButtonDeselected?.Invoke();
                 return; 
             }
             foreach (var b in _buttons)
@@ -35,10 +37,13 @@ namespace PlayingAround.ButtonsFolder
                 if (b.UpdateInput(mousePoint, leftPressedThisFrame))
                 {
                     bool alreadySelected = b.CurrentlySelected;
-
                     ResetButtons();
 
-                    if (alreadySelected) { return; ; }
+                    if (alreadySelected) 
+                    {
+                        ButtonDeselected?.Invoke();
+                        return; 
+                    }
 
                     b.CurrentlySelected = true;
                     ButtonSelected?.Invoke(b);
@@ -94,5 +99,6 @@ namespace PlayingAround.ButtonsFolder
         public void ResetInputState()
         {
             CurrentlySelected= false;
+            MouseHovered= false;
         }
     }

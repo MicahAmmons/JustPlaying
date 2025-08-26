@@ -43,8 +43,8 @@
             "FrameCount": 31,
             "FrameDurationMs": 200,
             "IsLooping": false,
-            "SpriteSheetName": "FrostOozeSlamTopLeft",
-            "DefaultDirection": "Left",
+            "SpriteSheetName": "FrostOozeSlamUp",
+            "DefaultDirection": "Right",
             "FrameWidth": 192,
             "FrameHeight": 192
           }
@@ -56,8 +56,8 @@
             "FrameCount": 28,
             "FrameDurationMs": 200,
             "IsLooping": false,
-            "SpriteSheetName": "FrostOozeSlamBottomLeft",
-            "DefaultDirection": "Left",
+            "SpriteSheetName": "FrostOozeSlamDown",
+            "DefaultDirection": "Right",
             "FrameWidth": 192,
             "FrameHeight": 192
           }
@@ -89,7 +89,7 @@
                 "BaseDamageMax": 3,
                 "Range": 1,
                 "ElementType": "Ice",
-                "AttackPerformedFrame": 21,
+                "AttackPerformedFrame": 15,
                 "AttackUpAnimation": "AttackUp",
                 "AttackDownAnimation": "AttackDown"
             }

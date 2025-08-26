@@ -12,10 +12,8 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MiscAssets/GlowMound.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIdle.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamBottomLeft.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamBottomRight.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamTopLeft.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamTopRight.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamDown.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalk.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
@@ -57,8 +55,6 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

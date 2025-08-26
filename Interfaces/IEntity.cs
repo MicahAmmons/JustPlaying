@@ -58,7 +58,9 @@ namespace PlayingAround.Interfaces
         public void UpdateCombatPosition(int pos);
         public void FinishedMovingOneTile();
         public void BeginAct(Act act);
-
+        public void UpdateAct(float delta);
+        public void UpdateTopOfRoundStats();
+        public event Action<SummonAct> ReadyToSummon;
 
 
     }

@@ -104,7 +104,7 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeIdle.png
 
-#begin MonsterAnimations/FrostOoze/FrostOozeSlamBottomLeft.png
+#begin MonsterAnimations/FrostOoze/FrostOozeSlamDown.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -114,9 +114,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MonsterAnimations/FrostOoze/FrostOozeSlamBottomLeft.png
+/build:MonsterAnimations/FrostOoze/FrostOozeSlamDown.png
 
-#begin MonsterAnimations/FrostOoze/FrostOozeSlamBottomRight.png
+#begin MonsterAnimations/FrostOoze/FrostOozeSlamUp.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -126,31 +126,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MonsterAnimations/FrostOoze/FrostOozeSlamBottomRight.png
-
-#begin MonsterAnimations/FrostOoze/FrostOozeSlamTopLeft.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MonsterAnimations/FrostOoze/FrostOozeSlamTopLeft.png
-
-#begin MonsterAnimations/FrostOoze/FrostOozeSlamTopRight.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MonsterAnimations/FrostOoze/FrostOozeSlamTopRight.png
+/build:MonsterAnimations/FrostOoze/FrostOozeSlamUp.png
 
 #begin MonsterAnimations/FrostOoze/FrostOozeWalk.png
 /importer:TextureImporter

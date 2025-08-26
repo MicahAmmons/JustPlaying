@@ -56,6 +56,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool ExecutingSummon { get; set; } = false;
         public bool ExecutingAttack { get; set; } = false;
         public bool ExecutingMove {  get; set; } = false;
+        public event Action<SummonAct> ReadyToSummon;
 
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
@@ -96,6 +97,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         {
 
         }
+
+
 
         public void FinishedMovingOneTile()
         {
@@ -192,7 +195,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 SingleAttack attack = AttackAct.Attack;
                 Vector2 currentPos = MovementController.CurrentPos;
                 Vector2 targetPos = AttackAct.EffectedTargets.First().Key.MovementController.CurrentPos;
-                Vector2 direction = currentPos - targetPos;
+                Vector2 direction = targetPos - currentPos;
                 direction.Normalize();
                 MovementController.SetAttackAnimation(direction);
                 int frame = MovementController.AnimationManager.CurrentControllers.First().GetCurrentFrameIndex();
@@ -207,6 +210,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     SpendActionPoint();
                     AttackAct.ClearActParams();
                     AttackAct = null;
+                    ExecutingAttack = false;
                 }
             }
             if (MoveAct != null)
@@ -252,6 +256,13 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void UpdateTopOfActionStats()
         {
 
+        }
+        public void UpdateTopOfRoundStats()
+        {
+            StartOfTurnEffectsResolved = false;
+            EndOfTurnEffectsResolved = false;
+            CurrentStats.AP = BaseStats.AP;
+            CurrentStats.MP = BaseStats.MP;
         }
         public void BeginAct(Act act)
         {
@@ -328,7 +339,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
         public void ResolveEffects(TickedTiming ticked)
         {
-            if (Aspects.Count == 0) return;
+            if (Aspects.Count == 0)
+            {
+                if (ticked == TickedTiming.EndOfTurn) { EndOfTurnEffectsResolved = true; }
+                if (ticked == TickedTiming.StartOfTurn) { StartOfTurnEffectsResolved = true; }
+                return;
+            }
             foreach (var aspect in Aspects)
             {
                 if (aspect.WhenTicked != ticked) continue;

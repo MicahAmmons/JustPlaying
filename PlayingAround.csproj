@@ -20,10 +20,8 @@
     <None Remove="Content\ColorReplace.fx" />
     <None Remove="Content\GrassTiles\GrassTile.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIdle.png" />
-    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamBottomLeft.png" />
-    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamBottomRight.png" />
-    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamTopLeft.png" />
-    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamTopRight.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamDown.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalk.png" />
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
@@ -82,16 +80,10 @@
     <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeIdle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamBottomLeft.png">
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamDown.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamBottomRight.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamTopLeft.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamTopRight.png">
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeSlamUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeWalk.png">

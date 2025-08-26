@@ -41,7 +41,7 @@ namespace PlayingAround.Managers.Entities
             };
             return newSummonedMon;
         }
-        public static AnimationData GetMonsterIdleAnimation(string name)
+        public static AnimationData GetIdleAnimationData(string name)
         {
             return _combatMonsterBaseData[name].AnimationData;
         }

@@ -53,7 +53,8 @@ namespace PlayingAround.Entities.Player
         public ActController ActController { get; set; }
         public AttackAct AttackAct { get; set; } = null;
         public MoveAct MoveAct { get; set; } = null;
-
+        public SummonAct SummonAct { get; set; } = null;
+        public event Action<SummonAct> ReadyToSummon;
         public static Player LoadFromSave(PlayerSaveData data)
         {
             var player = new Player()
@@ -75,7 +76,7 @@ namespace PlayingAround.Entities.Player
                     MP = 6,
                     AP = 2,
                     Health = 10,
-                    Initiative = 3
+                    Initiative = 1
                 },
                 CurrentStats = new CurrentCombatStats()
                 {
@@ -92,6 +93,9 @@ namespace PlayingAround.Entities.Player
             player.MovementController.CurrentlyMoving += player.IsCurrentlyMoving;
             return player;
         }
+
+
+
         public Player()
         {
             
@@ -102,8 +106,33 @@ namespace PlayingAround.Entities.Player
             UpdateMonsterTakingDamage(gameTime);
             DrawSpecifics.VEManager.Update(delta);
             MovementController.Update(gameTime);
+            UpdateAct(delta);
 
         }
+
+        private float _summonTimer = 0;
+        public void UpdateAct(float delta)
+        {
+            if (MoveAct != null)
+            {
+                MovementController.SetMovePath(MoveAct.ActMovementCellPath);
+                MoveAct = null;
+            }
+            if (SummonAct != null)
+            {
+                //this is a placeholder for any future animations or pauses or whatever
+                _summonTimer++;
+                if (_summonTimer >= 25)
+                {
+                    ReadyToSummon?.Invoke(SummonAct);
+                    SummonAct = null;
+                    _summonTimer = 0;
+                    ExecutingSummon = false;
+                }
+
+            }
+        }
+
         public void UpdatePlayerDestinationPoint(Vector2 vec)
         {
             if (SceneManager.IsState(SceneState.Play))
@@ -181,8 +210,8 @@ namespace PlayingAround.Entities.Player
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
                 Vector2 drawPoint = MovementController.DrawPoint;
-                int width = 128;
-                int height = 128;
+                int width = animation.Width;
+                int height = animation.Height;
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
                 Rectangle dest = new Rectangle(
                     (int)pos.X,
@@ -234,7 +263,14 @@ namespace PlayingAround.Entities.Player
         }
         public void UpdateTopOfActionStats()
         {
-            CurrentStats.MP = BaseStats.MP;        
+                   
+        }
+        public void UpdateTopOfRoundStats()
+        {
+            StartOfTurnEffectsResolved = false;
+            EndOfTurnEffectsResolved = false;
+            CurrentStats.AP =BaseStats.AP;
+            CurrentStats.MP = BaseStats.MP;
         }
         public void SpendActionPoint()
         {
@@ -278,7 +314,7 @@ namespace PlayingAround.Entities.Player
             throw new NotImplementedException();
         }
 
-        private float _movetimer = 0;
+        private float _framesHeld = 0;
         public void FinishedMovingOneTile()
         {
             if (SceneManager.IsState(SceneState.Play))
@@ -286,16 +322,14 @@ namespace PlayingAround.Entities.Player
                 MovementController.ApproveNextTileStep();
                 return;
             }
-
- 
-
             //Will make more complicated logic for when mechanics are implemented, such as traps or movement damage or terrarin, etc.
-            _movetimer += 0.1667f;
-            if (_movetimer >= 3)
+            _framesHeld += 1;
+            if (_framesHeld >= 20)
             {
+                _framesHeld = 0;
                 CurrentStats.MP -= 1;
                 MovementController.ApproveNextTileStep();
-                _movetimer = 0;
+                
             }
 
         }
@@ -371,7 +405,12 @@ namespace PlayingAround.Entities.Player
                     ExecutingMove = true;
                     MoveAct = (MoveAct)act;
                     break;
+                case ActType.Summon:
+                    ExecutingSummon = true;
+                    SummonAct = (SummonAct)act;
+                    break;
             }
+
         }
 
         public void CreateNewActController()

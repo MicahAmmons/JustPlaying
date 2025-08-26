@@ -12,95 +12,71 @@
     "Health": 8,
     "AnimationData": {
       "Animations": {
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 1,
-            "FrameDurationMs": 4000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerHead",
-            "Fades": true,
-            "SmokeEffect": true,
-            "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
-          },
-          {
-            "Row": 1,
-            "FrameCount": 4,
-            "FrameDurationMs": 12000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerBodyColored",
-            "FadeEffect": true,
-            "SmokeEffect": false,
-            "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
-          },
-          {
-            "Row": 1,
-            "FrameCount": 4,
-            "FrameDurationMs": 12000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerBody",
-            "FadeEffect": true,
-            "SmokeEffect": false,
-            "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
-          }
-        ],
         "WalkUp": [
           {
-            "Row": 1,
-            "FrameCount": 3,
-            "FrameDurationMs": 4000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerBody",
-            "Fades": true,
+            "Row": 2,
+            "FrameCount": 9,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
             "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
-          },
-          {
-            "Row": 1,
-            "FrameCount": 3,
-            "FrameDurationMs": 4000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerBodyColored",
-            "Fades": true,
-            "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
           }
         ],
         "WalkDown": [
           {
-            "Row": 1,
-            "FrameCount": 3,
-            "FrameDurationMs": 4000,
-            "IsLooping": true,
-            "SpriteSheetName": "PlayerHead",
-            "Fades": true,
+            "Row": 4,
+            "FrameCount": 12,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeWalk",
             "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
-          },
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 0.5
+          }
+        ],
+        "AttackUp": [
+          {
+            "AttackName": "Slam",
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamUp",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "AttackDown": [
+          {
+            "AttackName": "Slam",
+            "Row": 1,
+            "FrameCount": 28,
+            "FrameDurationMs": 200,
+            "IsLooping": false,
+            "SpriteSheetName": "FrostOozeSlamDown",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "Idle": [
           {
             "Row": 1,
-            "FrameCount": 3,
-            "FrameDurationMs": 4000,
+            "FrameCount": 29,
+            "FrameDurationMs": 200,
             "IsLooping": true,
-            "SpriteSheetName": "PlayerBody",
-            "Fades": true,
+            "SpriteSheetName": "FrostOozeIdle",
             "DefaultDirection": "Left",
-            "FrameWidth": 720,
-            "FrameHeight": 1080
+            "FrameWidth": 192,
+            "FrameHeight": 192
           }
         ]
-
       }
-
     }
   },
   "DayCycle": {
