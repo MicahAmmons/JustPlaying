@@ -9,6 +9,7 @@ using System.Numerics;
 using static CombatStateMachine;
 
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.ActFolder;
 
 namespace PlayingAround.ButtonsFolder
 {
@@ -18,7 +19,7 @@ namespace PlayingAround.ButtonsFolder
         public event Action<Button> ButtonSelected;
         public event Action ButtonDeselected;
         public void SetCurrentButtons(Button button) => _buttons.Add(button);
-        public void UpdateInput()
+        public void UpdateInput(Dictionary<Button, Act> dic, int playerAP, int playerMP)
         {
             if (_buttons.Count == 0) return;
 
@@ -36,6 +37,11 @@ namespace PlayingAround.ButtonsFolder
             {
                 if (b.UpdateInput(mousePoint, leftPressedThisFrame))
                 {
+                    ActType type = dic[b].ActType;
+                    switch (type) { case ActType.Move: if (playerMP <= 0) return; break;
+                                    case ActType.Attack:
+                                    case ActType.Summon: if (playerAP <= 0) return; break;  
+                    }
                     bool alreadySelected = b.CurrentlySelected;
                     ResetButtons();
 

@@ -423,7 +423,7 @@ namespace PlayingAround.Managers.CombatMan
                 case CombatState.WaitingPlayerInput:
                     if (_actManager.ConfirmedAct == null) return;
                     Act confirmedAct = _actManager.ConfirmedAct;
-                    _actManager.ResetConfirmedAndSelectedAct();
+                    _actManager.ResetSelectedAct();
                     _currentCombatant.BeginAct(confirmedAct);
                     SetCombatState(confirmedAct.ExecutingState());
                     break;
@@ -445,7 +445,11 @@ namespace PlayingAround.Managers.CombatMan
                     if (!_currentCombatant.ExecutingMove) EndOfAction();
                     break;
                 case CombatState.ExecutingSummon:
-                    if (!_currentCombatant.ExecutingSummon) EndOfAction();
+                    if (!_currentCombatant.ExecutingSummon) 
+                    { 
+                        SummonSummonMonster((SummonAct)_actManager.ConfirmedAct);
+                        EndOfAction();
+                    };
                     break;
                 case CombatState.EndingTurn:
                     _currentCombatant.ResolveEffects(TickedTiming.EndOfTurn);
@@ -528,18 +532,6 @@ namespace PlayingAround.Managers.CombatMan
                     mon.DrawSpecifics.DrawCellHightlight = true;
                     return;
                 }
-            }
-        }
-        private void HandlePlayerChooseSummonedCell()
-        {
-            ICombatant combatant = _currentCombatant;
-            TileCell cell = _currentClickedCell;
-            if (combatant.CurrentStats.CurrentSelectedSummon != null && _summonSpawnableCells.Contains(cell))
-            {
-                
-                combatant.CurrentStats.CurrentSelectedSummon = null;
-                combatant.SpendActionPoint();
-
             }
         }
         private void ResetClickValues()

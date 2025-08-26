@@ -48,7 +48,7 @@ namespace PlayingAround.ActFolder
         public void Update()
         {
             if (_actController == null) return;
-            _actController.Update();
+            _actController.Update(_currentCombatant.CurrentStats.AP, _currentCombatant.CurrentStats.MP);
         }
         public CombatState? DecideNextAct()
         {
@@ -91,11 +91,9 @@ namespace PlayingAround.ActFolder
             }
             return CombatState.ExecutingAttack;
         }
-        public void ResetConfirmedAndSelectedAct()
-        {
-           
+        public void ResetSelectedAct()
+        {   
             _actController.SelectedAct = null;
-            ConfirmedAct = null;
         }
         public void ResetActs()
         {
@@ -192,10 +190,10 @@ namespace PlayingAround.ActFolder
                 ButtonManager.SetCurrentButtons(btn);
             }
         }
-        public void Update()
+        public void Update(int ap, int mp)
         {
 
-            ButtonManager.UpdateInput();
+            ButtonManager.UpdateInput(_buttonToAct, ap, mp);
         }
         public void DrawButtons(SpriteBatch sb)
         {

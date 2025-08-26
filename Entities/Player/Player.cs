@@ -119,10 +119,10 @@ namespace PlayingAround.Entities.Player
             }
             if (SummonAct != null)
             {
-                var act = SummonAct;
-                SummonAct = null;            // handoff makes it one-shot
-                ReadyToSummon?.Invoke(act);
+                SummonAct = null;
+                SpendActionPoint();
                 ExecutingSummon = false;
+
             }
         }
 
