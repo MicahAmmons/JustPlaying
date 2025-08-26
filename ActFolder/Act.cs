@@ -49,6 +49,7 @@ namespace PlayingAround.ActFolder
         {
             if (_actController == null) return;
             _actController.Update(_currentCombatant.CurrentStats.AP, _currentCombatant.CurrentStats.MP);
+            ConfirmEndTurnAct();
         }
         public CombatState? DecideNextAct()
         {
@@ -102,7 +103,6 @@ namespace PlayingAround.ActFolder
             ConfirmedAct = null;
             _actController.ResetController();
         }
-
         public void ConfirmMoveAct(List<TileCell> cells)
         {
             if (SelectedAct is MoveAct moveAct)
@@ -117,6 +117,13 @@ namespace PlayingAround.ActFolder
             {
                 summonAct.SummonedCell = cell;
                 ConfirmedAct = summonAct;
+            }
+        }
+        public void ConfirmEndTurnAct()
+        {
+            if (SelectedAct is EndturnAct end)
+            {
+                ConfirmedAct = end;
             }
         }
     }
