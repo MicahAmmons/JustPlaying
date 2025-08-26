@@ -15,6 +15,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
+using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.UI.Combat;
@@ -183,6 +184,7 @@ namespace PlayingAround.Managers.CombatMan
         {
             bool endingScreen = false;
             _actManager.Draw(spriteBatch);
+            DrawActVisuals(spriteBatch);
             switch (StateCombat)
             {
                 case CombatState.LocationSelection:
@@ -197,6 +199,61 @@ namespace PlayingAround.Managers.CombatMan
             _visualEffectManager.Draw(spriteBatch);
             _combatUIManager.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
+
+        }
+        public void DrawActVisuals(SpriteBatch sb)
+        {
+            Act act = _actManager.SelectedAct;
+            if (act != null)
+            {
+                switch (act.ActType)
+                {
+                    case ActType.Move:
+                        DrawMoveAct(sb);
+                        break;
+                    case ActType.Attack:
+
+                        break;
+                    case ActType.Summon:
+
+                        break;
+                }
+            }
+        }
+        public void DrawMoveAct(SpriteBatch sb)
+        {
+            DrawMoveableCells(sb);
+        }
+        public void DrawMoveableCells(SpriteBatch sb)
+        {
+            ICombatant combatant = _currentCombatant;
+            if (combatant.Is == CombatMonsterType.AI) return;
+            TileCell origin = _playerControlledMonsterMap[combatant];
+
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
+            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
+            foreach (var cell in TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP))
+            {
+                cell.DrawCellHighlight(sb, _cellHighlightColors.Walkable);
+                if (_currentMouseHoverCell == cell)
+                {
+                    DrawEntityIdlePreviewOnCell(cell);
+                }
+                if (_currentClickedCell == cell)
+                {
+                    PlayerSelectedMoveDestination(GridMovement.GetCellToCellPath(combatant.MovementController.CurrentPos, cell.CenterPoint));
+                   
+                    return;
+                }
+            }
+        }
+        public void PlayerSelectedMoveDestination(List<TileCell> cells)
+        {
+            _actManager.ConfirmMoveAct(cells);
+
+        }
+        public void HandleMoveableCells()
+        {
 
         }
         public void DrawCombatEndScreen(SpriteBatch spriteBatch)
@@ -361,24 +418,23 @@ namespace PlayingAround.Managers.CombatMan
                     _currentCombatant.ResolveEffects(TickedTiming.StartOfTurn);
                     SetCombatState(CombatState.ResolvingStartOfTurnEffects);
                     break;
-
                 case CombatState.ResolvingStartOfTurnEffects:
                     if (_currentCombatant.StartOfTurnEffectsResolved) SetCombatState(CombatState.TopOfAction);
                     break;
-
                 case CombatState.TopOfAction:
-                    UpdatePlayerMoveableCells();
                     _currentCombatant.UpdateTopOfActionStats();
                     SetCombatState(
                               _currentCombatant.Is == CombatMonsterType.AI
                               ? CombatState.ActionNavigation
                               : CombatState.WaitingPlayerInput);
                     break;
-
                 case CombatState.WaitingPlayerInput:
-
+                    if (_actManager.ConfirmedAct == null) return;
+                    Act confirmedAct = _actManager.ConfirmedAct;
+                    _actManager.ResetConfirmedAndSelectedAct();
+                    _currentCombatant.BeginAct(confirmedAct);
+                    SetCombatState(confirmedAct.ExecutingState());
                     break;
-
                 case CombatState.ActionNavigation:
                     if (CheckIfAIShouldEndTurn()) {SetCombatState(CombatState.EndingTurn); return; }
 
@@ -387,7 +443,6 @@ namespace PlayingAround.Managers.CombatMan
 
                     SetCombatState(CombatState.EndingTurn);
                     break;
-
                 case CombatState.ExecutingAttack:
                     if (!_currentCombatant.ExecutingAttack) SetCombatState(CombatState.TopOfAction);
                     break;
@@ -397,7 +452,6 @@ namespace PlayingAround.Managers.CombatMan
                 case CombatState.ExecutingSummon:
                     if (!_currentCombatant.ExecutingSummon) SetCombatState(CombatState.TopOfAction);
                     break;
-
                 case CombatState.EndingTurn:
                     _currentCombatant.ResolveEffects(TickedTiming.EndOfTurn);
                     SetCombatState(CombatState.ResolvingEndOfTurnEffects);
@@ -487,16 +541,7 @@ namespace PlayingAround.Managers.CombatMan
             mon.CurrentStats.CurrentSelectedSummon = null;
         }
 
-        private void UpdatePlayerMoveableCells()
-        {
-            ICombatant combatant = _currentCombatant;
-            if (combatant.Is == CombatMonsterType.AI) return;
-            TileCell origin = _playerControlledMonsterMap[combatant];
 
-            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
-            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
-            combatant.MoveableCells = TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP);
-        }
         private void HandleLocationSelectionInput()
         {
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) )

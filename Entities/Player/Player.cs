@@ -51,6 +51,8 @@ namespace PlayingAround.Entities.Player
         public bool ExecutingSummon { get; set; } = false;
         public bool ExecutingAttack { get; set ; }
         public ActController ActController { get; set; }
+        public AttackAct AttackAct { get; set; } = null;
+        public MoveAct MoveAct { get; set; } = null;
 
         public static Player LoadFromSave(PlayerSaveData data)
         {
@@ -359,7 +361,17 @@ namespace PlayingAround.Entities.Player
 
         public void BeginAct(Act act)
         {
-            throw new NotImplementedException();
+            switch (act.ActType)
+            {
+                case ActType.Attack:
+                    ExecutingAttack = true;
+                    AttackAct = (AttackAct)act;
+                    break;
+                case ActType.Move:
+                    ExecutingMove = true;
+                    MoveAct = (MoveAct)act;
+                    break;
+            }
         }
 
         public void CreateNewActController()

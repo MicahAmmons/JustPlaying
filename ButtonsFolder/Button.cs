@@ -26,9 +26,8 @@ namespace PlayingAround.ButtonsFolder
             bool rightPressedThisFrame = InputManager.IsRightClick();
 
             if (rightPressedThisFrame) 
-            { 
-                foreach (var but in _buttons) 
-                    but.ResetInputState(); 
+            {
+                ResetButtons();
                 return; 
             }
             foreach (var b in _buttons)
@@ -37,7 +36,7 @@ namespace PlayingAround.ButtonsFolder
                 {
                     bool alreadySelected = b.CurrentlySelected;
 
-                    foreach (var but in _buttons) but.ResetInputState();
+                    ResetButtons();
 
                     if (alreadySelected) { return; ; }
 
@@ -56,6 +55,11 @@ namespace PlayingAround.ButtonsFolder
             {
                 b.Draw(spriteBatch);
             }
+        }
+
+        public void ResetButtons()
+        {
+            foreach (var but in _buttons) but.ResetInputState();
         }
     }
 }
