@@ -5,6 +5,7 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/ActIcons/MoveActIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/ActIcons/EndTurnActIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Aspects/AcidIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Attacks/Spit.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/File.spritefont</File>
@@ -51,6 +52,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/UI/fightBackground.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

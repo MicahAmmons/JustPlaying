@@ -31,20 +31,14 @@ namespace PlayingAround.Managers.CombatMan
 {
     public class CombatManager
     {
-
-        private static int _summonOptionHeight = 64;
-        private static int _summonOptionWidth = 64;
-        private static int _summonOptionSpacing = 10;
-
-        private static List<string> _log = new List<string>();
-
         private CombatStateMachine _stateMachine;
         private VisualEffectManager _visualEffectManager;
         private CombatUIManager _combatUIManager;
         public VisualEffectManager VisualEffectManager => _visualEffectManager;
         public CombatState StateCombat => _stateMachine.CurrentCombatState;
-        // just a list of all monsters that have entered this combat at any time
+
         private List<ICombatant> _referenceTurnOrder = new List<ICombatant>();
+
         public int TotalCombatants = 0;
         // the current alive turn order
         public Queue<ICombatant> TurnOrder = new Queue<ICombatant>();
@@ -52,9 +46,6 @@ namespace PlayingAround.Managers.CombatMan
         private MapTile _currentMapTile;
         private Texture2D _playerCellOptions;//placeholder texture
         private SpriteFont _font;
-
-
-        private List<(Rectangle rect, SingleAttack attack)> _attackButtons = new();
 
         private Dictionary<ICombatant, Rectangle> _displayStatRectangles = new Dictionary<ICombatant, Rectangle>();
         private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
@@ -74,20 +65,15 @@ namespace PlayingAround.Managers.CombatMan
         private Dictionary<ICombatant, TileCell> _aIControlledMonsterMap = new();
         public Dictionary<ICombatant, TileCell> AIControlledMonsterMap => _aIControlledMonsterMap;
         public Dictionary<ICombatant, TileCell> PlayerControlledMonsterMap => _playerControlledMonsterMap;
-
-        private int? _numberOfCellsMoved = 0;
-
-        private VisualEffect _currentAttackVisualEffect;
         public Dictionary<string, int> defeatedMonsters = new Dictionary<string, int>();
 
-        private List<TileCell> _summonSpawnableCells;
         private ICombatant _currentCombatant;
         public ICombatant CurrentCombatant => _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
-        private float _timer = 0;
 
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
         private ActManager _actManager;
+        private CombatButtonController _combatButtonController;
 
 
 
@@ -101,6 +87,7 @@ namespace PlayingAround.Managers.CombatMan
             _combatUIManager = new CombatUIManager();
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
             _actManager = new ActManager();
+            _combatButtonController = new CombatButtonController();
 
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
@@ -179,38 +166,23 @@ namespace PlayingAround.Managers.CombatMan
 
 
 
-
-
-
-
-
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             bool endingScreen = false;
-
-
-            switch (StateCombat)
-            {
-                case CombatState.LocationSelection:
-                    DrawLocationSelection(spriteBatch);
-                    break;
-                case CombatState.WaitingPlayerInput:
-                    DrawActVisuals(spriteBatch);
-                    break;
-                case CombatState.WinnerChosen:
-                    endingScreen = true;
-                    break;
-            }
-            DrawTurnStateOverlay(spriteBatch);
-            _visualEffectManager.Draw(spriteBatch);
+            if (StateCombat == CombatState.WinnerChosen) { endingScreen = true; }
+            DrawActVisuals(spriteBatch);
+            DrawLocationSelection(spriteBatch);
+            DrawTurnStateOverlay(spriteBatch);// debug overlay
             _combatUIManager.Draw(spriteBatch);
             if (StateCombat != CombatState.LocationSelection)
-            _actManager.Draw(spriteBatch);
+                _actManager.Draw(spriteBatch);
+            _combatButtonController.Draw(spriteBatch);
             if (endingScreen) DrawCombatEndScreen(spriteBatch);
 
         }
         public void DrawActVisuals(SpriteBatch sb)
         {
+            if (StateCombat != CombatState.WaitingPlayerInput) return;
             Act act = _actManager.SelectedAct;
             if (act != null)
             {
@@ -228,7 +200,6 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
         }
-
         private void DrawSummonAct(SpriteBatch sb)
         {
             DrawSummonableCells(sb);
@@ -261,12 +232,10 @@ namespace PlayingAround.Managers.CombatMan
                 }
             }
         }
-
         private void PlayerSelectedSummonDestination(TileCell cell)
         {
             _actManager.ConfirmSummonAct(cell);
         }
-
         public void DrawMoveAct(SpriteBatch sb)
         {
             DrawMoveableCells(sb);
@@ -302,7 +271,6 @@ namespace PlayingAround.Managers.CombatMan
                 _actManager.ConfirmMoveAct(cells);
 
         }
-
         public void DrawCombatEndScreen(SpriteBatch spriteBatch)
         {
             // Background panel
@@ -364,6 +332,7 @@ namespace PlayingAround.Managers.CombatMan
         }
         private void DrawLocationSelection(SpriteBatch spriteBatch)
         {
+            if (StateCombat != CombatState.LocationSelection) return;
             DrawSpawnableTiles(spriteBatch);
 
             if (_playerSpawnableCells.Contains( _currentMouseHoverCell))
@@ -383,18 +352,18 @@ namespace PlayingAround.Managers.CombatMan
                 cell.AddAnimation(data);
                 return;
         }
+
+
+
+
+
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            UpdateMouseWhereabouts();
-            UpdateCombatantCount();
-            _combatUIManager.Update();
+            UpdateEachFrameMethods();
+            _combatButtonController.Update();
             if (StateCombat == CombatState.WinnerChosen) return;
-            UpdateInput(gameTime);
-            _visualEffectManager.Update(delta);
-            ToggleIsDead(); // toggles ISDead as well as clears aspects
-            UpdateTurnOrder();
-            UpdateMonsterCellMap();
+            _combatUIManager.Update();
             _actManager.Update();
             if (WinnerChosen())
             {
@@ -461,13 +430,21 @@ namespace PlayingAround.Managers.CombatMan
                     break;
             }
         }
-
+        private void UpdateEachFrameMethods()
+        {
+            UpdateMouseWhereabouts();
+            HandleLocationSelectionInput();
+            UpdateCombatantCount();
+            ToggleIsDead(); // toggles ISDead as well as clears aspects
+            UpdateTurnOrder();
+            UpdateMonsterCellMap();
+        }
         private void Endturn()
         {
+            _actManager.ResetActs();
             SendMonsterToBackOfQueue();
             SetCombatState(CombatState.TurnStart);
         }
-
         private void EndOfAction()
         { 
             _actManager.ResetActs();
@@ -488,22 +465,12 @@ namespace PlayingAround.Managers.CombatMan
         }
         public bool CheckIfAIShouldEndTurn()
         {
-            if (_currentCombatant.CurrentStats.AP <= 0)
+            if (_actManager.ConfirmedAct is EndturnAct act)
             {
                 return true;
             }
             return false;
         }
-        public void UpdateInput(GameTime gameTime)
-        {
-            switch (StateCombat)
-            {
-                case CombatState.LocationSelection: HandleLocationSelectionInput(); break;
-            }
-        }
-
-
-
         private void HandlePlayerClickLeaveCombat()
         {
             if (InputManager.IsLeftClick() && _exitCombatButtonRect.Contains(_currentMousePos))
@@ -511,38 +478,9 @@ namespace PlayingAround.Managers.CombatMan
                 CombatGuard.EndCombat();
             }
         }
-
-        private void UpdateStatHoverMonsterCell()
-        {
-            foreach (var kvp in _displayStatRectangles)
-            {
-                ICombatant mon = kvp.Key;
-                Rectangle rect = kvp.Value;
-                if (rect.Contains(_currentMousePos))
-                {
-                    mon.DrawSpecifics.shrink = 5;
-                    Color col = ColorPalette.DarkColor;
-                    switch (mon.Is)
-                    {
-                        case CombatMonsterType.Player: col = Color.LimeGreen; break;
-                        case CombatMonsterType.AI: col = Color.MediumVioletRed; break;
-                        case CombatMonsterType.Summoned: col = Color.LightCoral; break;
-                    }
-                    mon.DrawSpecifics.HighlightCol = col;
-                    mon.DrawSpecifics.DrawCellHightlight = true;
-                    return;
-                }
-            }
-        }
-        private void ResetClickValues()
-        {
-            ICombatant mon = _currentCombatant;
-            mon.CurrentStats.CurrentSelectedSummon = null;
-        }
-
-
         private void HandleLocationSelectionInput()
         {
+            if (StateCombat != CombatState.LocationSelection) return;
             if (_playerSpawnableCells.Contains(_currentMouseHoverCell) )
             {
                 if (InputManager.IsLeftClick())
@@ -599,18 +537,6 @@ namespace PlayingAround.Managers.CombatMan
             _playerControlledMonsterMap.Clear();
             _aIControlledMonsterMap.Clear();
         }
-
-        
-
-
-
-
-
-
-
-
-
-
         private void ToggleIsDead()
         {
             bool someOneDied = false;

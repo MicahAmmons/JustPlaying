@@ -277,6 +277,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     ExecutingMove = true;
                     MoveAct = (MoveAct)act;
                     break;
+                case ActType.EndTurn:
+                    break;
             }
         }
         public void SpendActionPoint()

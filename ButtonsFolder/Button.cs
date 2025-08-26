@@ -10,6 +10,8 @@ using static CombatStateMachine;
 
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.ActFolder;
+using PlayingAround.Managers.CombatMan;
+using PlayingAround.Interfaces;
 
 namespace PlayingAround.ButtonsFolder
 {
@@ -19,7 +21,7 @@ namespace PlayingAround.ButtonsFolder
         public event Action<Button> ButtonSelected;
         public event Action ButtonDeselected;
         public void SetCurrentButtons(Button button) => _buttons.Add(button);
-        public void UpdateInput(Dictionary<Button, Act> dic, int playerAP, int playerMP)
+        public void UpdateInput(Dictionary<Button, Act> dic = null, int playerAP = 0, int playerMP = 0)
         {
             if (_buttons.Count == 0) return;
 
@@ -27,38 +29,44 @@ namespace PlayingAround.ButtonsFolder
             bool leftPressedThisFrame = InputManager.IsLeftClick();
             bool rightPressedThisFrame = InputManager.IsRightClick();
 
-            if (rightPressedThisFrame) 
+            if (rightPressedThisFrame)
             {
                 ResetButtons();
                 ButtonDeselected?.Invoke();
-                return; 
+                return;
             }
             foreach (var b in _buttons)
             {
                 if (b.UpdateInput(mousePoint, leftPressedThisFrame))
                 {
-                    ActType type = dic[b].ActType;
-                    switch (type) { case ActType.Move: if (playerMP <= 0) return; break;
-                                    case ActType.Attack:
-                                    case ActType.Summon: if (playerAP <= 0) return; break;  
+                    // For the Act buttons, this creates a gate based on if player has AP/MP
+                    if (dic != null)
+                    {
+                        ActType type = dic[b].ActType;
+                        switch (type)
+                        {
+                            case ActType.Move: if (playerMP <= 0) return; break;
+                            case ActType.Attack:
+                            case ActType.Summon: if (playerAP <= 0) return; break;
+                        }
                     }
                     bool alreadySelected = b.CurrentlySelected;
                     ResetButtons();
 
-                    if (alreadySelected) 
+                    if (alreadySelected)
                     {
                         ButtonDeselected?.Invoke();
-                        return; 
+                        return;
                     }
 
                     b.CurrentlySelected = true;
                     ButtonSelected?.Invoke(b);
 
                     return;
-                };
+                }
+                ;
             }
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             if (_buttons.Count == 0) return;
@@ -67,13 +75,37 @@ namespace PlayingAround.ButtonsFolder
                 b.Draw(spriteBatch);
             }
         }
-
         public void ResetButtons()
         {
             foreach (var but in _buttons) but.ResetInputState();
         }
     }
-}
+    public class CombatButtonController
+    {
+        private ButtonManager _buttonManager;
+        private CombatState CombState => CombatGuard.CurrentCombat.StateCombat;
+        private  ICombatant _currentCombatant => CombatGuard.CurrentCombat.CurrentCombatant;
+        public CombatButtonController()
+        {
+            InstanceCombatButtons();
+        }
+        private void InstanceCombatButtons()
+        {
+            _buttonManager = new ButtonManager();
+            Button endTurnBut = new Button(new Rectangle(100, 900, 100, 50));
+            _buttonManager.SetCurrentButtons(endTurnBut);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+           
+        }
+
+        public void Update()
+        {
+            
+        }
+    }
+
     public class Button
     {
         public Texture2D Texture = AssetManager.GetTexture("fightBackground");
@@ -87,10 +119,10 @@ namespace PlayingAround.ButtonsFolder
         public void Draw(SpriteBatch spriteBatch)
         {
             Color col = Color.White;
-        if (MouseHovered) col = Color.Blue;
-        if (CurrentlySelected) col = Color.Red;
+            if (MouseHovered) col = Color.Blue;
+            if (CurrentlySelected) col = Color.Red;
 
-       
+
             spriteBatch.Draw(Texture, DrawRectangle, col);
         }
         public bool UpdateInput(Point mousePoint, bool leftPressedThisFrame)
@@ -98,13 +130,14 @@ namespace PlayingAround.ButtonsFolder
             MouseHovered = DrawRectangle.Contains(mousePoint);
             if (MouseHovered && leftPressedThisFrame)
             {
-            return true;
+                return true;
             }
-        return false;
+            return false;
         }
         public void ResetInputState()
         {
-            CurrentlySelected= false;
-            MouseHovered= false;
+            CurrentlySelected = false;
+            MouseHovered = false;
         }
     }
+}

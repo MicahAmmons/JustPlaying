@@ -88,6 +88,8 @@ namespace PlayingAround.ActFolder
                     return CombatState.ExecutingAttack; 
                 case ActType.Move: 
                     return CombatState.ExecutingMove;
+                case ActType.EndTurn:
+                    return CombatState.EndingTurn;
             }
             return CombatState.ExecutingAttack;
         }
@@ -132,7 +134,7 @@ namespace PlayingAround.ActFolder
         int startingX = (ViewportManager.ScreenWidth / 2);
         int y = (ViewportManager.ScreenHeight - ButtonSize - Buffer);
 
-
+        //AI Controller
         public ActController(List<SpecificActData> data)
         {
             foreach (var act in data)
@@ -143,6 +145,7 @@ namespace PlayingAround.ActFolder
                     case ActType.Move: ActsOrder.Add(new MoveAct(act)); break;
                 }
             }
+            ActsOrder.Add(new EndturnAct());
             BuildButtonsAndMap();
             ButtonManager.ButtonSelected += b => SelectedAct = _buttonToAct[b];
             ButtonManager.ButtonDeselected += () =>
@@ -158,12 +161,17 @@ namespace PlayingAround.ActFolder
                 Target = ActionTarget.Self,
                 ActType = ActType.Move,
             });
+
                 foreach (var sumMon in SummonedMonsterManager.UnlockedSummons)
             {
                 string name = sumMon.Key;
                 SummonedSavedStats stats = sumMon.Value;
                 ActsOrder.Add(new SummonAct(name, stats));
             }
+            ActsOrder.Add(new EndturnAct()
+            {
+
+            });
             BuildButtonsAndMap();
             ButtonManager.ButtonSelected += b => SelectedAct = _buttonToAct[b];
             ButtonManager.ButtonDeselected += () =>
@@ -192,7 +200,6 @@ namespace PlayingAround.ActFolder
         }
         public void Update(int ap, int mp)
         {
-
             ButtonManager.UpdateInput(_buttonToAct, ap, mp);
         }
         public void DrawButtons(SpriteBatch sb)
@@ -221,7 +228,6 @@ namespace PlayingAround.ActFolder
     }
     public class AttackAct : Act
     {
-
         public SingleAttack Attack {  get; set; }
         public Dictionary<ICombatant, TileCell> EffectedTargets { get; set; } = new Dictionary<ICombatant, TileCell>();
         public AttackAct(SpecificActData data)
@@ -231,15 +237,18 @@ namespace PlayingAround.ActFolder
             Target = data.ActionTarget;
             ActType = data.Type;
         }
-
         public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
         {
             _combatant = currentCombatant;
             _playerMap = playerMap;
             _aiMap = aIMap;
-
+            if (!MonsterHasEnoughAP(currentCombatant.CurrentStats.AP)) return false;
             if (!ValidTargets()) return false;
             return true;
+        }
+        private bool MonsterHasEnoughAP(int ap)
+        {
+            return ap > 0;
         }
         private bool ValidTargets()
         {
@@ -317,13 +326,11 @@ namespace PlayingAround.ActFolder
             EffectedTargets.Clear();
             Attack.IsFinished = false;
         }
-
     }
     public class MoveAct : Act
     {
         public MovementAmount MovementAmount { get; set; }
         public List<TileCell> ActMovementCellPath { get; set; } = new List<TileCell>();
-
         public MoveAct(SpecificActData data)
         {
             MovementAmount = data.MovementAmount;
@@ -395,7 +402,6 @@ namespace PlayingAround.ActFolder
         public SummonedSavedStats SummonedMonsterStats {  get; set; }
         public string SummonedName { get; set; }
         public TileCell SummonedCell {  get; set; }
-
         public SummonAct(string name, SummonedSavedStats sumMon)
         {
             Icon = sumMon.Icon;
@@ -419,5 +425,26 @@ namespace PlayingAround.ActFolder
             throw new NotImplementedException();
         }
     }
-   
+    public class EndturnAct : Act
+    {
+        public EndturnAct()
+        {
+            Icon = AssetManager.GetTexture("EndTurnActIcon");
+            ActType = ActType.EndTurn;
+        }
+        public override CombatState ExecutingState()
+        {
+            return CombatState.EndingTurn;
+        }
+        public override void ClearActParams()
+        {
+           
+        }
+
+        public override bool TryAct(ICombatant currentCombatant, Dictionary<ICombatant, TileCell> playerMap, Dictionary<ICombatant, TileCell> aIMap)
+        {
+            return true;
+        }
+    }
+
 }

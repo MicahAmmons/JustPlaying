@@ -101,6 +101,7 @@ namespace PlayingAround.Game.Assets
         public static void LoadActIcons()
         {
             AssetManager.LoadTexture("MoveActIcon", "ActIcons/MoveActIcon");
+            AssetManager.LoadTexture("EndTurnActIcon", "ActIcons/EndTurnActIcon");
         }
     }
 
