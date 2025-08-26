@@ -208,6 +208,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (attack.IsFinished && MovementController.AnimationManager.IsFinished)
                 {
                     SpendActionPoint();
+                    MovementController.SetCurrentAnimationStateToIdle();
                     AttackAct.ClearActParams();
                     AttackAct = null;
                     ExecutingAttack = false;

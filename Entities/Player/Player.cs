@@ -110,7 +110,6 @@ namespace PlayingAround.Entities.Player
 
         }
 
-        private float _summonTimer = 0;
         public void UpdateAct(float delta)
         {
             if (MoveAct != null)
@@ -120,16 +119,10 @@ namespace PlayingAround.Entities.Player
             }
             if (SummonAct != null)
             {
-                //this is a placeholder for any future animations or pauses or whatever
-                _summonTimer++;
-                if (_summonTimer >= 25)
-                {
-                    ReadyToSummon?.Invoke(SummonAct);
-                    SummonAct = null;
-                    _summonTimer = 0;
-                    ExecutingSummon = false;
-                }
-
+                var act = SummonAct;
+                SummonAct = null;            // handoff makes it one-shot
+                ReadyToSummon?.Invoke(act);
+                ExecutingSummon = false;
             }
         }
 

@@ -105,11 +105,14 @@ namespace PlayingAround.Managers.CombatMan
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
             _currentPlayer.MovementController.CachPos();
+
             SetSpawnableCells();
             SetCombatantStartingPos();
             SetTurnOrder();
             UpdateCombatantPositions();
+
             UpdateCurrentMonster();
+
             InitilizeUIElements();
             SceneManager.SetState(SceneState.Combat);
             _currentCombatant.ReadyToSummon += SummonSummonMonster;

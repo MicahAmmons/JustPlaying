@@ -52,10 +52,8 @@ namespace PlayingAround.ActFolder
         }
         public CombatState? DecideNextAct()
         {
-            foreach (var act in _actController.ActsOrder)
-            {
-                ActOrderTry.Enqueue(act);
-            }
+            PopulateActOrder();
+
 
             while (ActOrderTry.Count > 0)
             {
@@ -67,11 +65,20 @@ namespace PlayingAround.ActFolder
                 { 
                     ConfirmedAct = act;
                     _currentCombatant.BeginAct(act);
+                    PopulateActOrder();
                     return state; 
                 }
 
             }
             return null;
+        }
+        private void PopulateActOrder()
+        {
+            ActOrderTry.Clear();   
+            foreach (var act in _actController.ActsOrder)
+            {
+                ActOrderTry.Enqueue(act);
+            }
         }
         public CombatState StateHelper(ActType type)
         {
@@ -310,6 +317,7 @@ namespace PlayingAround.ActFolder
             _playerMap.Clear();
             _aiMap.Clear();
             EffectedTargets.Clear();
+            Attack.IsFinished = false;
         }
 
     }
