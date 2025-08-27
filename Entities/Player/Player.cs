@@ -76,7 +76,7 @@ namespace PlayingAround.Entities.Player
                     MP = 6,
                     AP = 2,
                     Health = 10,
-                    Initiative = 1
+                    Initiative = 5
                 },
                 CurrentStats = new CurrentCombatStats()
                 {

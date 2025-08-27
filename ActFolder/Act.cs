@@ -126,6 +126,19 @@ namespace PlayingAround.ActFolder
                 ConfirmedAct = end;
             }
         }
+        public void ConfirmAttackAct(Dictionary<ICombatant, TileCell> dic)
+        {
+            if (SelectedAct is  AttackAct attackAct)
+            {
+                foreach (var kvp in dic)
+                {
+                    ICombatant combatant = kvp.Key;
+                    TileCell cell = kvp.Value;
+                    attackAct.EffectedTargets[combatant] = cell;
+                }
+                ConfirmedAct = attackAct;
+            }
+        }
     }
 
     public class ActController
@@ -223,7 +236,6 @@ namespace PlayingAround.ActFolder
     public abstract class Act
     {
         public ActionTarget Target { get; set; }
-        public Button ActButton { get; set; }
         public ActType ActType { get; set; }
         public ICombatant _combatant { get; set; } = null;
         public Dictionary<ICombatant, TileCell> _playerMap { get; set; } = new Dictionary<ICombatant, TileCell>();

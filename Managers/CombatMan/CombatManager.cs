@@ -191,14 +191,77 @@ namespace PlayingAround.Managers.CombatMan
                     case ActType.Move:
                         DrawMoveAct(sb);
                         break;
-                    case ActType.Attack:
-
-                        break;
                     case ActType.Summon:
                         DrawSummonAct(sb);
                         break;
+                    case ActType.Attack:
+                        DrawAttackAct(sb, act);
+                        break;
                 }
             }
+        }
+        private void DrawAttackAct(SpriteBatch sb, Act act)
+        {
+            DrawAttackRangeOptions(sb, act);
+        }
+        private void DrawAttackRangeOptions(SpriteBatch sb, Act act)
+        {
+            var comb = _currentCombatant;
+            if (comb.Is == CombatMonsterType.AI) return;
+            if (act is not AttackAct attackAct) return;
+
+            TileCell origin = _playerControlledMonsterMap[comb];
+            int range = attackAct.Attack.Range;
+
+            List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, range);
+
+            List<TileCell> invalidCells = new List<TileCell>();
+            List<TileCell> validCells = new List<TileCell>();
+
+            var targetTypes = attackAct.Attack.TargetType;
+
+            foreach (var cell in TileManager.GetFloodFillTileWithinRange(origin, range))
+            {
+                if (cell.IsWalkable && !cell.BlockedByCombatant)
+                {
+                    invalidCells.Add(cell);
+                    continue;
+                }
+                if (cell.IsWalkable && cell.BlockedByCombatant)
+                {
+                    if (targetTypes.Contains(GetCombatantAtCell(cell).Is))
+                    {
+                        invalidCells.Add(cell);
+                        continue;
+                    }
+                    else validCells.Add(cell);
+                }
+            }
+            foreach (var cell in invalidCells)
+            {
+                cell.DrawCellHighlight(sb, _cellHighlightColors.InvalidTarget);
+            }
+            foreach (var cell in validCells)
+            {
+                Color col = _cellHighlightColors.ValidTarget;
+                if (_currentMouseHoverCell == cell)
+                {
+                    col = Color.Black;
+                }
+                cell.DrawCellHighlight(sb, col);
+                if (_currentClickedCell == cell)
+                {
+                    PlayerSelectedAttackTarget(cell);
+                    return;
+                }
+            }
+
+        }
+        private void PlayerSelectedAttackTarget(TileCell cell)
+        {
+            Dictionary<ICombatant, TileCell> effected = new Dictionary<ICombatant, TileCell> ();
+            effected[GetCombatantAtCell(cell)] = cell;
+            _actManager.ConfirmAttackAct(effected);
         }
         private void DrawSummonAct(SpriteBatch sb)
         {
@@ -512,13 +575,13 @@ namespace PlayingAround.Managers.CombatMan
                 TileCell cell = TileManager.GetCell((Vector2)mon.MovementController.CurrentPos);
                 if (mon.Is == CombatMonsterType.Summoned || mon.Is == CombatMonsterType.Player)
                 {
-                    cell.BlockedByMonster = true;
+                    cell.AssignCombatant(mon);
                     _playerControlledMonsterMap[mon] = cell;
 
                 }
                 else if (mon.Is == CombatMonsterType.AI)
                 {
-                    cell.BlockedByMonster = true;
+                    cell.AssignCombatant(mon);
                     _aIControlledMonsterMap[mon] = cell;
                 }
 
@@ -528,11 +591,11 @@ namespace PlayingAround.Managers.CombatMan
         {
             foreach (var cell in _aIControlledMonsterMap.Values)
             {
-                cell.BlockedByMonster = false;
+                cell.UnassignCombatant();
             }
             foreach (var cell in _playerControlledMonsterMap.Values)
             {
-                cell.BlockedByMonster = false;
+                cell.UnassignCombatant();
             }
             _playerControlledMonsterMap.Clear();
             _aIControlledMonsterMap.Clear();
@@ -595,10 +658,33 @@ namespace PlayingAround.Managers.CombatMan
             if (_currentCombatant == TurnOrder.Peek()) return;
             _currentCombatant = TurnOrder.Peek();
         }
-
-
-
+        private ICombatant GetCombatantAtCell(TileCell cell)
+        {
+            
  
+
+            foreach (var kvp in _aIControlledMonsterMap)
+            {
+                var target = kvp.Key;
+                var targetCell = kvp.Value;
+
+                if (targetCell.X == cell.X && targetCell.Y == cell.Y)
+                    return target;
+            }
+            foreach (var kvp in _playerControlledMonsterMap)
+            {
+                var target = kvp.Key;
+                var targetCell = kvp.Value;
+                if (targetCell.X == cell.X && targetCell.Y == cell.Y)
+                    return target;
+            }
+
+            return null;
+        }
+
+
+
+
         public void SummonSummonMonster(SummonAct act)
         {
             ICombatant comSumMon = (CombatMonsterManager.SummonMonsterToCombat(act.SummonedName));

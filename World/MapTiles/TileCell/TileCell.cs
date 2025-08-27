@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Tiles;
@@ -31,7 +32,8 @@ namespace PlayingAround.Game.Map
         public bool PlayerSpawnable { get; }
         public bool MonsterSpawnable { get; }
         public bool PlayMonsterSpawnable { get; }
-        public bool BlockedByMonster { get; set; } = false;
+        public bool BlockedByCombatant { get; set; } = false;
+        public ICombatant BlockedCombatant { get; set; } = null;
         public Vector2 CenterPoint { get; set; }
         public string NPCName { get; set; }
         public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
@@ -135,6 +137,16 @@ namespace PlayingAround.Game.Map
             TileCellManager.AddCellVE(this);
         }
 
+        internal void AssignCombatant(ICombatant mon)
+        {
+            BlockedCombatant = mon;
+            BlockedByCombatant = true;
+        }
 
+        internal void UnassignCombatant()
+        {
+            BlockedCombatant = null;
+            BlockedByCombatant = false;
+        }
     }
 }

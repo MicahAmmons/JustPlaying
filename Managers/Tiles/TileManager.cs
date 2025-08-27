@@ -207,11 +207,9 @@ namespace PlayingAround.Managers.Tiles
         }
         internal static int CheckManhattanDistance(TileCell origin, TileCell destination)
         {
-            int dx = Math.Abs(origin.X/2 - destination.X/2);
-            int dy = Math.Abs(origin.Y/2 - destination.Y/2);
-            if (dx == 1) dx = 2;
-            if (dy == 1) dy = 2;
-            return (dx + dy);
+            int dx = Math.Abs(origin.X - destination.X);
+            int dy = Math.Abs(origin.Y - destination.Y);
+            return Math.Max(dx, dy);
         }
         public static List<TileCell> GetReachableCellsFromSubset(TileCell start, List<TileCell> cellSubset, int range)
         {
