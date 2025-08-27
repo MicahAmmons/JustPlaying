@@ -56,7 +56,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public bool ExecutingSummon { get; set; } = false;
         public bool ExecutingAttack { get; set; } = false;
         public bool ExecutingMove {  get; set; } = false;
-        public event Action<SummonAct> ReadyToSummon;
+        public SummonAct SummonAct { get ; set ; }
+
 
 
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
@@ -272,6 +273,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 case ActType.Attack:
                     ExecutingAttack = true;
                     AttackAct = (AttackAct)act;
+                    MovementController.AnimationManager.ResetStates();
                     break;
                 case ActType.Move:
                     ExecutingMove = true;

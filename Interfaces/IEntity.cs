@@ -46,6 +46,7 @@ namespace PlayingAround.Interfaces
         public bool ExecutingSummon { get; set; }
         public bool ExecutingAttack { get; set; }
         public bool ExecutingMove { get; set; }
+        public SummonAct SummonAct { get; set; }
         public ActController ActController { get; set; }
         void Update(GameTime gameTime, float delta);
         public void UpdateTopOfActionStats();
@@ -60,7 +61,6 @@ namespace PlayingAround.Interfaces
         public void BeginAct(Act act);
         public void UpdateAct(float delta);
         public void UpdateTopOfRoundStats();
-        public event Action<SummonAct> ReadyToSummon;
 
 
     }

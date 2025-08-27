@@ -50,7 +50,7 @@ namespace PlayingAround.Game.Pathfinding
 
                 foreach (var neighbor in TileManager.GetWalkableNeighbors(current))
                 {
-                    if (neighbor.BlockedByMonster) continue;
+                    if (neighbor.BlockedByCombatant) continue;
                     int moveCost = IsDiagonal(current, neighbor) ? DIAGONAL_COST : ORTHOGONAL_COST;
                     int tentativeG = gScore[current] + moveCost;
 

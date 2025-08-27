@@ -97,7 +97,7 @@ namespace PlayingAround.Managers.Movement
 
                 foreach (var neighbor in TileManager.GetWalkableNeighbors(current))
                 {
-                    if (neighbor.BlockedByMonster && neighbor != goal) 
+                    if (neighbor.BlockedByCombatant && neighbor != goal) 
                         continue;
                     int moveCost = IsDiagonal(current, neighbor) ? DIAGONAL_COST : ORTHOGONAL_COST;
                     int tentativeG = gScore[current] + moveCost;

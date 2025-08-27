@@ -107,6 +107,7 @@ namespace PlayingAround.ActFolder
         {
             if (SelectedAct is MoveAct moveAct)
             {
+                ResetSelectedAct();
                 moveAct.ActMovementCellPath = cells;
                 ConfirmedAct = moveAct;
             }
@@ -115,6 +116,7 @@ namespace PlayingAround.ActFolder
         {
             if (SelectedAct is SummonAct summonAct)
             {
+                ResetSelectedAct();
                 summonAct.SummonedCell = cell;
                 ConfirmedAct = summonAct;
             }
@@ -123,6 +125,7 @@ namespace PlayingAround.ActFolder
         {
             if (SelectedAct is EndturnAct end)
             {
+                ResetSelectedAct();
                 ConfirmedAct = end;
             }
         }
@@ -130,6 +133,7 @@ namespace PlayingAround.ActFolder
         {
             if (SelectedAct is  AttackAct attackAct)
             {
+                ResetSelectedAct();
                 foreach (var kvp in dic)
                 {
                     ICombatant combatant = kvp.Key;

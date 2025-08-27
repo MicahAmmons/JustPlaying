@@ -74,12 +74,21 @@ namespace PlayingAround.AnimationFolder
         {
             if (_currentAnimationState != state)
             {
-                foreach (var contr in ControllerList[_currentAnimationState])
+                ResetStates();
+                _currentAnimationState = state;
+            }
+        }
+
+        public void ResetStates()
+        {
+            foreach (var kvp in ControllerList)
+            {
+                AnimationState state = kvp.Key;
+                List<AnimationController> controllerList = kvp.Value;
+                foreach (var contr in controllerList)
                 {
                     contr.Reset();
                 }
-                IsFinished = false;
-                _currentAnimationState = state;
             }
         }
     }

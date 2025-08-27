@@ -102,7 +102,6 @@ namespace PlayingAround.Managers.CombatMan
 
             InitilizeUIElements();
             SceneManager.SetState(SceneState.Combat);
-            _currentCombatant.ReadyToSummon += SummonSummonMonster;
         }
         public void SetSpawnableCells()
         {
@@ -274,7 +273,7 @@ namespace PlayingAround.Managers.CombatMan
             TileCell origin = _playerControlledMonsterMap[comb];
 
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, 2);
-            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
+            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByCombatant).ToList();
 
             foreach (var cell in openCells)
             {
@@ -310,7 +309,7 @@ namespace PlayingAround.Managers.CombatMan
             TileCell origin = _playerControlledMonsterMap[combatant];
 
             List<TileCell> cells = TileManager.GetFloodFillTileWithinRange(origin, (int)combatant.CurrentStats.MP);
-            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByMonster).ToList();
+            var openCells = cells.Where(cells => cells.IsWalkable && !cells.BlockedByCombatant).ToList();
             var reachableCells = TileManager.GetReachableCellsFromSubset(origin, openCells, (int)combatant.CurrentStats.MP);
             foreach (var cell in reachableCells)
             {
