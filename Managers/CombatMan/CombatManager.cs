@@ -70,6 +70,7 @@ namespace PlayingAround.Managers.CombatMan
         private ICombatant _currentCombatant;
         public ICombatant CurrentCombatant => _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
+        private Button _endCombatButton;
 
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
         private ActManager _actManager;
@@ -92,6 +93,10 @@ namespace PlayingAround.Managers.CombatMan
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
             _currentPlayer.MovementController.CachPos();
+            _endCombatButton = new Button(new Rectangle()
+            {
+                Text = "Exit Combat",
+            };
 
             SetSpawnableCells();
             SetCombatantStartingPos();
@@ -370,16 +375,7 @@ namespace PlayingAround.Managers.CombatMan
             }
 
             // Exit Combat button
-            spriteBatch.Draw(_playerCellOptions, _exitCombatButtonRect, Color.DarkRed);
-
-            string buttonText = "Exit Combat";
-            Vector2 buttonTextSize = _font.MeasureString(buttonText);
-            Vector2 buttonTextPos = new Vector2(
-                _exitCombatButtonRect.X + (_exitCombatButtonRect.Width - buttonTextSize.X) / 2,
-                _exitCombatButtonRect.Y + (_exitCombatButtonRect.Height - buttonTextSize.Y) / 2
-            );
-
-            spriteBatch.DrawString(_font, buttonText, buttonTextPos, Color.White);
+            _endCombatButton.Draw(spriteBatch);
         }
         private void DrawTurnStateOverlay(SpriteBatch spriteBatch)
         {
