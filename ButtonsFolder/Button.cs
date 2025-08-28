@@ -106,10 +106,10 @@ namespace PlayingAround.ButtonsFolder
         }
     }
 
+
     public class Button
     {
         public Texture2D Texture = AssetManager.GetTexture("fightBackground");
-        public string Text;
         public Rectangle DrawRectangle;
         public bool MouseHovered = false;
         public bool CurrentlySelected = false;

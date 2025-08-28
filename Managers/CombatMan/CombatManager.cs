@@ -48,8 +48,7 @@ namespace PlayingAround.Managers.CombatMan
         private SpriteFont _font;
 
         private Dictionary<ICombatant, Rectangle> _displayStatRectangles = new Dictionary<ICombatant, Rectangle>();
-        private Rectangle _endScreenRect = new Rectangle(710, 440, 500, 200);
-        private Rectangle _exitCombatButtonRect = new Rectangle(885, 580, 150, 50);
+      
 
         public PlayMonsters PlayMonsters; // kept as reference as needed
         private List<TileCell> _playerSpawnableCells = new List<TileCell>();
@@ -70,7 +69,7 @@ namespace PlayingAround.Managers.CombatMan
         private ICombatant _currentCombatant;
         public ICombatant CurrentCombatant => _currentCombatant;
         public WhoWon TheWinner = WhoWon.None;
-        private Button _endCombatButton;
+        private ExitCombatController _exitCombatContr;
 
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
         private ActManager _actManager;
@@ -93,10 +92,7 @@ namespace PlayingAround.Managers.CombatMan
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
             _currentPlayer.MovementController.CachPos();
-            _endCombatButton = new Button(new Rectangle()
-            {
-                Text = "Exit Combat",
-            };
+
 
             SetSpawnableCells();
             SetCombatantStartingPos();
@@ -181,7 +177,7 @@ namespace PlayingAround.Managers.CombatMan
             if (StateCombat != CombatState.LocationSelection)
                 _actManager.Draw(spriteBatch);
             _combatButtonController.Draw(spriteBatch);
-            if (endingScreen) DrawCombatEndScreen(spriteBatch);
+            if (endingScreen) _exitCombatContr.Draw(spriteBatch);
 
         }
         public void DrawActVisuals(SpriteBatch sb)
@@ -528,13 +524,6 @@ namespace PlayingAround.Managers.CombatMan
                 return true;
             }
             return false;
-        }
-        private void HandlePlayerClickLeaveCombat()
-        {
-            if (InputManager.IsLeftClick() && _exitCombatButtonRect.Contains(_currentMousePos))
-            {
-                CombatGuard.EndCombat();
-            }
         }
         private void HandleLocationSelectionInput()
         {
