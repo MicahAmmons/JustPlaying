@@ -26,6 +26,22 @@
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\OozeIcon.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
+    <None Remove="Content\NPC\Eyes\LeftCircular.png" />
+    <None Remove="Content\NPC\Eyes\LeftFlat.png" />
+    <None Remove="Content\NPC\Eyes\LeftInward.png" />
+    <None Remove="Content\NPC\Eyes\LeftOutward.png" />
+    <None Remove="Content\NPC\Eyes\LeftTriangle.png" />
+    <None Remove="Content\NPC\Eyes\RightCircular.png" />
+    <None Remove="Content\NPC\Eyes\RightFlat.png" />
+    <None Remove="Content\NPC\Eyes\RightInward.png" />
+    <None Remove="Content\NPC\Eyes\RightOutward.png" />
+    <None Remove="Content\NPC\Eyes\RightTriangle.png" />
+    <None Remove="Content\NPC\Head\Normalhead.png" />
+    <None Remove="Content\NPC\Head\ShortWideHead.png" />
+    <None Remove="Content\NPC\Head\SmallHead.png" />
+    <None Remove="Content\NPC\Head\TallSkinnyHead.png" />
+    <None Remove="Content\NPC\Head\THead.png" />
+    <None Remove="Content\ParticleDefault.png" />
     <None Remove="Content\PlayerSprites\PlayerBody.png" />
     <None Remove="Content\PlayerSprites\PlayerBodyColored.png" />
     <None Remove="Content\PlayerSprites\PlayerHead.png" />
@@ -49,6 +65,7 @@
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\1_4_0.png" />
     <None Remove="Content\Tiles\BackgroundSmoke.png" />
+    <None Remove="Content\WhiteSmoke.png" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
@@ -57,6 +74,54 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ActIcons\MoveActIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\LeftCircular.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\LeftFlat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\LeftInward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\LeftOutward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\LeftTriangle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\RightCircular.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\RightFlat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\RightInward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\RightOutward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Eyes\RightTriangle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Head\NormalHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Head\ShortWideHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Head\SmallHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Head\TallSkinnyHead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\NPC\Head\THead.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ParticleDefault.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlayerSprites\PlayerBody.png">
@@ -153,6 +218,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\BackgroundSmoke.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\WhiteSmoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_0_-1_0.json">

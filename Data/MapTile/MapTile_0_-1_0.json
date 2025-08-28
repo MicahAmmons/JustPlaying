@@ -3231,7 +3231,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "npc": "Mr. NPC"
     },
     {
       "x": 14,
@@ -3241,7 +3242,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": true,
+      "npc": "Cale"
     },
     {
       "x": 16,
@@ -3251,7 +3253,8 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": true,
+      "npc": "Abby"
     },
     {
       "x": 18,
@@ -3261,7 +3264,8 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": true,
+      "npc": "Micah"
     },
     {
       "x": 20,
@@ -3271,7 +3275,8 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": false,
+      "npc": "Torren"
     },
     {
       "x": 22,

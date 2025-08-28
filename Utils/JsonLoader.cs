@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using PlayingAround.Data.NPCs;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
@@ -103,7 +102,12 @@ namespace PlayingAround.Utils
         public static Dictionary<string, NPCData> LoadNPCData()
         {
             string json = File.ReadAllText(NPCDataPath);
-            return JsonSerializer.Deserialize<Dictionary<string, NPCData>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, NPCData>>(json, options);
         }
 
         private static readonly string DialogueDataPath = GetDataPath("Dialogue", "DialogueData.json");

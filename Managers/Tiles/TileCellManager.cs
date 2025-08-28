@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Game.Map;
+using PlayingAround.Interfaces;
+using PlayingAround.Managers.CombatMan;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +22,8 @@ namespace PlayingAround.Managers.Tiles
         {
             UpdateActiveAnimation(gameTime);
         }
+
+
         public static void UpdateActiveAnimation(GameTime gameTime)
         {
             if (_activeAnimation.Count == 0) return;
@@ -65,13 +69,7 @@ namespace PlayingAround.Managers.Tiles
             _activeVisualEffectCells.Add(tileCell);
         }
 
-        internal static void DrawMovementHighlights(List<TileCell> moveableCells, Color walkable)
-        {
-            foreach (var cell in moveableCells)
-            {
-                cell.DrawCellHighlight(_sb, walkable, 5);
-            }
-        }
+
     }
 
 }

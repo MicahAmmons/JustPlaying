@@ -80,31 +80,6 @@ namespace PlayingAround.ButtonsFolder
             foreach (var but in _buttons) but.ResetInputState();
         }
     }
-    public class CombatButtonController
-    {
-        private ButtonManager _buttonManager;
-        private CombatState CombState => CombatGuard.CurrentCombat.StateCombat;
-        private  ICombatant _currentCombatant => CombatGuard.CurrentCombat.CurrentCombatant;
-        public CombatButtonController()
-        {
-            InstanceCombatButtons();
-        }
-        private void InstanceCombatButtons()
-        {
-            _buttonManager = new ButtonManager();
-            Button endTurnBut = new Button(new Rectangle(100, 900, 100, 50));
-            _buttonManager.SetCurrentButtons(endTurnBut);
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-           
-        }
-
-        public void Update()
-        {
-            
-        }
-    }
 
 
     public class Button

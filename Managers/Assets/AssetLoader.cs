@@ -45,6 +45,7 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("PlayerHead", "PlayerSprites/PlayerHead");
             AssetManager.LoadTexture("PlayerBody", "PlayerSprites/PlayerBody");
             AssetManager.LoadTexture("PlayerBodyColored", "PlayerSprites/PlayerBodyColored");
+            AssetManager.LoadTexture("ParticleDefault", "ParticleDefault");
         }
         public static void LoadAttackIconTextures()
         {
@@ -57,6 +58,7 @@ namespace PlayingAround.Game.Assets
         public static void LoadPlayerIconTextures()
         {
             AssetManager.LoadTexture("Hero_Blonde", "HeroArt/BlonderHero");
+
         }
         public static void LoadElementIconTextures()
         {
@@ -96,8 +98,29 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadEffect("ColorReplace", "Shaders/ColorReplace");
             AssetManager.LoadEffect("ColorColumnPulse", "Shaders/ColorColumnPulse");
             AssetManager.LoadEffect("Smoke", "Shaders/Smoke");
+            AssetManager.LoadEffect("BodySmoke", "Shaders/BodySmoke");
         }
+        public static void LoadNPCTextures()
+        {
+            AssetManager.LoadTexture("NormalHead", "NPC/Head/NormalHead");
+            AssetManager.LoadTexture("ShortWideHead", "NPC/Head/ShortWideHead");
+            AssetManager.LoadTexture("SmallHead", "NPC/Head/SmallHead");
+            AssetManager.LoadTexture("THead", "NPC/Head/THead");
+            AssetManager.LoadTexture("TallSkinnyHead", "NPC/Head/TallSkinnyHead");
 
+            AssetManager.LoadTexture("LeftCircular", "NPC/Eyes/LeftCircular");
+            AssetManager.LoadTexture("LeftTriangle", "NPC/Eyes/LeftTriangle");
+            AssetManager.LoadTexture("LeftFlat", "NPC/Eyes/LeftFlat");
+            AssetManager.LoadTexture("LeftInward", "NPC/Eyes/LeftInward");
+            AssetManager.LoadTexture("LeftOutward", "NPC/Eyes/LeftOutward");
+
+            AssetManager.LoadTexture("RightCircular", "NPC/Eyes/RightCircular");
+            AssetManager.LoadTexture("RightTriangle", "NPC/Eyes/RightTriangle");
+            AssetManager.LoadTexture("RightFlat", "NPC/Eyes/RightFlat");
+            AssetManager.LoadTexture("RightInward", "NPC/Eyes/RightInward");
+            AssetManager.LoadTexture("RightOutward", "NPC/Eyes/RightOutward");
+
+        }
         public static void LoadActIcons()
         {
             AssetManager.LoadTexture("MoveActIcon", "ActIcons/MoveActIcon");

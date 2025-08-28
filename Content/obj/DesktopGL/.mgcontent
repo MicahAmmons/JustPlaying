@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/ActIcons/EndTurnActIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/ActIcons/MoveActIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Aspects/AcidIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Attacks/Spit.png</File>
@@ -19,6 +20,22 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/TrainingDummyIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/DefaultNPC.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/LeftCircular.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/LeftFlat.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/LeftInward.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/LeftOutward.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/LeftTriangle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/RightCircular.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/RightFlat.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/RightInward.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/RightOutward.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Eyes/RightTriangle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/Normalhead.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/ShortWideHead.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/SmallHead.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/TallSkinnyHead.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/THead.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/ParticleDefault.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/PlayerSprites/PlayerBody.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/PlayerSprites/PlayerBodyColored.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/PlayerSprites/PlayerHead.png</File>
@@ -49,12 +66,31 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreen/TitleScreenBackGround.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreenButtonFont.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/UI/fightBackground.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/WhiteSmoke.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

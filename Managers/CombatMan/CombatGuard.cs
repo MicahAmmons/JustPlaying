@@ -48,25 +48,28 @@ namespace PlayingAround.Managers.CombatMan
         }
         public static void EndCombat()
         {
-            switch (_currentCombat.TheWinner)
+            var contr = _currentCombat.ExitCombatContr;
+            if (!contr.LeaveCombat) return;
+
+            switch (contr.PlayerWon)
             {
-                case WhoWon.Player:
+                case true:
                     PlayMonsterManager.RemovePlayMonster(_currentCombat.PlayMonsters);
-                    foreach (var kvp in _currentCombat.defeatedMonsters) 
+                    foreach (var kvp in contr.DefeatedMonsterList)
                     {
                         string monName = kvp.Key;
                         int count = kvp.Value;
                         QuestManager.UpdateKillCounts(monName, count);
                     }
                     break;
-                case WhoWon.Monster:
+                case false:
 
                     break;
             }
             _currentCombat.ClearEntityMaps();
             PlayerManager.ClearAllPlayerAspects();
             _previousCombat = _currentCombat;
-            _currentCombat= null;
+            _currentCombat = null;
             var player = PlayerManager.CurrentPlayer.MovementController;
 
             player.SetCurrentPos((Vector2)player.CachedPosition);
@@ -76,8 +79,9 @@ namespace PlayingAround.Managers.CombatMan
 
         }
 
-
-
-
+        internal static void DrawExitCombat(SpriteBatch spriteBatch)
+        {
+            _currentCombat?.ExitCombatContr?.Draw(spriteBatch);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder.GlowTex;
+using PlayingAround.AnimationFolder.ParticleFolder;
 using PlayingAround.Debug;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
@@ -30,8 +31,6 @@ namespace PlayingAround
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private static float _timer = 0f;
-        private Effect _smokeFx;
-        private Texture2D _noiseA, _noiseB;
 
 
 
@@ -77,11 +76,10 @@ namespace PlayingAround
             CombatGuard.LoadContent();
             TileCellManager.LoadContent(_spriteBatch);
 
-
         }
 
 
-    public static void WaitUntilLoadingIsDone(float delta)
+        public static void WaitUntilLoadingIsDone(float delta)
         {
             if (_timer >= 5.0f)
             {
@@ -116,6 +114,7 @@ namespace PlayingAround
             PlayMonsterManager.Update(gameTime);
             DialogueManager.Update();
             TitleScreenManager.Update(gameTime);
+            ParticleManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -140,19 +139,20 @@ namespace PlayingAround
             DrawPlayer(gameTime);
 
             DrawForeground();
-
-
-
-
+            _spriteBatch.Begin();
+            ParticleManager.Draw(_spriteBatch);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+
         private void DrawForeground()
         {
             _spriteBatch.Begin();
 
             DialogueManager.Draw(_spriteBatch);
             UIManager.Draw(_spriteBatch);
-
+            CombatGuard.DrawExitCombat(_spriteBatch);
             CinematicRuler.Draw(_spriteBatch);
             MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
             DebugBugger.Draw(_spriteBatch);

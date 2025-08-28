@@ -68,13 +68,12 @@ namespace PlayingAround.Managers.CombatMan
 
         private ICombatant _currentCombatant;
         public ICombatant CurrentCombatant => _currentCombatant;
-        public WhoWon TheWinner = WhoWon.None;
+        public CombatMonsterType TheWinner;
         private ExitCombatController _exitCombatContr;
+        public ExitCombatController ExitCombatContr => _exitCombatContr;    
 
         private Player _currentPlayer => PlayerManager.CurrentPlayer;
         private ActManager _actManager;
-        private CombatButtonController _combatButtonController;
-
 
 
         public CombatManager(PlayMonsters playMonsters)
@@ -87,7 +86,6 @@ namespace PlayingAround.Managers.CombatMan
             _combatUIManager = new CombatUIManager();
             _cellHighlightColors = TileManager.CurrentMapTile.CellHighlights;
             _actManager = new ActManager();
-            _combatButtonController = new CombatButtonController();
 
             PlayMonsters = playMonsters;
             _currentPlayer.MovementController.ClearMovementPath();
@@ -119,9 +117,19 @@ namespace PlayingAround.Managers.CombatMan
         {
             _stateMachine.SetCombatState(state);
         }
-        public void SetWhoWon(WhoWon whoWon)
+        public bool SetWhoWon()
         {
-            TheWinner = whoWon;
+            if (AIControlledMonsterMap.Count == 0 )
+            {
+                TheWinner = CombatMonsterType.Player;
+                return true; 
+            }
+            if (_currentPlayer.isDead)
+            {
+                TheWinner = CombatMonsterType.AI;
+                return true;
+            }
+            return false;
         }
         private void SetTurnOrder()
         {
@@ -168,17 +176,12 @@ namespace PlayingAround.Managers.CombatMan
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            bool endingScreen = false;
-            if (StateCombat == CombatState.WinnerChosen) { endingScreen = true; }
             DrawActVisuals(spriteBatch);
             DrawLocationSelection(spriteBatch);
             DrawTurnStateOverlay(spriteBatch);// debug overlay
             _combatUIManager.Draw(spriteBatch);
             if (StateCombat != CombatState.LocationSelection)
                 _actManager.Draw(spriteBatch);
-            _combatButtonController.Draw(spriteBatch);
-            if (endingScreen) _exitCombatContr.Draw(spriteBatch);
-
         }
         public void DrawActVisuals(SpriteBatch sb)
         {
@@ -334,45 +337,6 @@ namespace PlayingAround.Managers.CombatMan
                 _actManager.ConfirmMoveAct(cells);
 
         }
-        public void DrawCombatEndScreen(SpriteBatch spriteBatch)
-        {
-            // Background panel
-            spriteBatch.Draw(_playerCellOptions, _endScreenRect, Color.DarkSlateGray * 0.9f);
-
-            // Determine outcome and text
-            string headerText = TheWinner == WhoWon.Player ? "Victory" : "Defeat";
-            Color headerColor = TheWinner == WhoWon.Player ? Color.LightGreen : Color.Red;
-
-            Vector2 headerSize = _font.MeasureString(headerText);
-            Vector2 headerPos = new Vector2(
-                _endScreenRect.X + (_endScreenRect.Width - headerSize.X) / 2,
-                _endScreenRect.Y + 20
-            );
-
-            spriteBatch.DrawString(_font, headerText, headerPos, headerColor);
-
-            // If player won, list defeated monsters
-            if (TheWinner == WhoWon.Player)
-            {
-                int yOffset = 70;
-
-                foreach (var entry in defeatedMonsters)
-                {
-                    string line = $"{entry.Value}x {entry.Key}";
-                    Vector2 textSize = _font.MeasureString(line);
-                    Vector2 linePos = new Vector2(
-                        _endScreenRect.X + (_endScreenRect.Width - textSize.X) / 2,
-                        _endScreenRect.Y + yOffset
-                    );
-
-                    spriteBatch.DrawString(_font, line, linePos, Color.White);
-                    yOffset += 25;
-                }
-            }
-
-            // Exit Combat button
-            _endCombatButton.Draw(spriteBatch);
-        }
         private void DrawTurnStateOverlay(SpriteBatch spriteBatch)
         {
             string combatStateText = $"CombatState: {StateCombat}";
@@ -415,16 +379,12 @@ namespace PlayingAround.Managers.CombatMan
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             UpdateEachFrameMethods();
-            _combatButtonController.Update();
-            if (StateCombat == CombatState.WinnerChosen) return;
+            //_combatButtonController.Update();
             _combatUIManager.Update();
             _actManager.Update();
-            if (WinnerChosen())
-            {
-                SetCombatState(CombatState.WinnerChosen);
-                CountDefeatedMonsters();
-                return;
-            }
+
+
+            
             switch (StateCombat)
             {
                 case CombatState.TurnStart:
@@ -482,7 +442,12 @@ namespace PlayingAround.Managers.CombatMan
                     if (_currentCombatant.EndOfTurnEffectsResolved) Endturn();
 
                     break;
+                case CombatState.WinnerChosen:
+                    _exitCombatContr?.Update();
+                    CombatGuard.EndCombat();
+                    return;
             }
+            TryEndCombat();
         }
         private void UpdateEachFrameMethods()
         {
@@ -511,12 +476,16 @@ namespace PlayingAround.Managers.CombatMan
                 TotalCombatants = TurnOrder.Count;
             }
         }
-        private bool WinnerChosen()
+        private void TryEndCombat()
         {
-            if (AIControlledMonsterMap.Count == 0) { SetWhoWon(WhoWon.Player); return true; }
-            if (_currentPlayer.isDead) { SetWhoWon(WhoWon.Monster); return true; }
-            return false;
+            if (!SetWhoWon()) return;
+
+            SetCombatState(CombatState.WinnerChosen);
+            CombatMonsterType winnerType = TheWinner; 
+
+            _exitCombatContr = new ExitCombatController(winnerType, CountDefeatedMonsters());
         }
+
         public bool CheckIfAIShouldEndTurn()
         {
             if (_actManager.ConfirmedAct is EndturnAct act)
@@ -591,6 +560,17 @@ namespace PlayingAround.Managers.CombatMan
             {
                 if (mon.CurrentStats.Health <= 0)
                 {
+                    if (mon.isDead) continue;
+                    TileCell deadCell = null;
+                    if (_aIControlledMonsterMap.TryGetValue(mon, out var aiCell))
+                    {
+                        deadCell = aiCell;
+                    }
+                    else if (_playerControlledMonsterMap.TryGetValue(mon, out var playerCell))
+                    {
+                        deadCell = playerCell;
+                    }
+                    deadCell.UnassignCombatant();
                     mon.isDead = true;
                     mon.Aspects.Clear();
                     someOneDied = true;
@@ -720,7 +700,6 @@ namespace PlayingAround.Managers.CombatMan
         {
             _combatUIManager.AddCombatantUIInfo(new CombatantInfoUI(comb));
         }
-
         public Dictionary<string, int> CountDefeatedMonsters()
         {
 
@@ -743,11 +722,5 @@ namespace PlayingAround.Managers.CombatMan
 
 
     }
-}
-public enum WhoWon
-{
-    None,
-    Player,
-    Monster
 }
 

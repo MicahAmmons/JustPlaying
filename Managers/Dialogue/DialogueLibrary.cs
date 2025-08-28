@@ -18,6 +18,7 @@
             }
         public static DialogueData GetDialogueData(string name)
         {
+            if (!_dialogueBaseData.ContainsKey(name)) return null;
             return _dialogueBaseData[name];
         }
         }

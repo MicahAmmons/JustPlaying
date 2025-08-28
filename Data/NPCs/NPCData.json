@@ -1,18 +1,42 @@
 {
   "Mr. NPC": {
     "name": "Mr. NPC",
-    "width": 64,
-    "height": 64
+    "width": 300,
+    "height": 300,
+    "headTexturePath": "THead",
+    "eyeColor": "Ice",
+    "headcolor": "Metal"
   },
   "Cale": {
     "name": "Cale",
-    "width": 64,
-    "height": 64
+    "width": 150,
+    "height": 150,
+    "headTexturePath": "ShortWideHead",
+    "eyeColor": "Metal",
+    "headcolor": "Water"
   },
   "Torren": {
     "name": "Torren",
-    "width": 64,
-    "height": 64
-
+    "width": 80,
+    "height": 80,
+    "headTexturePath": "SmallHead",
+    "eyeColor": "Earth",
+    "headcolor": "Electricity"
+  },
+  "Abby": {
+    "name": "Abby",
+    "width": 32,
+    "height": 32,
+    "headTexturePath": "TallSkinnyHead",
+    "eyeColor": "Electricity",
+    "headcolor": "Wind"
+  },
+  "Micah": {
+    "name": "Micah",
+    "width": 128,
+    "height": 128,
+    "headTexturePath": "NormalHead",
+    "eyeColor": "Fire",
+    "headcolor": "Ice"
   }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PlayingAround.Data.NPCs;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers.Dialogue;
-using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Utils;
 using System;
@@ -28,10 +26,8 @@ namespace PlayingAround.Managers.NPCHouse
         {
             Vector2 currentPos = new Vector2(cell.CenterPoint.X, cell.CenterPoint.Y);
 
-            NPC npc = new NPC(_dataNPC[name])
+            NPC npc = new NPC(_dataNPC[name], currentPos, DialogueLibrary.GetDialogueData(name))
             {
-                currentPos = currentPos,
-                AllDialogue = DialogueLibrary.GetDialogueData(name)
             };
             return npc;
         }
@@ -39,25 +35,11 @@ namespace PlayingAround.Managers.NPCHouse
         {
             if (SceneManager.CurrentState == SceneState.Dialogue || SceneManager.CurrentState == SceneState.Play)
             {
-                DrawCurrentNPCs(spriteBatch);
+                foreach (var npc in  _currentNPCs)
+                {
+                    npc?.Draw(spriteBatch);
+                }
             }
         }
-        public static void DrawCurrentNPCs(SpriteBatch spriteBatch)
-        {
-            if (_currentNPCs == null)  return;
-
-            foreach (var npc in _currentNPCs)
-            {
-                Vector2 currentPos = npc.currentPos;
-                Vector2 drawSpot = TileManager.OffSetFromCenterOfDiamond(currentPos, npc.width, npc.height);
-                Rectangle rect = new Rectangle((int)drawSpot.X, (int)drawSpot.Y - (npc.width / 2), npc.width, npc.height);
-                spriteBatch.Draw(npc.texture, rect, Color.White);
-            }
-        }
-
-
-
-
-
     }
 }
