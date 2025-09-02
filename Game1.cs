@@ -20,6 +20,7 @@ using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.UI;
+using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Utils;
 using System;
 
@@ -75,7 +76,7 @@ namespace PlayingAround
             TriggerLibrary.LoadContent();
             CombatGuard.LoadContent();
             TileCellManager.LoadContent(_spriteBatch);
-
+            VisualEffectLibrary.LoadContent();
         }
 
 

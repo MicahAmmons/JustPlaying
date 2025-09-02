@@ -12,11 +12,17 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/GrassTiles/GrassTile.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MiscAssets/GlowMound.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeGraspingRoot.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeIdle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeWalkDown.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeWalkUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIdle.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamDown.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalk.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/EarthOoze.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/TrainingDummyIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/DefaultNPC.png</File>
@@ -74,6 +80,12 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

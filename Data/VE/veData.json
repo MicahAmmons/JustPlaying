@@ -1,0 +1,22 @@
+{
+  "GraspingRoot": {
+    "AnimationData": {
+      "Animations": {
+        "VE": [
+          {
+            "Row": 1,
+            "FrameCount": 11,
+            "FrameDurationMs": 100,
+            "IsLooping": false,
+            "SpriteSheetName": "EarthOozeGraspingVE",
+            "DefaultDirection": "Left",
+            "FrameWidth": 64,
+            "FrameHeight": 64,
+            "FadeEffect": false,
+            "PingPong": true
+          }
+        ]
+      }
+    }
+  }
+}

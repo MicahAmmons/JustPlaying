@@ -105,6 +105,7 @@ namespace PlayingAround.Managers.Dialogue
         }
         private static DialogueStage FetchCurrentStage(DialogueData data)
         {
+
             foreach (var stage in data.stages)
             {
                 if (stage == null || stage.conditions == null || stage.conditions.Count <= 0) continue;

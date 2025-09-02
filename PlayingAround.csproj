@@ -19,12 +19,17 @@
     <None Remove="Content\ActIcons\MoveActIcon.png" />
     <None Remove="Content\ColorReplace.fx" />
     <None Remove="Content\GrassTiles\GrassTile.png" />
+    <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRoot.png" />
+    <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRootVE.png" />
+    <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeIdle.png" />
+    <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkDown.png" />
+    <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamDown.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalk.png" />
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
-    <None Remove="Content\MonsterIcons\OozeIcon.png" />
+    <None Remove="Content\MonsterIcons\EarthOoze.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
     <None Remove="Content\NPC\Eyes\LeftCircular.png" />
     <None Remove="Content\NPC\Eyes\LeftFlat.png" />
@@ -67,13 +72,33 @@
     <None Remove="Content\Tiles\BackgroundSmoke.png" />
     <None Remove="Content\WhiteSmoke.png" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
+    <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
     <None Remove="Data\SaveData\SaveJson\savegame3.json" />
+    <None Remove="Data\VE\veData.json" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ActIcons\MoveActIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRootVE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeWalkDown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterIcons\EarthOoze.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\NPC\Eyes\LeftCircular.png">
@@ -229,6 +254,12 @@
     <Content Include="Data\MapTile\MapTile_-1_0_0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\SaveData\SaveJson\savegame1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\VE\veData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
@@ -248,9 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Data\Aspects\AspectData.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\Attacks\AttackData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\CombatMonsterData\CombatMonsterData.json">

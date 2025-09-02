@@ -65,7 +65,11 @@ namespace PlayingAround.Managers.Assets
         // Step 3: Get a previously loaded texture
         public static Texture2D GetTexture(string key)
         {
-            return _textures[key];
+            if (_textures.TryGetValue(key, out var tex))
+                return tex;
+
+            return _textures["OozeIcon"];
+
         }
         public static bool TextureExists(string key)
         {

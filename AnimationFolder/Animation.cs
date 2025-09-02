@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Managers.Assets;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace PlayingAround.AnimationFolder
         public int Height { get; private set; }
         public bool FadeEffect { get; private set; }
         public bool SmokeEffect { get; private set; }
+        public bool PingPong { get; private set; }
+        public int EndCyclePause { get; private set; }
+        public string FXName { get; private set; }
         public Direction DefaultDirection { get; private set; }
 
 
@@ -57,24 +61,14 @@ namespace PlayingAround.AnimationFolder
             FrameCount = Frames.Count; // in case we broke early
             FadeEffect = data.FadeEffect;
             SmokeEffect = data.SmokeEffect;
+            PingPong = data.PingPong;
+            EndCyclePause = data.EndCyclePause;
         }
 
-
-        public Animation(Animation other)
-        {
-            Frames = new List<Rectangle>(other.Frames);
-            FrameDuration = other.FrameDuration;
-            IsLooping = other.IsLooping;
-            SpriteSheet = other.SpriteSheet;
-            Width = other.Width;
-            Height = other.Height;
-            FrameCount = other.FrameCount;
-            SpriteSheet = other.SpriteSheet;
-        }
         public Rectangle GetFrame(int index)
         {
             if (index < 0 || index >= Frames.Count)
-                return Frames[0]; // fallback
+                return Frames[Frames.Count - 1]; // fallback
             return Frames[index];
         }
     }

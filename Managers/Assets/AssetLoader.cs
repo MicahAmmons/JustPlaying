@@ -36,9 +36,17 @@ namespace PlayingAround.Game.Assets
         public static void LoadAllSpriteSheets()
         {
             AssetManager.LoadTexture("FrostOozeIdle", "MonsterAnimations/FrostOoze/FrostOozeIdle");
-           AssetManager.LoadTexture("FrostOozeSlamDown", "MonsterAnimations/FrostOoze/FrostOozeSlamDown");
+            AssetManager.LoadTexture("FrostOozeSlamDown", "MonsterAnimations/FrostOoze/FrostOozeSlamDown");
             AssetManager.LoadTexture("FrostOozeSlamUp", "MonsterAnimations/FrostOoze/FrostOozeSlamUp");
             AssetManager.LoadTexture("FrostOozeWalk", "MonsterAnimations/FrostOoze/FrostOozeWalk");
+
+            AssetManager.LoadTexture("EarthOozeIdle", "MonsterAnimations/EarthOoze/EarthOozeIdle");
+            AssetManager.LoadTexture("EarthOozeWalkUp", "MonsterAnimations/EarthOoze/EarthOozeWalkUp");
+            AssetManager.LoadTexture("EarthOozeWalkDown", "MonsterAnimations/EarthOoze/EarthOozeWalkDown");
+            AssetManager.LoadTexture("EarthOozeGraspingRoot", "MonsterAnimations/EarthOoze/EarthOozeGraspingRoot");
+            AssetManager.LoadTexture("EarthOozeGraspingRootVE", "MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE");
+
+
         }
         public static void LoadPlayerSpriteSheets()
         {

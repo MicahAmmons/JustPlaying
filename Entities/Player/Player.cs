@@ -59,14 +59,13 @@ namespace PlayingAround.Entities.Player
         {
             var player = new Player()
             {
-                MovementController = new MovementController(data.AnimationData, data.MovementQuickness, CombatMonsterType.Player)
+                MovementController = new MovementController(data.AnimationData, CombatMonsterType.Player)
                 {
                     CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
                     DrawPoint = new Vector2(data.CurrentPosX, data.CurrentPosY)
                 },
                 DrawSpecifics = new DrawSpecificStats()
                 {
-                    MovementQuickness = (int)data.MovementQuickness,
                     Width = data.Width,
                     Height = data.Height,
                     MovementPattern = MovementPatternType.Straight
@@ -159,7 +158,6 @@ namespace PlayingAround.Entities.Player
         }
         public PlayerSaveData Save(PlayerSaveData data)
         {
-            data.MovementQuickness = (int)this.DrawSpecifics.MovementQuickness;
             data.CurrentPosX = MovementController.CurrentPos.X;
             data.CurrentPosY = MovementController.CurrentPos.Y;
             return data;

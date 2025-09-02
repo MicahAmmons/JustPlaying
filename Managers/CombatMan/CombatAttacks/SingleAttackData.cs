@@ -22,5 +22,17 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public int AttackPerformedFrame { get; set; }
         public AnimationState AttackUpAnimation { get; set; }
         public AnimationState AttackDownAnimation { get; set; }
+        public AttVisualEffectDetails VE { get; set; } = null;
     }
+    public class AttVisualEffectDetails
+    {
+        public string Name { get; set; }
+        public VEDrawLocation DrawLocation { get; set; }
+        public int FrameBeing {  get; set; }
+    }
+}
+
+public enum VEDrawLocation
+{
+    TargetCell
 }

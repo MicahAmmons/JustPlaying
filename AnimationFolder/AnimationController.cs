@@ -99,18 +99,22 @@ namespace PlayingAround.AnimationFolder
        
         private int _currentFrameIndex = 0;
         private float _frameTimer = 0f;
-        public float FadeMultiplier = 0f;
+        private int _direction = 1;
+
         public bool IsFinished = false;
+        public float FadeMultiplier = 0f;
         public AnimationController(Animation ani)
         {
             _animation = ani;
+            Reset();
         }
         public void Reset()
         {
             _currentFrameIndex = 0;
             _frameTimer = 0f;
-            IsFinished = false;
-            if (_animation.IsLooping) IsFinished = true;
+            _direction = 1;
+
+            IsFinished = _animation.IsLooping;
         }
 
         public void Update(GameTime gameTime)
@@ -118,33 +122,82 @@ namespace PlayingAround.AnimationFolder
 
             if (_animation == null || _animation.FrameCount < 1)
                 return;
-            if (_animation.IsLooping) IsFinished = true;
 
-            _frameTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            FadeMultiplier = _frameTimer / _animation.FrameDuration;
-            //if its time to go to next frame
-            if (_frameTimer >= _animation.FrameDuration)
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _frameTimer += delta;
+
+            if (_frameTimer < _animation.FrameDuration) return;
+
+            _frameTimer -= _animation.FrameDuration;
+            if (_animation.IsLooping)
             {
-                _frameTimer -= _animation.FrameDuration;
-                _currentFrameIndex++;
-
-                if (_currentFrameIndex >= _animation.FrameCount)
-                {
-                    if (_animation.IsLooping)
-                    {
-                        _currentFrameIndex = 0;
-                    }
-                    else
-                        _currentFrameIndex--;
-                        IsFinished = true;
-                }
+                StepLooping(delta);
             }
-            FadeMultiplier = MathHelper.Clamp(
-       _animation.FrameDuration <= 0f ? 1f : _frameTimer / _animation.FrameDuration,
-       0f, 1f
-   );
-        }
 
+            else if (_animation.PingPong)
+            {
+                StepPingPongSingle(delta);
+            }
+            else
+            {
+                StepNormalSingle(delta);
+            }
+        }
+        private void StepLooping(float delta)
+        { 
+            IsFinished = true;
+
+            _currentFrameIndex++;
+            if (_currentFrameIndex >= _animation.FrameCount)
+            {
+                 if (InPause(delta)) return;
+
+                _currentFrameIndex = 0;
+            }
+
+        }
+        private void StepNormalSingle(float delta)
+        {
+            if (IsFinished) return;
+
+            _currentFrameIndex = Math.Min(_currentFrameIndex + 1, _animation.FrameCount - 1);
+            if (_currentFrameIndex >= _animation.FrameCount - 1)
+            {
+                if (InPause(delta)) return;
+                IsFinished = true;
+            }
+        }
+        private void StepPingPongSingle(float delta)
+        {
+            if (IsFinished) return;
+
+            _currentFrameIndex += _direction;
+
+            if (_currentFrameIndex >= _animation.FrameCount)
+            {
+                if (InPause(delta)) return;
+                _currentFrameIndex = _animation.FrameCount;
+                _direction = -1;
+                return;
+            }
+            if (_currentFrameIndex <= 0 && _direction == -1)
+            {
+
+                _currentFrameIndex = 0;
+                IsFinished = true;
+            }
+        }
+        private bool InPause(float delta)
+        {
+            if (_animation.EndCyclePause <= 0) return false;
+
+            if (_currentFrameIndex < _animation.FrameCount + _animation.EndCyclePause)
+            {
+                return true;
+            }
+
+            return false;
+        }
         public Rectangle GetCurrentFrame()
         {
             if (_animation == null)
@@ -152,17 +205,31 @@ namespace PlayingAround.AnimationFolder
 
             return _animation.GetFrame(_currentFrameIndex);
         }
-
         public Rectangle GetNextFrame()
         {
             if (_animation == null || _animation.FrameCount <= 0)
                 return Rectangle.Empty;
 
-            int next = _currentFrameIndex + 1;
-            if (next >= _animation.FrameCount)
-                next = 0;
-            return _animation.GetFrame(next);
+            if (_animation.IsLooping)
+            {
+                int next = _currentFrameIndex + 1;
+                if (next >= _animation.FrameCount) next = 0;
+                return _animation.GetFrame(next);
+            }
+
+            if (_animation.PingPong)
+            {
+                int next = _currentFrameIndex + _direction;
+                if (next >= _animation.FrameCount) next = _animation.FrameCount - 2; // bounce
+                if (next < 0) next = 1; // bounce
+                return _animation.GetFrame(Math.Clamp(next, 0, _animation.FrameCount - 1));
+            }
+
+            // normal single
+            int n = Math.Min(_animation.FrameCount - 1, _currentFrameIndex + 1);
+            return _animation.GetFrame(n);
         }
+
         public int GetCurrentFrameIndex()
         {
             return _currentFrameIndex;
@@ -188,4 +255,5 @@ public enum AnimationState
     Idle,
     AttackUp,
     AttackDown,
+    FX
 }

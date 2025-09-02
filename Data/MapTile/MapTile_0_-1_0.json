@@ -36,7 +36,7 @@
 
 
 
-  "monsters": [ "Ooze" ],
+  "monsters": [ "EarthOoze", "FrostOoze" ],
   "tileHighlights": {
     "invalidTarget": {
       "color": "Red",
@@ -501,7 +501,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 26,
@@ -3231,8 +3231,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": false,
-      "npc": "Mr. NPC"
+      "playMonsterSpawnable": false
     },
     {
       "x": 14,
@@ -3242,8 +3241,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": true,
-      "playMonsterSpawnable": true,
-      "npc": "Cale"
+      "playMonsterSpawnable": true
     },
     {
       "x": 16,
@@ -3253,8 +3251,7 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true,
-      "npc": "Abby"
+      "playMonsterSpawnable": true
     },
     {
       "x": 18,
@@ -3264,8 +3261,7 @@
       "nextTileCell": null,
       "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true,
-      "npc": "Micah"
+      "playMonsterSpawnable": true
     },
     {
       "x": 20,
@@ -3275,8 +3271,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false,
-      "npc": "Torren"
+      "playMonsterSpawnable": false
     },
     {
       "x": 22,

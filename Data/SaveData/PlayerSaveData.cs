@@ -10,7 +10,6 @@ namespace PlayingAround.Data.SaveData
 {
     public class PlayerSaveData
     {
-        public int MovementQuickness { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string TextureKey { get; set; }

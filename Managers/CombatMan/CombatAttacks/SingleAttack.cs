@@ -27,7 +27,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public int AttackPerformedFrame { get; set; }
         public AnimationState AttackUpAnimation { get; set; }
         public AnimationState AttackDownAnimation { get; set; }
-
+        public AttVisualEffectDetails VE { get; set; }
         public bool IsFinished { get; set; } = false;
 
        
@@ -42,6 +42,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             AttackPerformedFrame = data.AttackPerformedFrame;
             AttackUpAnimation = data.AttackUpAnimation;
             AttackDownAnimation = data.AttackDownAnimation;
+            VE = data.VE;
             if (data.TargetType.Count > 0)
             {
                 foreach (var tar in data.TargetType)
@@ -58,6 +59,7 @@ public enum AttackName
 {
     Slam,
     Spit,
+    GraspingRoot
 
 }
 

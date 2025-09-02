@@ -6,7 +6,9 @@ using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Movement;
 using PlayingAround.Visuals;
 using System;
@@ -39,7 +41,7 @@ namespace PlayingAround.Game.Map
         public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
         public Texture2D BackGroundTexture { get; set; }
         public AnimationManager AnimationManager { get; set; } 
-
+  
         public TileCell(TileCellData data)        
         {
             X = data.X;
@@ -66,6 +68,7 @@ namespace PlayingAround.Game.Map
 
             AnimationManager.Update(gameTime, AnimationState.Idle);
             if (_removeAnimationTimer >= delta * 3) AnimationManager = null;
+
         }
         public void DrawAnimation(SpriteBatch spriteBatch)
         {
@@ -130,13 +133,6 @@ namespace PlayingAround.Game.Map
                 
             spriteBatch.Draw(BackGroundTexture, rect, Color.White);
         }
-        public void AddVisualEffect()
-        {
-            VisualEffect ve = new VisualEffect(new Vector2(0,0), new Vector2(0,0), AttackName.Slam, 500);
-            VEManager.AddEffect(ve);
-            TileCellManager.AddCellVE(this);
-        }
-
         internal void AssignCombatant(ICombatant mon)
         {
             BlockedCombatant = mon;

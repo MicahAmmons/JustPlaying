@@ -8,12 +8,14 @@ using PlayingAround.Game.Pathfinding;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Movement;
 using PlayingAround.Visuals;
 using System;
@@ -88,7 +90,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
             Is = CombatMonsterType.AI;
-            MovementController = new MovementController(data.AnimationData, 0, Is);
+            MovementController = new MovementController(data.AnimationData, Is);
             MovementController.FinishedTileMove += FinishedMovingOneTile;
             MovementController.FinishedAllMovement += FinishedAllMovement;
             MovementController.CurrentlyMoving += IsCurrentlyMoving;
@@ -273,6 +275,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 case ActType.Attack:
                     ExecutingAttack = true;
                     AttackAct = (AttackAct)act;
+                    if (AttackAct.Attack.VE != null) SendAttackVE(AttackAct);
                     MovementController.AnimationManager.ResetStates();
                     break;
                 case ActType.Move:
@@ -280,6 +283,18 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     MoveAct = (MoveAct)act;
                     break;
                 case ActType.EndTurn:
+                    break;
+            }
+        }
+        public void SendAttackVE(AttackAct act)
+        {
+            switch (act.Attack.VE.DrawLocation)
+            {
+                case VEDrawLocation.TargetCell:
+                    foreach (var kvp in act.EffectedTargets)
+                    {
+
+                    }
                     break;
             }
         }
@@ -370,6 +385,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         AI,
         Player,
         Self,
-        PlayMonster
+        PlayMonster,
     }
 }

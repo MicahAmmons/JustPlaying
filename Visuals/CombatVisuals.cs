@@ -6,6 +6,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Managers.VisualEffects;
 using System;
 
 namespace PlayingAround.Visuals
@@ -57,7 +58,10 @@ namespace PlayingAround.Visuals
                 Height = 32;
 
         }
+        public VisualEffect(VisualEffectData data)
+        {
 
+        }
 
         public bool IsExpired => Elapsed >= Duration;
 

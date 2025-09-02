@@ -1,11 +1,12 @@
 {
-  "Ooze": {
+  "FrostOoze": {
     "MovementQuickness": 20,
     "PauseDurationMax": 10.0,
     "PauseDurationMin": 3.0
   },
-  "TrainingDummy": {
-    "MovementQuickness": 0,
-    "MovementPattern": "None"
+  "EarthOoze": {
+    "MovementQuickness": 50,
+    "PauseDurationMax": 12.0,
+    "PauseDurationMin": 6.0
   }
 }

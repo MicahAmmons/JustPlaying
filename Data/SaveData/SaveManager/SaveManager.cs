@@ -83,7 +83,6 @@ public class SaveManager
             }
             catch (Exception ex)
             {
-                File.Delete(path);
                 Console.WriteLine($"Deleted unreadable save '{fileName}': {ex.Message}");
             }
         }

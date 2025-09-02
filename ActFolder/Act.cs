@@ -255,7 +255,6 @@ namespace PlayingAround.ActFolder
         public Dictionary<ICombatant, TileCell> EffectedTargets { get; set; } = new Dictionary<ICombatant, TileCell>();
         public AttackAct(SpecificActData data)
         {
-            
             Attack = new SingleAttack(data.AttackData);
             Target = data.ActionTarget;
             ActType = data.Type;

@@ -14,6 +14,8 @@ using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Quests;
 using PlayingAround.Managers.Triggers;
+using PlayingAround.Managers.VisualEffects;
+using PlayingAround.Visuals;
 
 namespace PlayingAround.Utils
 {
@@ -159,6 +161,18 @@ namespace PlayingAround.Utils
                 Converters = { new JsonStringEnumConverter() }
             };
             return JsonSerializer.Deserialize<Dictionary<string, Trigger>>(json, options);
+        }
+
+        private static readonly string VEDataPath = GetDataPath("VE", "veData.json");
+        public static Dictionary<string, VisualEffectData> LoadVEData()
+        {
+            string json = File.ReadAllText(VEDataPath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, VisualEffectData>>(json, options);
         }
     }
 }

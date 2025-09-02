@@ -92,7 +92,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
 
                 float frameFade = 1;
                 if (animation.FadeEffect)
-                    frameFade = 1 - contr.FadeMultiplier;
+                    frameFade = 1;
                 SpriteEffects flip = flipHorizontal
                      ? SpriteEffects.FlipHorizontally
                      : SpriteEffects.None;

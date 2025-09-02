@@ -39,9 +39,8 @@ namespace PlayingAround.Movement
         public bool AllowedToBeDrawn = true;
 
         // player and combat monster constructor
-        public MovementController(AnimationData data, float moveQuickness, CombatMonsterType type)
+        public MovementController(AnimationData data, CombatMonsterType type)
         {
-            MovementQuickness = moveQuickness;
             AnimationManager = new AnimationManager(data);
             Is = type;
         }
@@ -160,7 +159,7 @@ namespace PlayingAround.Movement
             if (VectorMovePath.Count > 0)
             {
 
-                float speed = MovementQuickness * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float speed = 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Vector2 nextPoint = VectorMovePath[0];
                 Vector2 direction = nextPoint - CurrentPos;
                 float distance = direction.Length();
