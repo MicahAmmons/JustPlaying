@@ -101,6 +101,7 @@ namespace PlayingAround.AnimationFolder
         private float _frameTimer = 0f;
         private int _direction = 1;
 
+        public bool IsStartingPause = true;
         public bool IsFinished = false;
         public float FadeMultiplier = 0f;
         public AnimationController(Animation ani)
@@ -113,6 +114,8 @@ namespace PlayingAround.AnimationFolder
             _currentFrameIndex = 0;
             _frameTimer = 0f;
             _direction = 1;
+            _startCyclePauseTimer = 0f;
+            IsStartingPause = true;
 
             IsFinished = _animation.IsLooping;
         }
@@ -122,13 +125,20 @@ namespace PlayingAround.AnimationFolder
 
             if (_animation == null || _animation.FrameCount < 1)
                 return;
-
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (InStartingPause(delta))
+            {
+                return;
+            }
+
+
             _frameTimer += delta;
+
 
             if (_frameTimer < _animation.FrameDuration) return;
 
             _frameTimer -= _animation.FrameDuration;
+
             if (_animation.IsLooping)
             {
                 StepLooping(delta);
@@ -150,7 +160,7 @@ namespace PlayingAround.AnimationFolder
             _currentFrameIndex++;
             if (_currentFrameIndex >= _animation.FrameCount)
             {
-                 if (InPause(delta)) return;
+                 if (InPause()) return;
 
                 _currentFrameIndex = 0;
             }
@@ -163,7 +173,7 @@ namespace PlayingAround.AnimationFolder
             _currentFrameIndex = Math.Min(_currentFrameIndex + 1, _animation.FrameCount - 1);
             if (_currentFrameIndex >= _animation.FrameCount - 1)
             {
-                if (InPause(delta)) return;
+                if (InPause()) return;
                 IsFinished = true;
             }
         }
@@ -175,7 +185,7 @@ namespace PlayingAround.AnimationFolder
 
             if (_currentFrameIndex >= _animation.FrameCount)
             {
-                if (InPause(delta)) return;
+                if (InPause()) return;
                 _currentFrameIndex = _animation.FrameCount;
                 _direction = -1;
                 return;
@@ -187,7 +197,26 @@ namespace PlayingAround.AnimationFolder
                 IsFinished = true;
             }
         }
-        private bool InPause(float delta)
+
+        private float _startCyclePauseTimer = 0;
+        private bool InStartingPause(float delta)
+        {
+            if (_animation.StartCyclePause <= 0)
+            {
+                IsStartingPause = false;
+                return false;
+            }
+            float maxDur = (_animation.StartCyclePause * _animation.FrameDuration );
+            if (_startCyclePauseTimer < maxDur)
+            {
+                _startCyclePauseTimer += delta;
+                IsStartingPause = true;
+                return true;
+            }
+            IsStartingPause = false;
+            return false;
+        }
+        private bool InPause()
         {
             if (_animation.EndCyclePause <= 0) return false;
 

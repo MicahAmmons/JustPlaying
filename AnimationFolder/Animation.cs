@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Managers.Assets;
+using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +24,10 @@ namespace PlayingAround.AnimationFolder
         public bool SmokeEffect { get; private set; }
         public bool PingPong { get; private set; }
         public int EndCyclePause { get; private set; }
-        public string FXName { get; private set; }
         public Direction DefaultDirection { get; private set; }
+        public int StartCyclePause { get; private set; }
+        public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
+        public Vector2? DrawPointOverride; 
 
 
 
@@ -63,6 +66,9 @@ namespace PlayingAround.AnimationFolder
             SmokeEffect = data.SmokeEffect;
             PingPong = data.PingPong;
             EndCyclePause = data.EndCyclePause;
+            StartCyclePause = data.StartCyclePause;
+            if (data.IsDrawPointOverride != null) { IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; }
+
         }
 
         public Rectangle GetFrame(int index)

@@ -356,6 +356,7 @@ namespace PlayingAround.ActFolder
         public MoveAct(SpecificActData data)
         {
             MovementAmount = data.MovementAmount;
+            Target = data.ActionTarget;
             ActType = data.Type;
         }
         public MoveAct() { }
@@ -379,9 +380,91 @@ namespace PlayingAround.ActFolder
                 case ActionTarget.ClosestEnemy:
                     if (!SetMovementPathToClosestEnemy(currentCombatant, maxMovementAllowed, playerMap)) return false ;
                     break;
+                case ActionTarget.AwayFromEnemy:
+                    if (!SetMovementPathAwayFromEnemy(currentCombatant, maxMovementAllowed, playerMap)) return false;
+                    break;
             }
             return true;
         }
+
+        private bool SetMovementPathAwayFromEnemy(
+        ICombatant currentCombatant,
+        int maxMovementAllowed,
+        Dictionary<ICombatant, TileCell> playerMap)
+        {
+            var currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
+            if (currentCell == null) return false;
+
+            // 1) In-range cells (walkable region limited by movement allowance)
+            var inRange = TileManager.GetFloodFillTileWithinRange(currentCell, maxMovementAllowed);
+            if (inRange == null || inRange.Count == 0) return false;
+
+            // 2) Filter to valid walkable & unblocked
+            var validCells = new List<TileCell>(inRange.Count);
+            foreach (var cell in inRange)
+            {
+                if (cell != null && cell.IsWalkable && !cell.BlockedByCombatant)
+                    validCells.Add(cell);
+            }
+            if (validCells.Count == 0) return false;
+
+            // 3) Choose the cell that maximizes the minimum distance to ANY enemy.
+            //    Include unreachable enemies by treating their distance as "very large".
+            const int UNREACHABLE_DIST = 1_000_000; // big but safe to add/compare
+            TileCell bestCell = null;
+            int bestMin = int.MinValue; // we want to maximize this; tie => keep first-tested
+
+            foreach (var candidate in validCells) // first-tested tie-winner: don't update on equals
+            {
+                int minToAnyEnemy = int.MaxValue;
+
+                foreach (var kvp in playerMap)
+                {
+                    var enemyCell = kvp.Value;
+                    if (enemyCell == null) continue;
+
+                    var path = GridMovement.GetCellToCellPath(candidate.CenterPoint, enemyCell.CenterPoint);
+
+                    int d = (path == null || path.Count == 0) ? UNREACHABLE_DIST : path.Count;
+
+                    if (d < minToAnyEnemy)
+                        minToAnyEnemy = d;
+
+                    // Early exit: if min already <= bestMin, this candidate cannot beat current best
+                    if (minToAnyEnemy <= bestMin)
+                        break;
+                }
+
+                // Prefer strictly larger minimum; ties are ignored (keep earlier tested)
+                if (minToAnyEnemy > bestMin)
+                {
+                    bestMin = minToAnyEnemy;
+                    bestCell = candidate;
+                }
+            }
+
+            if (bestCell == null || bestCell == currentCell) return false;
+
+            // 4) Build path to chosen cell with your pathfinder
+            var bestPath = GridMovement.GetCellToCellPath(currentCell.CenterPoint, bestCell.CenterPoint);
+            if (bestPath == null || bestPath.Count == 0) return false;
+
+            // Remove starting cell if present
+            if (bestPath.Count > 0 && bestPath[0] == currentCell)
+                bestPath.RemoveAt(0);
+
+            // Cap to movement allowance, just in case
+            if (bestPath.Count > maxMovementAllowed)
+                bestPath = bestPath.Take(maxMovementAllowed).ToList();
+
+            if (bestPath.Count == 0) return false;
+
+            ActMovementCellPath = bestPath;
+            return true;
+        }
+
+
+
         public bool SetMovementPathToClosestEnemy(ICombatant currentCombatant, int max, Dictionary<ICombatant, TileCell> playerMap)
         {
             TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);

@@ -100,7 +100,7 @@ namespace PlayingAround.Game.Map
             }
         }
         private float _removeAnimationTimer = 0f;
-        public void AddAnimation(AnimationData ani)
+        public void AddIdleAnimation(AnimationData ani)
         {
             _removeAnimationTimer = 0;
             if (AnimationManager == null)
@@ -138,7 +138,6 @@ namespace PlayingAround.Game.Map
             BlockedCombatant = mon;
             BlockedByCombatant = true;
         }
-
         internal void UnassignCombatant()
         {
             BlockedCombatant = null;

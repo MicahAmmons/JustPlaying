@@ -128,11 +128,16 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
                 if (contr.Animation == null) continue;
-
+                if (contr.IsStartingPause) continue;
+                if (contr.IsFinished && !contr.Animation.IsLooping) continue;
 
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
                 Vector2 drawPoint = MovementController.DrawPoint;
+                if (contr.Animation.DrawPointOverride != null)
+                {
+                    drawPoint= (Vector2)contr.Animation.DrawPointOverride;
+                }
                 int width = animation.Width;
                 int height = animation.Height;
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
@@ -201,6 +206,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Vector2 direction = targetPos - currentPos;
                 direction.Normalize();
                 MovementController.SetAttackAnimation(direction);
+                SetAttackAnimationDrawPointOverride(AttackAct);
                 int frame = MovementController.AnimationManager.CurrentControllers.First().GetCurrentFrameIndex();
 
                 if (attack.AttackPerformedFrame <= frame)
@@ -211,6 +217,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (attack.IsFinished && MovementController.AnimationManager.IsFinished)
                 {
                     SpendActionPoint();
+
                     MovementController.SetCurrentAnimationStateToIdle();
                     AttackAct.ClearActParams();
                     AttackAct = null;
@@ -275,7 +282,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 case ActType.Attack:
                     ExecutingAttack = true;
                     AttackAct = (AttackAct)act;
-                    if (AttackAct.Attack.VE != null) SendAttackVE(AttackAct);
                     MovementController.AnimationManager.ResetStates();
                     break;
                 case ActType.Move:
@@ -286,23 +292,27 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     break;
             }
         }
-        public void SendAttackVE(AttackAct act)
-        {
-            switch (act.Attack.VE.DrawLocation)
-            {
-                case VEDrawLocation.TargetCell:
-                    foreach (var kvp in act.EffectedTargets)
-                    {
 
-                    }
-                    break;
+        private void SetAttackAnimationDrawPointOverride(AttackAct act)
+        {
+            foreach (var contr in MovementController.AnimationManager.CurrentControllers)
+            {
+                switch (contr.Animation.IsDrawPointOverride)
+                {
+                    case VEDrawLocation.TargetCell:
+                        foreach (var cell in act.EffectedTargets)
+                        {
+                            contr.Animation.DrawPointOverride = cell.Value.CenterPoint;
+                        }
+                        break;
+                }
             }
         }
+
         public void SpendActionPoint()
         {
             CurrentStats.AP -= 1;
         }
-
         public void ApplyAspect(string aspect, ElementType elementDamage)
         {
             Aspect asp = AspectManager.GetAspect(aspect, elementDamage);

@@ -367,7 +367,7 @@ namespace PlayingAround.Managers.CombatMan
         private void DrawEntityIdlePreviewOnCell(TileCell cell, AnimationData data )
         {
                 TileCellManager.AddActiveAnimationCell(cell);
-                cell.AddAnimation(data);
+                cell.AddIdleAnimation(data);
                 return;
         }
 

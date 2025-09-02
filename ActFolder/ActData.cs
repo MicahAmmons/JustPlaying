@@ -37,7 +37,8 @@ public enum ActionTarget
 {
     ClosestEnemy,
     Self,
-    RandomEnemy
+    RandomEnemy,
+    AwayFromEnemy
 }
 
 public enum MovementAmount

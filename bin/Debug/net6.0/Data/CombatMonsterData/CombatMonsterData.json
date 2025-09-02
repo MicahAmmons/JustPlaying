@@ -97,7 +97,7 @@
       {
         "Type": "Move",
         "MovementAmount": "FullMP",
-        "Target": "ClosestEnemy"
+        "ActionTarget": "ClosestEnemy"
       }
     ]
   },
@@ -105,7 +105,7 @@
     "UniqueId": "EarthOoze",
     "DefaultElementType": "Earth",
     "BaseStats": {
-      "MP": 1,
+      "MP": 3,
       "AP": 2,
       "Health": 2,
       "Initiative": 4
@@ -151,6 +151,21 @@
             "FrameWidth": 192,
             "FrameHeight": 192,
             "EndCyclePause": 22
+          },
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 11,
+            "FrameDurationMs": 100,
+            "IsLooping": false,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRootVE",
+            "DefaultDirection": "Right",
+            "FrameWidth": 128,
+            "FrameHeight": 128,
+            "EndCyclePause": 0,
+            "StartCyclePause": 31,
+            "IsDrawPointOverride": "TargetCell"
           }
         ],
         "AttackDown": [
@@ -166,6 +181,21 @@
             "FrameWidth": 192,
             "FrameHeight": 192,
             "EndCyclePause": 22
+          },
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 11,
+            "FrameDurationMs": 100,
+            "IsLooping": false,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRootVE",
+            "DefaultDirection": "Right",
+            "FrameWidth": 128,
+            "FrameHeight": 128,
+            "EndCyclePause": 0,
+            "StartCyclePause": 31,
+            "IsDrawPointOverride": "TargetCell"
           }
         ],
         "Idle": [
@@ -188,7 +218,7 @@
       {
         "Type": "Move",
         "MovementAmount": "FullMP",
-        "Target": "Away"
+        "ActionTarget": "AwayFromEnemy"
       },
       {
         "Type": "Attack",
@@ -202,12 +232,7 @@
           "ElementType": "Earth",
           "AttackPerformedFrame": 42,
           "AttackUpAnimation": "AttackUp",
-          "AttackDownAnimation": "AttackDown",
-          "VE" :{
-            "Name": "GraspingRoot",
-            "DrawLocation": "TargetCell",
-            "FrameBegin":  31
-          }
+          "AttackDownAnimation": "AttackDown"
         }
       }
     ]
