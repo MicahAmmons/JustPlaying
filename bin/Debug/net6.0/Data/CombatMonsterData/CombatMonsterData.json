@@ -8,75 +8,8 @@
       "Health": 6,
       "Initiative": 2
     },
-    "AnimationData": {
-      "Animations": {
-        "WalkUp": [
-          {
-            "Row": 2,
-            "FrameCount": 9,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "SpriteSheetName": "FrostOozeWalk",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "WalkDown": [
-          {
-            "Row": 4,
-            "FrameCount": 12,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "SpriteSheetName": "FrostOozeWalk",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "AttackUp": [
-          {
-            "AttackName": "Slam",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "SpriteSheetName": "FrostOozeSlamUp",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ],
-        "AttackDown": [
-          {
-            "AttackName": "Slam",
-            "Row": 1,
-            "FrameCount": 28,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "SpriteSheetName": "FrostOozeSlamDown",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ],
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 29,
-            "FrameDurationMs": 100,
-            "IsLooping": true,
-            "FadeEffect": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ]
-      }
-    },
+    "AnimationData": "FrostOoze",
+   
 
     "ActionOrder": [
       {
@@ -110,109 +43,7 @@
       "Health": 2,
       "Initiative": 4
     },
-    "AnimationData": {
-      "Animations": {
-        "WalkUp": [
-          {
-            "Row": 1,
-            "FrameCount": 18,
-            "FrameDurationMs": 75,
-            "IsLooping": false,
-            "SpriteSheetName": "EarthOozeWalkUp",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "WalkDown": [
-          {
-            "Row": 1,
-            "FrameCount": 18,
-            "FrameDurationMs": 75,
-            "IsLooping": false,
-            "SpriteSheetName": "EarthOozeWalkDown",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "AttackUp": [
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRoot",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndCyclePause": 22
-          },
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 11,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRootVE",
-            "DefaultDirection": "Right",
-            "FrameWidth": 128,
-            "FrameHeight": 128,
-            "EndCyclePause": 0,
-            "StartCyclePause": 31,
-            "IsDrawPointOverride": "TargetCell"
-          }
-        ],
-        "AttackDown": [
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRoot",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndCyclePause": 22
-          },
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 11,
-            "FrameDurationMs": 100,
-            "IsLooping": false,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRootVE",
-            "DefaultDirection": "Right",
-            "FrameWidth": 128,
-            "FrameHeight": 128,
-            "EndCyclePause": 0,
-            "StartCyclePause": 31,
-            "IsDrawPointOverride": "TargetCell"
-          }
-        ],
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 19,
-            "FrameDurationMs": 100,
-            "IsLooping": true,
-            "SpriteSheetName": "EarthOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 64,
-            "FrameHeight": 64,
-            "FadeEffect": true
-          }
-        ]
-      }
-    },
+ "AnimationData": "EarthOoze",
 
     "ActionOrder": [
       {
@@ -228,7 +59,42 @@
           "TargetType": [ "Player", "Summoned" ],
           "BaseDamageMin": 1,
           "BaseDamageMax": 1,
-          "Range": 12,
+          "Range": 6,
+          "ElementType": "Earth",
+          "AttackPerformedFrame": 42,
+          "AttackUpAnimation": "AttackUp",
+          "AttackDownAnimation": "AttackDown"
+        }
+      }
+    ]
+  },
+  "FireOoze": {
+    "UniqueId": "FireOoze",
+    "DefaultElementType": "Fire",
+    "BaseStats": {
+      "MP": 3,
+      "AP": 2,
+      "Health": 4,
+      "Initiative": 3
+    },
+    "AnimationData": "FireOoze",
+   
+
+    "ActionOrder": [
+      {
+        "Type": "Move",
+        "MovementAmount": "FullMP",
+        "ActionTarget": "AwayFromEnemy"
+      },
+      {
+        "Type": "Attack",
+        "ActionTarget": "ClosestEnemy",
+        "AttackData": {
+          "AttackName": "GraspingRoot",
+          "TargetType": [ "Player", "Summoned" ],
+          "BaseDamageMin": 1,
+          "BaseDamageMax": 1,
+          "Range": 6,
           "ElementType": "Earth",
           "AttackPerformedFrame": 42,
           "AttackUpAnimation": "AttackUp",

@@ -36,7 +36,7 @@
 
 
 
-  "monsters": [ "EarthOoze", "FrostOoze" ],
+  "monsters": [ "FireOoze" ],
   "tileHighlights": {
     "invalidTarget": {
       "color": "Red",
@@ -61,7 +61,7 @@
   },
   "obstacles": [],
   "difficulty": 1,
-  "totalSpawns": 3,
+  "totalSpawns": 1,
   "cells": [
     {
       "x": 0,
@@ -3269,9 +3269,9 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": false
+      "playMonsterSpawnable": true
     },
     {
       "x": 22,
@@ -3279,7 +3279,7 @@
       "walkable": true,
       "z": 0,
       "nextTileCell": null,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
     },

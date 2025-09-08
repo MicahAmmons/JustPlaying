@@ -24,6 +24,10 @@
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkDown.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png" />
+    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeAttack.png" />
+    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeIdle.png" />
+    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png" />
+    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamDown.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamUp.png" />
@@ -71,6 +75,7 @@
     <None Remove="Content\Tiles\1_4_0.png" />
     <None Remove="Content\Tiles\BackgroundSmoke.png" />
     <None Remove="Content\WhiteSmoke.png" />
+    <None Remove="Data\CombatMonsterData\AnimationData.json" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
     <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
@@ -96,6 +101,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeAttack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterIcons\EarthOoze.png">
@@ -246,6 +263,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\WhiteSmoke.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\CombatMonsterData\AnimationData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_0_-1_0.json">

@@ -288,7 +288,7 @@ namespace PlayingAround.Managers.CombatMan
                     if (act is SummonAct summonAct)
                     {
                         string name = summonAct.SummonedName;
-                        DrawEntityIdlePreviewOnCell(cell, CombatMonsterManager.GetIdleAnimationData(name));
+                        DrawEntityIdlePreviewOnCell(cell, AnimationLibrary.GetIdleAnimationData(name));
                     }
                 }
                 if (_currentClickedCell == cell)
@@ -320,7 +320,7 @@ namespace PlayingAround.Managers.CombatMan
                 cell.DrawCellHighlight(sb, _cellHighlightColors.Walkable, 5);
                 if (_currentMouseHoverCell == cell)
                 {
-                    AnimationData data = combatant.Is == CombatMonsterType.Player ? data = PlayerManager.GetIdleAnimationData() : data = CombatMonsterManager.GetIdleAnimationData(combatant.UniqueId);
+                    AnimationData data = combatant.Is == CombatMonsterType.Player ? data = PlayerManager.GetIdleAnimationData() : data = AnimationLibrary.GetIdleAnimationData(combatant.UniqueId);
                     DrawEntityIdlePreviewOnCell(cell, data);
                 }
                 if (_currentClickedCell == cell)

@@ -117,7 +117,7 @@ namespace PlayingAround.AnimationFolder
             _startCyclePauseTimer = 0f;
             IsStartingPause = true;
 
-            IsFinished = _animation.IsLooping;
+            IsFinished = _animation.IsIndefinite;
         }
 
         public void Update(GameTime gameTime)
@@ -134,7 +134,7 @@ namespace PlayingAround.AnimationFolder
 
             _frameTimer += delta;
 
-
+            HandleTravelMovement(delta);
             if (_frameTimer < _animation.FrameDuration) return;
 
             _frameTimer -= _animation.FrameDuration;
@@ -143,7 +143,6 @@ namespace PlayingAround.AnimationFolder
             {
                 StepLooping(delta);
             }
-
             else if (_animation.PingPong)
             {
                 StepPingPongSingle(delta);
@@ -153,9 +152,35 @@ namespace PlayingAround.AnimationFolder
                 StepNormalSingle(delta);
             }
         }
+        private void HandleTravelMovement(float delta)
+        {
+            if (!_animation.OverrideTravels) return;
+            if (IsFinished) return;
+
+            Vector2 dest = _animation.DestinationPoint;
+
+            Vector2 currentPos = (Vector2)_animation.DrawPointOverride;
+            Vector2 toDest = dest - currentPos;
+            float dist = toDest.Length();
+            if (dist <= float.Epsilon) return;
+
+            float speed = _animation.FrameDuration; 
+            float step = speed * delta;
+
+            if (step >= dist)
+            {
+                _animation.DrawPointOverride = dest;
+                IsFinished = true;
+            }
+            else
+            {
+                Vector2 dir = toDest / dist;
+                _animation.DrawPointOverride = currentPos + dir * step;
+            }
+        }
         private void StepLooping(float delta)
         { 
-            IsFinished = true;
+            if (IsFinished && !_animation.IsIndefinite) return;
 
             _currentFrameIndex++;
             if (_currentFrameIndex >= _animation.FrameCount)

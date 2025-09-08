@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
@@ -173,6 +174,17 @@ namespace PlayingAround.Utils
                 Converters = { new JsonStringEnumConverter() }
             };
             return JsonSerializer.Deserialize<Dictionary<string, VisualEffectData>>(json, options);
+        }
+        private static readonly string AnimationDataPath = GetDataPath("CombatMonsterData", "AnimationData.json");
+        public static Dictionary<string, AnimationData> LoadAnimationData()
+        {
+            string json = File.ReadAllText(AnimationDataPath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            return JsonSerializer.Deserialize<Dictionary<string, AnimationData>>(json, options);
         }
     }
 }

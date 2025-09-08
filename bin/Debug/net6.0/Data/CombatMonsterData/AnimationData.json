@@ -1,0 +1,282 @@
+{
+  "FireOoze": {
+      "Animations": {
+        "WalkUp": [
+          {
+            "Row": 1,
+            "FrameCount": 51,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FireOozeWalkUp",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 186,
+            "EndOfCyclePause": 0
+          }
+        ],
+        "WalkDown": [
+          {
+            "Row": 1,
+            "FrameCount": 48,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FireOozeWalkDown",
+            "DefaultDirection": "Left",
+            "FrameWidth": 206,
+            "FrameHeight": 128,
+            "EndOfCyclePause": 0
+          }
+        ],
+        "AttackUp": [
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 39,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "FireOozeAttack",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32,
+            "EndCyclePause": 0
+          }
+        ],
+        "AttackDown": [
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 39,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "FireOozeAttack",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32,
+            "EndCyclePause": 0
+          }
+        ],
+        "Idle": [
+          {
+            "Row": 1,
+            "FrameCount": 17,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FireOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32
+          },
+          {
+            "Row": 2,
+            "FrameCount": 16,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FireOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32
+          },
+          {
+            "Row": 3,
+            "FrameCount": 14,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FireOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32
+          },
+          {
+            "Row": 4,
+            "FrameCount": 14,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FireOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32,
+            "EndCyclePause": 3
+          },
+          {
+            "Row": 5,
+            "FrameCount": 15,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FireOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 32,
+            "FrameHeight": 32
+          }
+        ]
+      }
+    
+  },
+  "FrostOoze": {
+      "Animations": {
+        "WalkUp": [
+          {
+            "Row": 2,
+            "FrameCount": 9,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FrostOozeWalk",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 1
+          }
+        ],
+        "WalkDown": [
+          {
+            "Row": 4,
+            "FrameCount": 12,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FrostOozeWalk",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 1
+          }
+        ],
+        "AttackUp": [
+          {
+            "AttackName": "Slam",
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FrostOozeSlamUp",
+            "DefaultDirection": "Right",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "AttackDown": [
+          {
+            "AttackName": "Slam",
+            "Row": 1,
+            "FrameCount": 28,
+            "FrameDurationMs": 100,
+            "SpriteSheetName": "FrostOozeSlamDown",
+            "DefaultDirection": "Right",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ],
+        "Idle": [
+          {
+            "Row": 1,
+            "FrameCount": 29,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "FrostOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192
+          }
+        ]
+      }
+    
+  },
+  "EarthOoze": {
+      "Animations": {
+        "WalkUp": [
+          {
+            "Row": 1,
+            "FrameCount": 18,
+            "FrameDurationMs": 75,
+            "SpriteSheetName": "EarthOozeWalkUp",
+            "DefaultDirection": "Right",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 1
+          }
+        ],
+        "WalkDown": [
+          {
+            "Row": 1,
+            "FrameCount": 18,
+            "FrameDurationMs": 75,
+            "SpriteSheetName": "EarthOozeWalkDown",
+            "DefaultDirection": "Right",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndOfCyclePause": 1
+          }
+        ],
+        "AttackUp": [
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRoot",
+            "DefaultDirection": "Right",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndCyclePause": 22
+          },
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 11,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRootVE",
+            "DefaultDirection": "Right",
+            "FrameWidth": 128,
+            "FrameHeight": 128,
+            "EndCyclePause": 0,
+            "StartCyclePause": 31,
+            "IsDrawPointOverride": "TargetCell"
+          }
+        ],
+        "AttackDown": [
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 31,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRoot",
+            "DefaultDirection": "Left",
+            "FrameWidth": 192,
+            "FrameHeight": 192,
+            "EndCyclePause": 22
+          },
+          {
+            "AttackName": "GraspingRoot",
+            "Row": 1,
+            "FrameCount": 11,
+            "FrameDurationMs": 100,
+            "PingPong": true,
+            "SpriteSheetName": "EarthOozeGraspingRootVE",
+            "DefaultDirection": "Right",
+            "FrameWidth": 128,
+            "FrameHeight": 128,
+            "EndCyclePause": 0,
+            "StartCyclePause": 31,
+            "IsDrawPointOverride": "TargetCell"
+          }
+        ],
+        "Idle": [
+          {
+            "Row": 1,
+            "FrameCount": 19,
+            "FrameDurationMs": 100,
+            "IsIndefinite": true,
+            "IsLooping": true,
+            "SpriteSheetName": "EarthOozeIdle",
+            "DefaultDirection": "Left",
+            "FrameWidth": 64,
+            "FrameHeight": 64,
+            "FadeEffect": true
+          }
+        ]
+      }
+    
+  }
+}

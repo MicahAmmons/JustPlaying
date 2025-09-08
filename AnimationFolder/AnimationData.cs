@@ -17,8 +17,9 @@ namespace PlayingAround.AnimationFolder
     {
         public int Row { get; set; }                 // 1-based
         public int FrameCount { get; set; }
-        public int FrameDurationMs { get; set; }  
-        public bool IsLooping { get; set; }
+        public int FrameDurationMs { get; set; }
+        public bool IsIndefinite { get; set; } = false;
+        public bool IsLooping { get; set; } = false; 
         public bool PingPong { get; set; } = false;
         public string SpriteSheetName { get; set; }
         public int FrameWidth { get; set; }
@@ -26,6 +27,7 @@ namespace PlayingAround.AnimationFolder
         public bool FadeEffect { get; set; } = false;
         public bool SmokeEffect {  get; set; } = false;
         public VEDrawLocation? IsDrawPointOverride { get; set; } = null;
+        public bool OverrideTravels { get; set; } = false;
         public int EndCyclePause { get; set; } = 0;
         public int StartCyclePause { get; set; } = 0;
         public Direction DefaultDirection { get; set; }

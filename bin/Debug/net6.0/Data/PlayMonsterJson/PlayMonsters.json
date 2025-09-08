@@ -8,5 +8,10 @@
     "MovementQuickness": 50,
     "PauseDurationMax": 12.0,
     "PauseDurationMin": 6.0
+  },
+  "FireOoze": {
+    "MovementQuickness": 50,
+    "PauseDurationMax": 5.0,
+    "PauseDurationMin": 2.0
   }
 }

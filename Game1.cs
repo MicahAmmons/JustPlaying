@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder;
 using PlayingAround.AnimationFolder.GlowTex;
 using PlayingAround.AnimationFolder.ParticleFolder;
 using PlayingAround.Debug;
@@ -77,6 +78,7 @@ namespace PlayingAround
             CombatGuard.LoadContent();
             TileCellManager.LoadContent(_spriteBatch);
             VisualEffectLibrary.LoadContent();
+            AnimationLibrary.LoadContrent();
         }
 
 

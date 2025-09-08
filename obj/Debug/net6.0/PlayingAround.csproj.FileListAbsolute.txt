@@ -344,3 +344,12 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingArou
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\PlayingAround.genruntimeconfig.cache
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\obj\Debug\net6.0\ref\PlayingAround.dll
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\VE\veData.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeIdle.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeIdle.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkUp.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeAttack.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeAttack.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkDown.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\CombatMonsterData\AnimationData.json

@@ -90,7 +90,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
             Is = CombatMonsterType.AI;
-            MovementController = new MovementController(data.AnimationData, Is);
+            MovementController = new MovementController(AnimationLibrary.GetAnimation(UniqueId), Is);
             MovementController.FinishedTileMove += FinishedMovingOneTile;
             MovementController.FinishedAllMovement += FinishedAllMovement;
             MovementController.CurrentlyMoving += IsCurrentlyMoving;
@@ -302,7 +302,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     case VEDrawLocation.TargetCell:
                         foreach (var cell in act.EffectedTargets)
                         {
-                            contr.Animation.DrawPointOverride = cell.Value.CenterPoint;
+                            contr.Animation.SetDrawPointOverride(cell.Value.CenterPoint);
                         }
                         break;
                 }

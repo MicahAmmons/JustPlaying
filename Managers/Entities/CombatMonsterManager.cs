@@ -41,10 +41,7 @@ namespace PlayingAround.Managers.Entities
             };
             return newSummonedMon;
         }
-        public static AnimationData GetIdleAnimationData(string name)
-        {
-            return _combatMonsterBaseData[name].AnimationData;
-        }
+
         public static void Update(GameTime gameTime, float delta)
         {
             if (_currentCombatMonsters == null || _currentCombatMonsters.Count == 0) return;

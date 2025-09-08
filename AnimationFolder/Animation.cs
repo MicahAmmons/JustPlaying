@@ -15,7 +15,8 @@ namespace PlayingAround.AnimationFolder
     {
         public List<Rectangle> Frames { get; private set; }
         public float FrameDuration { get; private set; } // In seconds
-        public bool IsLooping { get; private set; }
+        public bool IsIndefinite { get; private set; }
+        public bool IsLooping { get; private set; } 
         public Texture2D SpriteSheet { get; private set; }
         public int FrameCount { get; private set; }
         public int Width { get; private set; }
@@ -27,7 +28,9 @@ namespace PlayingAround.AnimationFolder
         public Direction DefaultDirection { get; private set; }
         public int StartCyclePause { get; private set; }
         public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
-        public Vector2? DrawPointOverride; 
+        public bool OverrideTravels { get; private set; }
+        public Vector2? DrawPointOverride;
+        public Vector2 DestinationPoint;
 
 
 
@@ -60,13 +63,15 @@ namespace PlayingAround.AnimationFolder
             Width = data.FrameWidth;
             Height = data.FrameHeight;
             FrameDuration = data.FrameDurationMs / 1000f; // ms -> seconds
-            IsLooping = data.IsLooping;
+            IsIndefinite = data.IsIndefinite;
             FrameCount = Frames.Count; // in case we broke early
             FadeEffect = data.FadeEffect;
             SmokeEffect = data.SmokeEffect;
             PingPong = data.PingPong;
             EndCyclePause = data.EndCyclePause;
             StartCyclePause = data.StartCyclePause;
+            IsLooping = data.IsLooping;
+            OverrideTravels = data.OverrideTravels;
             if (data.IsDrawPointOverride != null) { IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; }
 
         }
@@ -76,6 +81,19 @@ namespace PlayingAround.AnimationFolder
             if (index < 0 || index >= Frames.Count)
                 return Frames[Frames.Count - 1]; // fallback
             return Frames[index];
+        }
+
+        public void SetDrawPointOverride(Vector2 centerPoint)
+        {
+            if (!OverrideTravels)
+            {
+                DrawPointOverride = centerPoint;
+            }
+            else if (OverrideTravels)
+            {
+                DestinationPoint = centerPoint;
+            }
+
         }
     }
 
