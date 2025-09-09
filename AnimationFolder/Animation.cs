@@ -28,6 +28,7 @@ namespace PlayingAround.AnimationFolder
         public Direction DefaultDirection { get; private set; }
         public int StartCyclePause { get; private set; }
         public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
+        public int YOffset { get; private set; }
         public bool OverrideTravels { get; private set; }
         public Vector2? DrawPointOverride;
         public Vector2 DestinationPoint;
@@ -72,6 +73,7 @@ namespace PlayingAround.AnimationFolder
             StartCyclePause = data.StartCyclePause;
             IsLooping = data.IsLooping;
             OverrideTravels = data.OverrideTravels;
+            YOffset = data.YOffset;
             if (data.IsDrawPointOverride != null) { IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; }
 
         }

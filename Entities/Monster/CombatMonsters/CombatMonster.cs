@@ -134,6 +134,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
                 Vector2 drawPoint = MovementController.DrawPoint;
+                int yOffset = animation.YOffset;
                 if (contr.Animation.DrawPointOverride != null)
                 {
                     drawPoint= (Vector2)contr.Animation.DrawPointOverride;
@@ -143,7 +144,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
                 Rectangle dest = new Rectangle(
                     (int)pos.X,
-                    (int)pos.Y,
+                    (int)pos.Y - yOffset,
                     width,
                     height
                 );

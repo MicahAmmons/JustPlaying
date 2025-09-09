@@ -32,5 +32,6 @@ namespace PlayingAround.AnimationFolder
         public int StartCyclePause { get; set; } = 0;
         public Direction DefaultDirection { get; set; }
         public AttackName? AttackName { get; set; } = null;
+        public int YOffset { get; set; }
     }
 }

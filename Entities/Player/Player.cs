@@ -59,7 +59,7 @@ namespace PlayingAround.Entities.Player
         {
             var player = new Player()
             {
-                MovementController = new MovementController(data.AnimationData, CombatMonsterType.Player)
+                MovementController = new MovementController(AnimationLibrary.GetAnimation("FireOoze"), CombatMonsterType.Player)
                 {
                     CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
                     DrawPoint = new Vector2(data.CurrentPosX, data.CurrentPosY)

@@ -78,12 +78,13 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
                 Vector2 drawPoint = MovementController.DrawPoint;
+                int yOffset = animation.YOffset;
                 int width = animation.Width;
                 int height = animation.Height;
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
                 Rectangle dest = new Rectangle(
                     (int)pos.X,
-                    (int)pos.Y,
+                    (int)pos.Y - yOffset,
                     width,
                     height
                 );

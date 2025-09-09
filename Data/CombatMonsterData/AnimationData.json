@@ -8,8 +8,8 @@
             "FrameDurationMs": 100,
             "SpriteSheetName": "FireOozeWalkUp",
             "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 186,
+            "FrameWidth": 164,
+            "FrameHeight": 164,
             "EndOfCyclePause": 0
           }
         ],
@@ -63,7 +63,8 @@
             "SpriteSheetName": "FireOozeIdle",
             "DefaultDirection": "Left",
             "FrameWidth": 32,
-            "FrameHeight": 32
+            "FrameHeight": 32,
+            "YOffset":  16
           },
           {
             "Row": 2,
@@ -74,7 +75,8 @@
             "SpriteSheetName": "FireOozeIdle",
             "DefaultDirection": "Left",
             "FrameWidth": 32,
-            "FrameHeight": 32
+            "FrameHeight": 32,
+            "YOffset": 16
           },
           {
             "Row": 3,
@@ -85,7 +87,8 @@
             "SpriteSheetName": "FireOozeIdle",
             "DefaultDirection": "Left",
             "FrameWidth": 32,
-            "FrameHeight": 32
+            "FrameHeight": 32,
+            "YOffset": 16
           },
           {
             "Row": 4,
@@ -97,7 +100,8 @@
             "DefaultDirection": "Left",
             "FrameWidth": 32,
             "FrameHeight": 32,
-            "EndCyclePause": 3
+            "EndCyclePause": 3,
+            "YOffset": 16
           },
           {
             "Row": 5,
@@ -108,7 +112,8 @@
             "SpriteSheetName": "FireOozeIdle",
             "DefaultDirection": "Left",
             "FrameWidth": 32,
-            "FrameHeight": 32
+            "FrameHeight": 32,
+            "YOffset": 16
           }
         ]
       }

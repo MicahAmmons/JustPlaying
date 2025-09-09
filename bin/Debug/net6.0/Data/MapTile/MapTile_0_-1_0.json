@@ -501,7 +501,7 @@
       "nextTileCell": null,
       "monsterSpawnable": false,
       "playerSpawnbable": false,
-      "playMonsterSpawnable": true
+      "playMonsterSpawnable": false
     },
     {
       "x": 26,
