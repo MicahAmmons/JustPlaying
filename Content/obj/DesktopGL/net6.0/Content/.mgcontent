@@ -59,6 +59,9 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Songs/titleScreenBG.mp3</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/3arrows.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TileCell/arrow.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_-1_0/-1_-1_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_-1_0/ForeDarkFog_-1_-1_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_-1_0/LowerRocks_-1_-1_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_0_0/-1_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_0_0OLD (2).png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/-1_0_0OLD.png</File>
@@ -84,6 +87,9 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

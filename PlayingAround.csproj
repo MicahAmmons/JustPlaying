@@ -76,6 +76,7 @@
     <None Remove="Content\Tiles\BackgroundSmoke.png" />
     <None Remove="Content\WhiteSmoke.png" />
     <None Remove="Data\CombatMonsterData\AnimationData.json" />
+    <None Remove="Data\MapTile\MapTile_-1_-1_0.json" />
     <None Remove="Data\MapTile\MapTile_0_-1_0.json" />
     <None Remove="Data\SaveData\SaveJson\savegame1.json" />
     <None Remove="Data\SaveData\SaveJson\savegame2.json" />
@@ -266,6 +267,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\CombatMonsterData\AnimationData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\MapTile\MapTile_-1_-1_0.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\MapTile\MapTile_0_-1_0.json">

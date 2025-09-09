@@ -353,3 +353,7 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Mon
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeAttack.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkDown.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\CombatMonsterData\AnimationData.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\MapTile\MapTile_-1_-1_0.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_-1_0\-1_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_-1_0\ForeDarkFog_-1_-1_0.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\-1_-1_0\LowerRocks_-1_-1_0.xnb
