@@ -56,7 +56,11 @@ namespace PlayingAround.Game.Map
             FrontOverlay = data.FrontOverlay;
             NPCName = data.NPCName;
             Trigger = data.Trigger;
-            NextTile = data.NextTile;
+            if (data.NextTile != null)
+            {
+                NextTile = data.NextTile;
+            }
+
         
             CenterPoint = new Vector2(data.X * MapTile.TileWidth, data.Y * MapTile.TileHeight );
         }

@@ -46,7 +46,9 @@ namespace PlayingAround.Managers.Entities
             for (int i = 0; i < maxSpawn; i++)
             { 
                 // Step 1: Create a list of all available CombatMonsters based on the JSON data
+
                 List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
+                if (monsterOptions.Count <= 0) break;
                 CombatMonster firstMon = monsterOptions[0];
                 string firstMonName = firstMon.Name;
                 var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[firstMonName]);

@@ -138,7 +138,11 @@
       "y": 0,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -148,7 +152,11 @@
       "y": 0,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -158,7 +166,11 @@
       "y": 0,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -298,7 +310,11 @@
       "y": 1,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -308,7 +324,11 @@
       "y": 1,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -318,7 +338,11 @@
       "y": 1,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -2398,7 +2422,11 @@
       "y": 15,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -2548,7 +2576,11 @@
       "y": 16,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -2708,7 +2740,11 @@
       "y": 17,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -2858,7 +2894,11 @@
       "y": 18,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -3018,7 +3058,11 @@
       "y": 19,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -3168,7 +3212,11 @@
       "y": 20,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
@@ -3328,7 +3376,11 @@
       "y": 21,
       "walkable": true,
       "z": 0,
-      "nextTileCell": null,
+      "nextTileCell": {
+        "x": -1,
+        "y": -1,
+        "z": 0
+      },
       "monsterSpawnable": false,
       "playerSpawnbable": false,
       "playMonsterSpawnable": false
