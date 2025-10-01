@@ -1,6 +1,6 @@
 {
   "MapTile": {
-    "CurrentTileId": "-1_-1_0"
+    "CurrentTileId": "0_0_0"
   },
   "Player": {
     "Width": 64,
@@ -9,70 +9,7 @@
     "CurrentPosX": 1410,
     "CurrentPosY": 640,
     "Health": 8,
-    "AnimationData": {
-      "Animations": {
-        "WalkUp": [
-          {
-            "Row": 2,
-            "FrameCount": 9,
-            "FrameDurationMs": 200,
-            "SpriteSheetName": "FrostOozeWalk",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "WalkDown": [
-          {
-            "Row": 4,
-            "FrameCount": 12,
-            "FrameDurationMs": 200,
-            "SpriteSheetName": "FrostOozeWalk",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "AttackUp": [
-          {
-            "AttackName": "Slam",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 200,
-            "SpriteSheetName": "FrostOozeSlamUp",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ],
-        "AttackDown": [
-          {
-            "AttackName": "Slam",
-            "Row": 1,
-            "FrameCount": 28,
-            "FrameDurationMs": 200,
-            "SpriteSheetName": "FrostOozeSlamDown",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ],
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 29,
-            "FrameDurationMs": 200,
-            "IsIndefinite": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192
-          }
-        ]
-      }
-    }
+    "AnimationData":"FrostOoze" 
   },
   "DayCycle": {
     "Day": 1

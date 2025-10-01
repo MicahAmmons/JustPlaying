@@ -26,15 +26,17 @@ namespace PlayingAround.Managers.Proximity
         private const int _distanceForInteract = 64;
         private const int _distanceForNextTileInteract = 48;
 
+        private static readonly HashSet<PlayMonsters> _playMonstersCurrentlyInRange = new();
+
 
         public static event Action<PlayMonsters> OnPlayerNearPlayMonster;
-        public static event Action OnPlayerLeavePlayMonster;
+        public static event Action<PlayMonsters> OnPlayerLeavePlayMonster;
 
         public static event Action<NPC> OnPlayerNearNPC;
-        public static event Action OnPlayerLeaveNPC;
+        public static event Action<NPC> OnPlayerLeaveNPC;
 
-        public static event Action<Vector2,  NextTileData> OnPlayerNearNextTile;
-        public static event Action OnPlayerLeaveNextTile;
+        public static event Action<NextTileData> OnPlayerNearNextTile;
+        public static event Action<NextTileData> OnPlayerLeaveNextTile;
 
 
         public static void Update(GameTime gameTime)
@@ -46,57 +48,85 @@ namespace PlayingAround.Managers.Proximity
                 IsPlayerInNPCRange();
                 IsPlayerInNextTileRange();
         }
+        private static readonly HashSet<NPC> _npcsCurrentlyInRange = new();
         public static void IsPlayerInNPCRange()
         {
-            bool npcWasNear = false;
+            float thresholdSq = _distanceForInteract * _distanceForInteract;
+
             foreach (var npc in _currentNPCs)
             {
-                if (Vector2.Distance(_playerCurrentCords, npc.currentPos) <= _distanceForInteract)
+                Vector2 delta = _playerCurrentCords - npc.currentPos;
+                bool inRange = delta.LengthSquared() <= thresholdSq;
+
+                bool tracked = _npcsCurrentlyInRange.Contains(npc);
+
+                if (inRange && !tracked)
                 {
+                    _npcsCurrentlyInRange.Add(npc);
                     OnPlayerNearNPC?.Invoke(npc);
-                    npcWasNear = true;
-                    break;
                 }
-            }
-            if (!npcWasNear)
-            {
-                OnPlayerLeaveNPC?.Invoke();
+                else if (!inRange && tracked)
+                {
+                    _npcsCurrentlyInRange.Remove(npc);
+                    OnPlayerLeaveNPC?.Invoke(npc);
+                }
             }
         }
         public static void IsPlayerInPlayMonsterRange()
         {
-            bool monsterWasNear = false;
+            float thresholdSq = _distanceForInteract * _distanceForInteract;
+
             foreach (var mon in _currentPlayMonsters)
             {
-                if (Vector2.Distance(_playerCurrentCords, mon.MovementController.CurrentPos) <= _distanceForInteract)
+                Vector2 delta = _playerCurrentCords - mon.MovementController.CurrentPos;
+                bool inRange = delta.LengthSquared() <= thresholdSq;
+                bool tracked = _playMonstersCurrentlyInRange.Contains(mon);
+
+                if (inRange && !tracked)
                 {
-                    OnPlayerNearPlayMonster?.Invoke(mon);
-                    monsterWasNear = true;
-                    break;
+                    _playMonstersCurrentlyInRange.Add(mon);   
+                    OnPlayerNearPlayMonster?.Invoke(mon);  
+                }
+                else if (!inRange && tracked)
+                {
+                    _playMonstersCurrentlyInRange.Remove(mon);
+                    OnPlayerLeavePlayMonster?.Invoke(mon);   
                 }
             }
-            if (!monsterWasNear)
-            {
-                OnPlayerLeavePlayMonster?.Invoke();
-            }
         }
+
+        private static readonly HashSet<NextTileData> _nextTilesCurrentlyInRange = new();
+
         public static void IsPlayerInNextTileRange()
         {
-            bool nextTileWasNear = false;
+            float thresholdSq = _distanceForNextTileInteract * _distanceForNextTileInteract;
+
             foreach (var (center, nextTileData) in _currentNextTiles)
             {
-                if (Vector2.Distance(_playerCurrentCords, center) <= _distanceForNextTileInteract)
+                Vector2 delta = _playerCurrentCords - center;
+                bool inRange = delta.LengthSquared() <= thresholdSq;
+
+                bool tracked = _nextTilesCurrentlyInRange.Contains(nextTileData);
+
+                if (inRange && !tracked)
                 {
-                    OnPlayerNearNextTile?.Invoke(center, nextTileData);
-                    nextTileWasNear = true;
-                    break;
+                    _nextTilesCurrentlyInRange.Add(nextTileData);
+                    OnPlayerNearNextTile?.Invoke(nextTileData);
+                }
+                else if (!inRange && tracked)
+                {
+                    _nextTilesCurrentlyInRange.Remove(nextTileData);
+                    OnPlayerLeaveNextTile?.Invoke(nextTileData);
                 }
             }
-            if (!nextTileWasNear)
-            {
-                OnPlayerLeaveNextTile?.Invoke();
-            }
         }
+        public static void ClearCurrentRange()
+        {
+            _nextTilesCurrentlyInRange?.Clear();
+            _npcsCurrentlyInRange?.Clear();
+            _playMonstersCurrentlyInRange?.Clear();
+        }
+
         private static void UpdatePlayerCords()
         {
             _playerCurrentCords = _currentPlayer.MovementController.CurrentPos;

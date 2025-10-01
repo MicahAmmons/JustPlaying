@@ -59,7 +59,7 @@ namespace PlayingAround.Entities.Player
         {
             var player = new Player()
             {
-                MovementController = new MovementController(AnimationLibrary.GetAnimation("FireOoze"), CombatMonsterType.Player)
+                MovementController = new MovementController(AnimationLibrary.GetAnimation(data.AnimationData), CombatMonsterType.Player)
                 {
                     CurrentPos = new Vector2(data.CurrentPosX, data.CurrentPosY),
                     DrawPoint = new Vector2(data.CurrentPosX, data.CurrentPosY)
@@ -163,25 +163,7 @@ namespace PlayingAround.Entities.Player
             return data;
         }
         public Vector2? GetDebugClickTarget() => debugClickTarget;
-        public void NewMapTilePosition(Vector2 dir)
-        {
-            MovementController.ClearMovementPath();
 
-            float newX = MovementController.CurrentPos.X;
-            float newY = MovementController.CurrentPos.Y;
-
-            if (dir.X < 0) // Moving left
-                newX = ViewportManager.ScreenWidth - MovementController.CurrentPos.X;
-            else if (dir.X > 0) // Moving right
-                newX = ViewportManager.ScreenWidth - MovementController.CurrentPos.X;
-
-            if (dir.Y < 0) // Moving up
-                newY = ViewportManager.ScreenHeight - MovementController.CurrentPos.Y;
-            else if (dir.Y > 0) // Moving down
-                newY = ViewportManager.ScreenHeight - MovementController.CurrentPos.Y;
-
-            MovementController.CurrentPos = new Vector2(newX, newY);
-        }
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawSpecifics.VEManager.Draw(spriteBatch);
@@ -267,7 +249,6 @@ namespace PlayingAround.Entities.Player
         {
             CurrentStats.AP -= 1;
         }
-
         public void ResolveEffects(TickedTiming ticked)
         {
 
@@ -383,7 +364,6 @@ namespace PlayingAround.Entities.Player
         {
             ExecutingMove = true;
         }
-
         public void BeginAct(Act act)
         {
             switch (act.ActType)
@@ -403,7 +383,6 @@ namespace PlayingAround.Entities.Player
             }
 
         }
-
         public void CreateNewActController()
         {
             ActController = new ActController();

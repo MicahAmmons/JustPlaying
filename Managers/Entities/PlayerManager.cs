@@ -9,6 +9,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Movement;
 using PlayingAround.Utils;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,14 @@ namespace PlayingAround.Managers.Entities
         private static Player _currentPlayer;
         public static Player CurrentPlayer => _currentPlayer;
         public static PlayerSaveData _playerData;
+
+        public static void Initialize()
+        {
+            MapTileTransitionManager.OnFadeToBlackComplete += (NextTileData data) =>
+            {
+                PlayerMovedMapTile(data);
+            };
+        }
         public static void LoadContent(PlayerSaveData data)
         {
             _playerData = data;
@@ -68,16 +77,43 @@ namespace PlayingAround.Managers.Entities
         {
             _currentPlayer.ClearAllAspects();
         }
-        public static AnimationData GetIdleAnimationData()
+        public static string GetIdleAnimationData()
         {
             return _playerData.AnimationData;
         }
         public static void DrawPlayer(SpriteBatch spriteBatch, Effect fx = null)
         {
-            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue || SceneManager.IsState(SceneState.Combat))
-            {
                 _currentPlayer?.DrawTexture(spriteBatch, fx);
-            }
         }
+        public static void PlayerMovedMapTile(NextTileData data)
+        {
+            _currentPlayer.MovementController.ToggleAllowedToBeDrawn(false);
+            _currentPlayer.MovementController.ClearMovementPath();
+            Vector2 vec = GetNewMapTilePosition(data);
+            _currentPlayer.MovementController.SetCurrentPos(vec);
+            _currentPlayer.MovementController.ToggleAllowedToBeDrawn(true);
+        }
+        public static Vector2 GetNewMapTilePosition(NextTileData data)
+        {
+            Vector2 start = _currentPlayer.MovementController.CurrentPos;
+            int xStart = TileManager.CurrentMapTile.x;
+            int yStart = TileManager.CurrentMapTile.y;
+            int xEnd = data.NextX;
+            int yEnd = data.NextY;
+            Vector2 newPos = start;
+
+            if (xEnd != xStart)
+            {
+                newPos = new Vector2(ViewportManager.ScreenWidth - start.X, start.Y);
+            }
+            else if (yEnd != yStart)
+            {
+                newPos = new Vector2(start.X, ViewportManager.ScreenHeight - start.Y);
+            }
+
+            return newPos;
+        }
+
+
     }
 }

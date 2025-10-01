@@ -58,12 +58,7 @@ namespace PlayingAround.Managers.UI
         {
             _mainFont = AssetManager.GetFont("mainFont");
             _fightBackground = AssetManager.GetTexture("fightBackground");
-            ProximityManager.OnPlayerNearPlayMonster += HandlePlayMonsterInteract;
-            ProximityManager.OnPlayerLeavePlayMonster += HandlePlayerExitPlayMonster;
-            ProximityManager.OnPlayerNearNPC += HandleNPCInteract;
-            ProximityManager.OnPlayerLeaveNPC += HandlePlayerExitNPC;
-            ProximityManager.OnPlayerNearNextTile += HandlePlayerNextTileInteract;
-            ProximityManager.OnPlayerLeaveNextTile += HandlePlayerExitNextTile;
+
             int screenWidth = ViewportManager.ScreenWidth;
             int screenHeight = ViewportManager.ScreenHeight;
 
@@ -88,49 +83,11 @@ namespace PlayingAround.Managers.UI
             {
                 case SceneState.Play:
                     UpdatePlayer();
-                    UpdateInput();
-                    if (_currentInteractState != InteractState.None && _interactMessage == null)
-                    {
-                        SetInteractMessage();
-                    }
                     break;
             }
-        }
-
-        public static void UpdateInput()
-        {
-            switch (SceneManager.CurrentState)
-            {
-                case SceneState.Play:
-                    if (_currentInteractState != InteractState.None && InputManager.IsKeyPressed(Keys.F))
-                    {
-                        switch (_currentInteractState)
-                        {
-                            case InteractState.PlayMonster:
-                                SceneManager.SetState(SceneState.Combat);
-                                CombatGuard.CreateNewCombat(_currentPlayMonster);
-                                break;
-                            case InteractState.NPC:
-                                SceneManager.SetState(SceneState.Dialogue);
-                                DialogueManager.StartNewDialogue(_currentNPC);
-                                break;
-                            case InteractState.NextTile:
-                                MapTileTransitionManager.SetNextMapTile(_currentNextTile.Value.Item2);
-                                SceneManager.SetState(SceneState.MapTileTransition);
-                                break;
-                        }
-                    }
-                    break;
-            }
-
-
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            switch (SceneManager.CurrentState)
-            {
- 
-            }
             if (SceneManager.IsState(SceneState.LoadingScreen) || SceneManager.IsState(SceneState.Cinematic)) return;
             if (SceneManager.CurrentState != SceneState.Dialogue || SceneManager.CurrentState != SceneState.Play)
             if (_summonOverlayOpen)
@@ -142,7 +99,6 @@ namespace PlayingAround.Managers.UI
             DrawPlayerSummons(spriteBatch);
             DrawDayCount(spriteBatch);
             DrawEscapeState(spriteBatch);
-            DrawInteractText(spriteBatch);
             DrawPlayMonsterDetails(spriteBatch);
             if (SceneManager.IsState(SceneState.Dialogue))
             {
@@ -299,108 +255,6 @@ namespace PlayingAround.Managers.UI
             }
         }
 
-
-
-        // Section devoted to Interaction popups
-        //
-        //
-        private static InteractState _currentInteractState = InteractState.None;
-        private static PlayMonsters _currentPlayMonster;
-        private static NPC _currentNPC;
-        private static (Vector2, NextTileData)? _currentNextTile;
-        private static Rectangle _interactRectangle;
-        private static string? _interactMessage;
-        private static void DrawInteractText(SpriteBatch spriteBatch)
-        {
-            if (!SceneManager.IsState( SceneState.Play)) return;
-            if (_interactMessage != null)
-            {
-                int padding = 6;
-                spriteBatch.Draw(_fightBackground, _interactRectangle, ColorPalette.DarkColor * .5f);
-
-                Vector2 textPosition = new Vector2(_interactRectangle.X + padding, _interactRectangle.Y + padding);
-                spriteBatch.DrawString(_mainFont, _interactMessage, textPosition, ColorPalette.LightColor);
-            }
-        }
-        private static void HandlePlayerExitPlayMonster()
-        {
-            _currentPlayMonster = null;
-            if (_currentInteractState == InteractState.PlayMonster)
-            {
-                _currentInteractState = InteractState.None;
-                _interactMessage = null;
-                
-            }
-        }
-        private static void HandlePlayMonsterInteract(PlayMonsters mon)
-        {
-            _currentInteractState = InteractState.PlayMonster;            
-            _currentPlayMonster = mon;
-        }
-        private static void HandleNPCInteract(NPC npc)
-        {
-            _currentInteractState = InteractState.NPC;
-            _currentNPC = npc;
-        }
-        private static void HandlePlayerExitNPC()
-        {
-            _currentNPC = null;
-            if (_currentInteractState == InteractState.NPC)
-            {
-                _currentInteractState = InteractState.None;
-                _interactMessage = null;
-            }
-        }
-        private static void HandlePlayerNextTileInteract(Vector2 center, NextTileData nextTileData)
-        {
-            _currentInteractState = InteractState.NextTile;
-            _currentNextTile = (center, nextTileData);
-        }
-        private static void HandlePlayerExitNextTile()
-        {
-            _currentNextTile = null;
-            if (_currentInteractState == InteractState.NextTile)
-            {
-                _currentInteractState = InteractState.None;
-                _interactMessage = null;
-            }
-        }
-        private static void SetInteractMessage()
-        {
-            string message = "ERROR IN UI, NO MESSAGE SET";
-            Vector2 drawPoint = new Vector2(50, 50);
-
-            switch (_currentInteractState)
-            {
-                case InteractState.PlayMonster:
-                    message = "Press F to Fight";
-                    drawPoint = _currentPlayMonster.MovementController.CurrentPos;
-                    break;
-
-                case InteractState.NPC:
-                    message = "Press F to Talk";
-                    drawPoint = _currentNPC.currentPos;
-                    break;
-                case InteractState.NextTile:
-                    message = "Press F to travel";
-                    drawPoint = _currentNextTile.Value.Item1;
-                        break;
-            }
-
-            InteractMessage(message, drawPoint);
-        }
-        private static void InteractMessage(string message, Vector2 drawPoint)
-        {
-            int padding = 6;
-
-            Vector2 textSize = _mainFont.MeasureString(message);
-            int totalWidth = (int)textSize.X + padding * 2;
-            int totalHeight = (int)textSize.Y + padding * 2;
-
-            _interactRectangle = new Rectangle((int)drawPoint.X, (int)drawPoint.Y, totalWidth, totalHeight);
-            _interactMessage = message;
-        }
-
         private static string Pluralize(string name)
         {
             if (name.EndsWith("y", StringComparison.OrdinalIgnoreCase) && !name.EndsWith("ey"))
@@ -415,10 +269,4 @@ namespace PlayingAround.Managers.UI
     }
 
 }
-public enum InteractState
-{
-    None,
-    PlayMonster,
-    NPC,
-    NextTile
-}
+    

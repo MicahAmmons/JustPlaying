@@ -16,7 +16,7 @@ namespace PlayingAround.Data.SaveData
         public float CurrentPosX { get; set; }
         public float CurrentPosY { get; set; }
         public int Health { get; set; }
-        public AnimationData AnimationData { get; set; }
+        public string AnimationData { get; set; }
     }
 
 }

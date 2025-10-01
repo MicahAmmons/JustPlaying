@@ -64,7 +64,8 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
       
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
+            var state = SceneManager.CurrentState;
+            if (state is SceneState.Dialogue or SceneState.Play or SceneState.MapTileTransition)
             DrawTexture(spriteBatch);
         }
         public void DrawTexture(SpriteBatch spriteBatch)

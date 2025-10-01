@@ -228,6 +228,9 @@
     <Content Include="Content\TileCell\arrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\-1_-1_0\-1_-1_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Tiles\-1_0_0\-1_0_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

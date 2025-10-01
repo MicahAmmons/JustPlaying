@@ -320,8 +320,10 @@ namespace PlayingAround.Managers.CombatMan
                 cell.DrawCellHighlight(sb, _cellHighlightColors.Walkable, 5);
                 if (_currentMouseHoverCell == cell)
                 {
-                    AnimationData data = combatant.Is == CombatMonsterType.Player ? data = PlayerManager.GetIdleAnimationData() : data = AnimationLibrary.GetIdleAnimationData(combatant.UniqueId);
-                    DrawEntityIdlePreviewOnCell(cell, data);
+
+                    string data = combatant.Is == CombatMonsterType.Player ? data = PlayerManager.GetIdleAnimationData() : data = combatant.UniqueId;
+                    AnimationData aniData = AnimationLibrary.GetIdleAnimationData(data);
+                    DrawEntityIdlePreviewOnCell(cell, aniData);
                 }
                 if (_currentClickedCell == cell)
                 {
@@ -354,7 +356,7 @@ namespace PlayingAround.Managers.CombatMan
             DrawSpawnableTiles(spriteBatch);
 
             if (_playerSpawnableCells.Contains( _currentMouseHoverCell))
-                DrawEntityIdlePreviewOnCell(_currentMouseHoverCell, PlayerManager.GetIdleAnimationData());
+                DrawEntityIdlePreviewOnCell(_currentMouseHoverCell, AnimationLibrary.GetIdleAnimationData(PlayerManager.GetIdleAnimationData()));
         }
         private void DrawSpawnableTiles(SpriteBatch spriteBatch)
         {

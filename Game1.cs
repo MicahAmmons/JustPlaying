@@ -4,6 +4,7 @@ using PlayingAround.AnimationFolder;
 using PlayingAround.AnimationFolder.GlowTex;
 using PlayingAround.AnimationFolder.ParticleFolder;
 using PlayingAround.Debug;
+using PlayingAround.Interaction;
 using PlayingAround.Manager;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
@@ -50,8 +51,8 @@ namespace PlayingAround
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            PlayerManager.Initialize();
+            InteractManager.Initialize();
             base.Initialize();
         }
 
@@ -101,17 +102,16 @@ namespace PlayingAround
             EscapeOverseer.Update(gameTime);
             TileCellManager.Update(gameTime);
             CinematicRuler.Update(gameTime);
-            switch (SceneManager.CurrentState)
-            {
-                case (SceneState.LoadingScreen):
-                    WaitUntilLoadingIsDone(delta);
-                    break;
+            if (SceneManager.IsState(SceneState.LoadingScreen)) 
+            { 
+              WaitUntilLoadingIsDone(delta);
             }
             ProximityManager.Update(gameTime);
             MapTileTransitionManager.Update(gameTime);
             DebugBugger.Update(gameTime);
             CombatGuard.Update(gameTime);
             UIManager.Update(gameTime);
+            InteractManager.Update();
             CombatMonsterManager.Update(gameTime, delta);
             PlayerManager.Update(gameTime, delta);
             PlayMonsterManager.Update(gameTime);
@@ -156,6 +156,7 @@ namespace PlayingAround
             DialogueManager.Draw(_spriteBatch);
             UIManager.Draw(_spriteBatch);
             CombatGuard.DrawExitCombat(_spriteBatch);
+            InteractManager.Draw(_spriteBatch);
             CinematicRuler.Draw(_spriteBatch);
             MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
             DebugBugger.Draw(_spriteBatch);

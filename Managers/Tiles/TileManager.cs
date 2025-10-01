@@ -32,8 +32,6 @@ namespace PlayingAround.Managers.Tiles
             MapTileTransitionManager.OnFadeToBlackComplete += (NextTileData data) =>
             {
                 string nextId = $"{data.NextX}_{data.NextY}_{data.NextZ}";
-                
-                PlayerManager.CurrentPlayer.NewMapTilePosition(DirectionTraveledForNewMapTile(data));
                 LoadMapTileById(nextId);
             };
 
