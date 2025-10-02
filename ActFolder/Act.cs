@@ -383,8 +383,51 @@ namespace PlayingAround.ActFolder
                 case ActionTarget.AwayFromEnemy:
                     if (!SetMovementPathAwayFromEnemy(currentCombatant, maxMovementAllowed, playerMap)) return false;
                     break;
+                case ActionTarget.StayAtMaxAttackRange:
+                    if (!SetMovementPathToMaxAttackRange(currentCombatant, maxMovementAllowed, playerMap)) return false;
+                    break;
             }
             return true;
+        }
+
+        private bool SetMovementPathToMaxAttackRange(ICombatant currentCombatant, int maxMovementAllowed, Dictionary<ICombatant, TileCell> playerMap)
+        {
+            int maxDistanceFromEnemy = 0;
+            foreach (var act in currentCombatant.ActController.ActsOrder)
+            {
+                if (act is AttackAct att)
+                {
+                    if (att.Attack.Range > maxDistanceFromEnemy)
+                    {
+                        maxDistanceFromEnemy = att.Attack.Range;
+                    }
+                }
+            }
+            bool movingCloser = false;
+            TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
+
+            var inRangeMovementCells = TileManager.GetFloodFillTileWithinRange(currentCell, maxMovementAllowed);
+            if (inRangeMovementCells == null || inRangeMovementCells.Count == 0) return false;
+            var validCells = new List<TileCell>(inRangeMovementCells.Count);
+            foreach (var cell in inRangeMovementCells)
+            {
+                if (cell != null && cell.IsWalkable && !cell.BlockedByCombatant)
+                    validCells.Add(cell);
+            }
+            if (validCells.Count == 0) return false;
+            
+            Dictionary<ICombatant, int> distanceMap = new Dictionary<ICombatant, int>();
+            foreach (var kvp in playerMap)
+            {
+                ICombatant combatant = kvp.Key;
+                TileCell cell = kvp.Value;
+                var path = GridMovement.GetCellToCellPath(currentCell.CenterPoint, cell.CenterPoint);
+                distanceMap[combatant] = path.Count();
+            }
+            foreach (var kvp in distanceMap)
+            {
+                if (kvp.Value < maxDistanceFromEnemy)
+            }
         }
 
         private bool SetMovementPathAwayFromEnemy(

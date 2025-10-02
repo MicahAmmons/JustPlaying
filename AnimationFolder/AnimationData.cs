@@ -27,7 +27,6 @@ namespace PlayingAround.AnimationFolder
         public bool FadeEffect { get; set; } = false;
         public bool SmokeEffect {  get; set; } = false;
         public VEDrawLocation? IsDrawPointOverride { get; set; } = null;
-        public bool OverrideTravels { get; set; } = false;
         public int EndCyclePause { get; set; } = 0;
         public int StartCyclePause { get; set; } = 0;
         public Direction DefaultDirection { get; set; }

@@ -34,5 +34,6 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
 
 public enum VEDrawLocation
 {
-    TargetCell
+    TargetCell,
+    StraightLineToTarget
 }

@@ -59,7 +59,9 @@ public enum AttackName
 {
     Slam,
     Spit,
-    GraspingRoot
+    GraspingRoot,
+    LavaBall,
+    IcicleStab
 
 }
 

@@ -1,13 +1,13 @@
 {
   "MapTile": {
-    "CurrentTileId": "0_0_0"
+    "CurrentTileId": "-1_0_0"
   },
   "Player": {
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "CurrentPosX": 1410,
-    "CurrentPosY": 640,
+    "CurrentPosX": 1220,
+    "CurrentPosY": 900,
     "Health": 8,
     "AnimationData":"FrostOoze" 
   },

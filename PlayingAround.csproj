@@ -19,19 +19,25 @@
     <None Remove="Content\ActIcons\MoveActIcon.png" />
     <None Remove="Content\ColorReplace.fx" />
     <None Remove="Content\GrassTiles\GrassTile.png" />
+    <None Remove="Content\MonsterAnimations\AirOoze\AirOozeIdle.png" />
+    <None Remove="Content\MonsterAnimations\AirOoze\AirOozeWalk.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRoot.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRootVE.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkDown.png" />
     <None Remove="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png" />
-    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeAttack.png" />
     <None Remove="Content\MonsterAnimations\FireOoze\FireOozeIdle.png" />
+    <None Remove="Content\MonsterAnimations\FireOoze\FireOozeLavaBallVE.png" />
     <None Remove="Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png" />
     <None Remove="Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabDown.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamDown.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeSlamUp.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalk.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.png" />
+    <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png" />
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\EarthOoze.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
@@ -93,6 +99,12 @@
     <Content Include="Content\ActIcons\MoveActIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\MonsterAnimations\AirOoze\AirOozeIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\AirOoze\AirOozeWalk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeGraspingRoot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -108,16 +120,31 @@
     <Content Include="Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeAttack.png">
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeLavaBall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\FireOoze\FireOozeIdle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FireOoze\FireOozeLavaBallVE.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabDown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabUp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterIcons\EarthOoze.png">

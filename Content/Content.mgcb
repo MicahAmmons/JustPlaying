@@ -116,6 +116,18 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/EarthOoze/EarthOozeGraspingRoot.png
 
+#begin MonsterAnimations/EarthOoze/EarthOozeGraspingRoot.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/EarthOoze/EarthOozeGraspingRoot.png
+
 #begin MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -127,6 +139,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE.png
+
+#begin MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/EarthOoze/EarthOozeGraspingRootVE.png
+
+#begin MonsterAnimations/EarthOoze/EarthOozeIdle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/EarthOoze/EarthOozeIdle.png
 
 #begin MonsterAnimations/EarthOoze/EarthOozeIdle.png
 /importer:TextureImporter
@@ -152,6 +188,18 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/EarthOoze/EarthOozeWalkDown.png
 
+#begin MonsterAnimations/EarthOoze/EarthOozeWalkDown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/EarthOoze/EarthOozeWalkDown.png
+
 #begin MonsterAnimations/EarthOoze/EarthOozeWalkUp.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -164,7 +212,7 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/EarthOoze/EarthOozeWalkUp.png
 
-#begin MonsterAnimations/FireOoze/FireOozeAttack.png
+#begin MonsterAnimations/EarthOoze/EarthOozeWalkUp.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -174,7 +222,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MonsterAnimations/FireOoze/FireOozeAttack.png
+/build:MonsterAnimations/EarthOoze/EarthOozeWalkUp.png
 
 #begin MonsterAnimations/FireOoze/FireOozeIdle.png
 /importer:TextureImporter
@@ -187,6 +235,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FireOoze/FireOozeIdle.png
+
+#begin MonsterAnimations/FireOoze/FireOozeIdle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FireOoze/FireOozeIdle.png
+
+#begin MonsterAnimations/FireOoze/FireOozeLavaBall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FireOoze/FireOozeLavaBall.png
+
+#begin MonsterAnimations/FireOoze/FireOozeLavaBallVE.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FireOoze/FireOozeLavaBallVE.png
+
+#begin MonsterAnimations/FireOoze/FireOozeWalkDown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FireOoze/FireOozeWalkDown.png
 
 #begin MonsterAnimations/FireOoze/FireOozeWalkDown.png
 /importer:TextureImporter
@@ -212,6 +308,42 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FireOoze/FireOozeWalkUp.png
 
+#begin MonsterAnimations/FireOoze/FireOozeWalkUp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FireOoze/FireOozeWalkUp.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeIcicleStabDown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeIcicleStabDown.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeIcicleStabUp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeIcicleStabUp.png
+
 #begin MonsterAnimations/FrostOoze/FrostOozeIdle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -223,6 +355,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeIdle.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeIdle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeIdle.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeIdleOLD.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeIdleOLD.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeSlamDown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeSlamDown.png
 
 #begin MonsterAnimations/FrostOoze/FrostOozeSlamDown.png
 /importer:TextureImporter
@@ -248,6 +416,18 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeSlamUp.png
 
+#begin MonsterAnimations/FrostOoze/FrostOozeSlamUp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeSlamUp.png
+
 #begin MonsterAnimations/FrostOoze/FrostOozeWalk.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -259,6 +439,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeWalk.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeWalk.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeWalk.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeWalkDown.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeWalkDown.png
+
+#begin MonsterAnimations/FrostOoze/FrostOozeWalkUp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/FrostOoze/FrostOozeWalkUp.png
 
 #begin MonsterIcons/AngryPlantIcon.png
 /importer:TextureImporter
@@ -709,7 +925,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tiles/-1_0_0/LowerRocks_-1_0_0.png
-
 
 #begin Tiles/-1_0_0/Vines1.png
 /importer:TextureImporter

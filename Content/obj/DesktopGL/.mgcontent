@@ -17,14 +17,20 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeIdle.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeWalkDown.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/EarthOoze/EarthOozeWalkUp.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeAttack.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeIdle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeLavaBall.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeLavaBallVE.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeWalkDown.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FireOoze/FireOozeWalkUp.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIcicleStabDown.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIcicleStabUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIdle.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeIdleOLD.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamDown.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeSlamUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalk.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalkDown.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalkUp.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/EarthOoze.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
@@ -78,7 +84,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/ForeDarkFog_0_0_0.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/LowerRocks_0_0__0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/LowerRocks_0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0old.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/1_4_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackgroundSmoke.png</File>
@@ -93,6 +99,12 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

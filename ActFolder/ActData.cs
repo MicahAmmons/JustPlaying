@@ -38,12 +38,13 @@ public enum ActionTarget
     ClosestEnemy,
     Self,
     RandomEnemy,
-    AwayFromEnemy
+    AwayFromEnemy,
+    StayAtMaxAttackRange
 }
 
 public enum MovementAmount
 {
     FullMP,
     HalfMP,
-    Fixed
+    Fixed,
 }

@@ -42,19 +42,17 @@ namespace PlayingAround.Managers.Entities
             float difficultyMax = diffMax;
             float difficultyMin = diffMin;
             int totalSpawns = maxSpawn;
+            List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
             List<TileCell> startingCellOptions = new List<TileCell>(cells);
             for (int i = 0; i < maxSpawn; i++)
-            { 
-                // Step 1: Create a list of all available CombatMonsters based on the JSON data
-
-                List<CombatMonster> monsterOptions = CombatMonsterManager.GetCombatMonsters(monsterString);
-                if (monsterOptions.Count <= 0) break;
-                CombatMonster firstMon = monsterOptions[0];
-                string firstMonName = firstMon.Name;
-                var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[firstMonName]);
+            {
+                var num = RandomHut.rng.Next(0, monsterOptions.Count );
+                CombatMonster mon = monsterOptions[num];
+                string monName = mon.Name;
+                var dataCopy = DeepCopyHelper.DeepCopy(_playMonsterData[monName]);
                 TileCell startingCell = PickStartingCell(startingCellOptions);
                 startingCellOptions.Remove(startingCell);
-                PlayMonsters newPlayMon = new PlayMonsters(_playMonsterData[firstMonName], monsterOptions[0])
+                PlayMonsters newPlayMon = new PlayMonsters(_playMonsterData[monName], monsterOptions[num])
                 {
                     Monsters = monsterOptions,
                 };

@@ -3,7 +3,7 @@
   "gridY": -0,
   "gridZ": 0,
   "buildBackground": [ "LowerRocks_-1_0_0", "-1_0_0", "ForeDarkFog_-1_0_0" ],
-  "monsters": [],
+  "monsters": ["FireOoze", "FrostOoze", "EarthOoze"],
   "backgroundSmokeTexture": {
     "Frequency": [ 2.0, 2.0 ],
     "Speed": [ 0.25, 0.25 ],
@@ -34,7 +34,7 @@
   },
   "obstacles": [],
   "difficulty": 1,
-  "totalSpawns": 1,
+  "totalSpawns": 6,
 
   "cells": [
     {

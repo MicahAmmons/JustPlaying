@@ -126,18 +126,16 @@ namespace PlayingAround.AnimationFolder
             if (_animation == null || _animation.FrameCount < 1)
                 return;
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (InStartingPause(delta))
-            {
-                return;
-            }
+            if (InStartingPause(delta)){ return;}
 
 
             _frameTimer += delta;
 
-            HandleTravelMovement(delta);
             if (_frameTimer < _animation.FrameDuration) return;
 
             _frameTimer -= _animation.FrameDuration;
+
+            HandleTravelMovementFrameStep();
 
             if (_animation.IsLooping)
             {
@@ -152,31 +150,18 @@ namespace PlayingAround.AnimationFolder
                 StepNormalSingle(delta);
             }
         }
-        private void HandleTravelMovement(float delta)
+
+        private void HandleTravelMovementFrameStep()
         {
-            if (!_animation.OverrideTravels) return;
-            if (IsFinished) return;
+            var path = _animation.OverrideTravelPath;
+            if (path == null || path.Count == 0) return;
 
-            Vector2 dest = _animation.DestinationPoint;
+            _animation.DrawPointOverride = path[0];
 
-            Vector2 currentPos = (Vector2)_animation.DrawPointOverride;
-            Vector2 toDest = dest - currentPos;
-            float dist = toDest.Length();
-            if (dist <= float.Epsilon) return;
+            path.RemoveAt(0);
 
-            float speed = _animation.FrameDuration; 
-            float step = speed * delta;
-
-            if (step >= dist)
-            {
-                _animation.DrawPointOverride = dest;
+            if (path.Count == 0)
                 IsFinished = true;
-            }
-            else
-            {
-                Vector2 dir = toDest / dist;
-                _animation.DrawPointOverride = currentPos + dir * step;
-            }
         }
         private void StepLooping(float delta)
         { 
@@ -188,6 +173,7 @@ namespace PlayingAround.AnimationFolder
                  if (InPause()) return;
 
                 _currentFrameIndex = 0;
+                if (_animation.HasStartingPause) { Reset(); }
             }
 
         }

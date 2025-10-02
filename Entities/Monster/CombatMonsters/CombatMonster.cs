@@ -306,6 +306,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                             contr.Animation.SetDrawPointOverride(cell.Value.CenterPoint);
                         }
                         break;
+                    case VEDrawLocation.StraightLineToTarget:
+                        foreach (var cell in act.EffectedTargets)
+                        {
+                            var vectorPath = GridMovement.BuildStraightLinePath(act._combatant.MovementController.CurrentPos, cell.Value.CenterPoint);
+                        }
+                        break;
                 }
             }
         }

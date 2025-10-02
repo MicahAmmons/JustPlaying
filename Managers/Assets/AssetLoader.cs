@@ -36,9 +36,10 @@ namespace PlayingAround.Game.Assets
         public static void LoadAllSpriteSheets()
         {
             AssetManager.LoadTexture("FrostOozeIdle", "MonsterAnimations/FrostOoze/FrostOozeIdle");
-            AssetManager.LoadTexture("FrostOozeSlamDown", "MonsterAnimations/FrostOoze/FrostOozeSlamDown");
-            AssetManager.LoadTexture("FrostOozeSlamUp", "MonsterAnimations/FrostOoze/FrostOozeSlamUp");
-            AssetManager.LoadTexture("FrostOozeWalk", "MonsterAnimations/FrostOoze/FrostOozeWalk");
+            AssetManager.LoadTexture("FrostOozeIcicleStabDown", "MonsterAnimations/FrostOoze/FrostOozeIcicleStabDown");
+            AssetManager.LoadTexture("FrostOozeIcicleStabUp", "MonsterAnimations/FrostOoze/FrostOozeIcicleStabUp");
+            AssetManager.LoadTexture("FrostOozeWalkUp", "MonsterAnimations/FrostOoze/FrostOozeWalkUp");
+            AssetManager.LoadTexture("FrostOozeWalkDown", "MonsterAnimations/FrostOoze/FrostOozeWalkDown");
 
             AssetManager.LoadTexture("EarthOozeIdle", "MonsterAnimations/EarthOoze/EarthOozeIdle");
             AssetManager.LoadTexture("EarthOozeWalkUp", "MonsterAnimations/EarthOoze/EarthOozeWalkUp");
@@ -49,7 +50,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("FireOozeIdle", "MonsterAnimations/FireOoze/FireOozeIdle");
             AssetManager.LoadTexture("FireOozeWalkUp", "MonsterAnimations/FireOoze/FireOozeWalkUp");
             AssetManager.LoadTexture("FireOozeWalkDown", "MonsterAnimations/FireOoze/FireOozeWalkDown");
-            AssetManager.LoadTexture("FireOozeAttack", "MonsterAnimations/FireOoze/FireOozeAttack");
+            AssetManager.LoadTexture("FireOozeLavaBall", "MonsterAnimations/FireOoze/FireOozeLavaBall");
+            AssetManager.LoadTexture("FireOozeLavaBallVE", "MonsterAnimations/FireOoze/FireOozeLavaBallVE");
 
         }
         public static void LoadPlayerSpriteSheets()

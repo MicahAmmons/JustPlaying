@@ -1,17 +1,17 @@
 {
   "FrostOoze": {
     "MovementQuickness": 20,
-    "PauseDurationMax": 10.0,
-    "PauseDurationMin": 3.0
+    "PauseDurationMax": 15.0,
+    "PauseDurationMin": 8.0
   },
   "EarthOoze": {
     "MovementQuickness": 50,
-    "PauseDurationMax": 12.0,
-    "PauseDurationMin": 6.0
+    "PauseDurationMax": 7.0,
+    "PauseDurationMin": 2.0
   },
   "FireOoze": {
     "MovementQuickness": 50,
-    "PauseDurationMax": 5.0,
-    "PauseDurationMin": 2.0
+    "PauseDurationMax": 12.0,
+    "PauseDurationMin": 8.0
   }
 }

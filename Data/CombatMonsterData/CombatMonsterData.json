@@ -78,25 +78,23 @@
       "Initiative": 3
     },
     "AnimationData": "FireOoze",
-   
-
     "ActionOrder": [
       {
         "Type": "Move",
         "MovementAmount": "FullMP",
-        "ActionTarget": "AwayFromEnemy"
+        "ActionTarget": "StayAtMaxAttackRange"
       },
       {
         "Type": "Attack",
-        "ActionTarget": "ClosestEnemy",
+        "ActionTarget": "HighestHP",
         "AttackData": {
-          "AttackName": "GraspingRoot",
+          "AttackName": "LavaBall",
           "TargetType": [ "Player", "Summoned" ],
           "BaseDamageMin": 1,
           "BaseDamageMax": 1,
           "Range": 6,
-          "ElementType": "Earth",
-          "AttackPerformedFrame": 42,
+          "ElementType": "Fire",
+          "AttackPerformedWhenFinished" :true,
           "AttackUpAnimation": "AttackUp",
           "AttackDownAnimation": "AttackDown"
         }

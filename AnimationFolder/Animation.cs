@@ -28,10 +28,11 @@ namespace PlayingAround.AnimationFolder
         public Direction DefaultDirection { get; private set; }
         public int StartCyclePause { get; private set; }
         public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
+        public bool HasStartingPause { get; private set; } = false;
         public int YOffset { get; private set; }
-        public bool OverrideTravels { get; private set; }
         public Vector2? DrawPointOverride;
         public Vector2 DestinationPoint;
+        public List<Vector2> OverrideTravelPath = new List<Vector2>();
 
 
 
@@ -65,16 +66,19 @@ namespace PlayingAround.AnimationFolder
             Height = data.FrameHeight;
             FrameDuration = data.FrameDurationMs / 1000f; // ms -> seconds
             IsIndefinite = data.IsIndefinite;
-            FrameCount = Frames.Count; // in case we broke early
+            FrameCount = Frames.Count; 
             FadeEffect = data.FadeEffect;
             SmokeEffect = data.SmokeEffect;
             PingPong = data.PingPong;
             EndCyclePause = data.EndCyclePause;
             StartCyclePause = data.StartCyclePause;
             IsLooping = data.IsLooping;
-            OverrideTravels = data.OverrideTravels;
             YOffset = data.YOffset;
-            if (data.IsDrawPointOverride != null) { IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; }
+            if (StartCyclePause > 0) { HasStartingPause = true; }
+            if (data.IsDrawPointOverride != null) 
+            { 
+                IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; 
+            }
 
         }
 
@@ -87,15 +91,11 @@ namespace PlayingAround.AnimationFolder
 
         public void SetDrawPointOverride(Vector2 centerPoint)
         {
-            if (!OverrideTravels)
-            {
-                DrawPointOverride = centerPoint;
-            }
-            else if (OverrideTravels)
-            {
-                DestinationPoint = centerPoint;
-            }
-
+           DestinationPoint = centerPoint;
+        }
+        public void SetDrawPointPathOverride(List<Vector2> path)
+        {
+            OverrideTravelPath = path;
         }
     }
 
