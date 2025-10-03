@@ -23,7 +23,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public string Aspect { get; set; }
         public List<CombatMonsterType> TargetType { get; set; } = new List<CombatMonsterType>();
         public ElementType ElementDamage { get; set; } = ElementType.None;
-
+        public bool AttackPerformedWhenFinished {  get; set; }
         public int AttackPerformedFrame { get; set; }
         public AnimationState AttackUpAnimation { get; set; }
         public AnimationState AttackDownAnimation { get; set; }
@@ -42,6 +42,7 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             AttackPerformedFrame = data.AttackPerformedFrame;
             AttackUpAnimation = data.AttackUpAnimation;
             AttackDownAnimation = data.AttackDownAnimation;
+            AttackPerformedWhenFinished = data.AttackPerformedWhenFinished;
             VE = data.VE;
             if (data.TargetType.Count > 0)
             {

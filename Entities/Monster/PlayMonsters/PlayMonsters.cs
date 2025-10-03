@@ -51,6 +51,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
             };
 
             MovementController = new MovementController(mon.MovementController.AnimationManager);
+            if (data.MovementQuicknessOverride != null) { MovementController.QuicknessOverride(data.MovementQuicknessOverride / 1000); }
             MovementController.FinishedTileMove += FinishedMovingOneTile;
             MovementController.FinishedAllMovement += FinishedAllMovement;
             MovementController.CurrentlyMoving += IsCurrentlyMoving;

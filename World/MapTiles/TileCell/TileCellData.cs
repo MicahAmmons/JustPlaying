@@ -7,7 +7,7 @@ public class TileCellData
     [JsonPropertyName("y")] public int Y { get; set; }
     [JsonPropertyName("walkable")] public bool Walkable { get; set; }
     [JsonPropertyName("z")] public int Z { get; set; }
-    [JsonPropertyName("playerSpawnbable")] public bool PlayerSpawnable { get; set; }
+    [JsonPropertyName("playerSpawnable")] public bool PlayerSpawnable { get; set; }
     [JsonPropertyName("monsterSpawnable")] public bool MonsterSpawnable { get; set; }
     [JsonPropertyName("playMonsterSpawnable")] public bool PlayMonsterSpawnable { get; set; }
 

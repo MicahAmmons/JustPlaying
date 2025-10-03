@@ -90,16 +90,25 @@ namespace PlayingAround.Movement
         {
                 CurrentAnimationState = AnimationState.Idle;
         }
-        public void SetAttackAnimation(Vector2 direction)
+        public bool SetAttackAnimation(Vector2 direction)
         {
             SetFacingDirection(direction);
-            CurrentAnimationState = VerticalFacingDirection switch
+
+            var prevAnim = CurrentAnimationState;
+            var nextAnim = VerticalFacingDirection switch
             {
                 Direction.Up => AnimationState.AttackUp,
                 Direction.Down => AnimationState.AttackDown,
-                _ => CurrentAnimationState
+                _ => prevAnim 
             };
+
+            bool animChanged = nextAnim != prevAnim;
+            if (animChanged)
+                CurrentAnimationState = nextAnim;
+
+            return animChanged;
         }
+
 
 
         private void OnStartMoveOneTile()
@@ -278,6 +287,11 @@ namespace PlayingAround.Movement
         internal bool FinishedTileMovement()
         {
             return TileMovePath.Count <= 0 && AnimationManager.IsFinished && _nextMoveReady;
+        }
+
+        internal void QuicknessOverride(float? movementQuicknessOverride)
+        {
+            AnimationManager.QuicknessOverride((float)movementQuicknessOverride);
         }
     }
 }

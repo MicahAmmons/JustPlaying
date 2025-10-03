@@ -373,7 +373,6 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\C
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\EarthOoze\EarthOozeIdle.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\EarthOoze\EarthOozeWalkDown.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\EarthOoze\EarthOozeWalkUp.png
-C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeAttack.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeIdle.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkDown.png
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeWalkUp.png
@@ -460,3 +459,18 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Mon
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIdleOLD.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\AirOoze\AirOozeIdle.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\AirOoze\AirOozeWalk.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeLavaBall.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeLavaBallVE.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabDown.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabUp.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeLavaBall.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FireOoze\FireOozeLavaBallVE.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabDown.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIcicleStabUp.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeIdleOLD.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.xnb

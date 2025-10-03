@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,19 @@ namespace PlayingAround.AnimationFolder
                 }
             }
         }
+
+        internal void QuicknessOverride(float movementQuicknessOverride)
+        {
+            foreach (var contr in ControllerList)
+            {
+                AnimationState state = contr.Key;
+                List<AnimationController> contrs = contr.Value;
+                foreach (var ani in contrs)
+                {
+                    ani.FrameDurationOverride(movementQuicknessOverride);
+                }
+            }
+        }
     }
     public class AnimationController
     {
@@ -100,6 +114,7 @@ namespace PlayingAround.AnimationFolder
         private int _currentFrameIndex = 0;
         private float _frameTimer = 0f;
         private int _direction = 1;
+        private float _frameDurationOverride = 0;
 
         public bool IsStartingPause = true;
         public bool IsFinished = false;
@@ -125,15 +140,20 @@ namespace PlayingAround.AnimationFolder
 
             if (_animation == null || _animation.FrameCount < 1)
                 return;
+            var frameDur = _animation.FrameDuration;
+            if (_frameDurationOverride > 0f)
+            {
+                frameDur = _frameDurationOverride;
+            }
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (InStartingPause(delta)){ return;}
+            if (InStartingPause(delta, frameDur)){ return;}
 
 
             _frameTimer += delta;
 
-            if (_frameTimer < _animation.FrameDuration) return;
+            if (_frameTimer < frameDur) return;
 
-            _frameTimer -= _animation.FrameDuration;
+            _frameTimer -= frameDur;
 
             HandleTravelMovementFrameStep();
 
@@ -210,14 +230,14 @@ namespace PlayingAround.AnimationFolder
         }
 
         private float _startCyclePauseTimer = 0;
-        private bool InStartingPause(float delta)
+        private bool InStartingPause(float delta, float frameDur)
         {
             if (_animation.StartCyclePause <= 0)
             {
                 IsStartingPause = false;
                 return false;
             }
-            float maxDur = (_animation.StartCyclePause * _animation.FrameDuration );
+            float maxDur = (_animation.StartCyclePause * frameDur );
             if (_startCyclePauseTimer < maxDur)
             {
                 _startCyclePauseTimer += delta;
@@ -273,6 +293,11 @@ namespace PlayingAround.AnimationFolder
         public int GetCurrentFrameIndex()
         {
             return _currentFrameIndex;
+        }
+
+        internal void FrameDurationOverride(float movementQuicknessOverride)
+        {
+            _frameDurationOverride = movementQuicknessOverride;
         }
     }
 

@@ -3,7 +3,7 @@
   "gridY": -0,
   "gridZ": 0,
   "buildBackground": [ "LowerRocks_-1_0_0", "-1_0_0", "ForeDarkFog_-1_0_0" ],
-  "monsters": ["FireOoze", "FrostOoze", "EarthOoze"],
+  "monsters": ["FireOoze"],
   "backgroundSmokeTexture": {
     "Frequency": [ 2.0, 2.0 ],
     "Speed": [ 0.25, 0.25 ],
@@ -3180,7 +3180,7 @@
       "y": 22,
       "walkable": true,
       "monsterSpawnable": false,
-      "playerSpawnable": false,
+      "playerSpawnable": true,
       "playMonsterSpawnable": false,
       "nextTileCell": null
     },

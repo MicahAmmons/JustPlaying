@@ -310,6 +310,9 @@ namespace PlayingAround.ActFolder
                 case ActionTarget.ClosestEnemy:
                     if (!SetAttackClosestEnemyWithinRange(targetList)) return false;
                     break;
+                    case ActionTarget.HighestHP:
+                    if (!SetAttackHighestHP(targetList)) return false;
+                    break;
             }
             return true;
 
@@ -317,6 +320,24 @@ namespace PlayingAround.ActFolder
         public override CombatState ExecutingState()
         {
             return CombatState.ExecutingAttack;
+        }
+        private bool SetAttackHighestHP(Dictionary<ICombatant, TileCell> targetList)
+        {
+            int highestHP = 0;
+            ICombatant comb = null;
+            TileCell finalCell = null;
+            foreach (var kvp in targetList)
+            {
+                ICombatant combatant = kvp.Key;
+                TileCell cell = kvp.Value;
+                int distance = TileManager.CheckManhattanDistance(TileManager.GetCell(_combatant.MovementController.CurrentPos), cell);
+                if (distance > Attack.Range){continue;}
+                if (combatant.CurrentStats.Health > highestHP) { highestHP = distance; comb = combatant; finalCell = cell; }
+            }
+            if (comb == null) return false;
+            EffectedTargets[comb] = finalCell;
+
+            return true;
         }
         private bool SetAttackClosestEnemyWithinRange(Dictionary<ICombatant, TileCell> targetList)
         {
@@ -385,49 +406,112 @@ namespace PlayingAround.ActFolder
                     break;
                 case ActionTarget.StayAtMaxAttackRange:
                     if (!SetMovementPathToMaxAttackRange(currentCombatant, maxMovementAllowed, playerMap)) return false;
+                    currentCombatant.CurrentStats.MP = 0;
                     break;
             }
             return true;
         }
 
-        private bool SetMovementPathToMaxAttackRange(ICombatant currentCombatant, int maxMovementAllowed, Dictionary<ICombatant, TileCell> playerMap)
+        private bool SetMovementPathToMaxAttackRange(
+     ICombatant currentCombatant,
+     int maxMovementAllowed,
+     Dictionary<ICombatant, TileCell> playerMap)
         {
+            // 1) max attack range
             int maxDistanceFromEnemy = 0;
             foreach (var act in currentCombatant.ActController.ActsOrder)
-            {
                 if (act is AttackAct att)
-                {
-                    if (att.Attack.Range > maxDistanceFromEnemy)
-                    {
-                        maxDistanceFromEnemy = att.Attack.Range;
-                    }
-                }
-            }
-            bool movingCloser = false;
-            TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
+                    maxDistanceFromEnemy = Math.Max(maxDistanceFromEnemy, att.Attack.Range);
 
+            TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
+            if (currentCell == null) return false;
+
+            // 2) reachable, legal cells
             var inRangeMovementCells = TileManager.GetFloodFillTileWithinRange(currentCell, maxMovementAllowed);
+            //Take into consideration its own cell - potentially won't move
+            inRangeMovementCells.Add(currentCell);
             if (inRangeMovementCells == null || inRangeMovementCells.Count == 0) return false;
+
             var validCells = new List<TileCell>(inRangeMovementCells.Count);
             foreach (var cell in inRangeMovementCells)
-            {
                 if (cell != null && cell.IsWalkable && !cell.BlockedByCombatant)
                     validCells.Add(cell);
-            }
             if (validCells.Count == 0) return false;
-            
-            Dictionary<ICombatant, int> distanceMap = new Dictionary<ICombatant, int>();
-            foreach (var kvp in playerMap)
+
+            // 3) scoreboard: cell -> distance to closest enemy
+            var scoreBoard = new Dictionary<TileCell, int>(validCells.Count);
+            foreach (var cell in validCells)
             {
-                ICombatant combatant = kvp.Key;
-                TileCell cell = kvp.Value;
-                var path = GridMovement.GetCellToCellPath(currentCell.CenterPoint, cell.CenterPoint);
-                distanceMap[combatant] = path.Count();
+                int minDist = int.MaxValue;
+
+                foreach (var enemyCell in playerMap.Values)
+                {
+                    if (enemyCell == null) continue;
+
+                    int d = TileManager.CheckManhattanDistance(cell, enemyCell);
+
+                    if (d < minDist) minDist = d;
+                }
+                scoreBoard[cell] = (minDist == int.MaxValue) ? int.MaxValue : (minDist);
             }
-            foreach (var kvp in distanceMap)
+
+
+            // 4) best candidates near desired range
+            var finalOptions = new Dictionary<TileCell, int>();
+            var inRange = scoreBoard.Where(kv => kv.Value != int.MaxValue && kv.Value <= maxDistanceFromEnemy).ToList();
+            if (inRange.Count > 0)
             {
-                if (kvp.Value < maxDistanceFromEnemy)
+                int best = inRange.Max(kv => kv.Value);
+                foreach (var kv in inRange)
+                    if (kv.Value == best) finalOptions[kv.Key] = kv.Value;
             }
+            else
+            {
+                var outRange = scoreBoard.Where(kv => kv.Value != int.MaxValue && kv.Value > maxDistanceFromEnemy).ToList();
+                if (outRange.Count == 0) return false; // no reachable enemies from any candidate
+                int best = outRange.Min(kv => kv.Value); // closest outside range
+                foreach (var kv in outRange)
+                    if (kv.Value == best) finalOptions[kv.Key] = kv.Value;
+            }
+
+            if (finalOptions.Count == 0) return false;
+
+            const int UNREACHABLE_D = 100000; // big but avoids overflow with small enemy counts
+            TileCell destinationCell = null;
+            long bestSum = long.MinValue;
+
+            foreach (var kv in finalOptions)
+            {
+                var cell = kv.Key;
+                long sum = 0;
+
+                foreach (var enemyCell in playerMap.Values)
+                {
+                    if (enemyCell == null) continue;
+
+                    var p = GridMovement.GetCellToCellPath(cell.CenterPoint, enemyCell.CenterPoint);
+                    int d = (p == null || p.Count == 0) ? UNREACHABLE_D : p.Count;
+                    sum += d;
+                }
+
+                if (sum > bestSum)
+                {
+                    bestSum = sum;
+                    destinationCell = cell; // if equal, keep earlier (first wins)
+                }
+            }
+
+            if (destinationCell == null) return false;
+
+            // 6) build movement path, capped to maxMovementAllowed
+            var movePath = GridMovement.GetCellToCellPath(currentCell.CenterPoint, destinationCell.CenterPoint);
+            if (movePath.Contains(currentCell)) movePath.Remove(currentCell);
+            if (movePath == null || movePath.Count == 0) return false;
+
+            int steps = Math.Min(maxMovementAllowed, movePath.Count);
+            ActMovementCellPath = movePath.Take(steps).ToList();
+
+            return ActMovementCellPath.Count > 0;
         }
 
         private bool SetMovementPathAwayFromEnemy(
@@ -505,21 +589,24 @@ namespace PlayingAround.ActFolder
             ActMovementCellPath = bestPath;
             return true;
         }
-
-
-
         public bool SetMovementPathToClosestEnemy(ICombatant currentCombatant, int max, Dictionary<ICombatant, TileCell> playerMap)
         {
             TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
-            Dictionary<ICombatant, TileCell> playerControlledCells = playerMap;
+            List<TileCell> bestPath = FindClosestEnemy(currentCell, playerMap);
+
+            if (TileManager.IsNeighbor(bestPath[bestPath.Count - 1], currentCell))
+                return false;
+            if (bestPath.Count <= 0) return false;
+
+            ActMovementCellPath = bestPath.Count > max ? bestPath.Take(max).ToList() : bestPath;
+            return true;
+        }
+        public List<TileCell> FindClosestEnemy(TileCell currentCell, Dictionary<ICombatant, TileCell> playerMap)
+        {
             List<TileCell> bestPath = null;
             int shortestPathLength = 30;
-            foreach (var kvp in playerControlledCells)
+            foreach (var kvp in playerMap)
             {
-                if (TileManager.IsNeighbor(kvp.Value, currentCell))
-                    return false;
-                //already next to enemy
-
                 List<TileCell> path = GridMovement.GetCellToCellPath(currentCell.CenterPoint, kvp.Value.CenterPoint);
                 if (path.Count < shortestPathLength && path.Count > 0)
                 {
@@ -529,12 +616,7 @@ namespace PlayingAround.ActFolder
                     if (bestPath.Contains(currentCell)) bestPath.Remove(currentCell);
                 }
             }
-            if (bestPath.Count <= 0) return false;
-
-            ActMovementCellPath = bestPath.Count > max ? bestPath.Take(max).ToList() : bestPath;
-            return true;
-
-
+            return bestPath;
         }
         public override void ClearActParams()
         {

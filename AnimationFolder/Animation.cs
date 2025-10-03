@@ -17,7 +17,7 @@ namespace PlayingAround.AnimationFolder
         public float FrameDuration { get; private set; } // In seconds
         public bool IsIndefinite { get; private set; }
         public bool IsLooping { get; private set; } 
-        public Texture2D SpriteSheet { get; private set; }
+        public Texture2D SpriteSheet { get;  set; }
         public int FrameCount { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -96,6 +96,11 @@ namespace PlayingAround.AnimationFolder
         public void SetDrawPointPathOverride(List<Vector2> path)
         {
             OverrideTravelPath = path;
+        }
+
+        internal void FrameDurationOverride(float movementQuicknessOverride)
+        {
+           FrameDuration = movementQuicknessOverride;
         }
     }
 

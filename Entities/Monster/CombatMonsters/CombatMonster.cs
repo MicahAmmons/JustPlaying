@@ -206,17 +206,23 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 Vector2 targetPos = AttackAct.EffectedTargets.First().Key.MovementController.CurrentPos;
                 Vector2 direction = targetPos - currentPos;
                 direction.Normalize();
-                MovementController.SetAttackAnimation(direction);
+                if (MovementController.SetAttackAnimation(direction)) return;
                 SetAttackAnimationDrawPointOverride(AttackAct);
                 int frame = MovementController.AnimationManager.CurrentControllers.First().GetCurrentFrameIndex();
 
-                if (attack.AttackPerformedFrame <= frame)
+                if (attack.AttackPerformedFrame <= frame && !attack.AttackPerformedWhenFinished)
                 {
                     if (!AttackAct.Attack.IsFinished)
                     PerformAttack();
                 }
+                if (attack.AttackPerformedWhenFinished && MovementController.AnimationManager.IsFinished )
+                {
+                    if (!AttackAct.Attack.IsFinished)
+                        PerformAttack();
+                }
                 if (attack.IsFinished && MovementController.AnimationManager.IsFinished)
                 {
+
                     SpendActionPoint();
 
                     MovementController.SetCurrentAnimationStateToIdle();

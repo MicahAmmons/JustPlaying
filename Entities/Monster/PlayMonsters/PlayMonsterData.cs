@@ -8,6 +8,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
     {
          public float PauseDurationMax { get; set; } = 0;
          public float PauseDurationMin { get; set; }
+        public float? MovementQuicknessOverride { get; set; }
 
     }
 

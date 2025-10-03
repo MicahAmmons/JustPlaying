@@ -5,7 +5,7 @@
         {
           "Row": 1,
           "FrameCount": 51,
-          "FrameDurationMs": 100,
+          "FrameDurationMs": 50,
           "SpriteSheetName": "FireOozeWalkUp",
           "DefaultDirection": "Left",
           "FrameWidth": 164,
@@ -17,7 +17,7 @@
         {
           "Row": 1,
           "FrameCount": 48,
-          "FrameDurationMs": 100,
+          "FrameDurationMs": 50,
           "SpriteSheetName": "FireOozeWalkDown",
           "DefaultDirection": "Left",
           "FrameWidth": 206,
@@ -47,7 +47,7 @@
           "IsLooping": true,
           "FrameWidth": 32,
           "FrameHeight": 64,
-          "EndCyclePause": 0,
+          "StartCyclePause": 37,
           "IsDrawPointOverride": "StraightLineToTarget"
         }
       ],
@@ -73,7 +73,7 @@
           "IsLooping": true,
           "FrameWidth": 32,
           "FrameHeight": 64,
-          "EndCyclePause": 0,
+          "StartCyclePause": 37,
           "IsDrawPointOverride": "StraightLineToTarget"
         }
       ],

@@ -39,6 +39,7 @@ public enum ActionTarget
     Self,
     RandomEnemy,
     AwayFromEnemy,
+    HighestHP,
     StayAtMaxAttackRange
 }
 
