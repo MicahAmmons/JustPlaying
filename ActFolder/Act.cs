@@ -406,16 +406,12 @@ namespace PlayingAround.ActFolder
                     break;
                 case ActionTarget.StayAtMaxAttackRange:
                     if (!SetMovementPathToMaxAttackRange(currentCombatant, maxMovementAllowed, playerMap)) return false;
-                    currentCombatant.CurrentStats.MP = 0;
                     break;
             }
             return true;
         }
 
-        private bool SetMovementPathToMaxAttackRange(
-     ICombatant currentCombatant,
-     int maxMovementAllowed,
-     Dictionary<ICombatant, TileCell> playerMap)
+        private bool SetMovementPathToMaxAttackRange(ICombatant currentCombatant, int maxMovementAllowed, Dictionary<ICombatant, TileCell> playerMap)
         {
             // 1) max attack range
             int maxDistanceFromEnemy = 0;
@@ -426,16 +422,18 @@ namespace PlayingAround.ActFolder
             TileCell currentCell = TileManager.GetCell(currentCombatant.MovementController.CurrentPos);
             if (currentCell == null) return false;
 
+
             // 2) reachable, legal cells
             var inRangeMovementCells = TileManager.GetFloodFillTileWithinRange(currentCell, maxMovementAllowed);
-            //Take into consideration its own cell - potentially won't move
-            inRangeMovementCells.Add(currentCell);
+
             if (inRangeMovementCells == null || inRangeMovementCells.Count == 0) return false;
 
             var validCells = new List<TileCell>(inRangeMovementCells.Count);
             foreach (var cell in inRangeMovementCells)
                 if (cell != null && cell.IsWalkable && !cell.BlockedByCombatant)
                     validCells.Add(cell);
+            //Take into consideration its own cell - potentially won't move
+            validCells.Add(currentCell);
             if (validCells.Count == 0) return false;
 
             // 3) scoreboard: cell -> distance to closest enemy
@@ -449,12 +447,14 @@ namespace PlayingAround.ActFolder
                     if (enemyCell == null) continue;
 
                     int d = TileManager.CheckManhattanDistance(cell, enemyCell);
-
                     if (d < minDist) minDist = d;
                 }
                 scoreBoard[cell] = (minDist == int.MaxValue) ? int.MaxValue : (minDist);
             }
-
+            if (scoreBoard.TryGetValue(currentCell, out int value) && value == maxDistanceFromEnemy)
+            {
+                return false;
+            }
 
             // 4) best candidates near desired range
             var finalOptions = new Dictionary<TileCell, int>();
@@ -513,7 +513,6 @@ namespace PlayingAround.ActFolder
 
             return ActMovementCellPath.Count > 0;
         }
-
         private bool SetMovementPathAwayFromEnemy(
         ICombatant currentCombatant,
         int maxMovementAllowed,

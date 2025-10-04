@@ -30,6 +30,8 @@ namespace PlayingAround.AnimationFolder
         public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
         public bool HasStartingPause { get; private set; } = false;
         public bool RotatesTowardDirection { get; private set; } = false;
+        public bool OverrideDiamondDrawPoint { get; private set; } = false;
+        public OriginPoint OriginPoint { get; private set; }
         public int YOffset { get; private set; }
         public bool HoldUntilAllFinished { get; private set; }
 
@@ -80,7 +82,9 @@ namespace PlayingAround.AnimationFolder
             IsLooping = data.IsLooping;
             YOffset = data.YOffset;
             RotatesTowardDirection = data.RotatesTowardsDirection;
+            if (RotatesTowardDirection) OverrideDiamondDrawPoint = true;
             HoldUntilAllFinished = data.HoldUntilFinished;
+            OriginPoint = data.OriginPoint ?? OriginPoint.TopLeft;
             if (StartCyclePause > 0) { HasStartingPause = true; }
             if (data.IsDrawPointOverride != null) 
             { 
@@ -95,7 +99,6 @@ namespace PlayingAround.AnimationFolder
                 return Frames[Frames.Count - 1]; // fallback
             return Frames[index];
         }
-
         public void SetDrawPointOverride(Vector2 centerPoint)
         {
            DestinationPoint = centerPoint;
@@ -105,17 +108,14 @@ namespace PlayingAround.AnimationFolder
             OverrideTravelPath = new List<Vector2>(path);
             AnimationMovementDirection = OverrideTravelPath[OverrideTravelPath.Count - 1] - OverrideTravelPath[0];
         }
-
         internal void FrameDurationOverride(float movementQuicknessOverride)
         {
            FrameDuration = movementQuicknessOverride;
         }
-
         internal void ResetOverridePath()
         {
             OverrideTravelPath = null;
         }
-
         internal float GetRotation()
         {
             if (RotatesTowardDirection)
@@ -124,6 +124,63 @@ namespace PlayingAround.AnimationFolder
                 return 0f;
         }
 
+        internal Vector2 GetOrigin()
+        {
+            return GetOriginPoint();
+        }
+        private Vector2 GetOriginPoint()
+        {
+            float w = Width;
+            float h = Height;
+                switch (OriginPoint)
+                {
+                    case OriginPoint.TopLeft:
+                        return new Vector2(0, 0);
+
+                    case OriginPoint.TopMiddle:
+                        return new Vector2(w / 2f, 0);
+
+                    case OriginPoint.TopRight:
+                        return new Vector2(w, 0);
+
+                    case OriginPoint.MiddleLeft:
+                        return new Vector2(0, h / 2f);
+
+                    case OriginPoint.Middle:
+                        return new Vector2(w / 2f, h / 2f);
+
+                    case OriginPoint.MiddleRight:
+                        return new Vector2(w, h / 2f);
+
+                    case OriginPoint.BottomLeft:
+                        return new Vector2(0, h);
+
+                    case OriginPoint.BottomMiddle:
+                        return new Vector2(w / 2f, h);
+
+                    case OriginPoint.BottomRight:
+                        return new Vector2(w, h);
+
+                    default:
+                        return Vector2.Zero;
+                }
+            }
+        
+
     }
 
+}
+
+
+public enum OriginPoint
+{
+    TopLeft,
+    TopMiddle,
+    TopRight,
+    MiddleLeft,
+    Middle,
+    MiddleRight,
+    BottomLeft,
+    BottomMiddle,
+    BottomRight
 }

@@ -130,6 +130,9 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void DrawTexture(SpriteBatch spriteBatch)
         {
             if (MovementController.AnimationManager.CurrentControllers == null) return;
+            EnsureDebugPixel(spriteBatch.GraphicsDevice);
+
+
             bool allAnimationIsFinished = MovementController.AnimationManager.IsFinished;
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
@@ -149,7 +152,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 int height = animation.Height;
                 int yOffset = animation.YOffset;
 
-                var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
+                var pos = animation.OverrideDiamondDrawPoint
+                    ? drawPoint
+                    : TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
+
 
                 Rectangle dest = new Rectangle(
                   (int)pos.X,
@@ -166,13 +172,12 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                 if (animation.FadeEffect)
                     frameFade = 1 - contr.FadeMultiplier;
 
-                float rotation =  animation.GetRotation();
-                Vector2 origin = Vector2.Zero;
-                if (animation.RotatesTowardDirection)
-                { 
-                    origin = new Vector2(source.Width / 2f, source.Height / 2f);
+                float rotation = animation.GetRotation();
+                Vector2 origin = animation.GetOrigin();
+                if (origin != Vector2.Zero)
+                {
+                    int x = 3;
                 }
-
                 SpriteEffects flip = flipHorizontal
                          ? SpriteEffects.FlipHorizontally
                          : SpriteEffects.None;
@@ -184,7 +189,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     source,
                     DrawSpecifics.IsFlashingRed ? Color.Red * frameFade : Color.White * frameFade,
                     rotation,                  // rotation
-                    origin  ,      // origin
+                    origin,      // origin
                     flip,                // 👈 flip goes here
                     0f                   // layerDepth
                 );
@@ -202,8 +207,77 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                          0f
 );
                 }
+                    if (DEBUG_OUTLINE)
+                    {
+                        // top = Red, right = Green, bottom+left = Blue
+                        DrawRectOutline(
+                            spriteBatch,
+                            dest,
+                            rotation,
+                            origin,
+                            source,
+                            flip,
+                            topColor: Color.Red,
+                            rightColor: Color.Green,
+                            bottomColor: Color.Blue,
+                            leftColor: Color.Blue
+                        );
+                    }
+                }
             }
+        
+        // Put these at class scope
+        private static Texture2D _debugPixel;
+        private const bool DEBUG_OUTLINE = true;
+
+        private void EnsureDebugPixel(GraphicsDevice gd)
+        {
+            if (_debugPixel != null) return;
+            _debugPixel = new Texture2D(gd, 1, 1);
+            _debugPixel.SetData(new[] { Color.White });
         }
+
+        private void DrawRectOutline(
+            SpriteBatch sb,
+            Rectangle dest,
+            float rotation,
+            Vector2 originForSource,
+            Rectangle sourceForSprite,
+            SpriteEffects flip,
+            Color topColor,
+            Color rightColor,
+            Color bottomColor,
+            Color leftColor)
+        {
+            // We draw a 1x1 texture stretched into 4 thin rectangles that share the SAME
+            // rotation/origin/flip as your sprite so the outline tracks perfectly.
+            // IMPORTANT: SpriteBatch origin is in *source-pixel* units.
+            // Your sprite uses `originForSource` in units of `sourceForSprite`.
+            // Our debug pixel's source is 1x1, so we normalize the origin to keep the same pivot.
+            Vector2 originForPixel = Vector2.Zero;
+            if (sourceForSprite.Width != 0 && sourceForSprite.Height != 0)
+            {
+                originForPixel = new Vector2(
+                    originForSource.X / sourceForSprite.Width,
+                    originForSource.Y / sourceForSprite.Height
+                );
+            }
+
+            // 1px thickness (you can bump this to 2–3 if it's too thin on high-DPI).
+            const int t = 1;
+
+            var top = new Rectangle(dest.X, dest.Y, dest.Width, t);
+            var right = new Rectangle(dest.Right - t, dest.Y, t, dest.Height);
+            var bottom = new Rectangle(dest.X, dest.Bottom - t, dest.Width, t);
+            var left = new Rectangle(dest.X, dest.Y, t, dest.Height);
+
+            // Draw order: left/Bottom first so top/right are most visible if overlapping
+            sb.Draw(_debugPixel, left, null, leftColor, rotation, originForPixel, flip, 0f);
+            sb.Draw(_debugPixel, bottom, null, bottomColor, rotation, originForPixel, flip, 0f);
+            sb.Draw(_debugPixel, top, null, topColor, rotation, originForPixel, flip, 0f);
+            sb.Draw(_debugPixel, right, null, rightColor, rotation, originForPixel, flip, 0f);
+        }
+
         public void DrawEntityCellPreview(SpriteBatch spriteBatch, TileCell cell)
         {
             Vector2 drawPoint = TileManager.OffSetFromCenterOfDiamond(cell.CenterPoint, DrawSpecifics.Width, DrawSpecifics.Height);

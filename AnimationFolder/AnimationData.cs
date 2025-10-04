@@ -34,5 +34,6 @@ namespace PlayingAround.AnimationFolder
         public int YOffset { get; set; }
         public bool HoldUntilFinished { get; set; }
         public bool RotatesTowardsDirection { get;  set; }
+        public OriginPoint? OriginPoint { get; set; }
     }
 }
