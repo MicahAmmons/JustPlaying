@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using static CombatStateMachine;
 
@@ -82,6 +83,10 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             };
 
             ActController = new ActController(data.ActionOrder);
+            foreach (var act in ActController.ActsOrder)
+            {
+                act._combatant = this;
+            }
             UniqueId = data.UniqueId;
             BaseStats.Resistances = ResistanceManager.GetResistances(ElementType);
             DrawSpecifics = data.DrawSpecifics;
@@ -125,46 +130,61 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public void DrawTexture(SpriteBatch spriteBatch)
         {
             if (MovementController.AnimationManager.CurrentControllers == null) return;
+            bool allAnimationIsFinished = MovementController.AnimationManager.IsFinished;
             foreach (var contr in MovementController.AnimationManager.CurrentControllers)
             {
                 if (contr.Animation == null) continue;
                 if (contr.IsStartingPause) continue;
-                if (contr.IsFinished && !contr.Animation.IsLooping) continue;
+                if (contr.IsFinished && !contr.Animation.IsLooping && !contr.Animation.HoldUntilAllFinished) continue;
 
                 Animation animation = contr.Animation;
                 bool flipHorizontal = MovementController.FlipHorizontally(animation.DefaultDirection);
-                Vector2 drawPoint = MovementController.DrawPoint;
-                int yOffset = animation.YOffset;
-                if (contr.Animation.DrawPointOverride != null)
-                {
-                    drawPoint= (Vector2)contr.Animation.DrawPointOverride;
-                }
+                if (animation.RotatesTowardDirection) flipHorizontal = false;
+
+                Vector2 drawPoint = contr.Animation.DrawPointOverride != null
+                    ? (Vector2)contr.Animation.DrawPointOverride
+                    : MovementController.DrawPoint;
+
                 int width = animation.Width;
                 int height = animation.Height;
+                int yOffset = animation.YOffset;
+
                 var pos = TileManager.OffSetFromCenterOfDiamond(drawPoint, width, height);
+
                 Rectangle dest = new Rectangle(
-                    (int)pos.X,
-                    (int)pos.Y - yOffset,
-                    width,
-                    height
-                );
+                  (int)pos.X,
+                  (int)pos.Y - yOffset,
+                  width,
+                  height
+              );
+
                 Rectangle source = contr.GetCurrentFrame();
                 Texture2D texture = animation.SpriteSheet;
 
                 float frameFade = 1;
+
                 if (animation.FadeEffect)
                     frameFade = 1 - contr.FadeMultiplier;
+
+                float rotation =  animation.GetRotation();
+                Vector2 origin = Vector2.Zero;
+                if (animation.RotatesTowardDirection)
+                { 
+                    origin = new Vector2(source.Width / 2f, source.Height / 2f);
+                }
+
                 SpriteEffects flip = flipHorizontal
-                     ? SpriteEffects.FlipHorizontally
-                     : SpriteEffects.None;
+                         ? SpriteEffects.FlipHorizontally
+                         : SpriteEffects.None;
+
 
                 spriteBatch.Draw(
                     texture,
                     dest,
                     source,
                     DrawSpecifics.IsFlashingRed ? Color.Red * frameFade : Color.White * frameFade,
-                    0f,                  // rotation
-                    Vector2.Zero,        // origin
+                    rotation,                  // rotation
+                    origin  ,      // origin
                     flip,                // 👈 flip goes here
                     0f                   // layerDepth
                 );
@@ -315,7 +335,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                     case VEDrawLocation.StraightLineToTarget:
                         foreach (var cell in act.EffectedTargets)
                         {
-                            var vectorPath = GridMovement.BuildStraightLinePath(act._combatant.MovementController.CurrentPos, cell.Value.CenterPoint);
+                            if (contr.Animation.OverrideTravelPath != null) continue;
+                            contr.Animation.SetDrawPointPathOverride(GridMovement.BuildStraightLinePath(act._combatant.MovementController.CurrentPos, cell.Value.CenterPoint));
                         }
                         break;
                 }

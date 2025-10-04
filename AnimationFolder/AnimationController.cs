@@ -131,6 +131,7 @@ namespace PlayingAround.AnimationFolder
             _direction = 1;
             _startCyclePauseTimer = 0f;
             IsStartingPause = true;
+            _animation.ResetOverridePath();
 
             IsFinished = _animation.IsIndefinite;
         }
@@ -193,7 +194,7 @@ namespace PlayingAround.AnimationFolder
                  if (InPause()) return;
 
                 _currentFrameIndex = 0;
-                if (_animation.HasStartingPause) { Reset(); }
+                if (_animation.HasStartingPause & _animation.IsIndefinite) { Reset(); }
             }
 
         }
@@ -289,12 +290,10 @@ namespace PlayingAround.AnimationFolder
             int n = Math.Min(_animation.FrameCount - 1, _currentFrameIndex + 1);
             return _animation.GetFrame(n);
         }
-
         public int GetCurrentFrameIndex()
         {
             return _currentFrameIndex;
         }
-
         internal void FrameDurationOverride(float movementQuicknessOverride)
         {
             _frameDurationOverride = movementQuicknessOverride;

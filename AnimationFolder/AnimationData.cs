@@ -32,5 +32,7 @@ namespace PlayingAround.AnimationFolder
         public Direction DefaultDirection { get; set; }
         public AttackName? AttackName { get; set; } = null;
         public int YOffset { get; set; }
+        public bool HoldUntilFinished { get; set; }
+        public bool RotatesTowardsDirection { get;  set; }
     }
 }

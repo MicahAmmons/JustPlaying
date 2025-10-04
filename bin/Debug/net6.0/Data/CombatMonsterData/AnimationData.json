@@ -34,8 +34,8 @@
           "SpriteSheetName": "FireOozeLavaBall",
           "DefaultDirection": "Left",
           "FrameWidth": 32,
-          "FrameHeight": 64,
-          "EndCyclePause": 0
+          "HoldUntilFInished": true,
+          "FrameHeight": 64
         },
         {
           "AttackName": "LavaBall",
@@ -45,10 +45,12 @@
           "SpriteSheetName": "FireOozeLavaBallVE",
           "DefaultDirection": "Right",
           "IsLooping": true,
-          "FrameWidth": 32,
-          "FrameHeight": 64,
+          "FrameWidth": 24,
+          "FrameHeight": 16,
           "StartCyclePause": 37,
-          "IsDrawPointOverride": "StraightLineToTarget"
+          "IsDrawPointOverride": "StraightLineToTarget",
+          "RotatesTowardsDirection": true,
+          "YOffset": 8
         }
       ],
       "AttackDown": [
@@ -59,6 +61,7 @@
           "FrameDurationMs": 100,
           "SpriteSheetName": "FireOozeLavaBall",
           "DefaultDirection": "Left",
+          "HoldUntilFInished": true,
           "FrameWidth": 32,
           "FrameHeight": 64,
           "EndCyclePause": 0
@@ -71,10 +74,13 @@
           "SpriteSheetName": "FireOozeLavaBallVE",
           "DefaultDirection": "Right",
           "IsLooping": true,
-          "FrameWidth": 32,
-          "FrameHeight": 64,
+          "FrameWidth": 24,
+          "FrameHeight": 16,
           "StartCyclePause": 37,
-          "IsDrawPointOverride": "StraightLineToTarget"
+          "IsDrawPointOverride": "StraightLineToTarget",
+          "RotatesTowardsDirection": true,
+          "YOffset": 8
+
         }
       ],
       "Idle": [

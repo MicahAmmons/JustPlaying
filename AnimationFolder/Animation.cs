@@ -29,10 +29,15 @@ namespace PlayingAround.AnimationFolder
         public int StartCyclePause { get; private set; }
         public VEDrawLocation? IsDrawPointOverride { get; private set; } = null;
         public bool HasStartingPause { get; private set; } = false;
+        public bool RotatesTowardDirection { get; private set; } = false;
         public int YOffset { get; private set; }
+        public bool HoldUntilAllFinished { get; private set; }
+
+
         public Vector2? DrawPointOverride;
         public Vector2 DestinationPoint;
-        public List<Vector2> OverrideTravelPath = new List<Vector2>();
+        public Vector2 AnimationMovementDirection;
+        public List<Vector2> OverrideTravelPath = null;
 
 
 
@@ -74,6 +79,8 @@ namespace PlayingAround.AnimationFolder
             StartCyclePause = data.StartCyclePause;
             IsLooping = data.IsLooping;
             YOffset = data.YOffset;
+            RotatesTowardDirection = data.RotatesTowardsDirection;
+            HoldUntilAllFinished = data.HoldUntilFinished;
             if (StartCyclePause > 0) { HasStartingPause = true; }
             if (data.IsDrawPointOverride != null) 
             { 
@@ -95,13 +102,28 @@ namespace PlayingAround.AnimationFolder
         }
         public void SetDrawPointPathOverride(List<Vector2> path)
         {
-            OverrideTravelPath = path;
+            OverrideTravelPath = new List<Vector2>(path);
+            AnimationMovementDirection = OverrideTravelPath[OverrideTravelPath.Count - 1] - OverrideTravelPath[0];
         }
 
         internal void FrameDurationOverride(float movementQuicknessOverride)
         {
            FrameDuration = movementQuicknessOverride;
         }
+
+        internal void ResetOverridePath()
+        {
+            OverrideTravelPath = null;
+        }
+
+        internal float GetRotation()
+        {
+            if (RotatesTowardDirection)
+                return MathF.Atan2(AnimationMovementDirection.Y, AnimationMovementDirection.X);
+            else
+                return 0f;
+        }
+
     }
 
 }
