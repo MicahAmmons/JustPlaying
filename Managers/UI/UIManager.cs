@@ -33,9 +33,9 @@ namespace PlayingAround.Managers.UI
 
 
         // 🆕 Moved rectangles to static fields
-        private static Rectangle _playerStatsRect = new Rectangle(1600, 880, 200, 100);
+        private static Rectangle _playerStatsRect = new Rectangle(1700, 880, 200, 100);
         private static Rectangle _summonRect = new Rectangle(
-            1600 - 200 - 10,  // 10px gap left
+            1700 - 200 - 10,  // 10px gap left
             880,
             200,
             100
@@ -50,7 +50,7 @@ namespace PlayingAround.Managers.UI
         private static int _overlayMarginLeft = 100;
         private static int _overlayMarginTop = 200;
         private static int _overlayMarginBottom = 200;
-        private static int _overLayMarginRight = 800;
+        private static int _overLayMarginRight = 1000;
 
 
 

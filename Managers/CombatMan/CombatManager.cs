@@ -456,9 +456,10 @@ namespace PlayingAround.Managers.CombatMan
             UpdateMouseWhereabouts();
             HandleLocationSelectionInput();
             UpdateCombatantCount();
+            UpdateMonsterCellMap();
             ToggleIsDead(); // toggles ISDead as well as clears aspects
             UpdateTurnOrder();
-            UpdateMonsterCellMap();
+
         }
         private void Endturn()
         {

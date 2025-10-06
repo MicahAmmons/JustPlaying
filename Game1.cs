@@ -67,7 +67,7 @@ namespace PlayingAround
             AssetManager.Initialize(Content);
             JukeBoxManager.InitializeJukeBox();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            DebugBugger.LoadContent(GraphicsDevice);
+            DebugBugger.LoadContent(GraphicsDevice, _spriteBatch);
             DialogueLibrary.LoadContent();
             SettingsSuper.LoadContent();
             TitleScreenManager.LoadContent();

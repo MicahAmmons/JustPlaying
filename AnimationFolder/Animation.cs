@@ -101,7 +101,7 @@ namespace PlayingAround.AnimationFolder
         }
         public void SetDrawPointOverride(Vector2 centerPoint)
         {
-           DestinationPoint = centerPoint;
+           DrawPointOverride = centerPoint;
         }
         public void SetDrawPointPathOverride(List<Vector2> path)
         {

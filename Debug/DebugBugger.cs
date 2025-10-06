@@ -27,6 +27,7 @@ namespace PlayingAround.Debug
         private static bool showDebugOutline = false;
         private static bool showTileCellOutlines = false;
         private static bool showDebugLines = false;
+        private static bool _animationDebugHitbox = false;
         private static KeyboardState previousKeyboardState; // Used to toggle debug info
         private static SpriteFont _mainFont;
         public static bool EnableLogging { get; set; } = true;
@@ -42,11 +43,11 @@ namespace PlayingAround.Debug
         private static Texture2D _diamondHighlightTexture { get; set; }
         private static GraphicsDevice _graphics;
         private static TileCell _currentCellHover;
+        private static SpriteBatch _sb;
 
 
 
-
-        public static void LoadContent(GraphicsDevice graphics)
+        public static void LoadContent(GraphicsDevice graphics, SpriteBatch sb)
         {
             _graphics = graphics;
             debugPixel = new Texture2D(graphics, 1, 1);
@@ -55,7 +56,7 @@ namespace PlayingAround.Debug
             _mainFont = AssetManager.GetFont("mainFont");
             int screenHeight = ViewportManager.ScreenHeight;
             debugBoxPosition = new Vector2(debugBoxMargin, screenHeight - debugBoxMargin);
-
+            _sb = sb;
 
 
         }
@@ -88,6 +89,8 @@ namespace PlayingAround.Debug
         {
             if (InputManager.IsKeyPressed(Keys.F3))
                 showDebugOutline = !showDebugOutline;
+            if (InputManager.IsKeyPressed(Keys.F2))
+                _animationDebugHitbox = !_animationDebugHitbox;
         }
         private static void ToggleCellGridLines()
         {
@@ -102,6 +105,38 @@ namespace PlayingAround.Debug
             DrawDebugLines(spriteBatch);
             DrawCellCenterDots(spriteBatch);
 
+        }
+        public static void DrawAnimationDebugOutLines(Rectangle dest,
+            float rotation,
+            Vector2 originForSource,
+            Rectangle sourceForSprite,
+            SpriteEffects flip)
+        {
+            Color topColor = ColorPalette.LightColor;
+            Color rightColor = ColorPalette.LightColor;
+            Color bottomColor = ColorPalette.DarkColor;
+            Color leftColor = ColorPalette.DarkColor;
+            Texture2D debugPixel = DebugBugger.BorrowDebugPixel();
+            Vector2 originForPixel = Vector2.Zero;
+            if (sourceForSprite.Width != 0 && sourceForSprite.Height != 0)
+            {
+                originForPixel = new Vector2(
+                    originForSource.X / sourceForSprite.Width,
+                    originForSource.Y / sourceForSprite.Height
+                );
+            }
+            const int t = 2;
+
+            var top = new Rectangle(dest.X, dest.Y, dest.Width, t);
+            var right = new Rectangle(dest.Right - t, dest.Y, t, dest.Height);
+            var bottom = new Rectangle(dest.X, dest.Bottom - t, dest.Width, t);
+            var left = new Rectangle(dest.X, dest.Y, t, dest.Height);
+
+            // Draw order: left/Bottom first so top/right are most visible if overlapping
+            _sb.Draw(debugPixel, left, null, leftColor, rotation, originForPixel, flip, 0f);
+            _sb.Draw(debugPixel, bottom, null, bottomColor, rotation, originForPixel, flip, 0f);
+            _sb.Draw(debugPixel, top, null, topColor, rotation, originForPixel, flip, 0f);
+            _sb.Draw(debugPixel, right, null, rightColor, rotation, originForPixel, flip, 0f);
         }
         private static void DrawDebugLines(SpriteBatch spriteBatch)
         {
@@ -132,7 +167,14 @@ namespace PlayingAround.Debug
             }
         }
       
-
+        public static bool ShowAnimationDebug()
+        {
+            return _animationDebugHitbox;
+        }
+        public static Texture2D BorrowDebugPixel()
+        {
+            return debugPixel;
+        }
         public static void DrawTileCellOutlines(SpriteBatch spriteBatch, Texture2D debugPixel)
         {
             foreach (var cell in _currentMapTile.AllValidCells)

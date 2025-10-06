@@ -19,7 +19,8 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public string Aspect { get; set; } = null;
         public List<CombatMonsterType> TargetType { get; set; }
         public ElementType ElementType { get; set; }
-        public int AttackPerformedFrame { get; set; }
+        public int AttackPerformedUpFrame { get; set; }
+        public int AttackPerformedDownFrame { get; set; }
         public bool AttackPerformedWhenFinished { get; set; } = false;
         public AnimationState AttackUpAnimation { get; set; }
         public AnimationState AttackDownAnimation { get; set; }

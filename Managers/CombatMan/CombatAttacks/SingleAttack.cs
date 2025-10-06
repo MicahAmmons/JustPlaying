@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.ActFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
@@ -24,7 +25,8 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
         public List<CombatMonsterType> TargetType { get; set; } = new List<CombatMonsterType>();
         public ElementType ElementDamage { get; set; } = ElementType.None;
         public bool AttackPerformedWhenFinished {  get; set; }
-        public int AttackPerformedFrame { get; set; }
+        public int AttackPerformedDownFrame { get; set; }
+        public int AttackPerformedUpFrame { get; set; }
         public AnimationState AttackUpAnimation { get; set; }
         public AnimationState AttackDownAnimation { get; set; }
         public AttVisualEffectDetails VE { get; set; }
@@ -39,7 +41,8 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
             Aspect = data.Aspect;
             MinDamage = data.BaseDamageMin;
             MaxDamage = data.BaseDamageMax;
-            AttackPerformedFrame = data.AttackPerformedFrame;
+            AttackPerformedDownFrame = data.AttackPerformedDownFrame;
+            AttackPerformedUpFrame = data.AttackPerformedUpFrame;
             AttackUpAnimation = data.AttackUpAnimation;
             AttackDownAnimation = data.AttackDownAnimation;
             AttackPerformedWhenFinished = data.AttackPerformedWhenFinished;
@@ -52,6 +55,12 @@ namespace PlayingAround.Managers.CombatMan.CombatAttacks
                 }
             }
         }
+
+        internal int AttackPerformedFrame(Vector2 dir)
+        {
+            return dir.Y < 0 ? AttackPerformedUpFrame : AttackPerformedDownFrame;
+        }
+
     }
 
 }

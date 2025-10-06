@@ -22,7 +22,8 @@
           "BaseDamageMax": 3,
           "Range": 1,
           "ElementType": "Ice",
-          "AttackPerformedFrame": 15,
+          "AttackPerformedUpFrame": 34,
+          "AttackPerformedDownFrame": 29,
           "AttackUpAnimation": "AttackUp",
           "AttackDownAnimation": "AttackDown"
         }
