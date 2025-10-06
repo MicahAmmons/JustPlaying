@@ -342,7 +342,8 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
                         foreach (var cell in act.EffectedTargets)
                         {
                             if (contr.Animation.OverrideTravelPath != null) continue;
-                            contr.Animation.SetDrawPointPathOverride(GridMovement.BuildStraightLinePath(act._combatant.MovementController.CurrentPos, cell.Value.CenterPoint));
+                            bool all = true;
+                            contr.Animation.SetDrawPointPathOverride(GridMovement.BuildStraightLinePath(act._combatant.MovementController.CurrentPos, cell.Value.CenterPoint, all));
                         }
                         break;
                 }

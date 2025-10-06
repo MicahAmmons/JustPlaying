@@ -73,7 +73,7 @@ namespace PlayingAround.Entities.Player
                 BaseStats = new BaseCombatStats()
                 {
                     MP = 6,
-                    AP = 2,
+                    AP = 10,
                     Health = 10,
                     Initiative = 5
                 },

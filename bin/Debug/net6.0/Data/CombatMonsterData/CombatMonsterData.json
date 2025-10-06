@@ -6,7 +6,7 @@
       "MP": 4,
       "AP": 2,
       "Health": 6,
-      "Initiative": 2
+      "Initiative": 20
     },
     "AnimationData": "FrostOoze",
    
@@ -61,8 +61,9 @@
           "BaseDamageMin": 1,
           "BaseDamageMax": 1,
           "Range": 6,
+          "AttackPerformedUpFrame": 42,
+          "AttackPerformedDownFrame": 42,
           "ElementType": "Earth",
-          "AttackPerformedFrame": 42,
           "AttackUpAnimation": "AttackUp",
           "AttackDownAnimation": "AttackDown"
         }
@@ -95,7 +96,7 @@
           "BaseDamageMax": 1,
           "Range": 6,
           "ElementType": "Fire",
-          "AttackPerformedWhenFinished" :true,
+          "AttackPerformedWhenFinished": true,
           "AttackUpAnimation": "AttackUp",
           "AttackDownAnimation": "AttackDown"
         }
