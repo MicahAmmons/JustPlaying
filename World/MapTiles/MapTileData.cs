@@ -30,6 +30,7 @@ namespace PlayingAround.Game.Map
         [JsonPropertyName("totalSpawns")] public int TotalMonsterSpawns { get; set; }
         [JsonPropertyName("tileHighlights")] public TileCellHighlightData TileHighlightData { get; set; }
         [JsonPropertyName("backgroundColor")] public string BackgroundColor {  get; set; }
+        
 
 
     }

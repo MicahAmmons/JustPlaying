@@ -6,8 +6,8 @@
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "CurrentPosX": 1220,
-    "CurrentPosY": 900,
+    "CurrentPosX": 800,
+    "CurrentPosY": 600,
     "Health": 8,
     "AnimationData":"FrostOoze" 
   },

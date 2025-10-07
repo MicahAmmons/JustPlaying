@@ -18,7 +18,7 @@ namespace PlayingAround.Smoke
         private static readonly List<CloudPulseController> _pulseClouds = new List<CloudPulseController>();
         private static readonly Random _rng = new Random();
 
-        private static readonly int[] _sizeOptions = {  150, 200, 250, 300, 350 }; 
+        private static readonly int[] _sizeOptions = {  150, 200, 250, 300, 350, 450, 550 }; 
         private static readonly Color[] _cloudPalette = new[]
         {
             ColorPalette.Acid,

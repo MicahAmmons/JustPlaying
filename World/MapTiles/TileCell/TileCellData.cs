@@ -14,8 +14,8 @@ public class TileCellData
     [JsonPropertyName("behindOverlay")] public string? BehindOverlay { get; set; }
     [JsonPropertyName("frontOverlay")] public string? FrontOverlay { get; set; }
     [JsonPropertyName("npc")] public string? NPCName { get; set; }
+    [JsonPropertyName("trigger")] public string? TriggerName { get; set; }
     [JsonPropertyName("monster")] public List<string?> Monsters { get; set; }
-    [JsonPropertyName("trigger")] public string? Trigger { get; set; }
     [JsonPropertyName("nextTileCell")] public NextTileData NextTile { get; set; }
     [JsonPropertyName("staticBackGroundTexture")] public string StaticBackGroundTexture {  get; set; }
     [JsonIgnore] public bool CanSpawn => Walkable && NextTile == null;

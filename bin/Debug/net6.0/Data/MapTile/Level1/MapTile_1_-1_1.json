@@ -1,0 +1,5027 @@
+{
+  "gridX": 1,
+  "gridY": -1,
+  "gridZ": 1,
+  "buildBackground": [ "1_-1_1" ],
+  "monsters": [],
+  "backgroundColor": "SkyBlue",
+  "backgroundSmokeTexture": {
+    "Color": "White",
+    "Frequency": [ 1.5, 1.5 ],
+    "Speed": [ 0.19, 0.19 ],
+    "DistortAmount": 0.035,
+    "Opacity": 1
+  },
+  "tileHighlights": {
+    "invalidTarget": {
+      "color": "Red",
+      "fade": 0.35
+    },
+    "validTarget": {
+      "color": "White",
+      "fade": 0.9
+    },
+    "walkable": {
+      "color": "Green",
+      "fade": 0.6
+    },
+    "playerStartable": {
+      "color": "Blue",
+      "fade": 0.8
+    },
+    "monsterStartable": {
+      "color": "Purple",
+      "fade": 0.8
+    }
+  },
+  "obstacles": [],
+  "difficulty": 0,
+  "totalSpawns": 0,
+
+
+  "cells": [
+    {
+      "x": 0,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 10,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 26,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 0,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 11,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 13,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 21,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 23,
+      "y": 1,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      }
+    },
+    {
+      "x": 25,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 1,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 2,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 3,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 3,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 4,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 4,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 5,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 5,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 5,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 5,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 5,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 6,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 6,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 6,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 6,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 7,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 7,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 7,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 7,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 8,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 8,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 8,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 8,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 9,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 9,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 9,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 9,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 9,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 9,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 10,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 10,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 11,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 11,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 12,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 12,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 13,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 13,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 14,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 14,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 15,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 15,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 15,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 15,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 15,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 16,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 16,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 16,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 16,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 16,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 17,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 17,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 18,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 18,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 18,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 3,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 19,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 0,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 2,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 20,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 20,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 20,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 1,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 3,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 21,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 21,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 21,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 21,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 21,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 0,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 2,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 22,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 22,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 1,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 3,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 23,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 23,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 0,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 0,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 2,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 24,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 24,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": {
+        "x": 2,
+        "y": -1,
+        "z": 1
+      }
+    },
+    {
+      "x": 1,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 25,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 25,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 25,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 25,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 26,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 26,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 26,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 27,
+      "walkable": true,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 27,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 28,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 29,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 30,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 31,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 32,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 1,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 3,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 5,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 7,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 9,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 11,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 13,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 15,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 17,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 19,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 21,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 23,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 25,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 27,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 29,
+      "y": 33,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 0,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 2,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 4,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 6,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 8,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 10,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 12,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 14,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 16,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 18,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 20,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 22,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 24,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 26,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 28,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    },
+    {
+      "x": 30,
+      "y": 34,
+      "walkable": false,
+      "monsterSpawnable": false,
+      "playerSpawnable": false,
+      "playMonsterSpawnable": false,
+      "nextTileCell": null
+    }
+  ]
+}

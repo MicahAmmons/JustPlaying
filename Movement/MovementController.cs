@@ -8,6 +8,7 @@ using PlayingAround.Interfaces;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Movement;
+using PlayingAround.Managers.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -243,13 +244,23 @@ namespace PlayingAround.Movement
                 if (DestinationPoint != null)
                 {
                 CurrentlyMoving();
-                List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)DestinationPoint);
+                List<Vector2> cellPath = GridMovement.BuildVectorPath(CurrentPos, (Vector2)DestinationPoint);
+               // List<Vector2> cellPath = GridMovement.BuildStraightLinePath(CurrentPos, (Vector2)DestinationPoint);
                     DestinationPoint = null;
                     if (cellPath == null || cellPath.Count == 0) // Abort early if path is empty
                         return;
                     if (cellPath[0] == CurrentPos) // Remove CurrentPos if it's the first point in the path
                         cellPath.RemoveAt(0);
-                    if (cellPath.Count == 0) // All points were removed, nothing left to move to
+                for (int i = 0; i < cellPath.Count; i++)
+                {
+                    var cell = TileManager.GetCell(cellPath[i]);
+                    if (cell == null || !cell.IsWalkable)
+                    {
+                        cellPath.RemoveRange(i, cellPath.Count - i);
+                        break;
+                    }
+                }
+                if (cellPath.Count == 0) // All points were removed, nothing left to move to
                         return;
                     VectorMovePath = cellPath;
                 }          

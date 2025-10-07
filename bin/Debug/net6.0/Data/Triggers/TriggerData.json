@@ -1,45 +1,59 @@
 {
-  "GraveDigging": {
-    "Effects": {
-        "Type": "NotificationText",
-        "Stages": [
-          {
-            "Id": "1",
-            "Condition": [
-              {
-                "Type": "ItemNotHeld",
-                "ItemName": "Shovel"
-              }
-            ],
-            "Effect": [
-              {
-                "Type": "NotificationText",
-                "Text": "Your feet sink ever so slightly into the soft earth. Perhaps you could dig deeper..."
-              }
-            ]
-          },
-          {
-            "Id": "2",
-            "Condition": [
-              {
-                "Type": "ItemHeld",
-                "ItemName": "Shovel"
-              }
-            ],
-            "Effect": [
-              {
-                "Type": "NotificationText",
-                "Text": "Press F to dig"
-              },
-              {
-                "Type": "KeyInput",
-                "Key" :"F"
-              }
-              
-            ]
-          }
+  "PathToLevel2": {
+    "TriggerNodes": [
+      {
+        "Conditions": [
+          [
+            {
+              "Type": "KeyPressed",
+              "Key": "F"
+            },
+            {
+              "Type": "AspectObtained",
+              "AspectName": "RockSkin"
+            }
+          ]
+        ],
+        "Outcomes": [
+          [
+            {
+              "Type": "AdvanceLevels",
+              "Level" : 2
+            }
+          ]
         ]
-      
-    }
+      },
+      {
+        "Conditions": [
+          [
+            {
+              "Type": "AspectObtained",
+              "AspectName": "RockSkin"
+            }
+          ]
+        ],
+        "Outcomes": [
+          [
+            {
+              "Type": "NotificationText",
+              "Text": "The Wind Blows strongly... Press F to apply the Aspect of the Rock-it"
+            }
+          ]
+        ]
+      },
+      {
+        "Conditions": [
+          []
+        ],
+        "Outcomes": [
+          [
+            {
+              "Type": "NotificationText",
+              "Text": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
+            }
+          ]
+        ]
+      }
+    ]
   }
 }

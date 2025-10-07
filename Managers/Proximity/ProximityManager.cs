@@ -6,6 +6,7 @@ using PlayingAround.Game.Map;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace PlayingAround.Managers.Proximity
         private static List<NPC> _currentNPCs => TileManager.CurrentMapTile.NPCs;
         private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         private static Dictionary<Vector2, NextTileData> _currentNextTiles => TileManager.CurrentMapTile.NextTileMap;
-
+        private static Dictionary<TileCell, Trigger> _currentTriggerCells => TileManager.CurrentMapTile.TriggerCells;
+        private static List<Trigger> _triggersInRangeCurrently = new List<Trigger>();   
         private static Vector2 _playerCurrentCords;
 
         private const int _distanceForInteract = 64;
@@ -38,6 +40,9 @@ namespace PlayingAround.Managers.Proximity
         public static event Action<NextTileData> OnPlayerNearNextTile;
         public static event Action<NextTileData> OnPlayerLeaveNextTile;
 
+        public static event Action<Trigger> OnPlayerNearTrigger;
+        public static event Action<Trigger> OnPlayerLeaveTrigger;
+
 
         public static void Update(GameTime gameTime)
         {
@@ -47,7 +52,36 @@ namespace PlayingAround.Managers.Proximity
                 IsPlayerInPlayMonsterRange();
                 IsPlayerInNPCRange();
                 IsPlayerInNextTileRange();
+            IsPlayerInTriggerRange();
         }
+
+        private static void IsPlayerInTriggerRange()
+        {
+            float thresholdSq = _distanceForInteract * _distanceForInteract;
+
+            foreach (var trigger in _currentTriggerCells)
+            {
+                TileCell cell = trigger.Key;
+                Trigger trig = trigger.Value;
+
+                Vector2 delta = _playerCurrentCords - cell.CenterPoint;
+                bool inRange = delta.LengthSquared() <= thresholdSq;
+
+                bool tracked = _triggersInRangeCurrently.Contains(trig);
+
+                if (inRange && !tracked)
+                {
+                    _triggersInRangeCurrently.Add(trig);
+                    OnPlayerNearTrigger?.Invoke(trig);
+                }
+                else if (!inRange && tracked)
+                {
+                    _triggersInRangeCurrently.Remove(trig);
+                    OnPlayerLeaveTrigger?.Invoke(trig);
+                }
+            }
+        }
+
         private static readonly HashSet<NPC> _npcsCurrentlyInRange = new();
         public static void IsPlayerInNPCRange()
         {

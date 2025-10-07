@@ -43,9 +43,10 @@ namespace PlayingAround.Managers.Tiles
                 CurrentMapTile = existingTile;
                 return;
             }
+            int z = int.Parse(id.Split('_')[2]);
 
             // Try loading from disk
-            string path = $"Data/MapTile/MapTile_{id}.json";
+            string path = $"Data/MapTile/Level{z}/MapTile_{id}.json";
             MapTileData data = JsonLoader.LoadTileData(path);
   
             var tile = new MapTile(data);

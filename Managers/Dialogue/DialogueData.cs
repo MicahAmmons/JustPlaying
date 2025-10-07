@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PlayingAround.ConditionsAndEffects.ConditionFolder;
+using PlayingAround.ConditionsAndEffects.EffectFolder;
+using System;
 using System.Collections.Generic;
 
 namespace PlayingAround.Managers.Dialogue
@@ -19,34 +21,14 @@ namespace PlayingAround.Managers.Dialogue
     public class DialogueStage : DialogueNode
     {
         public string id { get; set; }
-        public List<DialogueCondition> conditions { get; set; } = new();
-        public List<DialogueEffect> effects { get; set; } = new(); // optional
+        public List<Condition> conditions { get; set; } = new();
+        public List<Outcome> effects { get; set; } = new(); // optional
     }
 
     public class DialogueResponse
     {
         public string text { get; set; }
         public string nextDialogue { get; set; }
-        public List<DialogueEffect> effects { get; set; } = new(); // allow per-response effects
-    }
-
-    public class DialogueCondition
-    {
-        public DialogueConditionType type { get; set; }
-        public QuestObjectiveProgressionState progressionStateId { get; set; } = QuestObjectiveProgressionState.Default;
-        public string questId { get; set; }
-        public string objectiveId { get; set; }
-        public QuestStage questStage { get; set; }
-    }
-
-    public class DialogueEffect
-    {
-        public DialogueEffectType type { get; set; }       
-        public string questId { get; set; }      // used by most effects
-        public QuestObjectiveProgressionState progressionStateId { get; set; }
-        public string ObjectiveId { get; set; }
-        public QuestStage questStage { get; set; }
-        public string itemId { get; set; }       // optional, for item-based effects
-        public string customTrigger { get; set; } // optional, for game-defined triggers
+        public List<Outcome> effects { get; set; } = new(); // allow per-response effects
     }
 }

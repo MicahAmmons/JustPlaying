@@ -37,6 +37,8 @@ namespace PlayingAround.Interaction
 
             ProximityManager.OnPlayerNearNextTile += HandleNextTileInteract;
             ProximityManager.OnPlayerLeaveNextTile += HandleExitNextTile;
+
+
         }
         public static void Draw(SpriteBatch sb)
         {

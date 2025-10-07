@@ -108,13 +108,23 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("ForeDarkFog_-1_0_0", "Tiles/-1_0_0/ForeDarkFog_-1_0_0");
             AssetManager.LoadTexture("LowerRocks_-1_0_0", "Tiles/-1_0_0/LowerRocks_-1_0_0");
 
+
             AssetManager.LoadTexture("0_0_0", "Tiles/0_0_0/0_0_0");
             AssetManager.LoadTexture("ForeDarkFog_0_0_0", "Tiles/0_0_0/ForeDarkFog_0_0_0");
             AssetManager.LoadTexture("LowerRocks_0_0_0", "Tiles/0_0_0/LowerRocks_0_0_0");
 
-            AssetManager.LoadTexture("0_0_1", "Tiles/0_0_1/0_0_1");
-            AssetManager.LoadTexture("BGSmoke_0_0_1", "Tiles/0_0_1/BGSmoke_0_0_1");
-            AssetManager.LoadTexture("BGCloud_0_0_1", "Tiles/0_0_1/BGCloud_0_0_1");
+            //Level 1
+            AssetManager.LoadTexture("0_0_1", "Tiles/Level1/0_0_1/0_0_1");
+            AssetManager.LoadTexture("BGSmoke_0_0_1", "Tiles/Level1/0_0_1/BGSmoke_0_0_1");
+            AssetManager.LoadTexture("BGCloud_0_0_1", "Tiles/Level1/0_0_1/BGCloud_0_0_1");
+
+            AssetManager.LoadTexture("1_0_1", "Tiles/Level1/1_0_1/1_0_1");
+            AssetManager.LoadTexture("BGSmoke_1_0_1", "Tiles/Level1/1_0_1/BGSmoke_1_0_1");
+            AssetManager.LoadTexture("BGCloud_1_0_1", "Tiles/Level1/1_0_1/BGCloud_1_0_1");
+
+            AssetManager.LoadTexture("1_-1_1", "Tiles/Level1/1_-1_1/1_-1_1");
+            AssetManager.LoadTexture("BGSmoke_1_-1_1", "Tiles/Level1/1_0_1/BGSmoke_1_0_1");
+            AssetManager.LoadTexture("BGCloud_1_-1_1", "Tiles/Level1/1_0_1/BGCloud_1_0_1");
         }
         public static void LoadMiscMapTileAssets()
         {

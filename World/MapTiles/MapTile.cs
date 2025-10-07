@@ -7,6 +7,7 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Smoke;
+using PlayingAround.Triggers;
 using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace PlayingAround.Game.Map
         public TileCellHighlights CellHighlights { get; private set; }
         public List<NPC> NPCs { get; private set; } = new();
         public Dictionary<TileCell, NPC> NPCCells { get; private set; } = new Dictionary< TileCell, NPC> { };
+        public Dictionary<TileCell, Trigger> TriggerCells { get; private set; } = new() { };
         public float DifficultyMax { get; }
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
@@ -96,6 +98,7 @@ namespace PlayingAround.Game.Map
                         PlayerSpawnableCells.Add(tile);
                     if (cellData.PlayMonsterSpawnable)
                        PlayMonsterSpawnableCells.Add(tile);
+
                 if (cellData.StaticBackGroundTexture != null)
                 {
                     tile.BackGroundTexture = AssetManager.GetTexture(cellData.StaticBackGroundTexture);
@@ -107,9 +110,9 @@ namespace PlayingAround.Game.Map
                     NPCCells[tile] = npc;
                     NPCs.Add(npc);
                 }
-                if (cellData.Trigger != null)
+                if (cellData.TriggerName != null)
                 {
-
+                    TriggerCells[tile] = TriggerLibrary.FetchTrigger(cellData.TriggerName);
                 }
 
             }

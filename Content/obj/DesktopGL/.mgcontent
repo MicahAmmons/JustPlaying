@@ -86,10 +86,15 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/ForeDarkFog_0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/LowerRocks_0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0old.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_1/0_0_1.png</File>
-    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_1/BGSmoke_0_0_1.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/1_4_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackgroundSmoke.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/0_0_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/BGCloud_0_0_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/BGSmoke_0_0_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/1_-1_1/1_-1_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/1_0_1/1_0_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/1_0_1/BGCloud_1_0_1.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/1_0_1/BGSmoke_1_0_1.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreen/TitleScreenBackGround.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/TitleScreenButtonFont.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/UI/fightBackground.png</File>
@@ -101,6 +106,11 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>mainFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

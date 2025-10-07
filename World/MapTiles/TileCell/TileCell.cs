@@ -55,7 +55,7 @@ namespace PlayingAround.Game.Map
             BehindOverlay = data.BehindOverlay;
             FrontOverlay = data.FrontOverlay;
             NPCName = data.NPCName;
-            Trigger = data.Trigger;
+            Trigger = data.TriggerName;
             if (data.NextTile != null)
             {
                 NextTile = data.NextTile;

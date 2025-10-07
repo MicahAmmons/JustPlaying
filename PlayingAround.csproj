@@ -81,11 +81,13 @@
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\0_0_0\0_0_0.png" />
     <None Remove="Content\Tiles\0_0_0\ForeDarkFog_0_0_0.png" />
-    <None Remove="Content\Tiles\0_0_1\0_0_1.png" />
-    <None Remove="Content\Tiles\0_0_1\BGCloud_0_0_1.png" />
-    <None Remove="Content\Tiles\0_0_1\BGSmoke_0_0_1.png" />
+    <None Remove="Content\Tiles\Level1\0_0_1\0_0_1.png" />
+    <None Remove="Content\Tiles\Level1\0_0_1\BGCloud_0_0_1.png" />
+    <None Remove="Content\Tiles\Level1\0_0_1\BGSmoke_0_0_1.png" />
     <None Remove="Content\Tiles\1_4_0.png" />
     <None Remove="Content\Tiles\BackgroundSmoke.png" />
+    <None Remove="Content\Tiles\Level1\1_-1_1\1_-1_1.png" />
+    <None Remove="Content\Tiles\Level1\1_0_1\1_0_1.png" />
     <None Remove="Content\WhiteSmoke.png" />
     <None Remove="Data\CombatMonsterData\AnimationData.json" />
     <None Remove="Data\MapTile\MapTile_-1_-1_0.json" />
@@ -309,13 +311,13 @@
     <Content Include="Content\Tiles\0_0_0\LowerRocks_0_0_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Tiles\0_0_1\0_0_1.png">
+    <Content Include="Content\Tiles\Level1\0_0_1\0_0_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Tiles\0_0_1\BGCloud_0_0_1.png">
+    <Content Include="Content\Tiles\Level1\0_0_1\BGCloud_0_0_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Tiles\0_0_1\BGSmoke_0_0_1.png">
+    <Content Include="Content\Tiles\Level1\0_0_1\BGSmoke_0_0_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\1_4_0.png">
@@ -324,25 +326,43 @@
     <Content Include="Content\Tiles\BackgroundSmoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Tiles\Level1\1_-1_1\1_-1_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\Level1\1_0_1\1_0_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\Level1\1_0_1\BGCloud_1_0_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\Level1\1_0_1\BGSmoke_1_0_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\WhiteSmoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\CombatMonsterData\AnimationData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\MapTile\MapTile_-1_-1_0.json">
+    <Content Include="Data\MapTile\Level1\MapTile_1_-1_1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\MapTile\MapTile_0_-1_0.json">
+    <Content Include="Data\MapTile\Level1\MapTile_1_0_1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\MapTile\MapTile_-1_0_0.json">
+    <Content Include="Data\MapTile\Level0\MapTile_-1_-1_0.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\MapTile\Level0\MapTile_0_-1_0.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\MapTile\Level0\MapTile_-1_0_0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\MapTile\MapTile_0_0_0.json">
+    <Content Include="Data\MapTile\Level0\MapTile_0_0_0.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\MapTile\MapTile_0_0_1.json">
+    <Content Include="Data\MapTile\Level1\MapTile_0_0_1.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\SaveData\SaveJson\savegame1.json">

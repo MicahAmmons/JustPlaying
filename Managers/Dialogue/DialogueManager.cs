@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.ConditionsAndEffects.ConditionFolder;
+using PlayingAround.ConditionsAndEffects.EffectFolder;
 using PlayingAround.Entities.Player;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Entities;
@@ -52,7 +54,7 @@ namespace PlayingAround.Managers.Dialogue
         {
             if (response.effects != null || response.effects.Count >= 0)
                 foreach (var effect in response.effects)
-                    HandleEffect(effect);
+                    OutcomeManager.HandleOutcomes(effect);
 
             if (!string.IsNullOrEmpty(response.nextDialogue))
             {
@@ -67,29 +69,6 @@ namespace PlayingAround.Managers.Dialogue
             {
                 EndDialogue();
             }
-        }
-        public static void HandleEffect(DialogueEffect effect)
-        {
-            switch (effect.type)
-            {
-                case DialogueEffectType.SetQuestStage:
-                    QuestManager.UpdateQuestStageTo(effect.questId, effect.questStage);
-                    break;
-                case DialogueEffectType.CompleteQuest:
-                    QuestManager.CompleteQuest(effect.questId);
-                    GiveReward(effect);
-                    break;
-                case DialogueEffectType.StartQuest:
-                    QuestManager.StartQuest(effect.questId);
-                    break;
-                case DialogueEffectType.SetObjectiveProgressState:
-                    QuestManager.SetObjectiveProgress(effect.progressionStateId, effect.questId, effect.ObjectiveId);
-                    break;
-            }
-        }
-        public static void GiveReward(DialogueEffect effect)
-        {
-            
         }
         public static void StartNewDialogue(NPC npc)
         {
@@ -109,31 +88,10 @@ namespace PlayingAround.Managers.Dialogue
             foreach (var stage in data.stages)
             {
                 if (stage == null || stage.conditions == null || stage.conditions.Count <= 0) continue;
-                if (ConditionsAreMet(stage.conditions))
+                if (ConditionManager.ConditionsAreMet(stage.conditions))
                     return stage;
             }
             return _currentDialogue.defaultNode;
-        }
-        private static bool ConditionsAreMet(List<DialogueCondition> conditions)
-        {
-            // return false if anything fails, otherwise true if it makes it all teh way through 
-            foreach (var condition in conditions)
-            {
-                switch (condition.type)
-                {
-                    case DialogueConditionType.QuestStage:
-                        if (QuestManager.GetStage(condition.questId) != condition.questStage)
-                            return false;
-                        break;
-
-                    case DialogueConditionType.ObjectiveProgress:
-                        if (!QuestManager.ObjectiveProgressIs(condition.questId, condition.objectiveId, condition.progressionStateId))
-                            return false;
-                        break;
-                }
-            }
-
-            return true; // all conditions passed
         }
 
 
@@ -155,17 +113,3 @@ namespace PlayingAround.Managers.Dialogue
     }
 }
 
-public enum DialogueConditionType
-{
-    None,
-    QuestStage,
-    ObjectiveProgress
-
-}
-public enum DialogueEffectType
-{
-    SetQuestStage,
-    CompleteQuest,
-    StartQuest,
-    SetObjectiveProgressState
-}

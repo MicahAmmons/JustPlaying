@@ -14,8 +14,8 @@ using PlayingAround.Managers.Dialogue;
 using PlayingAround.Managers.Escape.Settings;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Quests;
-using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.VisualEffects;
+using PlayingAround.Triggers;
 using PlayingAround.Visuals;
 
 namespace PlayingAround.Utils

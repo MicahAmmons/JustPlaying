@@ -20,10 +20,10 @@ using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
-using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Smoke;
+using PlayingAround.Triggers;
 using PlayingAround.Utils;
 using System;
 
