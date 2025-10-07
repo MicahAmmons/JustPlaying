@@ -19,6 +19,7 @@ namespace PlayingAround.Managers.Assets
         public static Color DarkColor = new Color(62, 27, 36);
         public static Color LightColor = new Color(255, 213, 167);
         public static Color TransparentWhite = new Color(255, 255, 255, 128);
+        public static Color SkyBlue = new Color(15, 172, 237);
 
 
         //These are the 4 green/blues used in -1,0,0

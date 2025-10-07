@@ -112,6 +112,9 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("ForeDarkFog_0_0_0", "Tiles/0_0_0/ForeDarkFog_0_0_0");
             AssetManager.LoadTexture("LowerRocks_0_0_0", "Tiles/0_0_0/LowerRocks_0_0_0");
 
+            AssetManager.LoadTexture("0_0_1", "Tiles/0_0_1/0_0_1");
+            AssetManager.LoadTexture("BGSmoke_0_0_1", "Tiles/0_0_1/BGSmoke_0_0_1");
+            AssetManager.LoadTexture("BGCloud_0_0_1", "Tiles/0_0_1/BGCloud_0_0_1");
         }
         public static void LoadMiscMapTileAssets()
         {

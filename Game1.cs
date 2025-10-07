@@ -208,6 +208,7 @@ namespace PlayingAround
         }
         public void DrawBackgroundSmoke(GameTime gameTime)
         {
+
             var fx = AssetManager.GetEffect("Smoke");
             fx.Parameters["GlobalTime"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
 
