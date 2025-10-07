@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder.GlowTex;
-using PlayingAround.AnimationFolder.SmokeText;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
+using PlayingAround.Smoke;
 using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;

@@ -481,3 +481,10 @@ C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Til
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Data\MapTile\MapTile_0_0_1.json
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_0_1\BGCloud_0_0_1.png
 C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Tiles\0_0_1\BGCloud_0_0_1.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\0_0_1.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\BGCloud_0_0_1.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\BGSmoke_0_0_1.png
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\MapTile\MapTile_0_0_1.json
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\0_0_1.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\BGCloud_0_0_1.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\0_0_1\BGSmoke_0_0_1.xnb

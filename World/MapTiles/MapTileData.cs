@@ -1,7 +1,7 @@
 ﻿using PlayingAround.AnimationFolder.GlowTex;
-using PlayingAround.AnimationFolder.SmokeText;
 using PlayingAround.Entities.Monster;
 using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Smoke;
 using PlayingAround.World.MapTiles.CellHighlights;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;

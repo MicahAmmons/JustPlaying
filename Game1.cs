@@ -23,6 +23,7 @@ using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.Triggers;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.VisualEffects;
+using PlayingAround.Smoke;
 using PlayingAround.Utils;
 using System;
 
@@ -80,6 +81,7 @@ namespace PlayingAround
             TileCellManager.LoadContent(_spriteBatch);
             VisualEffectLibrary.LoadContent();
             AnimationLibrary.LoadContrent();
+            SmokeManager.LoadContent();
         }
 
 
@@ -109,6 +111,7 @@ namespace PlayingAround
             ProximityManager.Update(gameTime);
             MapTileTransitionManager.Update(gameTime);
             DebugBugger.Update(gameTime);
+            SmokeManager.Update(gameTime);
             CombatGuard.Update(gameTime);
             UIManager.Update(gameTime);
             InteractManager.Update();
@@ -208,6 +211,10 @@ namespace PlayingAround
         }
         public void DrawBackgroundSmoke(GameTime gameTime)
         {
+            _spriteBatch.Begin();
+            SmokeManager.DrawPulseCloud(_spriteBatch);
+            _spriteBatch.End();
+
 
             var fx = AssetManager.GetEffect("Smoke");
             fx.Parameters["GlobalTime"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
@@ -223,7 +230,7 @@ namespace PlayingAround
                                SamplerState.LinearClamp,
                                null, null, fx, Matrix.Identity);
 
-            TileManager.DrawBackgroundSmoke(_spriteBatch, fx);
+            SmokeManager.DrawBackgroundSmoke(_spriteBatch, fx);
 
             _spriteBatch.End();
 

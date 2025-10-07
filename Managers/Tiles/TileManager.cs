@@ -269,32 +269,7 @@ namespace PlayingAround.Managers.Tiles
                 spriteBatch.Draw(text, Vector2.Zero, Color.White);
             }
         }
-        internal static void DrawBackgroundSmoke(SpriteBatch spriteBatch, Effect fx)
-        {
-            var e = CurrentMapTile.BackgroundSmokeTexture;
-            fx.Parameters["Frequency"].SetValue(e.FrequencyVec);
-            fx.Parameters["Speed"].SetValue(e.SpeedVec);
-            fx.Parameters["DistortAmount"].SetValue(e.DistortAmount);
-            fx.Parameters["Opacity"].SetValue(e.Opacity);
-            Color col = CurrentMapTile.BackgroundSmokeTexture.DrawColor;
-            var tex = AssetManager.GetTexture("BGSmoke_0_0_1");
-
-            var vp = spriteBatch.GraphicsDevice.Viewport;
-            Vector2 screenCenter = new Vector2(vp.Width * 0.5f, vp.Height * 0.5f);
-            Vector2 origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
-
-            spriteBatch.Draw(
-    tex,
-    position: screenCenter,
-    sourceRectangle: null,
-    color: col,
-    rotation: 0f,
-    origin: origin,
-    scale: 1f,
-    effects: SpriteEffects.None,
-    layerDepth: 0f
-); 
-        }
+       
 
         internal static Color FetchBackgroundColor()
         {

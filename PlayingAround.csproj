@@ -361,6 +361,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AnimationFolder\SmokeText\" />
     <Folder Include="Content\UnAdded\" />
     <Folder Include="Content\UI\" />
     <Folder Include="Data\SaveData\SaveStates\" />
