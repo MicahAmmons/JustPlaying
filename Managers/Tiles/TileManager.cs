@@ -276,10 +276,16 @@ namespace PlayingAround.Managers.Tiles
             fx.Parameters["Speed"].SetValue(e.SpeedVec);
             fx.Parameters["DistortAmount"].SetValue(e.DistortAmount);
             fx.Parameters["Opacity"].SetValue(e.Opacity);
-
+            Color col = CurrentMapTile.BackgroundSmokeTexture.DrawColor;
             var tex = AssetManager.GetTexture("BackgroundSmoke");
-            spriteBatch.Draw(tex, Vector2.Zero, Color.White);
+            spriteBatch.Draw(tex, Vector2.Zero, col);
         }
+
+        internal static Color FetchBackgroundColor()
+        {
+            return CurrentMapTile != null ? CurrentMapTile.BackgroundColor : Color.White;
+        }
+
     }
 }
 

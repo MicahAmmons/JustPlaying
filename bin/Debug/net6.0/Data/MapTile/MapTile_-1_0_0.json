@@ -3,8 +3,10 @@
   "gridY": -0,
   "gridZ": 0,
   "buildBackground": [ "LowerRocks_-1_0_0", "-1_0_0", "ForeDarkFog_-1_0_0" ],
-  "monsters": ["FireOoze"],
+  "monsters": [ "FireOoze" ],
+  "backgroundColor": "White",
   "backgroundSmokeTexture": {
+    "Color": "Acid",
     "Frequency": [ 2.0, 2.0 ],
     "Speed": [ 0.25, 0.25 ],
     "DistortAmount": 0.05,

@@ -14,6 +14,8 @@ namespace PlayingAround.AnimationFolder.SmokeText
         public float[] Speed { get; set; }       // JSON array maps here
         public float DistortAmount { get; set; }
         public float Opacity { get; set; }
+        public string Color { get; set; }
+        [JsonIgnore]public Color DrawColor;
 
         // Convenience to get a Vector2
         [JsonIgnore]

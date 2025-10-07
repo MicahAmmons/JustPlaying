@@ -126,9 +126,10 @@ namespace PlayingAround
         {
             this.Exit();
         }
+        
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(TileManager.FetchBackgroundColor());
 
 
             if (DrawTitleScreen(gameTime)) return;

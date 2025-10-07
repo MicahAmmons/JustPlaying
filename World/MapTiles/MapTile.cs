@@ -39,6 +39,7 @@ namespace PlayingAround.Game.Map
         public float DifficultyMin { get; }
         public int TotalMonsterSpawns { get; }
         public List<PlayMonsters> PlayMonstersList { get; } = new List<PlayMonsters>();
+        public Color BackgroundColor { get; set; }
 
 
 
@@ -57,11 +58,12 @@ namespace PlayingAround.Game.Map
                 BackgroundBuidldOrder.Add(AssetManager.GetTexture(str));    
             }
             BackgroundSmokeTexture = data.BackgroundSmokeTexture;
+            BackgroundSmokeTexture.DrawColor = ColorPalette.GetColor(data.BackgroundSmokeTexture.Color);
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
             CellHighlights = new TileCellHighlights(data.TileHighlightData);
-  
+            BackgroundColor = ColorPalette.GetColor(data.BackgroundColor);
             if (data.GlowTexture != null)
             {
                 foreach (var glowText in data.GlowTexture)
