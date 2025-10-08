@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.CombatMan.Aspects;
 using System;
@@ -22,17 +23,9 @@ namespace PlayingAround.Triggers.ConditionFolder
         public int ProximityDistance { get; set; }
         public bool AllowedToFight { get; set; } 
         public IProximityTracked AnchorPoint { get; set; }
+        public PlayMonsters PlayMonster {  get; set; }
 
     }
 
 }
-public enum ConditionType
-{
-    None,
-    QuestStage,
-    ObjectiveProgress,
-    AspectObtained,
-    KeyPressed,
-    Proximity,
-    AllowedToFight
-}
+

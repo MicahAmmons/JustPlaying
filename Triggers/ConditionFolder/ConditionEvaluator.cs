@@ -1,5 +1,6 @@
-﻿using PlayingAround.Managers.Dialogue;
-using PlayingAround.Managers.Proximity;
+﻿using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Manager;
+using PlayingAround.Managers.CombatMan.Aspects;
 using PlayingAround.Managers.Quests;
 using PlayingAround.Triggers;
 using PlayingAround.Triggers.Proximity;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PlayingAround.Triggers.CombatTrigger;
 using static PlayingAround.Triggers.TriggerManager;
 
 namespace PlayingAround.Triggers.ConditionFolder
@@ -36,19 +38,34 @@ namespace PlayingAround.Triggers.ConditionFolder
         }
         private bool Evaluate(Condition cond, Trigger trig, in EvalContext ctx)
         {
+            
             switch (cond.Type)
             {
+                
                 case ConditionType.QuestStage:
                     return QuestManager.GetStage(cond.QuestId) == cond.QuestStage;
-
                 case ConditionType.ObjectiveProgress:
                     return QuestManager.ObjectiveProgressIs(cond.QuestId, cond.ObjectiveId, cond.ProgressionStateId);
                 case ConditionType.Proximity:
                     return _proximityEvaluator.WithinRange(cond, ctx);
-                // add KeyPressed / Proximity, etc., later
-                default:
-                    return false;
+                case ConditionType.KeyPressed:
+                    return InputManager.IsKeyPressed(cond.Key);
+                case ConditionType.AllowedToFight:
+                    return cond.PlayMonster.AllowedToFight;
+                case ConditionType.AspectObtained:
+                    return AspectManager.IsAspectUnlocked(cond.AspectName);
+                default: return false;
             }
         }
     }
+}
+public enum ConditionType
+{
+    None,
+    QuestStage,
+    ObjectiveProgress,
+    AspectObtained,
+    KeyPressed,
+    Proximity,
+    AllowedToFight
 }

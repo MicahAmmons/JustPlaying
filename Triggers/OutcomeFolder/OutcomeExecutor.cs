@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.Managers.Quests;
+using PlayingAround.Triggers.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace PlayingAround.Triggers.EffectFolder
             {
                 switch (outcome.Type)
                 {
+                    
                     case OutcomeType.SetQuestStage:
                         QuestManager.UpdateQuestStageTo(outcome.QuestId, outcome.QuestStage);
                         break;
@@ -30,8 +32,15 @@ namespace PlayingAround.Triggers.EffectFolder
                     case OutcomeType.SetObjectiveProgressState:
                         QuestManager.SetObjectiveProgress(outcome.ProgressionStateId, outcome.QuestId, outcome.ObjectiveId);
                         break;
-                        case OutcomeType.NotificationText:
+                    case OutcomeType.NotificationText:
+                        NotificationTextManager.AddNotificationBoxes(outcome.NotificationTextBox);
+                        break;
+                    case OutcomeType.AdvanceLevels:
 
+                        break;
+                    case OutcomeType.StartCombat:
+
+                        break;
                 }
             }
         }
@@ -45,4 +54,14 @@ namespace PlayingAround.Triggers.EffectFolder
                 HandleOutcomes(group);
         }
     }
+}
+public enum OutcomeType
+{
+    SetQuestStage,
+    CompleteQuest,
+    StartQuest,
+    SetObjectiveProgressState,
+    NotificationText,
+    AdvanceLevels,
+    StartCombat
 }

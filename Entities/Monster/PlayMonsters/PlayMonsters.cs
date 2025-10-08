@@ -34,6 +34,7 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public bool HasCombatTrigger { get; set; }
         public List<Trigger> Triggers { get; set; } = new List<Trigger> { };
         public Vector2 ProximityTrackingPoint { get; set; }
+        public bool AllowedToFight { get; set; } = true;
         public PlayMonsters(PlayMonsterData data, CombatMonster mon)
         {
             Name = mon.Name;

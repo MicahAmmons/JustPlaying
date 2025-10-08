@@ -35,5 +35,10 @@ namespace PlayingAround.Managers.CombatMan.Aspects
             
         }
 
+        public static bool IsAspectUnlocked(string aspectName)
+        {
+            // Place holder for how to track if the player has unlocked Aspect 
+            return false;
+        }
     }
 }

@@ -9,6 +9,7 @@ using PlayingAround.Interfaces;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Triggers.ConditionFolder;
 using PlayingAround.Triggers.EffectFolder;
+using PlayingAround.Triggers.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace PlayingAround.Triggers
 {
     public class Trigger
     {
+
         public List<TriggerNodes> TriggerNodes {  get; set; }
 
     }
@@ -38,7 +40,8 @@ namespace PlayingAround.Triggers
             var engageFight = new Condition
             {
                 Type = ConditionType.KeyPressed,
-                Key = Keys.F
+                Key = Keys.E,
+                PlayMonster = mon,
             };
 
             var startCombat = new Outcome
@@ -51,37 +54,38 @@ namespace PlayingAround.Triggers
 
             TriggerNodes = new List<TriggerNodes> { node };
         }
-        public class ProximityTrigger : Trigger
+        
+    }
+    public class ProximityTrigger : Trigger
+    {
+
+        public ProximityTrigger(IProximityTracked obj)
         {
+            var node = new TriggerNodes();
 
-            public ProximityTrigger(IProximityTracked obj)
+            var proxCondition = new Condition
             {
-                var node = new TriggerNodes();
+                Type = ConditionType.Proximity,
+                AnchorPoint = obj
 
-                var proxCondition = new Condition
-                {
-                    Type = ConditionType.Proximity,
-                    AnchorPoint = obj
+            };
 
-                };
+            var allowedToFight = new Condition
+            {
+                Type = ConditionType.AllowedToFight
+            };
 
-                var allowedToFight = new Condition
-                {
-                    Type = ConditionType.AllowedToFight
-                };
+            var notify = new Outcome
+            {
+                Type = OutcomeType.NotificationText,
+                NotificationTextBox = new CombatNotificationTextBox(obj),
+            };
 
-                var notify = new Outcome
-                {
-                    Type = OutcomeType.NotificationText,
-                    NotificationText = "Press F to Engage"
-                };
+            node.Conditions.Add(proxCondition);
+            node.Conditions.Add(allowedToFight);
+            node.Outcomes.Add(notify);
 
-                node.Conditions.Add(proxCondition);
-                node.Conditions.Add(allowedToFight);
-                node.Outcomes.Add(notify);
-
-                TriggerNodes = new List<TriggerNodes> { node };
-            }
+            TriggerNodes = new List<TriggerNodes> { node };
         }
     }
 }
