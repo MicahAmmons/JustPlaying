@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayingAround.ConditionsAndEffects.EffectFolder
+namespace PlayingAround.Triggers.EffectFolder
 {
     public class Outcome
     {
@@ -27,5 +28,6 @@ public enum OutcomeType
     StartQuest,
     SetObjectiveProgressState,
     NotificationText,
-    AdvanceLevels
+    AdvanceLevels,
+    StartCombat
 }

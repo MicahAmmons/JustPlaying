@@ -27,6 +27,7 @@ namespace PlayingAround.Managers.Entities
         private static List<PlayMonsters> _currentPlayMonsters => TileManager.CurrentMapTile.PlayMonstersList;
         public static PlayMonsters SelectedMonster = null;
         public static Vector2? SelectedMonsterInfoAnchor = null;
+        public static event Action PlayMonsterRemoved;
 
 
 
@@ -71,37 +72,7 @@ namespace PlayingAround.Managers.Entities
             return selectedCell;
         }
 
-        //private static void HandleMonsterSelection()
-        //{
-        //    if (InputManager.IsLeftClick())
-        //    {
-        //        Vector2 mousePos = new Vector2(InputManager.MouseX, InputManager.MouseY);
 
-        //        foreach (var mon in _currentPlayMonsters)
-        //        {
-        //            var widthHeight = CombatMonsterManager.GetMonsterWidthAndHeight(mon.Name);
-        //            int width = (int)widthHeight.X;
-        //            int height = (int)widthHeight.Y;
-        //            var pos = TileManager.OffSetFromCenterOfDiamond(mon.MovementController.CurrentPos, width, height);
-        //            Rectangle dest = new Rectangle(
-        //                (int)pos.X,
-        //                (int)pos.Y,
-        //                width,
-        //                height
-        //            );
-
-        //            if (dest.Contains(mousePos))
-        //            {
-        //                SelectedMonster = mon;
-        //                SelectedMonsterInfoAnchor = mousePos; // Capture click position
-        //                return;
-        //            }
-        //        }
-
-        //        SelectedMonster = null;
-        //        SelectedMonsterInfoAnchor = null;
-        //    }
-        //}
         public static void Update(GameTime gameTime)
         {
             if (SceneManager.CurrentState == SceneState.Play || SceneManager.CurrentState == SceneState.Dialogue)
@@ -122,6 +93,7 @@ namespace PlayingAround.Managers.Entities
         public static void RemovePlayMonster(PlayMonsters playMonsters)
         {
             _currentPlayMonsters.Remove(playMonsters);
+            PlayMonsterRemoved?.Invoke();
         }
     }
 }

@@ -80,6 +80,7 @@
       "Initiative": 3
     },
     "AnimationData": "FireOoze",
+
     "ActionOrder": [
       {
         "Type": "Move",

@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.ConditionsAndEffects.ConditionFolder;
-using PlayingAround.ConditionsAndEffects.EffectFolder;
 using PlayingAround.Entities.Player;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Managers.Quests;
+using PlayingAround.Triggers.EffectFolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;

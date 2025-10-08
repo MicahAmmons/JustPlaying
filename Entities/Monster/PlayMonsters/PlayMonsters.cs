@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Net;
-using System.Net.WebSockets;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlayingAround.AnimationFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
@@ -15,10 +10,16 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Movement;
+using PlayingAround.Triggers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Net;
+using System.Net.WebSockets;
 
 namespace PlayingAround.Entities.Monster.PlayMonsters
 {
-    public class PlayMonsters : IAnimatable, IOutOfCombatAnimated
+    public class PlayMonsters : IAnimatable, IOutOfCombatAnimated, IProximityTracked
     {
         // A list of combat monsters that this play monster is associated with
         public List<CombatMonster> Monsters { get; set; }
@@ -29,12 +30,22 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public string UniqueId {  get; set; }
         public OutOfCombatAnimatedStats OOCombatStats {  get; set; }
         public MovementController MovementController { get; set; }
-        public bool ExecutingMove { get; set; } = false;
-
+        public bool ExecutingMove { get; set; } = false; 
+        public bool HasCombatTrigger { get; set; }
+        public List<Trigger> Triggers { get; set; } = new List<Trigger> { };
+        public Vector2 ProximityTrackingPoint { get; set; }
         public PlayMonsters(PlayMonsterData data, CombatMonster mon)
         {
             Name = mon.Name;
             UniqueId = $"{Name}PM";
+            HasCombatTrigger = data.HasCombatTrigger;
+            if (HasCombatTrigger) 
+            { 
+            foreach (Trigger trigger in TriggerManager.GenerateCombatTriggers(this))
+                {
+                    Triggers.Add(trigger);
+                }
+            }
 
             OOCombatStats = new OutOfCombatAnimatedStats()
             {
@@ -60,9 +71,14 @@ namespace PlayingAround.Entities.Monster.PlayMonsters
         public void Update(GameTime gameTime)
         {
             PopulateMovementPath(gameTime);
-            MovementController.Update(gameTime); 
+            MovementController.Update(gameTime);
+            UpdateProximityPos();
         }
-      
+        private void UpdateProximityPos()
+        {
+            if (MovementController == null) return;
+            ProximityTrackingPoint = MovementController.CurrentPos;
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             var state = SceneManager.CurrentState;

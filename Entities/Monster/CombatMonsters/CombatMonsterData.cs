@@ -21,7 +21,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         public BaseCombatStats BaseStats {  get; set; }
         public DrawSpecificStats DrawSpecifics { get; set; } = new DrawSpecificStats() { IsFlashingRed = false};
         public string AnimationData { get; set; }
-
+        public bool HasCombatTrigger { get; set; }
         public List<SpecificActData> ActionOrder { get; set; }
     }
     public class BaseCombatStats

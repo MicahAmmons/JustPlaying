@@ -19,7 +19,7 @@ using System.Xml.XPath;
 
 namespace PlayingAround.Game.Map
 {
-    public class TileCell
+    public class TileCell : IProximityTracked
     {
         public int X { get; }
         public int Y { get; }
@@ -41,6 +41,7 @@ namespace PlayingAround.Game.Map
         public VisualEffectManager VEManager { get; set; } = new VisualEffectManager();
         public Texture2D BackGroundTexture { get; set; }
         public AnimationManager AnimationManager { get; set; } 
+        public Vector2 ProximityTrackingPoint { get; set; }
   
         public TileCell(TileCellData data)        
         {
@@ -60,9 +61,8 @@ namespace PlayingAround.Game.Map
             {
                 NextTile = data.NextTile;
             }
-
-        
             CenterPoint = new Vector2(data.X * MapTile.TileWidth, data.Y * MapTile.TileHeight );
+            ProximityTrackingPoint = CenterPoint;
         }
 
         public void Update(GameTime gameTime)

@@ -1,5 +1,5 @@
-﻿using PlayingAround.ConditionsAndEffects.ConditionFolder;
-using PlayingAround.ConditionsAndEffects.EffectFolder;
+﻿using PlayingAround.Triggers.ConditionFolder;
+using PlayingAround.Triggers.EffectFolder;
 using System;
 using System.Collections.Generic;
 

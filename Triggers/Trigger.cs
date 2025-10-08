@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using PlayingAround.AnimationFolder;
-using PlayingAround.ConditionsAndEffects.ConditionFolder;
-using PlayingAround.ConditionsAndEffects.EffectFolder;
 using PlayingAround.Entities.Monster.CombatMonsters;
+using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Triggers.ConditionFolder;
+using PlayingAround.Triggers.EffectFolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,64 @@ namespace PlayingAround.Triggers
     }
     public class TriggerNodes
     {
-        public List<List<Condition>> Conditions { get; set; } = new();
-        public List<List<Outcome>> Outcomes { get; set; } = new();
+        public List<Condition> Conditions { get; set; } = new();
+        public List<Outcome> Outcomes { get; set; } = new();
+
+    }
+    public class CombatTrigger : Trigger
+    {
+        public PlayMonsters Mon { get; set; }
+        public CombatTrigger(PlayMonsters mon)
+        {
+            Mon = mon;
+            var node = new TriggerNodes();
+            var engageFight = new Condition
+            {
+                Type = ConditionType.KeyPressed,
+                Key = Keys.F
+            };
+
+            var startCombat = new Outcome
+            {
+                Type = OutcomeType.StartCombat
+            };
+
+            node.Conditions.Add(engageFight);
+            node.Outcomes.Add(startCombat);
+
+            TriggerNodes = new List<TriggerNodes> { node };
+        }
+        public class ProximityTrigger : Trigger
+        {
+
+            public ProximityTrigger(IProximityTracked obj)
+            {
+                var node = new TriggerNodes();
+
+                var proxCondition = new Condition
+                {
+                    Type = ConditionType.Proximity,
+                    AnchorPoint = obj
+
+                };
+
+                var allowedToFight = new Condition
+                {
+                    Type = ConditionType.AllowedToFight
+                };
+
+                var notify = new Outcome
+                {
+                    Type = OutcomeType.NotificationText,
+                    NotificationText = "Press F to Engage"
+                };
+
+                node.Conditions.Add(proxCondition);
+                node.Conditions.Add(allowedToFight);
+                node.Outcomes.Add(notify);
+
+                TriggerNodes = new List<TriggerNodes> { node };
+            }
+        }
     }
 }

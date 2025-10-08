@@ -116,8 +116,13 @@ namespace PlayingAround.Game.Map
                 }
 
             }
+            var playMons = PlayMonsterManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters);
+            foreach (var mon in playMons)
+            {
+                PlayMonstersList.Add(mon);
+            }
+  
 
-            PlayMonstersList = PlayMonsterManager.GeneratePlayMonsters(DifficultyMax, DifficultyMin, TotalMonsterSpawns, PlayMonsterSpawnableCells, OptionsOfMonsters );
         }
 
 

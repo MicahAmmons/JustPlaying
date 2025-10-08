@@ -66,7 +66,10 @@ namespace PlayingAround.Interfaces
     }
 
 
-
+    public interface IProximityTracked
+    {
+        public Vector2 ProximityTrackingPoint { get; set; }
+    }
 
 
     public interface IOutOfCombatAnimated

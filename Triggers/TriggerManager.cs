@@ -1,35 +1,101 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Entities.Monster.PlayMonsters;
+using PlayingAround.Game.Map;
+using PlayingAround.Managers;
+using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Proximity;
+using PlayingAround.Managers.Tiles;
+using PlayingAround.Triggers.ConditionFolder;
+using PlayingAround.Triggers.EffectFolder;
 using System;
 using System.Collections.Generic;
+using static PlayingAround.Triggers.CombatTrigger;
 
 namespace PlayingAround.Triggers
 {
     public class TriggerManager
     {
-        private static List<Trigger> _trackedTriggers = new List<Trigger>();
+        private static readonly List<Trigger> _tracked = new();
+        private static readonly List<FiredNode> _fired = new();
+
+        private static Vector2 _playerPos => PlayerManager.CurrentPlayer.MovementController.CurrentPos;
+        private static ConditionEvaluator _conditionEvaluator = new ConditionEvaluator();
+        private static OutcomeExecutor _outcomeExecutor = new OutcomeExecutor();
+        // add other evaluators…
+
+        // Scratch partitions (reused each frame)
+        private static readonly List<Trigger> _proxPartition = new();
+        private static readonly List<Trigger> _nextTilePartition = new();
         public static void Initialize()
         {
-            ProximityManager.OnPlayerNearTrigger += HandleTriggerInteract;
-            ProximityManager.OnPlayerLeaveTrigger += HandleExitTriggerTile;
+            TileManager.OnMapTileChange += RebuildForCurrentTile;
+            PlayMonsterManager.PlayMonsterRemoved += RebuildForCurrentTile;
+        }
+        public static void RebuildForCurrentTile()
+        {
+            _tracked.Clear();
+            _fired.Clear();
+            foreach (var mon in TileManager.CurrentMapTile.PlayMonstersList)
+            {
+                foreach (var trigger in mon.Triggers)
+                {
+                    _tracked.Add(trigger);
+                }
+            }
+            foreach (var kvp in TileManager.CurrentMapTile.TriggerCells)
+            {
+                TileCell cell = kvp.Key;
+                Trigger trig = kvp.Value;
+                _tracked.Add(trig);
+            }
         }
 
         public static void Update(float delta)
         {
-            if (_trackedTriggers.Count == 0) return;
+            if (!SceneManager.IsState(SceneState.Play)) return;
+            if (_tracked.Count == 0) return;
+            var ctx = new EvalContext(
+                       playerFeet: _playerPos,
+                       delta: delta
+        );
+            _fired.Clear();
+            foreach (var trigger in _tracked)
+                _conditionEvaluator.CheckConditions(trigger, ctx, _fired);
 
-
+            for (int i = 0; i < _fired.Count; i++)
+                _outcomeExecutor.Execute(_fired[i]);
         }
-
-        private static void HandleTriggerInteract(Trigger trigger)
+        public static List<Trigger> GenerateCombatTriggers(PlayMonsters mon)
         {
-            _trackedTriggers.Add(trigger);
+            List<Trigger> combatTriggers = new List<Trigger>();
+            ProximityTrigger proxTrig = new ProximityTrigger(mon);
+            CombatTrigger combatStartTrig = new CombatTrigger(mon);
+            combatTriggers.Add(proxTrig);
+            combatTriggers.Add(combatStartTrig);
+            return combatTriggers;
         }
-
-        private static void HandleExitTriggerTile(Trigger trigger)
+        public readonly struct FiredNode
         {
-            _trackedTriggers.Remove(trigger);
+            public readonly Trigger Trigger;
+            public readonly int NodeIndex;
+            public FiredNode(Trigger trigger, int nodeIndex)
+            { 
+                Trigger = trigger; 
+                NodeIndex = nodeIndex; 
+            }
         }
+        public readonly struct EvalContext
+        {
+            public readonly Vector2 PlayerFeet;
+            public readonly float Delta;
 
+            public EvalContext(Vector2 playerFeet, float delta)
+            {
+                PlayerFeet = playerFeet;
+                Delta = delta;
+            }
+        }
     }
+
 }

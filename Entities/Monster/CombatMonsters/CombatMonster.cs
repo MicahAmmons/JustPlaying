@@ -18,6 +18,7 @@ using PlayingAround.Managers.Resistances;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Movement;
+using PlayingAround.Triggers;
 using PlayingAround.Visuals;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
 
 
 
+
         public CombatMonster(CombatMonsterData data, ElementType element = ElementType.None)
         {
             ElementType = element == ElementType.None ? data.DefaultElementType : element;
@@ -92,7 +94,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
             BaseStats.Resistances = ResistanceManager.GetResistances(ElementType);
             DrawSpecifics = data.DrawSpecifics;
             Name = UniqueId;
-
             CombatantIs = CombatMonsterType.AI;
             Icon = AssetManager.GetTexture($"{UniqueId}Icon");
             Is = CombatMonsterType.AI;

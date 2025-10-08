@@ -12,6 +12,8 @@
   "FireOoze": {
     "MovementQuicknessOverride": 100,
     "PauseDurationMax": 12.0,
-    "PauseDurationMin": 8.0
+    "PauseDurationMin": 8.0,
+    "HasCombatTrigger": true,
+    "Triggers": [ {} ]
   }
 }

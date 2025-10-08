@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using PlayingAround.Managers.Proximity;
 using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Managers.NPCHouse;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 using PlayingAround.ButtonsFolder;
 using System.Buffers.Text;
 using PlayingAround.Managers.Entities;
+using PlayingAround.Triggers.Proximity;
 
 namespace PlayingAround.Interaction
 {

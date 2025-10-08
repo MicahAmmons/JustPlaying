@@ -17,13 +17,13 @@ using PlayingAround.Managers.JukeBox;
 using PlayingAround.Managers.LoadingScreen;
 using PlayingAround.Managers.Movement;
 using PlayingAround.Managers.NPCHouse;
-using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Managers.TitleScreen;
 using PlayingAround.Managers.UI;
 using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Smoke;
 using PlayingAround.Triggers;
+using PlayingAround.Triggers.Proximity;
 using PlayingAround.Utils;
 using System;
 

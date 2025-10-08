@@ -25,6 +25,8 @@ namespace PlayingAround.Managers.Tiles
         private static Dictionary<string, MapTile> tiles = new();
         public static MapTile CurrentMapTile { get; private set; }
 
+        public static event Action OnMapTileChange;
+
         public static void Initialize( string id)
         {
 
@@ -41,6 +43,7 @@ namespace PlayingAround.Managers.Tiles
             if (tiles.TryGetValue(id, out var existingTile))
             {
                 CurrentMapTile = existingTile;
+                OnMapTileChange?.Invoke();
                 return;
             }
             int z = int.Parse(id.Split('_')[2]);
@@ -54,6 +57,7 @@ namespace PlayingAround.Managers.Tiles
 
 
             CurrentMapTile = tile;
+            OnMapTileChange?.Invoke();
         }
         public static TileCell GetCell(Vector2 pos)
         {

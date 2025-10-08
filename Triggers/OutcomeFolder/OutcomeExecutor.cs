@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PlayingAround.Triggers.TriggerManager;
 
-namespace PlayingAround.ConditionsAndEffects.EffectFolder
+namespace PlayingAround.Triggers.EffectFolder
 {
-    public static class OutcomeManager
+    public class OutcomeExecutor
     {
-        public static void HandleOutcomes(params Outcome[] outcomes)
+
+        public void HandleOutcomes(params Outcome[] outcomes)
         {
             foreach (var outcome in outcomes)
             {
@@ -28,8 +30,19 @@ namespace PlayingAround.ConditionsAndEffects.EffectFolder
                     case OutcomeType.SetObjectiveProgressState:
                         QuestManager.SetObjectiveProgress(outcome.ProgressionStateId, outcome.QuestId, outcome.ObjectiveId);
                         break;
+                        case OutcomeType.NotificationText:
+
                 }
             }
+        }
+
+        internal void Execute(FiredNode firedNode)
+        {
+            var trig = firedNode.Trigger;
+            var node = trig.TriggerNodes[firedNode.NodeIndex];
+
+            foreach (var group in node.Outcomes)
+                HandleOutcomes(group);
         }
     }
 }
