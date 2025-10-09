@@ -45,7 +45,7 @@ namespace PlayingAround.Interaction
         public override void BeginInteraction()
         {
             SceneManager.SetState(SceneState.Dialogue);
-            DialogueManager.StartNewDialogue(Npc);
+            //DialogueManager.StartNewDialogue(Npc);
         }
     }
     public sealed class InteractDataNextTile : InteractData

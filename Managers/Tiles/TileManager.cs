@@ -14,7 +14,6 @@ using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
-using PlayingAround.Managers.Proximity;
 using PlayingAround.Utils;
 using static System.Net.Mime.MediaTypeNames;
 

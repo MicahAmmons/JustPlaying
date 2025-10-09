@@ -33,7 +33,7 @@ namespace PlayingAround.Triggers.EffectFolder
                         QuestManager.SetObjectiveProgress(outcome.ProgressionStateId, outcome.QuestId, outcome.ObjectiveId);
                         break;
                     case OutcomeType.NotificationText:
-                        NotificationTextManager.AddNotificationBoxes(outcome.NotificationTextBox);
+                        NotificationTextManager.AddNotificationBox(outcome.NotificationTextBox);
                         break;
                     case OutcomeType.AdvanceLevels:
 

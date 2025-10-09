@@ -3,55 +3,43 @@
     "TriggerNodes": [
       {
         "Conditions": [
-          [
-            {
-              "Type": "KeyPressed",
-              "Key": "F"
-            },
-            {
-              "Type": "AspectObtained",
-              "AspectName": "RockSkin"
-            }
-          ]
+          {
+            "Type": "KeyPressed",
+            "Key": "F"
+          },
+          {
+            "Type": "AspectObtained",
+            "AspectName": "RockSkin"
+          }
         ],
         "Outcomes": [
-          [
-            {
-              "Type": "AdvanceLevels",
-              "Level" : 2
-            }
-          ]
+          {
+            "Type": "AdvanceLevels",
+            "Level": 2
+          }
         ]
       },
       {
         "Conditions": [
-          [
-            {
-              "Type": "AspectObtained",
-              "AspectName": "RockSkin"
-            }
-          ]
+          {
+            "Type": "AspectObtained",
+            "AspectName": "RockSkin"
+          }
         ],
         "Outcomes": [
-          [
-            {
-              "Type": "NotificationText",
-              "Text": "The Wind Blows strongly... Press F to apply the Aspect of the Rock-it"
-            }
-          ]
+          {
+            "Type": "NotificationText",
+            "Text": "The Wind Blows strongly... Press F to apply the Aspect of the Rock-it"
+          }
         ]
       },
       {
-        "Conditions": [
-          []
-        ],
+        "Conditions": [],
         "Outcomes": [
-          [
-            {
-              "Type": "NotificationText",
-              "Text": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
-            }
-          ]
+          {
+            "Type": "NotificationText",
+            "Text": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
+          }
         ]
       }
     ]

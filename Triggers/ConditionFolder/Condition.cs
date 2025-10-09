@@ -21,7 +21,6 @@ namespace PlayingAround.Triggers.ConditionFolder
         public string AspectName { get; set; }
         public Keys Key { get; set; }
         public int ProximityDistance { get; set; }
-        public bool AllowedToFight { get; set; } 
         public IProximityTracked AnchorPoint { get; set; }
         public PlayMonsters PlayMonster {  get; set; }
 

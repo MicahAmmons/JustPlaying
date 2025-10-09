@@ -18,6 +18,26 @@ namespace PlayingAround.Triggers.Notifications
         public string BeforeKeyText {  get; set; }
         public string AfterKeyText { get; set; } 
         public IProximityTracked AnchorPoint {  get; set; }
+        public bool Active { get; set; } = false;
+        public float FadeTimerMax { get; set; }
+        public float FadeTimerCurrent {  get; set; }
+        public Texture2D BackgroundTexture { get; set; }
+        public void MarkInactive()
+        {
+            Active = false;
+            FadeTimerCurrent = 0;
+        }
+        public void MarkActive()
+        {
+          
+            FadeTimerCurrent = FadeTimerMax;
+            Active = true;
+        }
+        public abstract Vector2 GetTypeSpecificDrawPoints();
+        public virtual Texture2D GetTexture()
+        {
+            return BackgroundTexture;
+        }
 
     }
     public class CombatNotificationTextBox : NotificationTextBox
@@ -28,6 +48,8 @@ namespace PlayingAround.Triggers.Notifications
             BeforeKeyText = "Press";
             AfterKeyText = "to begin Combat";
             Key = Keys.E;
+            FadeTimerMax = 3f;
+            BackgroundTexture = AssetManager.GetTexture("CombatNotificationBG");
             string fullText = $"{BeforeKeyText} {Key.ToString()} {AfterKeyText}";
             SpriteFont font = AssetManager.GetFont("mainFont");
             Vector2 size = font.MeasureString(fullText);
@@ -39,5 +61,11 @@ namespace PlayingAround.Triggers.Notifications
                (int)size.Y + 10 * 2
            );
         }
+        public override Vector2 GetTypeSpecificDrawPoints()
+        {
+            Vector2 anchorPoint = AnchorPoint.ProximityTrackingPoint;
+            return anchorPoint + new Vector2(0, 32f);
+        }
+
     }
 }

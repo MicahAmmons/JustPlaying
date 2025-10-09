@@ -23,6 +23,7 @@ using PlayingAround.Managers.UI;
 using PlayingAround.Managers.VisualEffects;
 using PlayingAround.Smoke;
 using PlayingAround.Triggers;
+using PlayingAround.Triggers.Notifications;
 using PlayingAround.Triggers.Proximity;
 using PlayingAround.Utils;
 using System;
@@ -53,7 +54,7 @@ namespace PlayingAround
         protected override void Initialize()
         {
             PlayerManager.Initialize();
-            InteractManager.Initialize();
+            TriggerManager.Initialize();
             base.Initialize();
         }
 
@@ -82,6 +83,7 @@ namespace PlayingAround
             VisualEffectLibrary.LoadContent();
             AnimationLibrary.LoadContrent();
             SmokeManager.LoadContent();
+            NotificationTextManager.LoadContent();
         }
 
 
@@ -108,19 +110,19 @@ namespace PlayingAround
             { 
               WaitUntilLoadingIsDone(delta);
             }
-            ProximityManager.Update(gameTime);
             MapTileTransitionManager.Update(gameTime);
             DebugBugger.Update(gameTime);
             SmokeManager.Update(gameTime);
             CombatGuard.Update(gameTime);
+            NotificationTextManager.Update(delta);
             UIManager.Update(gameTime);
-            InteractManager.Update();
             CombatMonsterManager.Update(gameTime, delta);
             PlayerManager.Update(gameTime, delta);
             PlayMonsterManager.Update(gameTime);
-            DialogueManager.Update();
+            TriggerManager.Update(delta);
+            //DialogueManager.Update();
             TitleScreenManager.Update(gameTime);
-            ParticleManager.Update(gameTime);
+            //ParticleManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -157,10 +159,9 @@ namespace PlayingAround
         {
             _spriteBatch.Begin();
 
-            DialogueManager.Draw(_spriteBatch);
+            //DialogueManager.Draw(_spriteBatch);
             UIManager.Draw(_spriteBatch);
             CombatGuard.DrawExitCombat(_spriteBatch);
-            InteractManager.Draw(_spriteBatch);
             EscapeOverseer.Draw(_spriteBatch);
             CinematicRuler.Draw(_spriteBatch);
             MapTileTransitionManager.Draw(_spriteBatch, GraphicsDevice);
@@ -243,6 +244,7 @@ namespace PlayingAround
             CombatMonsterManager.Draw(_spriteBatch);
             PlayMonsterManager.Draw(_spriteBatch);
             NPCManager.Draw(_spriteBatch);
+            NotificationTextManager.Draw(_spriteBatch);
             _spriteBatch.End();
 
         }

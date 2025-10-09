@@ -5,7 +5,6 @@ using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Managers;
 using PlayingAround.Managers.Entities;
-using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Triggers.ConditionFolder;
 using PlayingAround.Triggers.EffectFolder;
@@ -70,7 +69,7 @@ namespace PlayingAround.Triggers
         public static List<Trigger> GenerateCombatTriggers(PlayMonsters mon)
         {
             List<Trigger> combatTriggers = new List<Trigger>();
-            ProximityTrigger proxTrig = new ProximityTrigger(mon);
+            ProximityTrigger proxTrig = new ProximityTrigger(mon, mon);
             CombatTrigger combatStartTrig = new CombatTrigger(mon);
             combatTriggers.Add(proxTrig);
             combatTriggers.Add(combatStartTrig);

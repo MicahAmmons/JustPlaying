@@ -6,8 +6,6 @@ using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Entities.Player;
 using PlayingAround.Manager;
 using PlayingAround.Managers.Assets;
-using PlayingAround.Managers.CombatMan;
-using PlayingAround.Managers.Proximity;
 using PlayingAround.Managers.DayManager;
 using System;
 using System.Collections.Generic;

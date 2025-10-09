@@ -59,20 +59,22 @@ namespace PlayingAround.Triggers
     public class ProximityTrigger : Trigger
     {
 
-        public ProximityTrigger(IProximityTracked obj)
+        public ProximityTrigger(IProximityTracked obj, PlayMonsters mon)
         {
             var node = new TriggerNodes();
 
             var proxCondition = new Condition
             {
                 Type = ConditionType.Proximity,
-                AnchorPoint = obj
+                AnchorPoint = obj,
+                ProximityDistance = 100
 
             };
 
             var allowedToFight = new Condition
             {
-                Type = ConditionType.AllowedToFight
+                Type = ConditionType.AllowedToFight,
+                PlayMonster = mon
             };
 
             var notify = new Outcome
