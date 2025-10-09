@@ -29,13 +29,13 @@ namespace PlayingAround.Triggers.Notifications
             for (int i = _activeNotificationBoxes.Count - 1; i >= 0; i--)
             {
                 var box = _activeNotificationBoxes[i];
-
+                if (box == null) {_activeNotificationBoxes.RemoveAt(i); continue;}
                 if (box.Active)
                 {
-                    box.FadeTimerCurrent = box.FadeTimerMax;
+                    box.ResetCurrentFadeTimer();
                 }
                 else
-                {
+                    {
                     box.FadeTimerCurrent -= delta;
                     if (box.FadeTimerCurrent <= 0f)
                     {
@@ -53,8 +53,10 @@ namespace PlayingAround.Triggers.Notifications
             }
             foreach (var box in _toggledThisFrameBoxes)
             {
+                if (box == null) continue;
                 if (_activeNotificationBoxes.Contains(box)) { box.MarkActive(); continue; }
                 _activeNotificationBoxes.Add(box);
+                box.SetCacheAnchorPoint();
                 box.MarkActive();
             }
             _toggledThisFrameBoxes.Clear();
@@ -68,8 +70,6 @@ namespace PlayingAround.Triggers.Notifications
             ? MathHelper.Clamp(box.FadeTimerCurrent / box.FadeTimerMax, 0f, 1f)
             : 1f;
                 if (t <= 0f) continue;
-
-                Vector2 anchorPoint = box.AnchorPoint.ProximityTrackingPoint;
                 Vector2 position = box.GetTypeSpecificDrawPoints();
                 Rectangle rect = box.Rect;
                 Vector2 origin = new Vector2(rect.Width / 2f, rect.Height / 2f);

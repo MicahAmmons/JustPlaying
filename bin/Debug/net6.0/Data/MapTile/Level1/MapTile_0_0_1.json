@@ -3,7 +3,7 @@
   "gridY": 0,
   "gridZ": 1,
   "buildBackground": [ "0_0_1" ],
-  "monsters": [],
+  "monsters": ["EarthOoze"],
   "backgroundColor": "SkyBlue",
   "backgroundSmokeTexture": {
     "Color": "White",
@@ -35,8 +35,8 @@
     }
   },
   "obstacles": [],
-  "difficulty": 0,
-  "totalSpawns": 0,
+  "difficulty": 1,
+  "totalSpawns": 1,
 
 
   "cells": [
@@ -2790,9 +2790,9 @@
       "x": 21,
       "y": 19,
       "walkable": true,
-      "monsterSpawnable": false,
+      "monsterSpawnable": true,
       "playerSpawnable": false,
-      "playMonsterSpawnable": false,
+      "playMonsterSpawnable": true,
       "nextTileCell": null
     },
     {
@@ -2800,7 +2800,7 @@
       "y": 19,
       "walkable": true,
       "monsterSpawnable": false,
-      "playerSpawnable": false,
+      "playerSpawnable": true,
       "playMonsterSpawnable": false,
       "nextTileCell": null
     },

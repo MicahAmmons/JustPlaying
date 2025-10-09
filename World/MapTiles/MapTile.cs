@@ -113,6 +113,7 @@ namespace PlayingAround.Game.Map
                 if (cellData.TriggerName != null)
                 {
                     TriggerCells[tile] = TriggerLibrary.FetchTrigger(cellData.TriggerName);
+                    
                 }
 
             }

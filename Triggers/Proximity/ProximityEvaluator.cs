@@ -22,13 +22,15 @@ namespace PlayingAround.Triggers.Proximity
         internal bool WithinRange(Condition con, TriggerManager.EvalContext ctx)
         {
             if (con == null) return false;
-
+            TileCell playerCell = TileManager.GetCell(ctx.PlayerPos);
+            TileCell conCell = TileManager.GetCell(con.AnchorPoint.ProximityTrackingPoint);
+            return playerCell == conCell;
             Vector2 anchor = con.AnchorPoint.ProximityTrackingPoint; 
 
-            float distSq = Vector2.DistanceSquared(ctx.PlayerFeet, anchor);
-            float rangeSq = con.ProximityDistance * con.ProximityDistance;
+            //float distSq = Vector2.DistanceSquared(ctx.PlayerFeet, anchor);
+            //float rangeSq = con.ProximityDistance * con.ProximityDistance;
 
-            return distSq <= rangeSq;
+            //return distSq <= rangeSq;
         }
     }
 

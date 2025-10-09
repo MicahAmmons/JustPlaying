@@ -66,8 +66,7 @@ namespace PlayingAround.Triggers
             var proxCondition = new Condition
             {
                 Type = ConditionType.Proximity,
-                AnchorPoint = obj,
-                ProximityDistance = 100
+                AnchorPoint = obj
 
             };
 

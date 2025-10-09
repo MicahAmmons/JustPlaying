@@ -56,7 +56,7 @@ namespace PlayingAround.Triggers
             if (!SceneManager.IsState(SceneState.Play)) return;
             if (_tracked.Count == 0) return;
             var ctx = new EvalContext(
-                       playerFeet: _playerPos,
+                       playerPos: _playerPos,
                        delta: delta
         );
             _fired.Clear();
@@ -87,12 +87,12 @@ namespace PlayingAround.Triggers
         }
         public readonly struct EvalContext
         {
-            public readonly Vector2 PlayerFeet;
+            public readonly Vector2 PlayerPos;
             public readonly float Delta;
 
-            public EvalContext(Vector2 playerFeet, float delta)
+            public EvalContext(Vector2 playerPos, float delta)
             {
-                PlayerFeet = playerFeet;
+                PlayerPos = playerPos;
                 Delta = delta;
             }
         }

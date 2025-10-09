@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Assets;
-
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -18,27 +18,40 @@ namespace PlayingAround.Triggers.Notifications
         public string BeforeKeyText {  get; set; }
         public string AfterKeyText { get; set; } 
         public IProximityTracked AnchorPoint {  get; set; }
+        public Vector2 CacheAnchorPoint { get; set; }
         public bool Active { get; set; } = false;
         public float FadeTimerMax { get; set; }
         public float FadeTimerCurrent {  get; set; }
         public Texture2D BackgroundTexture { get; set; }
+
         public void MarkInactive()
         {
             Active = false;
-            FadeTimerCurrent = 0;
         }
         public void MarkActive()
         {
-          
-            FadeTimerCurrent = FadeTimerMax;
+            ResetCurrentFadeTimer();
             Active = true;
+        }
+        public void ResetCurrentFadeTimer()
+        {
+            FadeTimerCurrent = FadeTimerMax;
         }
         public abstract Vector2 GetTypeSpecificDrawPoints();
         public virtual Texture2D GetTexture()
         {
             return BackgroundTexture;
         }
+        public virtual void SetCacheAnchorPoint()
+        {
+            CacheAnchorPoint = AnchorPoint.ProximityTrackingPoint;
+        }
 
+        //If the anchorpoint moves (like a playmonster) it doesn't redraw the prompt in new area
+        internal virtual bool AnchorPointMoved(Vector2 anchorPoint)
+        {
+            return CacheAnchorPoint == anchorPoint;
+        }
     }
     public class CombatNotificationTextBox : NotificationTextBox
     {
@@ -48,7 +61,7 @@ namespace PlayingAround.Triggers.Notifications
             BeforeKeyText = "Press";
             AfterKeyText = "to begin Combat";
             Key = Keys.E;
-            FadeTimerMax = 3f;
+            FadeTimerMax = 0.5f;
             BackgroundTexture = AssetManager.GetTexture("CombatNotificationBG");
             string fullText = $"{BeforeKeyText} {Key.ToString()} {AfterKeyText}";
             SpriteFont font = AssetManager.GetFont("mainFont");
@@ -63,7 +76,7 @@ namespace PlayingAround.Triggers.Notifications
         }
         public override Vector2 GetTypeSpecificDrawPoints()
         {
-            Vector2 anchorPoint = AnchorPoint.ProximityTrackingPoint;
+            Vector2 anchorPoint = CacheAnchorPoint;
             return anchorPoint + new Vector2(0, 32f);
         }
 

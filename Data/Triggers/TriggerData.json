@@ -10,6 +10,9 @@
           {
             "Type": "AspectObtained",
             "AspectName": "RockSkin"
+          },
+          {
+            "Type": "Proximity" 
           }
         ],
         "Outcomes": [
@@ -24,21 +27,28 @@
           {
             "Type": "AspectObtained",
             "AspectName": "RockSkin"
+          },
+          { "Type": "Proximity" }
+        ],
+        "Outcomes": [
+          {
+            "Type": "NotificationText",
+            "BeforeKeyText": "The Wind Blows strongly... Press",
+            "Key": "F",
+            "AfterKeyText": "to apply the Aspect of the Rock-it"
+          }
+        ]
+      },
+      {
+        "Conditions": [
+          {
+            "Type": "Proximity"
           }
         ],
         "Outcomes": [
           {
             "Type": "NotificationText",
-            "Text": "The Wind Blows strongly... Press F to apply the Aspect of the Rock-it"
-          }
-        ]
-      },
-      {
-        "Conditions": [],
-        "Outcomes": [
-          {
-            "Type": "NotificationText",
-            "Text": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
+            "BeforeKeyText": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
           }
         ]
       }
