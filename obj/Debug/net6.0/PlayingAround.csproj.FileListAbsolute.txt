@@ -508,3 +508,9 @@ C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\C
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\Level1\1_0_1\BGCloud_1_0_1.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Content\Tiles\Level1\1_0_1\BGSmoke_1_0_1.xnb
 C:\Users\micah\OneDrive\Desktop\Repos\JustPlaying\JustPlaying\bin\Debug\net6.0\Data\MapTile\Level0\MapTile_-1_0_0.json
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\DarkcolorBG.png
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Fonts\NotificationBoxFont.spritefont
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\DarkcolorBG.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Fonts\File.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Fonts\NotificationBoxFont.xnb
+C:\Users\micah\OneDrive\Desktop\Repos\PlayingAround\bin\Debug\net6.0\Content\Fonts\TitleScreenButtonFont.xnb

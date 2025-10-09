@@ -61,12 +61,38 @@
 /processorParam:TextureFormat=Color
 /build:Attacks/Spit.png
 
-#begin File.spritefont
+#begin DarkcolorBG.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:DarkcolorBG.png
+
+#begin Fonts/File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:File.spritefont;mainFont.spritefont
+/build:Fonts/File.spritefont
+
+#begin Fonts/NotificationBoxFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/NotificationBoxFont.spritefont
+
+#begin Fonts/TitleScreenButtonFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/TitleScreenButtonFont.spritefont
 
 #begin GrassTiles/GrassTile.png
 /importer:TextureImporter
@@ -1034,18 +1060,6 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/Level1/1_-1_1/1_-1_1.png
 
-#begin Tiles/Level1/1_-1_1/1_-1_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tiles/Level1/1_-1_1/1_-1_1.png
-
 #begin Tiles/Level1/1_0_1/1_0_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1093,13 +1107,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TitleScreen/TitleScreenBackGround.png
-
-#begin TitleScreenButtonFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:TitleScreenButtonFont.spritefont
 
 #begin UI/fightBackground.png
 /importer:TextureImporter

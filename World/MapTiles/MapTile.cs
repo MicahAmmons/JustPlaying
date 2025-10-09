@@ -8,9 +8,11 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.NPCHouse;
 using PlayingAround.Smoke;
 using PlayingAround.Triggers;
+using PlayingAround.Triggers.Notifications;
 using PlayingAround.World.MapTiles.CellHighlights;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 namespace PlayingAround.Game.Map
@@ -113,7 +115,24 @@ namespace PlayingAround.Game.Map
                 if (cellData.TriggerName != null)
                 {
                     TriggerCells[tile] = TriggerLibrary.FetchTrigger(cellData.TriggerName);
-                    
+                    Trigger trig = TriggerCells[tile];
+                    foreach (var node in trig.TriggerNodes)
+                    {
+                        foreach (var cond in node.Conditions)
+                        {
+                            if (cond.Type == ConditionType.Proximity)
+                            {
+                                cond.AnchorPoint = tile;
+                            }
+                        }
+                        foreach (var outcome in node.Outcomes)
+                        {
+                            if (outcome.NoteBoxData != null)
+                            {
+                                outcome.NotificationTextBox = new MessageNotificationTextBox(tile, outcome.NoteBoxData);
+                            }
+                        }
+                    }
                 }
 
             }

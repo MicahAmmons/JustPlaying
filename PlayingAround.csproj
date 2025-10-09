@@ -18,6 +18,8 @@
   <ItemGroup>
     <None Remove="Content\ActIcons\MoveActIcon.png" />
     <None Remove="Content\ColorReplace.fx" />
+    <None Remove="Content\DarkcolorBG.png" />
+    <None Remove="Content\Fonts\NotificationBoxFont.spritefont" />
     <None Remove="Content\GrassTiles\GrassTile.png" />
     <None Remove="Content\MonsterAnimations\AirOoze\AirOozeIdle.png" />
     <None Remove="Content\MonsterAnimations\AirOoze\AirOozeWalk.png" />
@@ -102,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ActIcons\MoveActIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\DarkcolorBG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\NotificationBoxFont.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\AirOoze\AirOozeIdle.png">

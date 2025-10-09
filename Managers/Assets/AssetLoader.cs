@@ -12,8 +12,9 @@ namespace PlayingAround.Game.Assets
     {
         public static void LoadAllFonts()
         {
-            AssetManager.LoadFont("mainFont", "mainFont");
-            AssetManager.LoadFont("titleScreenButtonFont", "TitleScreenButtonFont");
+            AssetManager.LoadFont("mainFont", "Fonts/File");
+            AssetManager.LoadFont("titleScreenButtonFont", "Fonts/TitleScreenButtonFont");
+            AssetManager.LoadFont("NotificationBoxFont", "Fonts/NotificationBoxFont");
         }
         public static void LoadAllTextures()
         {
@@ -131,6 +132,7 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("NoiseA", CreateNoise.GenerateTileableFBM(256, octaves: 5, lacunarity: 2f, gain: 0.5f, seed: 42));
             AssetManager.LoadTexture("NoiseB", CreateNoise.GenerateTileableFBM(256, octaves: 5, lacunarity: 2.2f, gain: 0.52f, seed: 1337));
             AssetManager.LoadTexture("BackgroundSmoke", "Tiles/BackgroundSmoke");
+            AssetManager.LoadTexture("DarkColorBG", "DarkColorBG");
         }
 
         public static void LoadShaders()

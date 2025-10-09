@@ -21,6 +21,8 @@ namespace PlayingAround.Triggers.EffectFolder
         public int Level { get; set; }
         public NotificationTextBox NotificationTextBox { get; set; }
         public IProximityTracked AnchorPoint { get; set; }
+        public PlayMonsters PlayMonster { get; set; }
+        public NotificationTextBoxData NoteBoxData { get; set; }
     }
 
 

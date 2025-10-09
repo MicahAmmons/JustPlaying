@@ -8,9 +8,10 @@ using PlayingAround.Managers.Entities;
 using PlayingAround.Managers.Tiles;
 using PlayingAround.Triggers.ConditionFolder;
 using PlayingAround.Triggers.EffectFolder;
+using PlayingAround.Triggers.Notifications;
 using System;
 using System.Collections.Generic;
-using static PlayingAround.Triggers.CombatTrigger;
+
 
 namespace PlayingAround.Triggers
 {
@@ -69,8 +70,37 @@ namespace PlayingAround.Triggers
         public static List<Trigger> GenerateCombatTriggers(PlayMonsters mon)
         {
             List<Trigger> combatTriggers = new List<Trigger>();
-            ProximityTrigger proxTrig = new ProximityTrigger(mon, mon);
-            CombatTrigger combatStartTrig = new CombatTrigger(mon);
+
+            Trigger proxTrig = TriggerFactory.SingleNode((
+        new[]
+        {
+            new Condition { Type = ConditionType.Proximity, AnchorPoint = mon },
+            new Condition { Type = ConditionType.AllowedToFight, PlayMonster = mon }
+        },
+        new[]
+        {
+            new Outcome
+            {
+                Type = OutcomeType.NotificationText,
+                NotificationTextBox = new CombatNotificationTextBox(mon)
+            }
+        }
+    )
+);
+            Trigger combatStartTrig = TriggerFactory.SingleNode((new[]
+            {
+            new Condition { Type = ConditionType.KeyPressed, Key = Keys.E },
+            new Condition { Type = ConditionType.Proximity, AnchorPoint= mon },
+            new Condition { Type = ConditionType.AllowedToFight, PlayMonster = mon }
+
+            }, 
+            new[]
+            {
+            new Outcome { Type = OutcomeType.StartCombat, PlayMonster = mon }
+            }
+        )
+    );
+
             combatTriggers.Add(proxTrig);
             combatTriggers.Add(combatStartTrig);
             return combatTriggers;

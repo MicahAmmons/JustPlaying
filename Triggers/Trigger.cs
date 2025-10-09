@@ -7,6 +7,7 @@ using PlayingAround.Entities.Monster.PlayMonsters;
 using PlayingAround.Game.Map;
 using PlayingAround.Interfaces;
 using PlayingAround.Managers.Tiles;
+using PlayingAround.Triggers;
 using PlayingAround.Triggers.ConditionFolder;
 using PlayingAround.Triggers.EffectFolder;
 using PlayingAround.Triggers.Notifications;
@@ -21,72 +22,29 @@ namespace PlayingAround.Triggers
     public class Trigger
     {
 
-        public List<TriggerNodes> TriggerNodes {  get; set; }
+        public List<TriggerNodes> TriggerNodes {  get; set; } = new List<TriggerNodes>();
 
     }
     public class TriggerNodes
     {
         public List<Condition> Conditions { get; set; } = new();
         public List<Outcome> Outcomes { get; set; } = new();
+        public int MaxNodesAccepted { get; set; }
 
     }
-    public class CombatTrigger : Trigger
+}
+public static class TriggerFactory
+{
+    public static Trigger SingleNode(params (Condition[] conds, Outcome[] outs)[] nodes)
     {
-        public PlayMonsters Mon { get; set; }
-        public CombatTrigger(PlayMonsters mon)
+        var t = new Trigger();
+        foreach (var (conds, outs) in nodes)
         {
-            Mon = mon;
-            var node = new TriggerNodes();
-            var engageFight = new Condition
-            {
-                Type = ConditionType.KeyPressed,
-                Key = Keys.E,
-                PlayMonster = mon,
-            };
-
-            var startCombat = new Outcome
-            {
-                Type = OutcomeType.StartCombat
-            };
-
-            node.Conditions.Add(engageFight);
-            node.Outcomes.Add(startCombat);
-
-            TriggerNodes = new List<TriggerNodes> { node };
+            var n = new TriggerNodes();
+            n.Conditions.AddRange(conds);
+            n.Outcomes.AddRange(outs);
+            t.TriggerNodes.Add(n);
         }
-        
-    }
-    public class ProximityTrigger : Trigger
-    {
-
-        public ProximityTrigger(IProximityTracked obj, PlayMonsters mon)
-        {
-            var node = new TriggerNodes();
-
-            var proxCondition = new Condition
-            {
-                Type = ConditionType.Proximity,
-                AnchorPoint = obj
-
-            };
-
-            var allowedToFight = new Condition
-            {
-                Type = ConditionType.AllowedToFight,
-                PlayMonster = mon
-            };
-
-            var notify = new Outcome
-            {
-                Type = OutcomeType.NotificationText,
-                NotificationTextBox = new CombatNotificationTextBox(obj),
-            };
-
-            node.Conditions.Add(proxCondition);
-            node.Conditions.Add(allowedToFight);
-            node.Outcomes.Add(notify);
-
-            TriggerNodes = new List<TriggerNodes> { node };
-        }
+        return t;
     }
 }

@@ -32,10 +32,13 @@
         ],
         "Outcomes": [
           {
-            "Type": "NotificationText",
-            "BeforeKeyText": "The Wind Blows strongly... Press",
-            "Key": "F",
-            "AfterKeyText": "to apply the Aspect of the Rock-it"
+            "NoteBoxData": {
+              "BeforeKeyText": "The Wind Blows strongly... Press",
+              "Key": "F",
+              "AfterKeyText": "to apply the Aspect of the Rock-it",
+              "Type": "Message"
+            },
+            "Type": "NotificationText"
           }
         ]
       },
@@ -47,8 +50,11 @@
         ],
         "Outcomes": [
           {
-            "Type": "NotificationText",
-            "BeforeKeyText": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up..."
+            "NoteBoxData": {
+              "BeforeKeyText": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up...",
+              "Type": "Message"
+            },
+            "Type": "NotificationText"
           }
         ]
       }
