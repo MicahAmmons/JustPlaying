@@ -10,6 +10,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Attacks/Spit.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/DarkcolorBG.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Fonts/File.spritefont</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Fonts/NotificationBoxFont.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Fonts/TitleScreenButtonFont.spritefont</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/GrassTiles/GrassTile.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/HeroArt/BlonderHero.png</File>
@@ -89,7 +90,12 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0/LowerRocks_0_0_0.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/0_0_0old.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/1_4_0.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackGroundColors/LightBlueBG.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackGroundColors/NicePink.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackGroundColors/PinkOrangeBG.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackGroundColors/PureWhite.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackgroundSmoke.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Clouds/Cloud1.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/0_0_1.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/BGCloud_0_0_1.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/Level1/0_0_1/BGSmoke_0_0_1.png</File>
@@ -102,6 +108,12 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/WhiteSmoke.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

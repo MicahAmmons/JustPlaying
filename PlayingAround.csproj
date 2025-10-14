@@ -83,6 +83,10 @@
     <None Remove="Content\Tiles\0_0_0old.png" />
     <None Remove="Content\Tiles\0_0_0\0_0_0.png" />
     <None Remove="Content\Tiles\0_0_0\ForeDarkFog_0_0_0.png" />
+    <None Remove="Content\Tiles\BackGroundColors\LightBlueBG.png" />
+    <None Remove="Content\Tiles\BackGroundColors\NicePink.png" />
+    <None Remove="Content\Tiles\BackGroundColors\PinkOrangeBG.png" />
+    <None Remove="Content\Tiles\BackGroundColors\PureWhite.png" />
     <None Remove="Content\Tiles\Level1\0_0_1\0_0_1.png" />
     <None Remove="Content\Tiles\Level1\0_0_1\BGCloud_0_0_1.png" />
     <None Remove="Content\Tiles\Level1\0_0_1\BGSmoke_0_0_1.png" />
@@ -317,6 +321,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\0_0_0\LowerRocks_0_0_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\BackGroundColors\LightBlueBG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\BackGroundColors\NicePink.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\BackGroundColors\PinkOrangeBG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Tiles\BackGroundColors\PureWhite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Tiles\Level1\0_0_1\0_0_1.png">

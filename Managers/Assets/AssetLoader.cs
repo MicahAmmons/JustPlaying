@@ -116,8 +116,6 @@ namespace PlayingAround.Game.Assets
 
             //Level 1
             AssetManager.LoadTexture("0_0_1", "Tiles/Level1/0_0_1/0_0_1");
-            AssetManager.LoadTexture("BGSmoke_0_0_1", "Tiles/Level1/0_0_1/BGSmoke_0_0_1");
-            AssetManager.LoadTexture("BGCloud_0_0_1", "Tiles/Level1/0_0_1/BGCloud_0_0_1");
 
             AssetManager.LoadTexture("1_0_1", "Tiles/Level1/1_0_1/1_0_1");
             AssetManager.LoadTexture("BGSmoke_1_0_1", "Tiles/Level1/1_0_1/BGSmoke_1_0_1");
@@ -126,6 +124,17 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("1_-1_1", "Tiles/Level1/1_-1_1/1_-1_1");
             AssetManager.LoadTexture("BGSmoke_1_-1_1", "Tiles/Level1/1_0_1/BGSmoke_1_0_1");
             AssetManager.LoadTexture("BGCloud_1_-1_1", "Tiles/Level1/1_0_1/BGCloud_1_0_1");
+        }
+        public static void LoadClouds()
+        {
+            //Cloud Shapes
+            AssetManager.LoadTexture("Cloud1", "Tiles/Clouds/Cloud1");
+
+            // BackGrounds for clouds
+            AssetManager.LoadTexture("PinkOrangeBG", "Tiles/BackGroundColors/PinkOrangeBG");
+            AssetManager.LoadTexture("LightBlueBG", "Tiles/BackGroundColors/LightBlueBG"); AssetManager.LoadTexture("PinkOrangeBG", "Tiles/BackGroundColors/PinkOrangeBG");
+            AssetManager.LoadTexture("NicePink", "Tiles/BackGroundColors/NicePink"); AssetManager.LoadTexture("PinkOrangeBG", "Tiles/BackGroundColors/PinkOrangeBG");
+            AssetManager.LoadTexture("PureWhite", "Tiles/BackGroundColors/PureWhite");
         }
         public static void LoadMiscMapTileAssets()
         {

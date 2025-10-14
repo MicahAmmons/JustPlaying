@@ -62,12 +62,22 @@ namespace PlayingAround.Game.Map
                 BackgroundBuidldOrder.Add(AssetManager.GetTexture(str));    
             }
             BackgroundSmokeTexture = data.BackgroundSmokeTexture;
-            BackgroundSmokeTexture.DrawColor = ColorPalette.GetColor(data.BackgroundSmokeTexture.Color);
+            foreach (var text in BackgroundSmokeTexture.StaticBaseTexturesString)
+            {
+                BackgroundSmokeTexture.StaticBaseTextures.Add(AssetManager.GetTexture(text));
+            }
+            foreach (var fade in BackgroundSmokeTexture.FadingBaseTextures)
+            {
+                fade.Texture = AssetManager.GetTexture(fade.TextureName);
+            }
+            if (BackgroundSmokeTexture.SmokeFXName != null)
+            BackgroundSmokeTexture.SmokeFXTexture = AssetManager.GetTexture(BackgroundSmokeTexture.SmokeFXName);
+
             DifficultyMax = data.DifficultyMax;
             DifficultyMin = data.DifficultyMin;
             TotalMonsterSpawns = data.TotalMonsterSpawns;
             CellHighlights = new TileCellHighlights(data.TileHighlightData);
-            BackgroundColor = ColorPalette.GetColor(data.BackgroundColor);
+            BackgroundColor = Color.White;
             if (data.GlowTexture != null)
             {
                 foreach (var glowText in data.GlowTexture)

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PlayingAround.Smoke
 {
@@ -17,6 +18,7 @@ namespace PlayingAround.Smoke
         private static Texture2D _singleCloud;
         private static readonly List<CloudPulseController> _pulseClouds = new List<CloudPulseController>();
         private static readonly Random _rng = new Random();
+
 
         private static readonly int[] _sizeOptions = {  150, 200, 250, 300, 350, 450, 550 }; 
         private static readonly Color[] _cloudPalette = new[]
@@ -54,6 +56,29 @@ namespace PlayingAround.Smoke
                 if (cloud.Timer <= 0)
                     _pulseClouds.RemoveAt(i);
             }
+
+            foreach (var text in _smokeInfo.FadingBaseTextures)
+            {
+                float currentTimer = text.CurrentTimer;
+                float max = text.FadeDuration;
+                if (max > 0f)
+                {
+                    text.CurrentTimer += text.FadeDirection * delta;
+
+                    if (text.CurrentTimer >= max)
+                    {
+                        text.CurrentTimer = max;
+                        text.FadeDirection = -1;
+                    }
+                    else if (text.CurrentTimer <= 0f)
+                    {
+                        text.CurrentTimer = 0f;
+                        text.FadeDirection = 1;
+                    }
+                }
+            }
+          
+
         }
 
         private static void AddNewPulseCloud()
@@ -167,12 +192,12 @@ namespace PlayingAround.Smoke
         internal static void DrawBackgroundSmoke(SpriteBatch spriteBatch, Effect fx)
         {
             var e = _smokeInfo;
+            if (e.Opacity == null || e.Opacity == 0) return;
             fx.Parameters["Frequency"].SetValue(e.FrequencyVec);
             fx.Parameters["Speed"].SetValue(e.SpeedVec);
             fx.Parameters["DistortAmount"].SetValue(e.DistortAmount);
             fx.Parameters["Opacity"].SetValue(e.Opacity);
-            Color col = e.DrawColor;
-            var tex = AssetManager.GetTexture("BGSmoke_0_0_1");
+            var tex = e.SmokeFXTexture;
 
             var vp = spriteBatch.GraphicsDevice.Viewport;
             Vector2 screenCenter = new Vector2(vp.Width * 0.5f, vp.Height * 0.5f);
@@ -182,13 +207,57 @@ namespace PlayingAround.Smoke
     tex,
     position: screenCenter,
     sourceRectangle: null,
-    color: col,
+    color: Color.White,
     rotation: 0f,
     origin: origin,
     scale: 1f,
     effects: SpriteEffects.None,
     layerDepth: 0f
 );
+        }
+
+        public static void DrawFadingBase(SpriteBatch spriteBatch)
+        {
+            var e = _smokeInfo;
+            if (e == null) return;
+            foreach (var t in e.FadingBaseTextures)
+            {
+                Texture2D text = t.Texture;
+                if (text == null) return;
+
+                float alpha = 1f;
+
+                if (t.FadeDuration > 0f)
+                {
+                    float f = t.CurrentTimer / t.FadeDuration;
+                    alpha = 1f - MathHelper.Clamp(f, 0f, 1f);
+                }
+                var width = ViewportManager.ScreenWidth;
+                var height = ViewportManager.ScreenHeight;  
+                Vector2 screenCenter = new Vector2(width * 0.5f, height * 0.5f);
+                Vector2 origin = new Vector2(text.Width * 0.5f, text.Height * 0.5f);
+                // Draw centered so the oversized texture overhangs evenly on all sides.
+                spriteBatch.Draw(
+                    text,
+                    position: screenCenter,
+                    sourceRectangle: null,
+                    color: Color.White * alpha,
+                    rotation: 0f,
+                    origin: origin,
+                    scale: 1f,
+                    effects: SpriteEffects.None,
+                    layerDepth: 0f
+                );
+            }
+        }
+
+        public static void DrawStaticBase(SpriteBatch sb)
+        {
+            var e = _smokeInfo;
+            foreach (var text in e.StaticBaseTextures)
+            {
+                sb.Draw(text, Vector2.Zero, Color.White);
+            }
         }
     }
 }

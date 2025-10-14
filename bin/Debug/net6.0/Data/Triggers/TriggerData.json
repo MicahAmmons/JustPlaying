@@ -33,9 +33,12 @@
         "Outcomes": [
           {
             "NoteBoxData": {
-              "BeforeKeyText": "The Wind Blows strongly... Press",
-              "Key": "F",
-              "AfterKeyText": "to apply the Aspect of the Rock-it",
+              "Texts": [
+                "The Wind Blows strongly...",
+                "You aren't heavy enough to descend...",
+                "But you could be...",
+                "Press F to apply the Aspect of the Turtle"
+              ],
               "Type": "Message"
             },
             "Type": "NotificationText"
@@ -51,7 +54,11 @@
         "Outcomes": [
           {
             "NoteBoxData": {
-              "BeforeKeyText": "The wind surges strongly up the bluffs.  Stepping off would surely send you flying up...",
+              "Texts": [
+                "The wind surges strongly up the bluffs...",
+                "If you stepped off, you'd be sent flying...",
+                "Perhaps you could make yourself heavier..."
+              ],
               "Type": "Message"
             },
             "Type": "NotificationText"

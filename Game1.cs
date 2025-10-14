@@ -134,7 +134,7 @@ namespace PlayingAround
         
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(TileManager.FetchBackgroundColor());
+            GraphicsDevice.Clear(Color.Black);
 
 
             if (DrawTitleScreen(gameTime)) return;
@@ -213,23 +213,31 @@ namespace PlayingAround
         public void DrawBackgroundSmoke(GameTime gameTime)
         {
             _spriteBatch.Begin();
-            SmokeManager.DrawPulseCloud(_spriteBatch);
+            //SmokeManager.DrawPulseCloud(_spriteBatch);
             _spriteBatch.End();
+
+            _spriteBatch.Begin();
+            SmokeManager.DrawStaticBase(_spriteBatch);
+            _spriteBatch.End();
+
+            _spriteBatch.Begin();
+          //  SmokeManager.DrawFadingBase(_spriteBatch);
+            _spriteBatch.End();
+
+
+
 
 
             var fx = AssetManager.GetEffect("Smoke");
             fx.Parameters["GlobalTime"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
 
-            // Good starting values:
-            fx.Parameters["Frequency"].SetValue(new Vector2(6f, 4f));
-            fx.Parameters["Speed"].SetValue(new Vector2(0.6f, 0.45f));
-            fx.Parameters["DistortAmount"].SetValue(0.08f);
-            fx.Parameters["Opacity"].SetValue(1.0f);
-
-            _spriteBatch.Begin(SpriteSortMode.Immediate,
-                               BlendState.NonPremultiplied,   // typical PNGs; switch to AlphaBlend if premultiplied
-                               SamplerState.LinearClamp,
-                               null, null, fx, Matrix.Identity);
+            _spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                BlendState.AlphaBlend,  
+                SamplerState.LinearClamp,  
+                null, null,
+                fx,
+                Matrix.Identity);
 
             SmokeManager.DrawBackgroundSmoke(_spriteBatch, fx);
 

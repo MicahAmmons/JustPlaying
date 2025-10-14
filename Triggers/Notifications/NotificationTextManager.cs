@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Managers;
 using PlayingAround.Managers.Assets;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,25 @@ namespace PlayingAround.Triggers.Notifications
         }
         public static void Update(float delta)
         {
+            if (!SceneManager.IsState(SceneState.Play))
+            {
+                if (_activeNotificationBoxes.Count > 0)
+                {
+                    _activeNotificationBoxes.Clear();
+                }
+                return;
+            }
             ToggleActive();
             UpdateActiveProgression(delta);
+            UpdateLifeTimeTimers(delta);
+        }
+        private static void UpdateLifeTimeTimers(float delta)
+        {
+            if (_activeNotificationBoxes.Count > 0) 
+            foreach (var box in _activeNotificationBoxes)
+            {
+                box.UpdateLifeTimeTimers(delta);
+            }
         }
         private static void UpdateActiveProgression(float delta)
         {
@@ -38,6 +56,7 @@ namespace PlayingAround.Triggers.Notifications
                     if (box.FadeTimerCurrent <= 0f)
                     {
                         _activeNotificationBoxes.RemoveAt(i);
+                        box.ClearLifeTimeTimer();
                         continue;
                     }
                 }
@@ -61,89 +80,67 @@ namespace PlayingAround.Triggers.Notifications
         }
         public static void Draw(SpriteBatch sb)
         {
+            if (!SceneManager.IsState(SceneState.Play)) return;
             if (_activeNotificationBoxes.Count == 0) return;
+
             foreach (var box in _activeNotificationBoxes)
             {
-                float t = (box.FadeTimerMax > 0f)
-            ? MathHelper.Clamp(box.FadeTimerCurrent / box.FadeTimerMax, 0f, 1f)
-            : 1f;
-                if (t <= 0f) continue;
-                Vector2 position = box.GetTypeSpecificDrawPoints();
+                box.GetTypeSpecificDrawPoints();
 
-                const float MaxLineWidth = 200f;
-                const int Padding = 5;
-
-                Rectangle rect = box.Rect;
-
-                float rotation = box.GetRotation();
-                float scale = 1f;
-                SpriteEffects fx = SpriteEffects.None;
-
-                Texture2D texture = box.GetTexture();
-                Color bgColor = Color.White * t;
-                Color textColor = ColorPalette.LightColor * t;
-                Color keyColor = Color.White * t;
                 SpriteFont font = box.Font;
+                float timer = box.BoxLifeTimer;
+                float fadeCurrent = box.FadeTimerCurrent; // remaining fade-out time
+                float fadeTimeMax = box.FadeTimerMax;     // total fade-out duration
+                float fadeInTimer = box.FadeInTimer;      // per-line fade-in duration
 
-                string beforeText = box.BeforeKeyText ?? string.Empty;
-                string keyText = $"{box.Key}";
-                string afterText = box.AfterKeyText ?? string.Empty;
-
-                string middle = string.IsNullOrEmpty(keyText) ? string.Empty : keyText;
-                string fullText = $"{beforeText} {middle} {afterText}".Trim();
-                Vector2 origin = Vector2.Zero;
-                var wrapped = WrapText(font, fullText, MaxLineWidth, out Vector2 textBlockSize);
-
-                var finalRect = new Rectangle(
-                        (int)MathF.Round(position.X - (textBlockSize.X * 0.5f) - Padding),
-                        (int)MathF.Round(position.Y - (textBlockSize.Y * 0.5f) - Padding),
-                        (int)MathF.Ceiling(textBlockSize.X) + Padding * 2,
-                        (int)MathF.Ceiling(textBlockSize.Y) + Padding * 2
-                );
-                origin = new Vector2(finalRect.Width / 2f, finalRect.Height / 2f);
-                //Drawing the Rectangle texture
-                // 1) Background: scale to match finalRect and rotate around center
-                if (texture != null)
+                List<TextData> data = box.TextData;
+                for (int i = 0; i < data.Count; i++)
                 {
-                    var bgOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-                    var bgScale = new Vector2(
-                        finalRect.Width / (float)texture.Width,
-                        finalRect.Height / (float)texture.Height
-                    );
+                    var text = data[i];
+                    if (timer < text.FadeDelay)
+                        continue;
 
-                    sb.Draw(
-                        texture,
-                        position,                 // center pivot
-                        null,
-                        bgColor,
-                        rotation,
-                        bgOrigin,                 // rotate around center of the texture
-                        bgScale,                  // scale to our computed rect size
-                        fx,
-                        0f
-                    );
-                }
+                    float timeSinceActive = timer - text.FadeDelay;
+                    float fade = 1f;
 
-                // 2) Text: compute local offsets relative to the same center pivot
-                float localY = -textBlockSize.Y * 0.5f + Padding;
-                foreach (var (line, lineWidth) in wrapped)
-                {
-                    float localX = -lineWidth * 0.5f; // center line horizontally
+                    if (fadeInTimer > 0f && timeSinceActive < fadeInTimer)
+                    {
+                        fade = MathHelper.Clamp(timeSinceActive / fadeInTimer, 0f, 1f);
+                    }
+                    else
+                    {
+                        if (fadeTimeMax > 0f)
+                        {
+                            float outAlpha = MathHelper.Clamp(fadeCurrent / fadeTimeMax, 0f, 1f);
+                            fade = outAlpha;
+                        }
+                        else
+                        {
+                            fade = 1f;
+                        }
+                    }
+
+                    if (fade <= 0f)
+                        continue;
+                    var size = font.MeasureString(text.Text); 
+                    var origin = size * 0.5f; 
+
                     sb.DrawString(
                         font,
-                        line,
-                        position + new Vector2(localX, localY),
-                        textColor,
-                        rotation,
-                        Vector2.Zero,            // IMPORTANT: origin = zero for text
-                        1f,
-                        fx,
+                        text.Text,
+                        text.DrawPoint,
+                        ColorPalette.DarkColor * fade,
+                        text.Rotation,
+                        origin,
+                        1f,  
+                        SpriteEffects.None,
                         0f
                     );
-                    localY += font.LineSpacing;
                 }
             }
         }
+
+
         public static void AddNotificationBox(NotificationTextBox box)
         {
             _toggledThisFrameBoxes.Add(box);

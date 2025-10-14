@@ -4,12 +4,19 @@
   "gridZ": 1,
   "buildBackground": [ "0_0_1" ],
   "monsters": ["EarthOoze"],
-  "backgroundColor": "SkyBlue",
   "backgroundSmokeTexture": {
-    "Color": "White",
+    "StaticBaseTexturesString": [ "NicePink" ],
+    "FadingBaseTextures": [
+      {
+        "TextureName": "LightBlueBG",
+        "FadeDuration": 10
+      }
+    ],
+    "SmokeFXName": "Cloud1",
+    "BackGroundTextureFadeAmount": 5,
     "Frequency": [ 1.5, 1.5 ],
-    "Speed": [ 0.19, 0.19 ],
-    "DistortAmount": 0.035,
+    "Speed": [ 0.60, 0.60 ],
+    "DistortAmount": 0.065,
     "Opacity": 1
   },
   "tileHighlights": {

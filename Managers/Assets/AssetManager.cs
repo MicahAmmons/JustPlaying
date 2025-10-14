@@ -35,6 +35,7 @@ namespace PlayingAround.Managers.Assets
             AssetLoader.LoadMiscMapTileAssets();
             AssetLoader.LoadNPCTextures();
             AssetLoader.LoadActIcons();
+            AssetLoader.LoadClouds();
             LoadCustomAssets();
         }
         public static void LoadCustomAssets()

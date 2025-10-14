@@ -75,6 +75,11 @@ namespace PlayingAround.Manager
         public static bool IsLeftMouseDown() =>
             _currentMouse.LeftButton == ButtonState.Pressed;
 
+        internal static KeyboardState GetKeyboardState()
+        {
+            return _currentKeyboard;
+        }
+
         public static int MouseX => _currentMouse.X;
         public static int MouseY => _currentMouse.Y;
 

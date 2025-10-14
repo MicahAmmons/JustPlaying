@@ -8,8 +8,7 @@ namespace PlayingAround.Triggers.Notifications
 {
     public class NotificationTextBoxData
     {
-        public string BeforeKeyText { get; set; }
-        public string AfterKeyText { get; set; }
+        public List<string> Texts { get; set; }
         public string Key {  get; set; }
         public NotificationTextBoxType Type { get; set; }
 

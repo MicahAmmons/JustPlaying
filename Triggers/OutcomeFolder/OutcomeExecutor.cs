@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.Managers;
+using PlayingAround.Managers.CombatMan;
 using PlayingAround.Managers.Quests;
 using PlayingAround.Triggers.Notifications;
 using System;
@@ -39,7 +41,8 @@ namespace PlayingAround.Triggers.EffectFolder
 
                         break;
                     case OutcomeType.StartCombat:
-
+                        SceneManager.SetState(SceneState.Combat);
+                        CombatGuard.CreateNewCombat(outcome.PlayMonster);
                         break;
                 }
             }

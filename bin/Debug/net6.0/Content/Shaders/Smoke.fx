@@ -18,6 +18,7 @@ float4 MainPS(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0
     float dy = cos(uv.x * Frequency.y - t * Speed.y) * 0.5;
 
     float2 warpedUV = uv + float2(dx, dy) * DistortAmount;
+    warpedUV = clamp(warpedUV, float2(0.01, 0.01), float2(0.99, 0.99)); // tiny inset
 
     // Sample; keep original RGB, scale alpha only
     float4 c = tex2D(TextureSampler, warpedUV) * color;
