@@ -40,6 +40,8 @@
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalk.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalkDown.png" />
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png" />
+    <None Remove="Content\MonsterAnimations\Test\TestCase.png" />
+    <None Remove="Content\MonsterAnimations\Test\TestTexture.png" />
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\EarthOoze.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
@@ -65,6 +67,7 @@
     <None Remove="Content\PlayerSprites\PlayerNeck.png" />
     <None Remove="Content\PlayerSprites\PlayerSprites.png" />
     <None Remove="Content\PlayerSprites\PlayerSS.png" />
+    <None Remove="Content\Shaders\EntityCloudMovement.fx" />
     <None Remove="Content\Shaders\Smoke.fx" />
     <None Remove="Content\Songs\newGameIntroCinBackground.mp3" />
     <None Remove="Content\TileCell\3arrows.png" />
@@ -164,6 +167,12 @@
     <Content Include="Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\MonsterAnimations\Test\TestCase.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Test\TestTexture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\MonsterIcons\EarthOoze.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -258,6 +267,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlayerSprites\PlayerSS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Shaders\EntityCloudMovement.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Shaders\Smoke.fx">

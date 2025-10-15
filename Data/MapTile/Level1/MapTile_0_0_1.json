@@ -43,7 +43,7 @@
   },
   "obstacles": [],
   "difficulty": 1,
-  "totalSpawns": 1,
+  "totalSpawns": 0,
 
 
   "cells": [
@@ -2647,7 +2647,8 @@
       "monsterSpawnable": false,
       "playerSpawnable": false,
       "playMonsterSpawnable": false,
-      "nextTileCell": null
+      "nextTileCell": null,
+      "npc": "Micah"
     },
     {
       "x": 20,

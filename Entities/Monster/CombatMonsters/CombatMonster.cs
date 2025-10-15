@@ -438,5 +438,6 @@ namespace PlayingAround.Entities.Monster.CombatMonsters
         Player,
         Self,
         PlayMonster,
+        NPC
     }
 }

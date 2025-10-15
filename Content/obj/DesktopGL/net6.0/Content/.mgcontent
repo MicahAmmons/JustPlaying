@@ -34,6 +34,8 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalk.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalkDown.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/FrostOoze/FrostOozeWalkUp.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/Test/TestCase.png</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterAnimations/Test/TestTexture.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/AngryPlantIcon.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/EarthOoze.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/MonsterIcons/OozeIcon.png</File>
@@ -63,6 +65,7 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/PlayerSprites/PlayerSS.png</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Shaders/ColorColumnPulse.fx</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Shaders/ColorReplace.fx</File>
+    <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Shaders/EntityCloudMovement.fx</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Shaders/Smoke.fx</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Songs/newGameIntroCinBackground.mp3</File>
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Songs/titleScreenBG.mp3</File>
@@ -108,6 +111,9 @@
     <File>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/WhiteSmoke.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

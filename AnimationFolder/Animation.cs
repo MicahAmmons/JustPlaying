@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder.EntityCloudFX;
 using PlayingAround.Managers.Assets;
 using PlayingAround.Managers.CombatMan.CombatAttacks;
 using System;
@@ -14,6 +15,7 @@ namespace PlayingAround.AnimationFolder
     public class Animation
     {
         public List<Rectangle> Frames { get; private set; }
+        public FXEntityCloud FXEntityCloud { get; private set; }
         public float FrameDuration { get; private set; } // In seconds
         public bool IsIndefinite { get; private set; }
         public bool IsLooping { get; private set; } 
@@ -48,26 +50,60 @@ namespace PlayingAround.AnimationFolder
             Frames = new List<Rectangle>(data.FrameCount);
             SpriteSheet = AssetManager.GetTexture(data.SpriteSheetName);
             DefaultDirection = data.DefaultDirection;
-            // Max numb of frames per sheet width
-            int framesPerRow = Math.Max(1, SpriteSheet.Width / data.FrameWidth);
+            if (data.FXEntityCloudData != null)
+            {
+                FXEntityCloud = new FXEntityCloud();
+                foreach (var d in data.FXEntityCloudData)
+                {
+                    var c = d.OverlayColor;
+                    FXEntityCloud.ListOfSpecificEntityClouds.Add(new FXEntityCloudSpecific()
+                    {
+                        ScrollSpeed = new Vector2(d.ScrollSpeed.X, d.ScrollSpeed.Y),
+                        SpriteSheet = SpriteSheet,
+                        MaskRow = d.MaskRow,
+                        OverlayTexture = AssetManager.GetTexture(d.OverlayTextureName),
 
-            // 0-based starting row index in the sheet
+                        OverlayColor = new Vector4(c.R, c.G, c.B, c.A)
+                    });
+
+                }
+               
+            }
+            int framesPerRow = Math.Max(1, SpriteSheet.Width / data.FrameWidth);
             int startRowIndex = Math.Max(0, data.Row - 1);
+
 
             for (int i = 0; i < data.FrameCount; i++)
             {
-                int col = i % framesPerRow;        // 0..framesPerRow-1
-                int rowOffset = i / framesPerRow;  // 0,1,2...
+                int col = i % framesPerRow;
+                int rowOffset = i / framesPerRow;
 
                 int x = col * data.FrameWidth;
                 int y = (startRowIndex + rowOffset) * data.FrameHeight;
 
-                // stop ifoutside the texture
                 if (y + data.FrameHeight > SpriteSheet.Height)
-                    break; 
+                    break;
 
+                // main overlay frame
                 Frames.Add(new Rectangle(x, y, data.FrameWidth, data.FrameHeight));
+
+                // per-FX mask frames
+                if (FXEntityCloud?.ListOfSpecificEntityClouds != null)
+                {
+                    foreach (var fxSpec in FXEntityCloud.ListOfSpecificEntityClouds)
+                    {
+                        int maskBaseRow = (fxSpec.MaskRow > 0) ? fxSpec.MaskRow : data.Row;
+                        int maskStartRowIndex = Math.Max(0, maskBaseRow - 1);
+                        int maskY = (maskStartRowIndex + rowOffset) * data.FrameHeight;
+
+                        if (maskY + data.FrameHeight <= SpriteSheet.Height)
+                        {
+                            fxSpec.MaskFrames.Add(new Rectangle(x, maskY, data.FrameWidth, data.FrameHeight));
+                        }
+                    }
+                }
             }
+
 
             Width = data.FrameWidth;
             Height = data.FrameHeight;
@@ -92,7 +128,6 @@ namespace PlayingAround.AnimationFolder
             }
 
         }
-
         public Rectangle GetFrame(int index)
         {
             if (index < 0 || index >= Frames.Count)
@@ -123,7 +158,6 @@ namespace PlayingAround.AnimationFolder
             else
                 return 0f;
         }
-
         internal Vector2 GetOrigin()
         {
             return GetOriginPoint();
@@ -165,7 +199,6 @@ namespace PlayingAround.AnimationFolder
                         return Vector2.Zero;
                 }
             }
-        
 
     }
 

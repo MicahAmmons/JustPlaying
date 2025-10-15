@@ -152,124 +152,172 @@
     
   },
   "FrostOoze": {
-      "Animations": {
-        "WalkUp": [
-          {
-            "Row": 1,
-            "FrameCount": 16,
-            "FrameDurationMs": 100,
-            "SpriteSheetName": "FrostOozeWalkUp",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 0
-          }
-        ],
-        "WalkDown": [
-          {
-            "Row": 1,
-            "FrameCount": 15,
-            "FrameDurationMs": 100,
-            "SpriteSheetName": "FrostOozeWalkDown",
-            "DefaultDirection": "Left",
-            "FrameWidth": 172,
-            "FrameHeight": 172,
-            "EndOfCyclePause": 0
-          }
-        ],
-        "AttackUp": [
-          {
-            "AttackName": "IcicleStab",
-            "Row": 1,
-            "FrameCount": 34,
-            "FrameDurationMs": 40,
-            "SpriteSheetName": "FrostOozeIcicleStabUp",
-            "DefaultDirection": "Left",
-            "PingPong": true,
-            "FrameWidth": 136,
-            "FrameHeight": 136
-          }
-        ],
-        "AttackDown": [
-          {
-            "AttackName": "IcicleStab",
-            "Row": 1,
-            "FrameCount": 29,
-            "FrameDurationMs": 40,
-            "SpriteSheetName": "FrostOozeIcicleStabDown",
-            "DefaultDirection": "Left",
-            "PingPong": true,
-            "FrameWidth": 136,
-            "FrameHeight": 136
-          }
-        ],
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 2,
-            "FrameDurationMs": 10000,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 84,
-            "FrameHeight": 84
-          },
-          {
-            "Row": 2,
-            "FrameCount": 30,
-            "FrameDurationMs": 85,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 84,
-            "FrameHeight": 84,
-            "StartCyclePause": 2,
-            "EndCyclePause": 16
-          },
-          {
-            "Row": 3,
-            "FrameCount": 30,
-            "FrameDurationMs": 85,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 84,
-            "FrameHeight": 84,
-            "StartCyclePause": 16,
-            "EndCyclePause": 16
-          },
-          {
-            "Row": 4,
-            "FrameCount": 30,
-            "FrameDurationMs": 85,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 84,
-            "FrameHeight": 84,
-            "StartCyclePause": 30,
-            "EndCyclePause": 16
-          },
-          {
-            "Row": 5,
-            "FrameCount": 30,
-            "FrameDurationMs": 85,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "FrostOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 84,
-            "FrameHeight": 84,
-            "StartCyclePause": 43,
-            "EndCyclePause": 16
-          }
-        ]
-      }
-    
+    "Animations": {
+      "WalkUp": [
+        {
+          "Row": 1,
+          "FrameCount": 16,
+          "FrameDurationMs": 100,
+          "SpriteSheetName": "FrostOozeWalkUp",
+          "DefaultDirection": "Left",
+          "FrameWidth": 192,
+          "FrameHeight": 192,
+          "EndOfCyclePause": 0
+        }
+      ],
+      "WalkDown": [
+        {
+          "Row": 1,
+          "FrameCount": 15,
+          "FrameDurationMs": 100,
+          "SpriteSheetName": "FrostOozeWalkDown",
+          "DefaultDirection": "Left",
+          "FrameWidth": 172,
+          "FrameHeight": 172,
+          "EndOfCyclePause": 0
+        }
+      ],
+      "AttackUp": [
+        {
+          "AttackName": "IcicleStab",
+          "Row": 1,
+          "FrameCount": 34,
+          "FrameDurationMs": 40,
+          "SpriteSheetName": "FrostOozeIcicleStabUp",
+          "DefaultDirection": "Left",
+          "PingPong": true,
+          "FrameWidth": 136,
+          "FrameHeight": 136
+        }
+      ],
+      "AttackDown": [
+        {
+          "AttackName": "IcicleStab",
+          "Row": 1,
+          "FrameCount": 29,
+          "FrameDurationMs": 40,
+          "SpriteSheetName": "FrostOozeIcicleStabDown",
+          "DefaultDirection": "Left",
+          "PingPong": true,
+          "FrameWidth": 136,
+          "FrameHeight": 136
+        }
+      ],
+      "Idle": [
+        {
+          "Row": 1,
+          "FrameCount": 2,
+          "FrameDurationMs": 10000,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "FrostOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 84,
+          "FrameHeight": 84
+        },
+        {
+          "Row": 2,
+          "FrameCount": 30,
+          "FrameDurationMs": 85,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "FrostOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 84,
+          "FrameHeight": 84,
+          "StartCyclePause": 2,
+          "EndCyclePause": 16
+        },
+        {
+          "Row": 3,
+          "FrameCount": 30,
+          "FrameDurationMs": 85,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "FrostOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 84,
+          "FrameHeight": 84,
+          "StartCyclePause": 16,
+          "EndCyclePause": 16
+        },
+        {
+          "Row": 4,
+          "FrameCount": 30,
+          "FrameDurationMs": 85,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "FrostOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 84,
+          "FrameHeight": 84,
+          "StartCyclePause": 30,
+          "EndCyclePause": 16
+        },
+        {
+          "Row": 5,
+          "FrameCount": 30,
+          "FrameDurationMs": 85,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "FrostOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 84,
+          "FrameHeight": 84,
+          "StartCyclePause": 43,
+          "EndCyclePause": 16
+        }
+      ]
+    }
+
+  },
+  "TestCase": {
+    "Animations": {
+      "Idle": [
+        {
+          "Row": 1,
+          "FrameCount": 3,
+          "FrameDurationMs": 550,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "TestCase",
+          "DefaultDirection": "Right",
+          "FrameWidth": 109,
+          "FrameHeight": 109,
+          "FXEntityCloudData": [
+            {
+              "MaskRow": 3,
+              "OverlayTextureName": "TestTexture",
+              "ScrollSpeed": {
+                "X": -0.05,
+                "Y": -0.05
+              },
+              "OverlayColor": {
+                "R": 1.0,
+                "G": 0.4,
+                "B": 0.2,
+                "A": 1.0
+              }
+            },
+            {
+              "MaskRow": 2,
+              "OverlayTextureName": "TestTexture",
+              "ScrollSpeed": {
+                "X": -0.02,
+                "Y": -0.02
+              },
+              "OverlayColor": {
+                "R": 0.6,
+                "G": 0.8,
+                "B": 1.0,
+                "A": 1.0
+              }
+            }
+
+          ]
+        }
+      ]
+    }
   },
   "EarthOoze": {
       "Animations": {

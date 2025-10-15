@@ -358,6 +358,30 @@
 /processorParam:TextureFormat=Color
 /build:MonsterAnimations/FrostOoze/FrostOozeWalkUp.png
 
+#begin MonsterAnimations/Test/TestCase.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Test/TestCase.png
+
+#begin MonsterAnimations/Test/TestTexture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Test/TestTexture.png
+
 #begin MonsterIcons/AngryPlantIcon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -693,6 +717,12 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Shaders/ColorReplace.fx
+
+#begin Shaders/EntityCloudMovement.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/EntityCloudMovement.fx
 
 #begin Shaders/Smoke.fx
 /importer:EffectImporter

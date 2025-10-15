@@ -32,11 +32,6 @@
     "headcolor": "Wind"
   },
   "Micah": {
-    "name": "Micah",
-    "width": 128,
-    "height": 128,
-    "headTexturePath": "NormalHead",
-    "eyeColor": "Fire",
-    "headcolor": "Ice"
+    "AnimationData": "TestCase"
   }
 }

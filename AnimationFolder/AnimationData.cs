@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using PlayingAround.AnimationFolder.EntityCloudFX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace PlayingAround.AnimationFolder
     public class SpecificAnimationData
     {
         public int Row { get; set; }                 // 1-based
+        public List<FXEntityCloudData> FXEntityCloudData { get; set; }
         public int FrameCount { get; set; }
         public int FrameDurationMs { get; set; }
         public bool IsIndefinite { get; set; } = false;

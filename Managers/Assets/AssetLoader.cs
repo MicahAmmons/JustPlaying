@@ -54,6 +54,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("FireOozeLavaBall", "MonsterAnimations/FireOoze/FireOozeLavaBall");
             AssetManager.LoadTexture("FireOozeLavaBallVE", "MonsterAnimations/FireOoze/FireOozeLavaBallVE");
 
+            AssetManager.LoadTexture("TestCase", "MonsterAnimations/Test/TestCase");
+            AssetManager.LoadTexture("TestTexture", "MonsterAnimations/Test/TestTexture");
         }
         public static void LoadPlayerSpriteSheets()
         {
@@ -135,6 +137,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadTexture("LightBlueBG", "Tiles/BackGroundColors/LightBlueBG"); AssetManager.LoadTexture("PinkOrangeBG", "Tiles/BackGroundColors/PinkOrangeBG");
             AssetManager.LoadTexture("NicePink", "Tiles/BackGroundColors/NicePink"); AssetManager.LoadTexture("PinkOrangeBG", "Tiles/BackGroundColors/PinkOrangeBG");
             AssetManager.LoadTexture("PureWhite", "Tiles/BackGroundColors/PureWhite");
+
+
         }
         public static void LoadMiscMapTileAssets()
         {
@@ -149,7 +153,8 @@ namespace PlayingAround.Game.Assets
             AssetManager.LoadEffect("ColorReplace", "Shaders/ColorReplace");
             AssetManager.LoadEffect("ColorColumnPulse", "Shaders/ColorColumnPulse");
             AssetManager.LoadEffect("Smoke", "Shaders/Smoke");
-            AssetManager.LoadEffect("BodySmoke", "Shaders/BodySmoke");
+            AssetManager.LoadEffect("BodySmoke", "Shaders/BodySmoke"); 
+            AssetManager.LoadEffect("EntityCloudMovement", "Shaders/EntityCloudMovement");
         }
         public static void LoadNPCTextures()
         {

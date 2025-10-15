@@ -266,37 +266,51 @@ namespace PlayingAround.AnimationFolder
 
             return _animation.GetFrame(_currentFrameIndex);
         }
+
         public Rectangle GetNextFrame()
         {
+            int idx = GetNextFrameIndex();
+            if (idx < 0) return Rectangle.Empty;
+            return _animation.GetFrame(idx);
+        }
+        public int GetNextFrameIndex()
+        {
             if (_animation == null || _animation.FrameCount <= 0)
-                return Rectangle.Empty;
+                return -1; 
+            int count = _animation.FrameCount;
 
             if (_animation.IsLooping)
             {
                 int next = _currentFrameIndex + 1;
-                if (next >= _animation.FrameCount) next = 0;
-                return _animation.GetFrame(next);
+                if (next >= count) next = 0;
+                return next;
             }
-
             if (_animation.PingPong)
             {
                 int next = _currentFrameIndex + _direction;
-                if (next >= _animation.FrameCount) next = _animation.FrameCount - 2; // bounce
-                if (next < 0) next = 1; // bounce
-                return _animation.GetFrame(Math.Clamp(next, 0, _animation.FrameCount - 1));
-            }
 
-            // normal single
-            int n = Math.Min(_animation.FrameCount - 1, _currentFrameIndex + 1);
-            return _animation.GetFrame(n);
+                // bounce at ends (handles 1 or 2 frames too)
+                if (next >= count) next = Math.Max(0, count - 2);
+                if (next < 0) next = Math.Min(1, count - 1);
+
+                return Math.Clamp(next, 0, count - 1);
+            }
+            return Math.Min(count - 1, _currentFrameIndex + 1);
         }
         public int GetCurrentFrameIndex()
         {
+
             return _currentFrameIndex;
         }
         internal void FrameDurationOverride(float movementQuicknessOverride)
         {
             _frameDurationOverride = movementQuicknessOverride;
+        }
+
+        public float GetRemainingTime()
+        {
+            float remaining = _animation.FrameDuration - _frameTimer;
+            return Math.Max(0f, remaining);
         }
     }
 

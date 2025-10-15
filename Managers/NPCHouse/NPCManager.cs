@@ -15,12 +15,21 @@ namespace PlayingAround.Managers.NPCHouse
     public static class NPCManager
     {
         private static Dictionary<string, NPCData> _dataNPC;
-        private static List<NPC> _currentNPCs => TileManager.CurrentMapTile.NPCs;
+        private static List<NPC> _currentNPCs => TileManager.CurrentMapTile?.NPCs;
         public static List<NPC> CurrentNPCs;
 
         public static void LoadContent()
         {
             _dataNPC = JsonLoader.LoadNPCData();
+        }
+        public static void Update(GameTime gametime)
+        {
+            if (_currentNPCs == null) { return; }
+            if (_currentNPCs.Count == 0 ) return;
+            foreach ( var npc in _currentNPCs)
+            {
+                npc.Update(gametime);
+            }
         }
         public static NPC GenerateNPC(string name, TileCell cell)
         {
@@ -29,16 +38,25 @@ namespace PlayingAround.Managers.NPCHouse
             NPC npc = new NPC(_dataNPC[name], currentPos, DialogueLibrary.GetDialogueData(name))
             {
             };
+            npc.SetStartingPoint(cell.CenterPoint);
             return npc;
         }
-        public static void Draw(SpriteBatch spriteBatch)
+        public static void DrawStaticFrames(SpriteBatch spriteBatch)
         {
             if (SceneManager.CurrentState == SceneState.Dialogue || SceneManager.CurrentState == SceneState.Play)
             {
                 foreach (var npc in  _currentNPCs)
                 {
-                    npc?.Draw(spriteBatch);
+                    npc?.DrawStaticFrames(spriteBatch);
                 }
+            }
+        }
+
+        internal static void DrawCloudMovement(SpriteBatch spriteBatch, Effect fx)
+        {
+            foreach (var npc in _currentNPCs)
+            {
+                npc.DrawCloudMovement(spriteBatch, fx);
             }
         }
     }

@@ -118,6 +118,7 @@ namespace PlayingAround
             UIManager.Update(gameTime);
             CombatMonsterManager.Update(gameTime, delta);
             PlayerManager.Update(gameTime, delta);
+            NPCManager.Update(gameTime);
             PlayMonsterManager.Update(gameTime);
             TriggerManager.Update(delta);
             //DialogueManager.Update();
@@ -250,14 +251,28 @@ namespace PlayingAround
             CombatGuard.Draw(_spriteBatch, GraphicsDevice);
             TileCellManager.Draw(_spriteBatch);
             CombatMonsterManager.Draw(_spriteBatch);
-            PlayMonsterManager.Draw(_spriteBatch);
-            NPCManager.Draw(_spriteBatch);
+
             NotificationTextManager.Draw(_spriteBatch);
+            _spriteBatch.End();
+            DrawNPCs(gameTime);
+        }
+
+        private void DrawNPCs(GameTime gameTime)
+        {
+            _spriteBatch.Begin();
+            NPCManager.DrawStaticFrames(_spriteBatch);
+            _spriteBatch.End();
+
+            var fx = AssetManager.GetEffect("EntityCloudMovement");
+            fx.Parameters["GlobalTime"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+            _spriteBatch.Begin(SpriteSortMode.Immediate,
+                   BlendState.AlphaBlend,
+                   SamplerState.LinearWrap,
+                   null, null, fx);
+            NPCManager.DrawCloudMovement(_spriteBatch, fx);
             _spriteBatch.End();
 
         }
-
-
 
         private bool DrawTitleScreen(GameTime gameTime)
         {
