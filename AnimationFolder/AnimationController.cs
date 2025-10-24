@@ -68,19 +68,19 @@ namespace PlayingAround.AnimationFolder
         {
             var finalState = state;
 
+            //Changes to Walk if Specifics don't exist
             ChangeToWalkIfNonSpecificWalking(ref finalState);
-
+            //
             HandleStartWalkTransitionAnimation(ref finalState);
 
-            HandleEndWalkTransitionAnimation(ref finalState);
+            if (finalState == AnimationState.Idle && finalState != _currentAnimationState)
+                HandleEndWalkTransitionAnimation(ref finalState);
 
-            if (state == AnimationState.Idle && state != _currentAnimationState)
-            {
+            if (finalState == AnimationState.Idle && finalState != _currentAnimationState)
                 ResetStates();
-            }
-
             _currentAnimationState = finalState;
 
+            
             foreach (var control in ControllerList[_currentAnimationState])
             {
                 control.Update(gameTime);
@@ -89,7 +89,8 @@ namespace PlayingAround.AnimationFolder
         }
         private void HandleEndWalkTransitionAnimation(ref AnimationState finalState)
         {
-            if (_currentAnimationState == AnimationState.Idle && ControllerList.ContainsKey(AnimationState.EndWalkTrans))
+            if (finalState != AnimationState.Idle) return;
+            if (ControllerList.ContainsKey(AnimationState.EndWalkTrans))
             {
                 foreach (var contr in ControllerList[AnimationState.EndWalkTrans])
                 {
@@ -338,4 +339,5 @@ public enum AnimationState
     FX,
     Walk,
     Attack,
+    n
 }

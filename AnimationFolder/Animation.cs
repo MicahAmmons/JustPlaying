@@ -33,6 +33,7 @@ namespace PlayingAround.AnimationFolder
         public bool HasStartingPause { get; private set; } = false;
         public bool RotatesTowardDirection { get; private set; } = false;
         public bool OverrideDiamondDrawPoint { get; private set; } = false;
+        public bool ReverseBuild {  get; private set; } 
         public OriginPoint OriginPoint { get; private set; }
         public int YOffset { get; private set; }
         public bool HoldUntilAllFinished { get; private set; }
@@ -53,6 +54,7 @@ namespace PlayingAround.AnimationFolder
             IsIndefinite = data.IsIndefinite;
             FadeEffect = data.FadeEffect;
             SmokeEffect = data.SmokeEffect;
+            ReverseBuild = data.ReverseBuild;
             PingPong = data.IsPingPong;
             EndCyclePause = data.EndCyclePause;
             StartCyclePause = data.StartCyclePause;
@@ -139,6 +141,10 @@ namespace PlayingAround.AnimationFolder
 
         private List<Rectangle> FinalizeRectangleList(List<Rectangle> frames)
         {
+            if (ReverseBuild)
+            {
+                frames.Reverse();
+            }
             if (EndCyclePause > 0)
             {
                 for (int i = 0; i < EndCyclePause ; i++)
