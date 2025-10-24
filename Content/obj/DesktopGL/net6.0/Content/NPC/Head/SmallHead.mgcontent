@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/NPC/Head/SmallHead.png</SourceFile>
-  <SourceTime>2025-08-28T16:21:20.9016156-04:00</SourceTime>
-  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/NPC/Head/SmallHead.xnb</DestFile>
-  <DestTime>2025-10-09T10:12:25.2023193-04:00</DestTime>
+  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/NPC/Head/SmallHead.png</SourceFile>
+  <SourceTime>2025-09-02T14:22:10.7931435-04:00</SourceTime>
+  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/bin/DesktopGL/Content/NPC/Head/SmallHead.xnb</DestFile>
+  <DestTime>2025-10-24T11:44:35.743164-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

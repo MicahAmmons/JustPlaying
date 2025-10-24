@@ -6,10 +6,10 @@
     "Width": 64,
     "Height": 64,
     "TextureKey": "Hero_Blonde",
-    "CurrentPosX": 800,
+    "CurrentPosX": 1200,
     "CurrentPosY": 600,
     "Health": 8,
-    "AnimationData":"FrostOoze" 
+    "AnimationData":"Turtle" 
   },
   "DayCycle": {
     "Day": 1

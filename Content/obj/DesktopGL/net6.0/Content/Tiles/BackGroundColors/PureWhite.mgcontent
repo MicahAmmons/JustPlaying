@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/Tiles/BackGroundColors/PureWhite.png</SourceFile>
-  <SourceTime>2025-10-13T21:33:41.0627317-04:00</SourceTime>
-  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/PlayingAround/Content/bin/DesktopGL/Content/Tiles/BackGroundColors/PureWhite.xnb</DestFile>
-  <DestTime>2025-10-13T21:40:05.2993194-04:00</DestTime>
+  <SourceFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/Tiles/BackGroundColors/PureWhite.png</SourceFile>
+  <SourceTime>2025-10-19T07:42:36.2028708-04:00</SourceTime>
+  <DestFile>C:/Users/micah/OneDrive/Desktop/Repos/JustPlaying/JustPlaying/Content/bin/DesktopGL/Content/Tiles/BackGroundColors/PureWhite.xnb</DestFile>
+  <DestTime>2025-10-24T11:45:01.8110777-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

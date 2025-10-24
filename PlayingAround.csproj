@@ -42,6 +42,11 @@
     <None Remove="Content\MonsterAnimations\FrostOoze\FrostOozeWalkUp.png" />
     <None Remove="Content\MonsterAnimations\Test\TestCase.png" />
     <None Remove="Content\MonsterAnimations\Test\TestTexture.png" />
+    <None Remove="Content\MonsterAnimations\Turtle\Turtle_Attack_SS.png" />
+    <None Remove="Content\MonsterAnimations\Turtle\Turtle_Attack_VE_SS.png" />
+    <None Remove="Content\MonsterAnimations\Turtle\Turtle_Idle_SS.png" />
+    <None Remove="Content\MonsterAnimations\Turtle\Turtle_Move_Start_Trans_SS.png" />
+    <None Remove="Content\MonsterAnimations\Turtle\Turtle_Walk_SS.png" />
     <None Remove="Content\MonsterIcons\AngryPlantIcon.png" />
     <None Remove="Content\MonsterIcons\EarthOoze.png" />
     <None Remove="Content\MonsterIcons\TrainingDummyIcon.png" />
@@ -171,6 +176,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterAnimations\Test\TestTexture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Turtle\Turtle_Attack_SS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Turtle\Turtle_Attack_VE_SS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Turtle\Turtle_Idle_SS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Turtle\Turtle_Move_Start_Trans_SS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonsterAnimations\Turtle\Turtle_Walk_SS.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\MonsterIcons\EarthOoze.png">

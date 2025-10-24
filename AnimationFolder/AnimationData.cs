@@ -22,7 +22,7 @@ namespace PlayingAround.AnimationFolder
         public int FrameDurationMs { get; set; }
         public bool IsIndefinite { get; set; } = false;
         public bool IsLooping { get; set; } = false; 
-        public bool PingPong { get; set; } = false;
+        public bool IsPingPong { get; set; } = false;
         public string SpriteSheetName { get; set; }
         public int FrameWidth { get; set; }
         public int FrameHeight { get; set; }

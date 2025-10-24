@@ -106,6 +106,66 @@
 /processorParam:TextureFormat=Color
 /build:GrassTiles/GrassTile.png
 
+#begin MonsterAnimations/Turtle/Turtle_Attack_SS.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Turtle/Turtle_Attack_SS.png
+
+#begin MonsterAnimations/Turtle/Turtle_Attack_VE_SS.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Turtle/Turtle_Attack_VE_SS.png
+
+#begin MonsterAnimations/Turtle/Turtle_Move_Start_Trans_SS.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Turtle/Turtle_Move_Start_Trans_SS.png
+
+#begin MonsterAnimations/Turtle/Turtle_Idle_SS.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Turtle/Turtle_Idle_SS.png
+
+#begin MonsterAnimations/Turtle/Turtle_Walk_SS.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonsterAnimations/Turtle/Turtle_Walk_SS.png
+
 #begin HeroArt/BlonderHero.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -47,7 +47,28 @@ namespace PlayingAround.AnimationFolder
 
         public Animation(SpecificAnimationData data)
         {
-            Frames = new List<Rectangle>(data.FrameCount);
+            Width = data.FrameWidth;
+            Height = data.FrameHeight;
+            FrameDuration = data.FrameDurationMs / 1000f; // ms -> seconds
+            IsIndefinite = data.IsIndefinite;
+            FadeEffect = data.FadeEffect;
+            SmokeEffect = data.SmokeEffect;
+            PingPong = data.IsPingPong;
+            EndCyclePause = data.EndCyclePause;
+            StartCyclePause = data.StartCyclePause;
+            IsLooping = data.IsLooping;
+            YOffset = data.YOffset;
+            RotatesTowardDirection = data.RotatesTowardsDirection;
+            if (RotatesTowardDirection) OverrideDiamondDrawPoint = true;
+            HoldUntilAllFinished = data.HoldUntilFinished;
+            OriginPoint = data.OriginPoint ?? OriginPoint.TopLeft;
+            if (StartCyclePause > 0) { HasStartingPause = true; }
+            if (data.IsDrawPointOverride != null)
+            {
+                IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride;
+            }
+            Frames = new List<Rectangle>();
+            var frames = new List<Rectangle>(data.FrameCount);
             SpriteSheet = AssetManager.GetTexture(data.SpriteSheetName);
             DefaultDirection = data.DefaultDirection;
             if (data.FXEntityCloudData != null)
@@ -69,6 +90,8 @@ namespace PlayingAround.AnimationFolder
                 }
                
             }
+
+
             int framesPerRow = Math.Max(1, SpriteSheet.Width / data.FrameWidth);
             int startRowIndex = Math.Max(0, data.Row - 1);
 
@@ -84,8 +107,9 @@ namespace PlayingAround.AnimationFolder
                 if (y + data.FrameHeight > SpriteSheet.Height)
                     break;
 
+
                 // main overlay frame
-                Frames.Add(new Rectangle(x, y, data.FrameWidth, data.FrameHeight));
+                frames.Add(new Rectangle(x, y, data.FrameWidth, data.FrameHeight));
 
                 // per-FX mask frames
                 if (FXEntityCloud?.ListOfSpecificEntityClouds != null)
@@ -103,31 +127,58 @@ namespace PlayingAround.AnimationFolder
                     }
                 }
             }
+            Frames.AddRange(FinalizeRectangleList(frames));
+            FrameCount = Frames.Count;
+            //PingPong
+            //EndDelay
+            //StartDelay
 
 
-            Width = data.FrameWidth;
-            Height = data.FrameHeight;
-            FrameDuration = data.FrameDurationMs / 1000f; // ms -> seconds
-            IsIndefinite = data.IsIndefinite;
-            FrameCount = Frames.Count; 
-            FadeEffect = data.FadeEffect;
-            SmokeEffect = data.SmokeEffect;
-            PingPong = data.PingPong;
-            EndCyclePause = data.EndCyclePause;
-            StartCyclePause = data.StartCyclePause;
-            IsLooping = data.IsLooping;
-            YOffset = data.YOffset;
-            RotatesTowardDirection = data.RotatesTowardsDirection;
-            if (RotatesTowardDirection) OverrideDiamondDrawPoint = true;
-            HoldUntilAllFinished = data.HoldUntilFinished;
-            OriginPoint = data.OriginPoint ?? OriginPoint.TopLeft;
-            if (StartCyclePause > 0) { HasStartingPause = true; }
-            if (data.IsDrawPointOverride != null) 
-            { 
-                IsDrawPointOverride = (VEDrawLocation)data.IsDrawPointOverride; 
-            }
 
         }
+
+        private List<Rectangle> FinalizeRectangleList(List<Rectangle> frames)
+        {
+            if (EndCyclePause > 0)
+            {
+                for (int i = 0; i < EndCyclePause ; i++)
+                {
+                    var dupedFrame = frames[frames.Count - 1];
+                    var frame = new Rectangle()
+                    {
+                        X = dupedFrame.X,
+                        Y = dupedFrame.Y,
+                        Width = dupedFrame.Width,
+                        Height = dupedFrame.Height
+                    };
+                    frames.Add(frame);
+                }
+            }
+            if (PingPong)
+            {
+                for (int i = frames.Count - 1; i >= 0; i--)
+                {
+                    var currentFrame = frames[i];
+                    var newFrame = new Rectangle()
+                    {
+                        X = currentFrame.X,
+                        Y = currentFrame.Y,
+                        Width = currentFrame.Width,
+                        Height = currentFrame.Height
+                    };
+                    frames.Add(newFrame);
+                }
+            }
+            if (StartCyclePause > 0)
+            {
+                for (int i = 0; i < StartCyclePause; i++)
+                {
+                    Frames.Add(new Rectangle());
+                }
+            }
+            return frames;
+        }
+
         public Rectangle GetFrame(int index)
         {
             if (index < 0 || index >= Frames.Count)

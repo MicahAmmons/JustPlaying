@@ -152,6 +152,7 @@ namespace PlayingAround.Movement
             }
             if (TileMovePath.Count > 0)
             {
+
                 OnStartMoveOneTile();
                 // Consume next tile: keep DrawPoint at old tile, jump CurrentPos to new tile, start walk anim
                 Vector2 oldPos = CurrentPos;
@@ -173,15 +174,20 @@ namespace PlayingAround.Movement
                 Vector2 nextPoint = VectorMovePath[0];
                 Vector2 direction = nextPoint - CurrentPos;
                 float distance = direction.Length();
-
+                if (AnimationManager.IsTransitioningAnimations())
+                {
+                    SetAnimationWalkState(direction);
+                    return;
+                    //This stops teh animation from moving until the transition animation is complete
+                }
                 if (distance <= speed)
                 {
                     CurrentPos = nextPoint;
                     VectorMovePath.RemoveAt(0);
                     DrawPoint = CurrentPos;
 
-                    if (VectorMovePath.Count == 0)
-                        SetCurrentAnimationStateToIdle();
+                if (VectorMovePath.Count == 0)
+                    SetCurrentAnimationStateToIdle();
                 }
                 else
                 {

@@ -2647,8 +2647,7 @@
       "monsterSpawnable": false,
       "playerSpawnable": false,
       "playMonsterSpawnable": false,
-      "nextTileCell": null,
-      "npc": "Micah"
+      "nextTileCell": null
     },
     {
       "x": 20,

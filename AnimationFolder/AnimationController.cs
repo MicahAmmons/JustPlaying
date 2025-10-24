@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,8 +53,7 @@ namespace PlayingAround.AnimationFolder
         }
         public void Update(GameTime gameTime, AnimationState state)
         {
-            UpdateState(state);
-            UpdateAnimations(gameTime);
+            UpdateAnimations(gameTime, state);
             IsFinished = UpdateIsFinished();
         }
         public bool UpdateIsFinished()
@@ -64,22 +64,57 @@ namespace PlayingAround.AnimationFolder
             }
             return true;
         }
-        public void UpdateAnimations(GameTime gameTime)
+        public void UpdateAnimations(GameTime gameTime, AnimationState state)
         {
+            var finalState = state;
+
+            ChangeToWalkIfNonSpecificWalking(ref finalState);
+
+            HandleStartWalkTransitionAnimation(ref finalState);
+
+            HandleEndWalkTransitionAnimation(ref finalState);
+
+            if (state == AnimationState.Idle && state != _currentAnimationState)
+            {
+                ResetStates();
+            }
+
+            _currentAnimationState = finalState;
+
             foreach (var control in ControllerList[_currentAnimationState])
             {
                 control.Update(gameTime);
             }
+
         }
-        public void UpdateState(AnimationState state)
+        private void HandleEndWalkTransitionAnimation(ref AnimationState finalState)
         {
-            if (_currentAnimationState != state)
+            if (_currentAnimationState == AnimationState.Idle && ControllerList.ContainsKey(AnimationState.EndWalkTrans))
             {
-                ResetStates();
-                _currentAnimationState = state;
+                foreach (var contr in ControllerList[AnimationState.EndWalkTrans])
+                {
+                    if (!contr.IsFinished) finalState = AnimationState.EndWalkTrans;break;
+                }
             }
         }
-
+        private void HandleStartWalkTransitionAnimation(ref AnimationState finalState)
+        {
+            if (IsCurrentlyAWalkingAnimation(finalState) && ControllerList.ContainsKey(AnimationState.StartWalkTrans))
+            {
+                foreach (var contr in ControllerList[AnimationState.StartWalkTrans])
+                {
+                    if (!contr.IsFinished) finalState = AnimationState.StartWalkTrans; break;
+                }
+            }
+        }
+        private void ChangeToWalkIfNonSpecificWalking(ref AnimationState finalState)
+        {
+            if (!ControllerList.ContainsKey(finalState) && IsCurrentlyAWalkingAnimation(finalState))
+            {
+                finalState = AnimationState.Walk;
+            }
+        }
+        public bool IsCurrentlyAWalkingAnimation(AnimationState state) => state is AnimationState.Walk or AnimationState.WalkUp or AnimationState.WalkDown;
         public void ResetStates()
         {
             foreach (var kvp in ControllerList)
@@ -92,7 +127,6 @@ namespace PlayingAround.AnimationFolder
                 }
             }
         }
-
         internal void QuicknessOverride(float movementQuicknessOverride)
         {
             foreach (var contr in ControllerList)
@@ -104,6 +138,18 @@ namespace PlayingAround.AnimationFolder
                     ani.FrameDurationOverride(movementQuicknessOverride);
                 }
             }
+        }
+
+        public bool IsTransitioningAnimations()
+        {
+            if (ControllerList.ContainsKey(AnimationState.StartWalkTrans))
+            {
+                foreach (var contr in ControllerList[AnimationState.StartWalkTrans])
+                {
+                    if (!contr.IsFinished) return true;
+                }
+            }
+            return false;
         }
     }
     public class AnimationController
@@ -129,7 +175,6 @@ namespace PlayingAround.AnimationFolder
             _currentFrameIndex = 0;
             _frameTimer = 0f;
             _direction = 1;
-            _startCyclePauseTimer = 0f;
             IsStartingPause = true;
             _animation.ResetOverridePath();
 
@@ -147,8 +192,6 @@ namespace PlayingAround.AnimationFolder
                 frameDur = _frameDurationOverride;
             }
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (InStartingPause(delta, frameDur)){ return;}
-
 
             _frameTimer += delta;
 
@@ -161,10 +204,6 @@ namespace PlayingAround.AnimationFolder
             if (_animation.IsLooping)
             {
                 StepLooping(delta);
-            }
-            else if (_animation.PingPong)
-            {
-                StepPingPongSingle(delta);
             }
             else
             {
@@ -208,45 +247,6 @@ namespace PlayingAround.AnimationFolder
                 if (InPause()) return;
                 IsFinished = true;
             }
-        }
-        private void StepPingPongSingle(float delta)
-        {
-            if (IsFinished) return;
-
-            _currentFrameIndex += _direction;
-
-            if (_currentFrameIndex >= _animation.FrameCount)
-            {
-                if (InPause()) return;
-                _currentFrameIndex = _animation.FrameCount;
-                _direction = -1;
-                return;
-            }
-            if (_currentFrameIndex <= 0 && _direction == -1)
-            {
-
-                _currentFrameIndex = 0;
-                IsFinished = true;
-            }
-        }
-
-        private float _startCyclePauseTimer = 0;
-        private bool InStartingPause(float delta, float frameDur)
-        {
-            if (_animation.StartCyclePause <= 0)
-            {
-                IsStartingPause = false;
-                return false;
-            }
-            float maxDur = (_animation.StartCyclePause * frameDur );
-            if (_startCyclePauseTimer < maxDur)
-            {
-                _startCyclePauseTimer += delta;
-                IsStartingPause = true;
-                return true;
-            }
-            IsStartingPause = false;
-            return false;
         }
         private bool InPause()
         {
@@ -330,8 +330,12 @@ public enum AnimationState
 {
     WalkUp,
     WalkDown,
+    StartWalkTrans,
+    EndWalkTrans,
     Idle,
     AttackUp,
     AttackDown,
-    FX
+    FX,
+    Walk,
+    Attack,
 }

@@ -320,102 +320,338 @@
     }
   },
   "EarthOoze": {
-      "Animations": {
-        "WalkUp": [
-          {
-            "Row": 1,
-            "FrameCount": 18,
-            "FrameDurationMs": 75,
-            "SpriteSheetName": "EarthOozeWalkUp",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "WalkDown": [
-          {
-            "Row": 1,
-            "FrameCount": 18,
-            "FrameDurationMs": 75,
-            "SpriteSheetName": "EarthOozeWalkDown",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndOfCyclePause": 1
-          }
-        ],
-        "AttackUp": [
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 70,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRoot",
-            "DefaultDirection": "Right",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndCyclePause": 22
-          },
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 11,
-            "FrameDurationMs": 70,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRootVE",
-            "DefaultDirection": "Right",
-            "FrameWidth": 128,
-            "FrameHeight": 128,
-            "EndCyclePause": 0,
-            "StartCyclePause": 31,
-            "IsDrawPointOverride": "TargetCell"
-          }
-        ],
-        "AttackDown": [
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 31,
-            "FrameDurationMs": 70,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRoot",
-            "DefaultDirection": "Left",
-            "FrameWidth": 192,
-            "FrameHeight": 192,
-            "EndCyclePause": 22
-          },
-          {
-            "AttackName": "GraspingRoot",
-            "Row": 1,
-            "FrameCount": 11,
-            "FrameDurationMs": 70,
-            "PingPong": true,
-            "SpriteSheetName": "EarthOozeGraspingRootVE",
-            "DefaultDirection": "Right",
-            "FrameWidth": 128,
-            "FrameHeight": 128,
-            "EndCyclePause": 0,
-            "StartCyclePause": 31,
-            "IsDrawPointOverride": "TargetCell"
-          }
-        ],
-        "Idle": [
-          {
-            "Row": 1,
-            "FrameCount": 19,
-            "FrameDurationMs": 100,
-            "IsIndefinite": true,
-            "IsLooping": true,
-            "SpriteSheetName": "EarthOozeIdle",
-            "DefaultDirection": "Left",
-            "FrameWidth": 64,
-            "FrameHeight": 64,
-            "FadeEffect": true
-          }
-        ]
-      }
-    
-  }
+    "Animations": {
+      "WalkUp": [
+        {
+          "Row": 1,
+          "FrameCount": 18,
+          "FrameDurationMs": 75,
+          "SpriteSheetName": "EarthOozeWalkUp",
+          "DefaultDirection": "Right",
+          "FrameWidth": 192,
+          "FrameHeight": 192,
+          "EndOfCyclePause": 1
+        }
+      ],
+      "WalkDown": [
+        {
+          "Row": 1,
+          "FrameCount": 18,
+          "FrameDurationMs": 75,
+          "SpriteSheetName": "EarthOozeWalkDown",
+          "DefaultDirection": "Right",
+          "FrameWidth": 192,
+          "FrameHeight": 192,
+          "EndOfCyclePause": 1
+        }
+      ],
+      "AttackUp": [
+        {
+          "AttackName": "GraspingRoot",
+          "Row": 1,
+          "FrameCount": 31,
+          "FrameDurationMs": 70,
+          "PingPong": true,
+          "SpriteSheetName": "EarthOozeGraspingRoot",
+          "DefaultDirection": "Right",
+          "FrameWidth": 192,
+          "FrameHeight": 192,
+          "EndCyclePause": 22
+        },
+        {
+          "AttackName": "GraspingRoot",
+          "Row": 1,
+          "FrameCount": 11,
+          "FrameDurationMs": 70,
+          "PingPong": true,
+          "SpriteSheetName": "EarthOozeGraspingRootVE",
+          "DefaultDirection": "Right",
+          "FrameWidth": 128,
+          "FrameHeight": 128,
+          "EndCyclePause": 0,
+          "StartCyclePause": 31,
+          "IsDrawPointOverride": "TargetCell"
+        }
+      ],
+      "AttackDown": [
+        {
+          "AttackName": "GraspingRoot",
+          "Row": 1,
+          "FrameCount": 31,
+          "FrameDurationMs": 70,
+          "PingPong": true,
+          "SpriteSheetName": "EarthOozeGraspingRoot",
+          "DefaultDirection": "Left",
+          "FrameWidth": 192,
+          "FrameHeight": 192,
+          "EndCyclePause": 22
+        },
+        {
+          "AttackName": "GraspingRoot",
+          "Row": 1,
+          "FrameCount": 11,
+          "FrameDurationMs": 70,
+          "PingPong": true,
+          "SpriteSheetName": "EarthOozeGraspingRootVE",
+          "DefaultDirection": "Right",
+          "FrameWidth": 128,
+          "FrameHeight": 128,
+          "EndCyclePause": 0,
+          "StartCyclePause": 31,
+          "IsDrawPointOverride": "TargetCell"
+        }
+      ],
+      "Idle": [
+        {
+          "Row": 1,
+          "FrameCount": 19,
+          "FrameDurationMs": 100,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "EarthOozeIdle",
+          "DefaultDirection": "Left",
+          "FrameWidth": 64,
+          "FrameHeight": 64,
+          "FadeEffect": true
+        }
+      ]
+    }
+
+  },
+  "Turtle" :{
+    "Animations": {
+
+      "Idle": [
+        {
+          "Row": 5,
+          "FrameCount": 8,
+          "FrameDurationMs": 150,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsPingPong": true,
+          "IsShadow": true,
+          "IsSherable": true,
+          "SpriteSheetName": "TurtleIdle",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+
+          "Row": 4,
+          "FrameCount": 8,
+          "FrameDurationMs": 100,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsPingPong": true,
+          "IsShadow": true,
+          "SpriteSheetName": "TurtleIdle",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 3,
+          "FrameCount": 8,
+          "FrameDurationMs": 150,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsPingPong": true,
+          "IsSherable": true,
+          "SpriteSheetName": "TurtleIdle",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 2,
+          "FrameCount": 8,
+          "FrameDurationMs": 150,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsPingPong": true,
+          "IsPulsing": true,
+          "IsSherable": true,
+          "PulseTimer": 5,
+          "SpriteSheetName": "TurtleIdle",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+
+          "Row": 1,
+          "FrameCount": 8,
+          "FrameDurationMs": 100,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "TurtleIdle",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        }
+      ],
+      "Walk": [
+        {
+          "Row": 4,
+          "FrameCount": 4,
+          "FrameDurationMs": 200,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsShadow": true,
+          "SpriteSheetName": "TurtleWalk",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 3,
+          "FrameCount": 4,
+          "FrameDurationMs": 200,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "IsShadow": true,
+          "Shearable": true,
+          "SpriteSheetName": "TurtleWalk",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+
+          "Row": 2,
+          "FrameCount": 4,
+          "FrameDurationMs": 200,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "Shearable": true,
+          "SpriteSheetName": "TurtleWalk",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+
+          "Row": 1,
+          "FrameCount": 4,
+          "FrameDurationMs": 200,
+          "IsIndefinite": true,
+          "IsLooping": true,
+          "SpriteSheetName": "TurtleWalk",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        }
+      ],
+      "StartWalkTrans": [
+        {
+          "Row": 4,
+          "FrameCount": 7,
+          "Shearable": true,
+          "IsShadow": true,
+          "FrameDurationMs": 200,
+          "SpriteSheetName": "TurtleMoveStartTrans",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 3,
+          "FrameCount": 7,
+          "IsShadow": true,
+          "FrameDurationMs": 200,
+          "SpriteSheetName": "TurtleMoveStartTrans",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 2,
+          "FrameCount": 7,
+          "Shearable": true,
+          "FrameDurationMs": 200,
+          "SpriteSheetName": "TurtleMoveStartTrans",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        },
+        {
+          "Row": 1,
+          "FrameCount": 7,
+          "FrameDurationMs": 200,
+          "SpriteSheetName": "TurtleMoveStartTrans",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76
+        }
+      ],
+      "Attack": [
+        {
+          "AttackName": "TurtleSmash",
+          "Row": 1,
+          "FrameCount": 4,
+          "FrameDurationMs": 100,
+          "SpriteSheetName": "TurtleAttack",
+          "DefaultDirection": "Right",
+          "IsPingPong": true,
+          "FrameWidth": 76,
+          "FrameHeight": 76,
+          "EndCyclePause": 2
+        },
+        {
+          "AttackName": "TurtleSmash",
+          "Row": 2,
+          "FrameCount": 4,
+          "FrameDurationMs": 100,
+          "IsSherable": true,
+          "SpriteSheetName": "TurtleAttack",
+          "DefaultDirection": "Right",
+          "IsPingPong": true,
+          "FrameWidth": 76,
+          "FrameHeight": 76,
+          "EndCyclePause": 2
+        },
+        {
+          "AttackName": "TurtleSmash",
+          "Row": 3,
+          "FrameCount": 4,
+          "FrameDurationMs": 100,
+          "SpriteSheetName": "TurtleAttack",
+          "DefaultDirection": "Right",
+          "IsPingPong": true,
+          "IsShadow": true,
+          "FrameWidth": 76,
+          "FrameHeight": 76,
+          "EndCyclePause": 2
+        },
+        {
+          "AttackName": "TurtleSmash",
+          "Row": 4,
+          "FrameCount": 4,
+          "FrameDurationMs": 100,
+          "SpriteSheetName": "TurtleAttack",
+          "DefaultDirection": "Right",
+          "IsPingPong": true,
+          "IsShadow": true,
+          "IsSherable": true,
+          "FrameWidth": 76,
+          "FrameHeight": 76,
+          "EndCyclePause": 2
+        },
+        {
+          "AttackName": "TurtleSmash",
+          "Row": 1,
+          "FrameCount": 4,
+          "FrameDurationMs": 100,
+          "PingPong": true,
+          "SpriteSheetName": "TurtleAttackVE",
+          "DefaultDirection": "Right",
+          "FrameWidth": 76,
+          "FrameHeight": 76,
+          "StartCyclePause": 11,
+          "IsDrawPointOverride": "TargetCell"
+        }
+      ]
+    }
+    }
 }

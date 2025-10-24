@@ -56,6 +56,12 @@ namespace PlayingAround.Game.Assets
 
             AssetManager.LoadTexture("TestCase", "MonsterAnimations/Test/TestCase");
             AssetManager.LoadTexture("TestTexture", "MonsterAnimations/Test/TestTexture");
+
+            AssetManager.LoadTexture("TurtleAttack", "MonsterAnimations/Turtle/Turtle_Attack_SS");
+            AssetManager.LoadTexture("TurtleAttackVE", "MonsterAnimations/Turtle/Turtle_Attack_VE_SS");
+            AssetManager.LoadTexture("TurtleWalk", "MonsterAnimations/Turtle/Turtle_Walk_SS");
+            AssetManager.LoadTexture("TurtleIdle", "MonsterAnimations/Turtle/Turtle_Idle_SS");
+            AssetManager.LoadTexture("TurtleMoveStartTrans", "MonsterAnimations/Turtle/Turtle_Move_Start_Trans_SS");
         }
         public static void LoadPlayerSpriteSheets()
         {

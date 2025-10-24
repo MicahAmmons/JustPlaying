@@ -71,7 +71,8 @@ public enum AttackName
     Spit,
     GraspingRoot,
     LavaBall,
-    IcicleStab
+    IcicleStab,
+    TurtleSmash
 
 }
 
