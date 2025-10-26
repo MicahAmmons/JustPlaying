@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\animationfolder\\animationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:animationfolder\\animationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\movement\\movementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:movement\\movementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\smoke\\smokemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:smoke\\smokemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\animationfolder\\animation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:animationfolder\\animation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:world\\maptiles\\maptile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\data\\combatmonsterdata\\animationdata.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\combatmonsterdata\\animationdata.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\assets\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\assets\\assetloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\data\\maptile\\level1\\maptile_0_0_1.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:data\\maptile\\level1\\maptile_0_0_1.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\managers\\combatman\\combatattacks\\singleattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:managers\\combatman\\combatattacks\\singleattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|c:\\users\\micah\\onedrive\\desktop\\repos\\justplaying\\justplaying\\smoke\\smoketexture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1EFE71E-DCF7-495D-B4DE-A94EC2663AF8}|PlayingAround.csproj|solutionrelative:smoke\\smoketexture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,8 +26,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Game1.cs",
+              "RelativeDocumentMoniker": "Game1.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Game1.cs",
+              "RelativeToolTip": "Game1.cs",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAuwNUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:23:39.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SmokeManager.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Smoke\\SmokeManager.cs",
+              "RelativeDocumentMoniker": "Smoke\\SmokeManager.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Smoke\\SmokeManager.cs",
+              "RelativeToolTip": "Smoke\\SmokeManager.cs",
+              "ViewState": "AgIAALkAAAAAAAAAAAAAwBAAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:23:03.904Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -78,111 +92,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MovementController.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Movement\\MovementController.cs",
-              "RelativeDocumentMoniker": "Movement\\MovementController.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Movement\\MovementController.cs",
-              "RelativeToolTip": "Movement\\MovementController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAWwD0AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T20:14:03.788Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AnimationController.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\AnimationController.cs",
-              "RelativeDocumentMoniker": "AnimationFolder\\AnimationController.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\AnimationController.cs",
-              "RelativeToolTip": "AnimationFolder\\AnimationController.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAwwEwAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T20:13:35.373Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MapTile_0_0_1.json",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\MapTile\\Level1\\MapTile_0_0_1.json",
-              "RelativeDocumentMoniker": "Data\\MapTile\\Level1\\MapTile_0_0_1.json",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\MapTile\\Level1\\MapTile_0_0_1.json",
-              "RelativeToolTip": "Data\\MapTile\\Level1\\MapTile_0_0_1.json",
-              "ViewState": "AgIAAEoKAAAAAAAAAAAkwFkKAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-24T16:38:03.871Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SingleAttack.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
-              "RelativeDocumentMoniker": "Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
-              "RelativeToolTip": "Managers\\CombatMan\\CombatAttacks\\SingleAttack.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAiwEoAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T16:11:06.592Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Animation.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\Animation.cs",
-              "RelativeDocumentMoniker": "AnimationFolder\\Animation.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\AnimationFolder\\Animation.cs",
-              "RelativeToolTip": "AnimationFolder\\Animation.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAAAJEAAAAQAAAAAAAAAA==",
+              "Title": "MapTile.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\World\\MapTiles\\MapTile.cs",
+              "RelativeDocumentMoniker": "World\\MapTiles\\MapTile.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\World\\MapTiles\\MapTile.cs",
+              "RelativeToolTip": "World\\MapTiles\\MapTile.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAlwD8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T16:10:05.628Z",
+              "WhenOpened": "2025-10-26T20:22:53.869Z",
               "EditorCaption": ""
             },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AssetLoader.cs",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Assets\\AssetLoader.cs",
-              "RelativeDocumentMoniker": "Managers\\Assets\\AssetLoader.cs",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Managers\\Assets\\AssetLoader.cs",
-              "RelativeToolTip": "Managers\\Assets\\AssetLoader.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAwwD8AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T15:47:00.972Z"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "f871002a-04f4-46ec-8875-4a542a857ec5",
-        "Display": 0,
-        "X": 151,
-        "Y": 129,
-        "Width": 1651,
-        "Height": 802,
-        "WindowState": 2
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AnimationData.json",
-              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\CombatMonsterData\\AnimationData.json",
-              "RelativeDocumentMoniker": "Data\\CombatMonsterData\\AnimationData.json",
-              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Data\\CombatMonsterData\\AnimationData.json",
-              "RelativeToolTip": "Data\\CombatMonsterData\\AnimationData.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcCAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-24T15:50:02.52Z",
+              "Title": "SmokeTexture.cs",
+              "DocumentMoniker": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Smoke\\SmokeTexture.cs",
+              "RelativeDocumentMoniker": "Smoke\\SmokeTexture.cs",
+              "ToolTip": "C:\\Users\\micah\\OneDrive\\Desktop\\Repos\\JustPlaying\\JustPlaying\\Smoke\\SmokeTexture.cs",
+              "RelativeToolTip": "Smoke\\SmokeTexture.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-26T20:22:40.354Z",
               "EditorCaption": ""
             }
           ]
